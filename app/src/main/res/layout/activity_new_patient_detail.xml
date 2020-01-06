@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-
+<layout xmlns:app="http://schemas.android.com/apk/res-auto" >
 <ScrollView xmlns:tools="http://schemas.android.com/tools"
     android:layout_height="match_parent"
     android:layout_width="match_parent"
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    >
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -124,6 +124,7 @@
                             android:fontFamily="@font/sf_pro_display_medium"
                             android:inputType="text"
                             android:padding="8sp"
+                            app:validateEmpty="@{false}"
                             android:textSize="13sp" />
 
 
@@ -237,7 +238,7 @@
                         android:fontFamily="@font/sf_pro_display_medium"
                         android:textCursorDrawable="@null"
                         android:imeOptions="actionNext"
-
+                        app:validateEmpty="@{false}"
                         android:inputType="number"
                         android:padding="8sp"
                         android:textSize="13sp"
@@ -735,3 +736,4 @@
 
     </LinearLayout>
 </ScrollView>
+</layout>

@@ -23,9 +23,11 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
+import androidx.databinding.DataBindingUtil;
 
 import com.agatsa.testsdknew.Models.PatientModel;
 import com.agatsa.testsdknew.Models.VitalSign;
+import com.agatsa.testsdknew.databinding.ActivityNewPatientDetailBinding;
 
 import java.io.File;
 import java.io.IOException;
@@ -34,6 +36,9 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
+
+import br.com.ilhasoft.support.validation.Validator;
+
 
 public class PersonalDetailsActivity extends AppCompatActivity {
 
@@ -63,12 +68,20 @@ public class PersonalDetailsActivity extends AppCompatActivity {
     LinearLayout medicationll;
     LinearLayout smokell;
     LinearLayout alcoholll;
+    ActivityNewPatientDetailBinding binding;
+
+ Validator validator;
+
+
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_new_patient_detail);
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_new_patient_detail);
+        validator = new Validator(binding);
+        validator.enableFormValidationMode();
+
         pref = this.getSharedPreferences("sunyahealth", Context.MODE_PRIVATE);
         device_id = pref.getString("device_id", "");
         duid = getIntent().getStringExtra("duid");
@@ -202,10 +215,15 @@ public class PersonalDetailsActivity extends AppCompatActivity {
 
         btnSave = findViewById(R.id.btnSave);
         btnSave.setOnClickListener(v -> {
-            if (datavalidation()) {
+            if (validator.validate()) {
                 Toast.makeText(getApplicationContext(), "Saving Data", Toast.LENGTH_LONG).show();
                 new savedata().execute();
                 navigatenext();
+            }
+            else {
+
+                Toast.makeText(getApplicationContext(), "Validation Error", Toast.LENGTH_LONG).show();
+
             }
         });
 
@@ -224,6 +242,16 @@ public class PersonalDetailsActivity extends AppCompatActivity {
 
         editText.setText(sdf.format(myCalendar.getTime()));
     }
+
+//    @Override
+//    public void onValidationSuccess() {
+//
+//    }
+//
+//    @Override
+//    public void onValidationError() {
+//
+//    }
 
     @SuppressLint("StaticFieldLeak")
     private class savedata extends AsyncTask<String, Void, Integer> {

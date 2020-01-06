@@ -98,14 +98,14 @@ public class SplashActivity extends Activity {
             editor = pref.edit();
             editor.apply();
 // this is to be done now
-//            Intent mainIntent = new Intent(SplashActivity.this, PatientActivity.class);
-//            SplashActivity.this.startActivity(mainIntent);
-//            SplashActivity.this.finish();
+            Intent mainIntent = new Intent(SplashActivity.this, PatientActivity.class);
+            SplashActivity.this.startActivity(mainIntent);
+            SplashActivity.this.finish();
 
             //   This is in development phase
-                            Intent patientIntent = new Intent(SplashActivity.this, UserLogIn.class);
-                            SplashActivity.this.startActivity(patientIntent);
-                            SplashActivity.this.finish();
+//                            Intent patientIntent = new Intent(SplashActivity.this, UserLogIn.class);
+//                            SplashActivity.this.startActivity(patientIntent);
+//                            SplashActivity.this.finish();
         }, SPLASH_DISPLAY_LENGTH);
     }
 
