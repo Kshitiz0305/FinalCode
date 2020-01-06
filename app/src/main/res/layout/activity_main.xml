@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity">
+
+    <Button
+        android:id="@+id/btnRegisterDevice"
+        style="@style/Widget.AppCompat.Button.Colored"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:text="@string/register_device" />
+
+    <Button
+        android:id="@+id/btnTakeSingleLeadECG"
+        style="@style/Widget.AppCompat.Button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/take_single_lead_ecg" />
+
+    <Button
+        android:id="@+id/btnLongECG"
+        android:layout_below="@id/btnTakeSingleLeadECG"
+        style="@style/Widget.AppCompat.Button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Single Lead Long ECG" />
+
+    <Button
+        android:id="@+id/btnCreatePDF"
+        android:layout_below="@id/btnLongECG"
+        style="@style/Widget.AppCompat.Button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/create_pdf" />
+
+    <Button
+        android:id="@+id/btnCreateLongPDF"
+        android:layout_below="@id/btnCreatePDF"
+        style="@style/Widget.AppCompat.Button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Create long PDF" />
+
+</RelativeLayout>

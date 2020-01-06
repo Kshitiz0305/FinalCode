@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView
+    android:layout_height="match_parent"
+    android:layout_width="match_parent"
+    xmlns:android="http://schemas.android.com/apk/res/android" >
+    <LinearLayout
+
+        android:orientation="vertical" android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/sfpro_display_bold"
+                android:gravity="center"
+                android:padding="8sp"
+                android:text="@string/diabetes"
+                android:textColor="@color/colorPrimaryDark"
+                android:textSize="17sp" />
+
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="2"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Glusoce Level"
+                android:fontFamily="@font/sfpro_display_semibold"
+                android:padding="8sp"
+                android:textColor="@color/colorPrimaryDark"
+                android:textSize="15sp" />
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center"
+                >
+
+                <EditText
+                    android:id="@+id/txtglucose"
+                    android:layout_width="100dp"
+                    android:layout_height="40sp"
+                    android:layout_weight="1"
+                    android:textSize="13sp"
+                    android:fontFamily="@font/sf_pro_display_medium"
+                    android:inputType="numberDecimal"
+                    android:padding="8sp"
+                    android:layout_marginRight="2sp"
+                    android:background="@drawable/bg_gray_border"
+                    />
+
+
+
+
+            </LinearLayout>
+
+
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/btnsave"
+            android:layout_width="match_parent"
+            android:textColor="@color/white"
+            android:text="SAVE"
+            android:layout_marginTop="@dimen/_10sdp"
+            android:layout_marginRight="@dimen/_10sdp"
+            android:layout_marginLeft="@dimen/_10sdp"
+            android:background="@drawable/rect_orange"
+            android:layout_height="wrap_content"/>
+
+
+    </LinearLayout>
+</ScrollView>

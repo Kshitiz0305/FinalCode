@@ -1,0 +1,38 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+
+    <dimen name="design_fab_size_mini" tools:override="true">@dimen/_40sdp</dimen>
+    <dimen name="design_fab_image_size" tools:override="true">@dimen/_18sdp</dimen>
+
+    <dimen name="txt_login_length">@dimen/_52sdp</dimen>
+    <dimen name="txt_login_height">@dimen/_32sdp</dimen>
+
+    <dimen name="btn_width">@dimen/_120sdp</dimen>
+    <dimen name="btn_height">@dimen/_30sdp</dimen>
+
+    <dimen name="ic_menu_size">@dimen/_45sdp</dimen>
+    <dimen name="ic_small_size">@dimen/_16sdp</dimen>
+    <dimen name="radius">@dimen/_4sdp</dimen>
+
+    <dimen name="ic_dash_size">@dimen/_40sdp</dimen>
+    <dimen name="graph_height">@dimen/_200sdp</dimen>
+    <dimen name="progressbar_size">@dimen/_25sdp</dimen>
+
+    <!-- Text -->
+    <dimen name="txtXSmallSize">@dimen/_10sdp</dimen>
+    <dimen name="txtSmallSize">@dimen/_13sdp</dimen>
+    <dimen name="txtNormalSize">@dimen/_14sdp</dimen>
+    <dimen name="txtTitleSize">@dimen/_18sdp</dimen>
+    <dimen name="txtExtraBigSize">@dimen/_16sdp</dimen>
+
+    <dimen name="actionBarSize">@dimen/_42sdp</dimen>
+    <dimen name="box_height">@dimen/_140sdp</dimen>
+    <dimen name="detail_backdrop_height">@dimen/_240sdp</dimen>
+
+    <!-- Padding -->
+    <dimen name="paddingNormal">@dimen/_14sdp</dimen>
+    <dimen name="paddingSmall">@dimen/_8sdp</dimen>
+    <dimen name="paddingXSmall">@dimen/_4sdp</dimen>
+    <dimen name="paddingXXSmall">@dimen/_2sdp</dimen>
+    <dimen name="fab_margin">16dp</dimen>
+
+</resources>

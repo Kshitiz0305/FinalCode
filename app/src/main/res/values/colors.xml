@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#3fb596</color>
+    <color name="colorPrimaryDark">#216664</color>
+    <color name="colorAccent">#FF4081</color>
+    <color name="control_background">#cc4285f4</color>
+    <color name="btnPrimaryColor">#1c6047</color>
+    <color name="colorOffWhite">#F7F2F2</color>
+    <color name="btnSecondaryColor">#2a6689</color>
+    <color name="colorGray">#d1d1d1</color>
+    <color name="white">#ffffff</color>
+    <color name="graydark">#9398a0</color>
+    <color name="graylight">#e2e2e2</color>
+    <color name="colorTransparentBlack">#AA000000</color>
+    <color name="dark_red">#ff0000</color>
+</resources>
