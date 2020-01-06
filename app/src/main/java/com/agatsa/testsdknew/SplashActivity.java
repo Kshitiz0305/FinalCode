@@ -16,6 +16,8 @@ import android.widget.Toast;
 
 import androidx.core.app.ActivityCompat;
 
+import com.agatsa.testsdknew.userlogin.UserLogIn;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -61,9 +63,16 @@ public class SplashActivity extends Activity {
                             editor2.putInt("pt_id", last_id);
                             editor2.apply();
 
+// this is to be implemented for now
                             Intent patientIntent = new Intent(SplashActivity.this, PatientActivity.class);
                             SplashActivity.this.startActivity(patientIntent);
                             SplashActivity.this.finish();
+//   This is in development phase
+//                            Intent patientIntent = new Intent(SplashActivity.this, UserLogIn.class);
+//                            SplashActivity.this.startActivity(patientIntent);
+//                            SplashActivity.this.finish();
+
+
                         }, SPLASH_DISPLAY_LENGTH));
                 alertDialog.setNegativeButton("DISCARD",
                         (dialog, which) -> {
@@ -88,10 +97,15 @@ public class SplashActivity extends Activity {
             pref = SplashActivity.this.getSharedPreferences("sunyahealth", Context.MODE_PRIVATE);
             editor = pref.edit();
             editor.apply();
+// this is to be done now
+//            Intent mainIntent = new Intent(SplashActivity.this, PatientActivity.class);
+//            SplashActivity.this.startActivity(mainIntent);
+//            SplashActivity.this.finish();
 
-            Intent mainIntent = new Intent(SplashActivity.this, PatientActivity.class);
-            SplashActivity.this.startActivity(mainIntent);
-            SplashActivity.this.finish();
+            //   This is in development phase
+                            Intent patientIntent = new Intent(SplashActivity.this, UserLogIn.class);
+                            SplashActivity.this.startActivity(patientIntent);
+                            SplashActivity.this.finish();
         }, SPLASH_DISPLAY_LENGTH);
     }
 
