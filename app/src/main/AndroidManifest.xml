@@ -12,12 +12,12 @@
         android:label="Sunya.Health"
         android:roundIcon="@mipmap/ic_launcher"
         android:supportsRtl="true"
-        android:usesCleartextTraffic="true"
-        android:theme="@style/AppTheme">
+        android:theme="@style/AppTheme"
+        android:usesCleartextTraffic="true">
+        <activity android:name=".userlogin.UserLogIn"></activity>
         <activity
             android:name=".HistoryActivity"
-            android:label="@string/title_activity_history"></activity>
-
+            android:label="@string/title_activity_history" />
         <activity android:name=".SplashActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -25,19 +25,14 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
-        <activity android:name=".MainActivity"/>
-        <activity android:name=".NewMainActivity"/>
-
-        <activity android:name=".PatientActivity"/>
-        <activity android:name=".PrintReport"/>
-        <activity android:name=".PersonalDetailsActivity"/>
-        <activity android:name=".GlucoseActivity"/>
-
-        <activity android:name=".RegisterDeviceActivity"/>
-
-        <activity android:name=".VitalSignActivity"/>
-
+        <activity android:name=".MainActivity" />
+        <activity android:name=".NewMainActivity" />
+        <activity android:name=".PatientActivity" />
+        <activity android:name=".PrintReport" />
+        <activity android:name=".PersonalDetailsActivity" />
+        <activity android:name=".GlucoseActivity" />
+        <activity android:name=".RegisterDeviceActivity" />
+        <activity android:name=".VitalSignActivity" />
 
         <provider
             android:name="androidx.core.content.FileProvider"
@@ -51,8 +46,7 @@
 
         <activity android:name=".PdfViewActivity" />
         <activity android:name=".ECGactivity" />
-        <activity
-            android:name=".ViewPDFActivity" />
+        <activity android:name=".ViewPDFActivity" />
     </application>
 
 </manifest>

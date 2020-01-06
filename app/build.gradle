@@ -1,4 +1,6 @@
 apply plugin: 'com.android.application'
+apply plugin: 'kotlin-android-extensions'
+apply plugin: 'kotlin-android'
 
 android {
     compileSdkVersion 28
@@ -8,6 +10,9 @@ android {
         minSdkVersion 21
         targetSdkVersion 28
         versionCode 1
+        dataBinding {
+            enabled = true
+        }
         versionName "1.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -47,10 +52,28 @@ dependencies {
     implementation('io.socket:socket.io-client:0.8.3') {
         exclude group: 'org.json', module: 'json'
     }
-    implementation ("com.agatsa:sanketlife:4.0.1@aar") {
+    implementation("com.agatsa:sanketlife:4.0.1@aar") {
         transitive = true
     }
     implementation 'com.github.thomper:sweet-alert-dialog:v1.4.0'
     androidTestImplementation 'androidx.test.ext:junit:1.1.0'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
+
+// for form validation
+    implementation 'com.github.Ilhasoft:data-binding-validator:2.0.0'
+
+//     for qr code
+    implementation 'com.dlazaro66.qrcodereaderview:qrcodereaderview:2.0.3'
+    implementation "androidx.core:core-ktx:+"
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+
+// for dynamic library
+    implementation 'com.intuit.sdp:sdp-android:1.0.6'
+
+
+
+
+}
+repositories {
+    mavenCentral()
 }

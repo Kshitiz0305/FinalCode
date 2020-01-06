@@ -13,9 +13,9 @@
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="480dp"
-        android:layout_marginLeft="@dimen/_10sdp"
+        android:layout_marginLeft="@dimen/_10kdp"
         android:layout_marginTop="5dp"
-        android:layout_marginRight="@dimen/_10sdp">
+        android:layout_marginRight="@dimen/_10kdp">
 
 
         <LinearLayout

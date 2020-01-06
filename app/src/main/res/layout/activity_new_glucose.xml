@@ -76,9 +76,9 @@
             android:layout_width="match_parent"
             android:textColor="@color/white"
             android:text="SAVE"
-            android:layout_marginTop="@dimen/_10sdp"
-            android:layout_marginRight="@dimen/_10sdp"
-            android:layout_marginLeft="@dimen/_10sdp"
+            android:layout_marginTop="@dimen/_10kdp"
+            android:layout_marginRight="@dimen/_10kdp"
+            android:layout_marginLeft="@dimen/_10kdp"
             android:background="@drawable/rect_orange"
             android:layout_height="wrap_content"/>
 

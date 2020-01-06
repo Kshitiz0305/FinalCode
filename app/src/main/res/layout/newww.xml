@@ -9,7 +9,7 @@
     >
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="@dimen/_200sdp">
+        android:layout_height="@dimen/_200kdp">
         <ImageView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -19,12 +19,12 @@
 
     </RelativeLayout>
     <androidx.cardview.widget.CardView
-        android:layout_margin="@dimen/_8sdp"
+        android:layout_margin="@dimen/_8kdp"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        app:cardCornerRadius="@dimen/_10sdp"
-        app:cardElevation="@dimen/_2sdp"
-        app:cardMaxElevation="@dimen/_4sdp"
+        app:cardCornerRadius="@dimen/_10kdp"
+        app:cardElevation="@dimen/_2kdp"
+        app:cardMaxElevation="@dimen/_4kdp"
         >
         <LinearLayout
             android:layout_width="match_parent"
@@ -37,7 +37,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_weight="1"
-                android:layout_marginTop="@dimen/_10sdp"
+                android:layout_marginTop="@dimen/_10kdp"
 
                 android:orientation="horizontal"
                 android:weightSum="2">
@@ -53,15 +53,15 @@
                     android:gravity="center_horizontal"
                     android:orientation="vertical">
                     <androidx.cardview.widget.CardView
-                        android:layout_width="@dimen/_50sdp"
-                        android:layout_height="@dimen/_50sdp"
-                        app:cardCornerRadius="@dimen/_25sdp"
-                        android:elevation="@dimen/_2sdp"
+                        android:layout_width="@dimen/_50kdp"
+                        android:layout_height="@dimen/_50kdp"
+                        app:cardCornerRadius="@dimen/_25kdp"
+                        android:elevation="@dimen/_2kdp"
                         >
 
                         <ImageView
-                            android:layout_width="@dimen/_65sdp"
-                            android:layout_height="@dimen/_65sdp"
+                            android:layout_width="@dimen/_65kdp"
+                            android:layout_height="@dimen/_65kdp"
                             android:layout_gravity="center"
                             android:src="@drawable/personaldetails" />
 
@@ -70,7 +70,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/_8sdp"
+                        android:layout_marginTop="@dimen/_8kdp"
                         android:elevation="2dp"
                         android:textColor="@color/colorPrimaryDark"
                         android:textSize="20dp"
@@ -100,14 +100,14 @@
                     android:gravity="center_horizontal"
                     android:orientation="vertical">
                     <androidx.cardview.widget.CardView
-                        android:layout_width="@dimen/_50sdp"
-                        android:layout_height="@dimen/_50sdp"
-                        app:cardCornerRadius="@dimen/_25sdp"
-                        android:elevation="@dimen/_2sdp"
+                        android:layout_width="@dimen/_50kdp"
+                        android:layout_height="@dimen/_50kdp"
+                        app:cardCornerRadius="@dimen/_25kdp"
+                        android:elevation="@dimen/_2kdp"
                         >
                         <ImageView
-                            android:layout_width="@dimen/_65sdp"
-                            android:layout_height="@dimen/_65sdp"
+                            android:layout_width="@dimen/_65kdp"
+                            android:layout_height="@dimen/_65kdp"
                             android:src="@drawable/vital_icon"
                             android:layout_gravity="center"
                             />
@@ -121,7 +121,7 @@
                         android:textColor="@color/colorPrimaryDark"
                         android:textSize="20dp"
                         android:fontFamily="@font/sfpro_display_semibold"
-                        android:layout_marginTop="@dimen/_8sdp"
+                        android:layout_marginTop="@dimen/_8kdp"
                         android:elevation="2dp"
                         />
 
@@ -160,14 +160,14 @@
                     android:orientation="vertical">
 
                     <androidx.cardview.widget.CardView
-                        android:layout_width="@dimen/_50sdp"
-                        android:layout_height="@dimen/_50sdp"
-                        app:cardCornerRadius="@dimen/_25sdp"
-                        android:elevation="@dimen/_2sdp"
+                        android:layout_width="@dimen/_50kdp"
+                        android:layout_height="@dimen/_50kdp"
+                        app:cardCornerRadius="@dimen/_25kdp"
+                        android:elevation="@dimen/_2kdp"
                         >
                         <ImageView
-                            android:layout_width="@dimen/_65sdp"
-                            android:layout_height="@dimen/_65sdp"
+                            android:layout_width="@dimen/_65kdp"
+                            android:layout_height="@dimen/_65kdp"
                             android:src="@drawable/ecg_icon"
                             android:layout_gravity="center"
                             />
@@ -177,7 +177,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/_8sdp"
+                        android:layout_marginTop="@dimen/_8kdp"
                         android:textColor="@color/colorPrimaryDark"
                         android:textSize="20dp"
                         android:fontFamily="@font/sfpro_display_semibold"
@@ -200,14 +200,14 @@
                     android:orientation="vertical">
 
                     <androidx.cardview.widget.CardView
-                        android:layout_width="@dimen/_50sdp"
-                        android:layout_height="@dimen/_50sdp"
-                        app:cardCornerRadius="@dimen/_25sdp"
-                        android:elevation="@dimen/_2sdp"
+                        android:layout_width="@dimen/_50kdp"
+                        android:layout_height="@dimen/_50kdp"
+                        app:cardCornerRadius="@dimen/_25kdp"
+                        android:elevation="@dimen/_2kdp"
                         >
                         <ImageView
-                            android:layout_width="@dimen/_65sdp"
-                            android:layout_height="@dimen/_65sdp"
+                            android:layout_width="@dimen/_65kdp"
+                            android:layout_height="@dimen/_65kdp"
                             android:src="@drawable/print"
                             android:layout_gravity="center" />
 
@@ -216,7 +216,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/_8sdp"
+                        android:layout_marginTop="@dimen/_8kdp"
                         android:elevation="2dp"
                         android:textColor="@color/colorPrimaryDark"
                         android:textSize="20dp"
