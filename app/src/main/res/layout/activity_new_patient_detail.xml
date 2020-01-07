@@ -124,8 +124,15 @@
                             android:fontFamily="@font/sf_pro_display_medium"
                             android:inputType="text"
                             android:padding="8sp"
-                            app:validateEmpty="@{false}"
+                            app:validateEmpty="@{true}"
                             android:textSize="13sp" />
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="*"
+                            android:textColor="@color/dark_red"
+                            android:layout_marginLeft="@dimen/_2sdp"
+                            android:textSize="20sp"/>
 
 
                     </LinearLayout>
@@ -212,41 +219,140 @@
 
 
                 </LinearLayout>
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical">
 
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="Age"
-                        android:fontFamily="@font/sfpro_display_semibold"
-                        android:padding="8sp"
-                        android:textColor="@color/colorPrimaryDark"
-                        android:textSize="15sp" />
-
-
-                    <EditText
-                        android:id="@+id/txtAge"
-                        android:layout_width="match_parent"
-                        android:layout_height="40dp"
-                        android:cursorVisible="true"
-                        android:maxLength="3"
-                        android:text="26"
-                        android:background="@drawable/bg_gray_border"
-                        android:fontFamily="@font/sf_pro_display_medium"
-                        android:textCursorDrawable="@null"
-                        android:imeOptions="actionNext"
-                        app:validateEmpty="@{false}"
-                        android:inputType="number"
-                        android:padding="8sp"
-                        android:textSize="13sp"
-                        android:importantForAutofill="no"
-                        tools:ignore="SpUsage" />
+          <LinearLayout
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:layout_marginVertical="@dimen/_5sdp"
+              android:background="@drawable/bg_gray_border"
+              android:padding="@dimen/_5sdp"
+              android:orientation="vertical">
+              <LinearLayout
+                  android:layout_width="match_parent"
+                  android:layout_height="match_parent"
+                  android:orientation="vertical">
+                  <TextView
+                      android:layout_width="wrap_content"
+                      android:layout_height="wrap_content"
+                      android:textSize="15sp"
+                      android:fontFamily="@font/sfpro_display_semibold"
+                      android:textColor="@color/colorPrimaryDark"
+                      android:text="Select Type"/>
 
 
-                </LinearLayout>
+
+                  <RadioGroup
+                      xmlns:android="http://schemas.android.com/apk/res/android"
+                      android:layout_width="match_parent"
+                      android:layout_height="wrap_content"
+                      android:id="@+id/rg_DobType"
+                      android:weightSum="2"
+                      android:orientation="horizontal">
+                      <RadioButton android:id="@+id/dob"
+                          android:layout_width="0dp"
+                          android:layout_height="wrap_content"
+                          android:layout_weight="1"
+                          android:text="Date Of Birth"
+                          android:checked="true"
+                          />
+                      <RadioButton android:id="@+id/Age"
+                          android:layout_width="0dp"
+                          android:layout_weight="1"
+                          android:layout_height="wrap_content"
+                          android:text="Age (Years)"
+                          />
+
+                  </RadioGroup>
+              </LinearLayout>
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:weightSum="2">
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+
+        android:layout_weight="1">
+
+        <!--                  <TextView-->
+        <!--                      android:layout_width="match_parent"-->
+        <!--                      android:layout_height="wrap_content"-->
+        <!--                      android:text="Date of Birth"-->
+        <!--                      android:fontFamily="@font/sfpro_display_semibold"-->
+        <!--                      android:padding="8sp"-->
+        <!--                      android:textColor="@color/colorPrimaryDark"-->
+        <!--                      android:textSize="15sp" />-->
+
+
+        <TextView
+            android:id="@+id/et_dob"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:cursorVisible="true"
+            android:background="@drawable/bg_gray_border"
+            android:fontFamily="@font/sf_pro_display_medium"
+            android:textCursorDrawable="@null"
+            android:imeOptions="actionNext"
+            android:padding="8sp"
+            android:textSize="13sp"
+            android:importantForAutofill="no"
+            tools:ignore="SpUsage" />
+
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:layout_marginLeft="@dimen/_5sdp"
+        android:orientation="vertical">
+
+        <!--                  <TextView-->
+        <!--                      android:layout_width="match_parent"-->
+        <!--                      android:layout_height="wrap_content"-->
+        <!--                      android:text="Age (Years)"-->
+        <!--                      android:fontFamily="@font/sfpro_display_semibold"-->
+        <!--                      android:padding="8sp"-->
+        <!--                      android:textColor="@color/colorPrimaryDark"-->
+        <!--                      android:textSize="15sp" />-->
+
+        <EditText
+            android:id="@+id/txtAge"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:cursorVisible="true"
+            android:maxLength="3"
+            android:background="@drawable/bg_gray_border"
+            android:fontFamily="@font/sf_pro_display_medium"
+            android:textCursorDrawable="@null"
+            android:imeOptions="actionNext"
+            app:validateEmpty="@{true}"
+            android:inputType="number"
+            android:padding="8sp"
+            android:textSize="13sp"
+            android:importantForAutofill="no"
+            tools:ignore="SpUsage" />
+
+
+    </LinearLayout>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="*"
+        android:layout_gravity="center"
+        android:textColor="@color/dark_red"
+        android:layout_marginLeft="@dimen/_2sdp"
+        android:textSize="20sp"/>
+
+
+</LinearLayout>
+
+
+
+          </LinearLayout>
+
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -387,7 +493,6 @@
                             android:layout_height="40sp"
                             android:layout_weight="1"
                             android:textSize="13sp"
-                            android:text="Boys"
                             android:padding="8sp"
                             android:fontFamily="@font/sf_pro_display_medium"
                             android:inputType="number"
@@ -443,15 +548,53 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical">
-
-                    <TextView
+                    <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="@string/drug_allergies"
-                        android:fontFamily="@font/sfpro_display_semibold"
-                        android:padding="8sp"
-                        android:textColor="@color/colorPrimaryDark"
-                        android:textSize="15sp" />
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/drug_allergies"
+                            android:fontFamily="@font/sfpro_display_semibold"
+                            android:padding="8sp"
+                            android:textColor="@color/colorPrimaryDark"
+                            android:textSize="15sp" />
+
+                        <RadioGroup
+                            android:id="@+id/rg_drug"
+                            android:layout_width="match_parent"
+                            android:layout_marginTop="2sp"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal">
+
+                            <RadioButton
+                                android:id="@+id/yesdrug"
+                                android:layout_width="@dimen/_60sdp"
+                                android:layout_height="wrap_content"
+                                android:text="@string/yes"
+                                />
+
+                            <RadioButton
+                                android:id="@+id/nodrug"
+                                android:layout_width="@dimen/_60sdp"
+                                android:checked="true"
+                                android:layout_height="wrap_content"
+                                android:text="@string/no" />
+
+
+
+
+                        </RadioGroup>
+
+
+
+
+
+                    </LinearLayout>
+
+
 
 
                     <EditText
@@ -464,6 +607,7 @@
                         android:fontFamily="@font/sf_pro_display_medium"
                         android:textCursorDrawable="@null"
                         android:imeOptions="actionNext"
+                        android:visibility="gone"
                         android:inputType="text"
                         android:padding="8sp"
                         android:textSize="13sp"
@@ -478,14 +622,46 @@
                     android:layout_height="wrap_content"
                     android:orientation="vertical">
 
-                    <TextView
+                    <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="@string/do_you_have_any_diseases"
-                        android:fontFamily="@font/sfpro_display_semibold"
-                        android:padding="8sp"
-                        android:textColor="@color/colorPrimaryDark"
-                        android:textSize="15sp" />
+                        android:orientation="horizontal">
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/do_you_have_any_diseases"
+                            android:fontFamily="@font/sfpro_display_semibold"
+                            android:padding="8sp"
+                            android:textColor="@color/colorPrimaryDark"
+                            android:textSize="15sp" />
+                        <RadioGroup
+                            android:id="@+id/rg_disease"
+                            android:layout_width="match_parent"
+                            android:layout_marginTop="2sp"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal">
+
+                            <RadioButton
+                                android:id="@+id/yes_disease"
+                                android:layout_width="@dimen/_60sdp"
+                                android:layout_height="wrap_content"
+                                android:text="@string/yes"
+                                />
+
+                            <RadioButton
+                                android:id="@+id/nodisease"
+                                android:layout_width="@dimen/_60sdp"
+                                android:layout_height="wrap_content"
+                                android:checked="true"
+                                android:text="@string/no" />
+
+
+
+
+                        </RadioGroup>
+
+                    </LinearLayout>
+
 
 
                     <EditText
@@ -498,6 +674,7 @@
                         android:textCursorDrawable="@null"
                         android:hint="@string/disease_name_s"
                         android:imeOptions="actionNext"
+                        android:visibility="gone"
                         android:inputType="text"
                         android:padding="8sp"
                         android:textSize="13sp"
@@ -597,28 +774,72 @@
                     android:layout_height="wrap_content"
                     android:orientation="vertical">
 
-                    <RadioGroup
+                    <LinearLayout
                         android:id="@+id/unhealthyhabitsrg"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
 
-                        <RadioButton
-                            android:id="@+id/optsmoking"
-                            android:layout_width="140dp"
+<!--                        <RadioButton-->
+<!--                            android:id="@+id/optsmoking"-->
+<!--                            android:layout_width="140dp"-->
+<!--                            android:layout_height="wrap_content"-->
+<!--                            android:text="@string/smoke"-->
+<!--                            />-->
+
+                        <TextView
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:text="@string/smoke"
-                            />
+                            android:text="Smoking"
+                            android:fontFamily="@font/sfpro_display_semibold"
+                            android:padding="8sp"
+                            android:textColor="@color/colorPrimaryDark"
+                            android:textSize="15sp" />
 
-                        <RadioButton
-                            android:id="@+id/optalcohol"
-                            android:layout_width="140dp"
+                        <EditText
+                            android:id="@+id/et_smoking"
+                            android:layout_width="match_parent"
+                            android:layout_height="40dp"
+                            android:cursorVisible="true"
+                            android:background="@drawable/bg_gray_border"
+                            android:fontFamily="@font/sf_pro_display_medium"
+                            android:textCursorDrawable="@null"
+                            android:hint="@string/cigerrates_alcohol_hint"
+                            android:imeOptions="actionNext"
+                            android:inputType="text"
+                            android:padding="8sp"
+                            android:textSize="13sp"
+                            android:importantForAutofill="no"
+                            tools:ignore="SpUsage" />
+
+
+                        <TextView
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:text="@string/alcohol_consumption" />
+                            android:text="Alcohol"
+                            android:fontFamily="@font/sfpro_display_semibold"
+                            android:padding="8sp"
+                            android:textColor="@color/colorPrimaryDark"
+                            android:textSize="15sp" />
+
+                        <EditText
+                            android:id="@+id/et_alcohol"
+                            android:layout_width="match_parent"
+                            android:layout_height="40dp"
+                            android:cursorVisible="true"
+                            android:background="@drawable/bg_gray_border"
+                            android:fontFamily="@font/sf_pro_display_medium"
+                            android:textCursorDrawable="@null"
+                            android:hint="@string/cigerrates_alcohol_hint"
+                            android:imeOptions="actionNext"
+                            android:inputType="text"
+                            android:padding="8sp"
+                            android:textSize="13sp"
+                            android:importantForAutofill="no"
+                            tools:ignore="SpUsage" />
 
 
-
-
-                    </RadioGroup>
+                    </LinearLayout>
                     <LinearLayout
                         android:id="@+id/smokell"
                         android:layout_width="match_parent"

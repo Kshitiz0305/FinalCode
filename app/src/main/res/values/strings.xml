@@ -38,11 +38,12 @@
     <string name="unmarried">Unmarried</string>
     <string name="divorced">Divorced</string>
     <string name="widowed">Widowed</string>
-    <string name="do_you_have_any_diseases">Do You Have Any Diseases?</string>
+    <string name="do_you_have_any_diseases">Any Diseases?</string>
     <string name="yes">Yes</string>
     <string name="no">No</string>
     <string name="medication_s_medicine_name">Medication\'s Medicine Name</string>
     <string name="disease_name_s">Disease Name\'s</string>
+    <string name="cigerrates_alcohol_hint">How often?</string>
     <string name="drug_allergies">Drug Allergies</string>
     <string name="unhealthy_habits">Unhealthy Habits</string>
     <string name="smoke">Smoking</string>

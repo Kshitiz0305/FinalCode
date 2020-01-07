@@ -72,6 +72,10 @@ dependencies {
 // for dynamic library
     implementation 'com.intuit.sdp:sdp-android:1.0.6'
 
+    // for nepali calendar
+    implementation 'com.github.keyrunHORNET:date_picker_converter:1.0'
+
+
 
 
 
