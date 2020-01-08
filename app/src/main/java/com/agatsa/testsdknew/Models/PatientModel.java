@@ -18,6 +18,7 @@ public class PatientModel {
     String ptnoofboys;
     String ptnoofgirls;
     String ptdrugallergies;
+    String ptDob;
     String ptdiseases;
     String ptmedication;
     String ptmedicationmedicinename;
@@ -36,6 +37,7 @@ public class PatientModel {
         ptAge = "";
         ptSex = "";
         ptmaritalstatus = "";
+        ptDob ="";
         ptnoofboys = "";
         ptnoofgirls = "";
         ptdrugallergies = "";
@@ -150,6 +152,14 @@ public class PatientModel {
 
     public void setPtdrugallergies(String ptdrugallergies) {
         this.ptdrugallergies = ptdrugallergies;
+    }
+
+    public String getPtDob() {
+        return ptDob;
+    }
+
+    public void setPtDob(String ptDob) {
+        this.ptDob = ptDob;
     }
 
     public String getPtmedication() {

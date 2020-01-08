@@ -373,6 +373,7 @@ public class PrintReport extends AppCompatActivity {
                 navigatenext();
             }
         });
+
     }
 
     private void navigatenext() {

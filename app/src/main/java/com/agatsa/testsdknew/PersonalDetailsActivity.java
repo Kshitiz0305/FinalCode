@@ -32,6 +32,7 @@ import androidx.databinding.DataBindingUtil;
 
 import com.agatsa.testsdknew.Models.PatientModel;
 import com.agatsa.testsdknew.Models.VitalSign;
+import com.agatsa.testsdknew.customviews.DialogUtil;
 import com.agatsa.testsdknew.databinding.ActivityNewPatientDetailBinding;
 import com.hornet.dateconverter.DateConverter;
 import com.hornet.dateconverter.DatePicker.DatePickerDialog;
@@ -40,9 +41,6 @@ import com.hornet.dateconverter.Model;
 import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
-import java.time.LocalDate;
-import java.time.Period;
-import java.time.format.DateTimeFormatter;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
@@ -93,9 +91,6 @@ public class PersonalDetailsActivity extends AppCompatActivity implements DatePi
         binding = DataBindingUtil.setContentView(this, R.layout.activity_new_patient_detail);
         validator = new Validator(binding);
         validator.enableFormValidationMode();
-
-//
-
 
         pref = this.getSharedPreferences("sunyahealth", Context.MODE_PRIVATE);
         device_id = pref.getString("device_id", "");
@@ -177,83 +172,68 @@ public class PersonalDetailsActivity extends AppCompatActivity implements DatePi
 
 
 
-        binding.rgDobType.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(RadioGroup radioGroup, int i) {
+        binding.rgDobType.setOnCheckedChangeListener((radioGroup, i) -> {
 
-                switch (i) {
-                    case R.id.dob:
-                        binding.etDob.setVisibility(View.VISIBLE);
-                        if(changedage!=-102){
+            switch (i) {
+                case R.id.dob:
+                    binding.etDob.setVisibility(View.VISIBLE);
+                    if(changedage!=-102){
 
-                            binding.txtAge.setText(String.valueOf(changedage));
-                        }
-                        binding.txtAge.setEnabled(false);
-                        break;
+                        binding.txtAge.setText(String.valueOf(changedage));
+                    }
+                    binding.txtAge.setEnabled(false);
+                    break;
 
-                    case R.id.Age:
-                        binding.etDob.setVisibility(View.GONE);
-                        binding.txtAge.setEnabled(true);
-                        break;
-
-                }
-
-
-
+                case R.id.Age:
+                    binding.etDob.setVisibility(View.GONE);
+                    binding.txtAge.setEnabled(true);
+                    break;
 
             }
+
+
 
 
         });
 
-        binding.rgDrug.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(RadioGroup radioGroup, int i) {
+        binding.rgDrug.setOnCheckedChangeListener((radioGroup, i) -> {
 
-                switch (i) {
-                    case R.id.yesdrug:
-                      binding.drugAllergies.setVisibility(View.VISIBLE);
+            switch (i) {
+                case R.id.yesdrug:
+                  binding.drugAllergies.setVisibility(View.VISIBLE);
 
-                        break;
+                    break;
 
-                    case R.id.nodrug:
-                        binding.drugAllergies.setVisibility(View.GONE);
-                        break;
-
-                }
-
-
-
+                case R.id.nodrug:
+                    binding.drugAllergies.setVisibility(View.GONE);
+                    break;
 
             }
+
+
 
 
         });
 
         binding.rgDisease
-                .setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(RadioGroup radioGroup, int i) {
+                .setOnCheckedChangeListener((radioGroup, i) -> {
 
-                switch (i) {
-                    case R.id.yes_disease:
-                        binding.diseases.setVisibility(View.VISIBLE);
+                    switch (i) {
+                        case R.id.yes_disease:
+                            binding.diseases.setVisibility(View.VISIBLE);
 
-                        break;
+                            break;
 
-                    case R.id.nodisease:
-                        binding.diseases.setVisibility(View.GONE);
-                        break;
+                        case R.id.nodisease:
+                            binding.diseases.setVisibility(View.GONE);
+                            break;
 
-                }
+                    }
 
 
 
 
-            }
-
-
-        });
+                });
 
 
 //     binding.etDob.setOnTouchListener(new View.OnTouchListener() {
@@ -295,44 +275,39 @@ public class PersonalDetailsActivity extends AppCompatActivity implements DatePi
 //             return false;
 //         }
 //     });
-        binding.etDob.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Calendar cal = Calendar.getInstance();
-                int dayOfMonthEnglish = cal.get(Calendar.DAY_OF_MONTH);
-                int monthEnglish = cal.get(Calendar.MONTH)+1;
-                int yearEnglish = cal.get(Calendar.YEAR);
-                Model m=null;
-                Log.d("rantestdate","todays date"+dayOfMonthEnglish+monthEnglish+yearEnglish);
-                DateConverter dateConverter = new DateConverter();
-                try {
-                    m = dateConverter.getNepaliDate(yearEnglish,monthEnglish,dayOfMonthEnglish);
-                }
-                catch (Exception e){
-
-                    Log.d("rantestexception",e.getLocalizedMessage());
-
-
-                }
-                if(m!=null)
-                {
-                    DatePickerDialog dpd = DatePickerDialog.newInstance(PersonalDetailsActivity.this,m.getYear(),m.getMonth(),m.getDay());
-                dpd.show(getSupportFragmentManager(), "Datepickerdialog");
-
-
-                    }
-                else {
-
-                    Toast.makeText(getApplicationContext(), "Please set your local time correctly", Toast.LENGTH_LONG).show();
-
-
-
-                }
-
+        binding.etDob.setOnClickListener(view -> {
+            Calendar cal = Calendar.getInstance();
+            int dayOfMonthEnglish = cal.get(Calendar.DAY_OF_MONTH);
+            int monthEnglish = cal.get(Calendar.MONTH)+1;
+            int yearEnglish = cal.get(Calendar.YEAR);
+            Model m=null;
+            Log.d("rantestdate","todays date"+dayOfMonthEnglish+monthEnglish+yearEnglish);
+            DateConverter dateConverter = new DateConverter();
+            try {
+                m = dateConverter.getNepaliDate(yearEnglish,monthEnglish,dayOfMonthEnglish);
             }
+            catch (Exception e){
+
+                Log.d("rantestexception",e.getLocalizedMessage());
 
 
             }
+            if(m!=null)
+            {
+                DatePickerDialog dpd = DatePickerDialog.newInstance(PersonalDetailsActivity.this,m.getYear(),m.getMonth(),m.getDay());
+            dpd.show(getSupportFragmentManager(), "Datepickerdialog");
+
+
+                }
+            else {
+
+                Toast.makeText(getApplicationContext(), "Please set your local time correctly", Toast.LENGTH_LONG).show();
+
+
+
+            }
+
+        }
         );
 
         maritalstatusrg.setOnCheckedChangeListener((group, checkedId) -> {
@@ -516,7 +491,15 @@ catch (Exception e){
 
             }
 
+          if(binding.etDob.getVisibility()==View.VISIBLE) {
 
+              if(binding.etDob.getTag()==null)
+                  newPatient.setPtDob("nill");
+              else
+              newPatient.setPtDob((String) binding.etDob.getTag());
+          }
+          else
+              newPatient.setPtDob("nill");
 
 
            String medication;
@@ -783,12 +766,37 @@ catch (Exception e){
 
     @Override
     public void onBackPressed() {
+
+        DialogUtil.getOKCancelDialog(this, "Warning", " Do you want to save data?", "Yes", "No", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                if (validator.validate()) {
+                    Toast.makeText(getApplicationContext(), "Saving Data", Toast.LENGTH_LONG).show();
+                    new savedata().execute();
+                    navigatenext();
+                }
+                else {
+
+                    Toast.makeText(getApplicationContext(), "Validation Error", Toast.LENGTH_LONG).show();
+
+                }
+
+
+            }
+        }, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+
+                Intent intent = new Intent(PersonalDetailsActivity.this, PatientActivity.class);
+                intent.putExtra("PTNO", pt_id);
+                intent.putExtra("duid", duid);
+                setResult(-1, intent);
+                finish();
+
+            }
+        });
 //        super.onBackPressed();
-        Intent i = new Intent(PersonalDetailsActivity.this, PatientActivity.class);
-        i.putExtra("PTNO", pt_id);
-        i.putExtra("duid", duid);
-        setResult(-1, i);
-        finish();
+
     }
 
 

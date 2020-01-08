@@ -56,6 +56,7 @@ public class LabDB extends SQLiteOpenHelper {
     private static final String COLUMN_PT_CONTACTNO = "ptContactNo";
     private static final String COLUMN_PT_EMAIL = "ptEmail";
     private static final String COLUMN_PT_AGE = "ptAge";
+    private static final String COLUMN_PT_DOB= "ptDob";
     private static final String COLUMN_PT_SEX = "ptSex";
     private static final String COLUMN_PT_MARITALSTATUS = "ptMaritalstatus";
     private static final String COLUMN_PT_NO_OF_BOYS = "ptNoofboys";
@@ -162,6 +163,7 @@ public class LabDB extends SQLiteOpenHelper {
                 + COLUMN_PT_CONTACTNO + " TEXT,"
                 + COLUMN_PT_EMAIL + " TEXT,"
                 + COLUMN_PT_AGE + " TEXT,"
+                + COLUMN_PT_DOB + " TEXT,"
                 + COLUMN_PT_SEX + " TEXT,"
                 + COLUMN_PT_MARITALSTATUS + " TEXT,"
                 + COLUMN_PT_NO_OF_BOYS + " TEXT,"
@@ -281,6 +283,7 @@ public class LabDB extends SQLiteOpenHelper {
         values.put(COLUMN_PT_CONTACTNO, ptdetail.getPtContactNo());
         values.put(COLUMN_PT_EMAIL, ptdetail.getPtEmail());
         values.put(COLUMN_PT_AGE, ptdetail.getPtAge());
+        values.put(COLUMN_PT_DOB, ptdetail.getPtDob());
         values.put(COLUMN_PT_SEX, ptdetail.getPtSex());
         values.put(COLUMN_PT_MARITALSTATUS, ptdetail.getPtmaritalstatus());
         values.put(COLUMN_PT_NO_OF_BOYS, ptdetail.getPtnoofboys());
@@ -293,8 +296,7 @@ public class LabDB extends SQLiteOpenHelper {
        values.put(COLUMN_PT_MEDICATION_MEDICINE, ptdetail.getPtmedicationmedicinename());
        values.put(COLUMN_PT_SMOKING, ptdetail.getPtsmoking());
        values.put(COLUMN_PT_ALCOHOL, ptdetail.getPtsmoking());
-       Log.d("smoking",ptdetail.getPtsmoking());
-       Log.d("alcohol",ptdetail.getPtalcohol());
+       Log.d("DOB",ptdetail.getPtDob());
 
 
 

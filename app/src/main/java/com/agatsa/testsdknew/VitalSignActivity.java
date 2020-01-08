@@ -145,7 +145,13 @@ public class VitalSignActivity extends AppCompatActivity {
             vitalSign.setSto2((float) Double.parseDouble(getEdittextValue(txtSTO2)));
             vitalSign.setBpd((float) Double.parseDouble(getEdittextValue(txtBPD)));
             vitalSign.setBps((float) Double.parseDouble(getEdittextValue(txtBPS)));
-            vitalSign.setGlucose((float) Double.parseDouble(getEdittextValue(txtglucose)));
+            try{
+            vitalSign.setGlucose((float) Double.parseDouble(getEdittextValue(txtglucose)));}
+            catch (Exception e ){
+
+                vitalSign.setGlucose(0);
+
+            }
             int last_vitalsign_row_id = db.SaveVitalSign(vitalSign);
             try {
                 Thread.sleep(1000);

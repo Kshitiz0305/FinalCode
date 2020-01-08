@@ -56,5 +56,6 @@
     <string name="daibetes">Daibetes</string>
     <string name="diabetes">Diabetes</string>
     <string name="glucose">Glucose</string>
-
+    <string name="message_text">Alert!</string>
+    <string name="ok_text">OK</string>
 </resources>
