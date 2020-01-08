@@ -1,4 +1,4 @@
-package com.agatsa.testsdknew;
+package com.agatsa.testsdknew.ui;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -11,18 +11,18 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.agatsa.sanketlife.development.EcgConfig;
-import com.agatsa.sanketlife.development.LongEcgConfig;
+import com.agatsa.testsdknew.R;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class HistoryStressAdapter extends RecyclerView.Adapter<HistoryStressAdapter.HistoryViewHolder> {
+public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.HistoryViewHolder> {
 
-    private List<LongEcgConfig> data = new ArrayList<>();
+    private List<EcgConfig> data = new ArrayList<>();
     private Context mContext;
     private HistoryCallback historyCallback;
 
-    public HistoryStressAdapter(Context mContext, List<LongEcgConfig> data, HistoryCallback historyCallback) {
+    public HistoryAdapter(Context mContext, List<EcgConfig> data, HistoryCallback historyCallback) {
         this.mContext = mContext;
         this.data = data;
         this.historyCallback = historyCallback;
@@ -30,7 +30,7 @@ public class HistoryStressAdapter extends RecyclerView.Adapter<HistoryStressAdap
 
     @NonNull
     @Override
-    public HistoryStressAdapter.HistoryViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public HistoryAdapter.HistoryViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_history, parent, false);
         return new HistoryViewHolder(view);
     }
@@ -40,7 +40,7 @@ public class HistoryStressAdapter extends RecyclerView.Adapter<HistoryStressAdap
         /*if(data.get(position) instanceof LongEcgConfigInternal) {
             holder.bindLongEcgConfig((LongEcgConfigInternal) data.get(position));
         } else {*/
-            holder.bindLongEcgConfig(data.get(position));
+            holder.bindEcgConfig(data.get(position));
         /*}*/
     }
 
@@ -67,9 +67,9 @@ public class HistoryStressAdapter extends RecyclerView.Adapter<HistoryStressAdap
             buttonViewPDF = itemView.findViewById(R.id.buttonViewPDF);
         }
 
-        void bindLongEcgConfig(final LongEcgConfig config) {
+        /*void bindLongEcgConfig(LongEcgConfigInternal config) {
             textViewFindings.setText(config.getFinding());
-            textViewHeartRate.setText(String.valueOf(config.getHeartRate()));
+            textViewHeartRate.setText(config.getHeartRate());
             String readings = "PR: " + config.getpR() + " \n" +
                     "QRS: " + config.getqRs() + " \n" +
                     "QT: " + config.getqT() + " \n" +
@@ -79,21 +79,7 @@ public class HistoryStressAdapter extends RecyclerView.Adapter<HistoryStressAdap
                     "rmssd: " + config.getRmssd() + "" ;
 
             textViewreadings.setText(readings);
-
-            buttonViewPDF.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    historyCallback.viewPdfStress(config);
-                }
-            });
-
-            buttonSync.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    historyCallback.syncStressData(config);
-                }
-            });
-        }
+        }*/
 
         void bindEcgConfig(final EcgConfig config) {
             textViewFindings.setText(config.getFinding());
@@ -107,19 +93,9 @@ public class HistoryStressAdapter extends RecyclerView.Adapter<HistoryStressAdap
                     "rmssd: " + config.getRmssd() + "" ;
 
             textViewreadings.setText(readings);
-            buttonViewPDF.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    historyCallback.viewPdf(config);
-                }
-            });
+            buttonViewPDF.setOnClickListener(view -> historyCallback.viewPdf(config));
 
-            buttonSync.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    historyCallback.syncEcgData(config);
-                }
-            });
+            buttonSync.setOnClickListener(view -> historyCallback.syncEcgData(config));
         }
     }
 }

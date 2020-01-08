@@ -1,16 +1,18 @@
-package com.agatsa.testsdknew;
+package com.agatsa.testsdknew.ui;
 
 import android.content.ActivityNotFoundException;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.FileProvider;
+
+import com.agatsa.testsdknew.BuildConfig;
+import com.agatsa.testsdknew.R;
 
 import java.io.File;
 

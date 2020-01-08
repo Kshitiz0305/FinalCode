@@ -1,22 +1,19 @@
-package com.agatsa.testsdknew;
+package com.agatsa.testsdknew.ui;
 
 import android.Manifest;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
-import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
-import android.telephony.TelephonyManager;
 import android.widget.Toast;
 
 import androidx.core.app.ActivityCompat;
 
-import com.agatsa.testsdknew.userlogin.UserLogIn;
+import com.agatsa.testsdknew.R;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -40,53 +37,56 @@ public class SplashActivity extends Activity {
     }
 
     public void navigateToNextActivity() {
-        final LabDB db = new LabDB(getApplicationContext());
-        final int last_id = db.getLastID("pt_details");
-        if (last_id != 0) {
-            if (db.getCountForLastDetails(last_id) == 0) {
-                AlertDialog.Builder alertDialog = new AlertDialog.Builder(
-                        SplashActivity.this);
-                alertDialog.setTitle("Warning!!");
-                alertDialog.setMessage("Do you wish to continue with the last detail that has not been completed?\n\n" +
-                        "Note: If Discarded the last detail that has not been completed will be deleted.");
-                alertDialog.setCancelable(false);
-                alertDialog.setPositiveButton("CONTINUE",
-                        (dialog, which) -> new Handler().postDelayed(() -> {
-                            /* Create an Intent that will start the Menu-Activity. */
-                            //to reset value
-                            pref = getSharedPreferences(CRS_PREF, MODE_PRIVATE);
-                            editor = pref.edit();
-                            editor.apply();
-
-                            pref = SplashActivity.this.getSharedPreferences("sunyahealth", Context.MODE_PRIVATE);
-                            SharedPreferences.Editor editor2 = pref.edit();
-                            editor2.putInt("pt_id", last_id);
-                            editor2.apply();
-
-// this is to be implemented for now
-                            Intent patientIntent = new Intent(SplashActivity.this, PatientActivity.class);
-                            SplashActivity.this.startActivity(patientIntent);
-                            SplashActivity.this.finish();
-//   This is in development phase
-//                            Intent patientIntent = new Intent(SplashActivity.this, UserLogIn.class);
+//        final LabDB db = new LabDB(getApplicationContext());
+//        final int last_id = db.getLastID("pt_details");
+//         now normal navigation
+        //        if (last_id != 0) {
+//            if (db.getCountForLastDetails(last_id) == 0) {
+//                AlertDialog.Builder alertDialog = new AlertDialog.Builder(
+//                        SplashActivity.this);
+//                alertDialog.setTitle("Warning!!");
+//                alertDialog.setMessage("Do you wish to continue with the last detail that has not been completed?\n\n" +
+//                        "Note: If Discarded the last detail that has not been completed will be deleted.");
+//                alertDialog.setCancelable(false);
+//                alertDialog.setPositiveButton("CONTINUE",
+//                        (dialog, which) -> new Handler().postDelayed(() -> {
+//                            /* Create an Intent that will start the Menu-Activity. */
+//                            //to reset value
+//                            pref = getSharedPreferences(CRS_PREF, MODE_PRIVATE);
+//                            editor = pref.edit();
+//                            editor.apply();
+//
+//                            pref = SplashActivity.this.getSharedPreferences("sunyahealth", Context.MODE_PRIVATE);
+//                            SharedPreferences.Editor editor2 = pref.edit();
+//                            editor2.putInt("pt_id", last_id);
+//                            editor2.apply();
+//
+//// this is to be implemented for now
+//                            Intent patientIntent = new Intent(SplashActivity.this, PatientActivity.class);
 //                            SplashActivity.this.startActivity(patientIntent);
 //                            SplashActivity.this.finish();
+////   This is in development phase
+////                            Intent patientIntent = new Intent(SplashActivity.this, UserLogIn.class);
+////                            SplashActivity.this.startActivity(patientIntent);
+////                            SplashActivity.this.finish();
+//
+//
+//                        }, SPLASH_DISPLAY_LENGTH));
+//                alertDialog.setNegativeButton("DISCARD",
+//                        (dialog, which) -> {
+//                            db.deleteData("pt_details", "id="+last_id);
+//                            db.deleteData("vital_sign", "ptno='"+last_id +"'");
+//                            normalNavigation();
+//                        });
+//                alertDialog.show();
+//            } else {
+//                normalNavigation();
+//            }
+//        } else {
+//            normalNavigation();
+//        }
 
-
-                        }, SPLASH_DISPLAY_LENGTH));
-                alertDialog.setNegativeButton("DISCARD",
-                        (dialog, which) -> {
-                            db.deleteData("pt_details", "id="+last_id);
-                            db.deleteData("vital_sign", "ptno='"+last_id +"'");
-                            normalNavigation();
-                        });
-                alertDialog.show();
-            } else {
-                normalNavigation();
-            }
-        } else {
-            normalNavigation();
-        }
+        normalNavigation();
 
     }
 

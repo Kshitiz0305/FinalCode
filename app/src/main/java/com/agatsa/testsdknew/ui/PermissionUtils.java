@@ -1,4 +1,4 @@
-package com.agatsa.testsdknew;
+package com.agatsa.testsdknew.ui;
 
 import android.Manifest;
 import android.app.Activity;

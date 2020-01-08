@@ -1,4 +1,4 @@
-package com.agatsa.testsdknew.userlogin;
+package com.agatsa.testsdknew.ui.userlogin;
 
 import androidx.appcompat.app.AppCompatActivity;
 

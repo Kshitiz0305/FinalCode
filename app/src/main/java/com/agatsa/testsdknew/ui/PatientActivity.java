@@ -1,4 +1,4 @@
-package com.agatsa.testsdknew;
+package com.agatsa.testsdknew.ui;
 
 import android.app.Activity;
 import android.content.Context;
@@ -10,11 +10,12 @@ import android.os.Bundle;
 import android.util.Log;
 import android.widget.Button;
 import android.widget.LinearLayout;
-import android.widget.Toast;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+
+import com.agatsa.testsdknew.R;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -41,13 +42,13 @@ public class PatientActivity extends AppCompatActivity {
         db = new LabDB(getApplicationContext());
         pref = this.getSharedPreferences("sunyahealth", Context.MODE_PRIVATE);
         device_id = pref.getString("device_id", "");
-        pt_id = pref.getInt("pt_id", 0);
-        duid = getIntent().getStringExtra("duid");
-        if (pt_id == 0) {
-            duid = getIntent().getStringExtra("duid");
-        } else {
-            duid = db.getUserIdFromPtno("pt_details", pt_id);
-        }
+//        pt_id = pref.getInt("pt_id", 0);
+//        duid = getIntent().getStringExtra("duid");
+//        if (pt_id == 0) {
+//            duid = getIntent().getStringExtra("duid");
+//        } else {
+//            duid = db.getUserIdFromPtno("pt_details", pt_id);
+//        }
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);

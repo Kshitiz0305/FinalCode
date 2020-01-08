@@ -1,4 +1,4 @@
-package com.agatsa.testsdknew.baglogin;
+package com.agatsa.testsdknew.ui.baglogin;
 
 import android.graphics.PointF;
 import android.os.Bundle;

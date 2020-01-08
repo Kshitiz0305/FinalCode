@@ -1,4 +1,4 @@
-package com.agatsa.testsdknew;
+package com.agatsa.testsdknew.ui;
 
 import android.content.ContentValues;
 import android.content.Context;
@@ -40,7 +40,7 @@ public class LabDB extends SQLiteOpenHelper {
     private static final int DATABASE_VERSION = 3;
 
     // Database Name
-    private static final String DATABASE_NAME = "newpathlogyonbox.db";
+    private static final String DATABASE_NAME = "LabInABagApplications.db";
 
 //     Common Column
     private static final String COLUMN_PT_NO = "ptno";
@@ -152,10 +152,13 @@ public class LabDB extends SQLiteOpenHelper {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
     }
 
+//     ptno > uuid
+//    uid > to be deleted
+
     @Override
     public void onCreate(SQLiteDatabase db) {
         String CREATE_PATIENT_TABLE = "CREATE TABLE " + TABLE_PT_DETAILS + "("
-                + COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT,"
+//                + COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT,"
                 + COLUMN_PT_NO + " TEXT,"
                 + COLUMN_PT_USER_ID + " TEXT,"
                 + COLUMN_PT_NAME + " TEXT,"

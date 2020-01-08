@@ -1,4 +1,4 @@
-package com.agatsa.testsdknew;
+package com.agatsa.testsdknew.ui;
 
 import android.content.ActivityNotFoundException;
 import android.content.Intent;
@@ -23,6 +23,8 @@ import com.agatsa.sanketlife.development.LongEcgConfig;
 import com.agatsa.sanketlife.development.Success;
 import com.agatsa.sanketlife.development.UserDetails;
 import com.agatsa.sanketlife.models.EcgTypes;
+import com.agatsa.testsdknew.BuildConfig;
+import com.agatsa.testsdknew.R;
 //import com.agatsa.sanketlife.models.EcgTypes;
 
 import java.io.File;

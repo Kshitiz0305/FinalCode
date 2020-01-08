@@ -75,6 +75,10 @@ dependencies {
     // for nepali calendar
     implementation 'com.github.keyrunHORNET:date_picker_converter:1.0'
 
+// for stetho implementation debugging sql lite and networkcalls in chrome browser
+    implementation 'com.facebook.stetho:stetho:1.5.1'
+    implementation 'com.facebook.stetho:stetho-okhttp3:1.5.1'
+
 
 
 

@@ -1,4 +1,4 @@
-package com.agatsa.testsdknew;
+package com.agatsa.testsdknew.ui;
 
 import android.Manifest;
 import android.app.ProgressDialog;
@@ -19,6 +19,7 @@ import androidx.core.content.ContextCompat;
 import com.agatsa.sanketlife.callbacks.RegisterDeviceResponse;
 import com.agatsa.sanketlife.development.Errors;
 import com.agatsa.sanketlife.development.InitiateEcg;
+import com.agatsa.testsdknew.R;
 
 import java.util.ArrayList;
 import java.util.Arrays;

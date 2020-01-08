@@ -1,8 +1,10 @@
-package com.agatsa.testsdknew;
+package com.agatsa.testsdknew.ui;
 
 import android.content.Context;
 import android.view.View;
 import android.widget.Toast;
+
+import com.agatsa.testsdknew.R;
 
 
 public class ToastUtils {

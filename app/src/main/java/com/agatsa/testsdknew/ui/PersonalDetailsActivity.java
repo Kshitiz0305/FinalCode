@@ -1,9 +1,8 @@
-package com.agatsa.testsdknew;
+package com.agatsa.testsdknew.ui;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
-import android.app.TimePickerDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -14,8 +13,6 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.util.Log;
-import android.view.Display;
-import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -23,7 +20,6 @@ import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
-import android.widget.TimePicker;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -32,6 +28,7 @@ import androidx.databinding.DataBindingUtil;
 
 import com.agatsa.testsdknew.Models.PatientModel;
 import com.agatsa.testsdknew.Models.VitalSign;
+import com.agatsa.testsdknew.R;
 import com.agatsa.testsdknew.customviews.DialogUtil;
 import com.agatsa.testsdknew.databinding.ActivityNewPatientDetailBinding;
 import com.hornet.dateconverter.DateConverter;
@@ -106,7 +103,6 @@ public class PersonalDetailsActivity extends AppCompatActivity implements DatePi
         maritalstatusrg=findViewById(R.id.maritalstatusrg);
         smokell=findViewById(R.id.smokell);
         alcoholll=findViewById(R.id.alcoholll);
-
         txtPtno = findViewById(R.id.txtPatientNo);
         txtPtName = findViewById(R.id.txtPatientName);
         txtPtAddress = findViewById(R.id.txtAddress);
@@ -215,6 +211,44 @@ public class PersonalDetailsActivity extends AppCompatActivity implements DatePi
 
         });
 
+        binding.rgAlcohol.setOnCheckedChangeListener((radioGroup, i) -> {
+
+            switch (i) {
+                case R.id.rb_yes_alcohol:
+                    binding.etAlcohol.setVisibility(View.VISIBLE);
+
+                    break;
+
+                case R.id.rb_no_alcohol:
+                    binding.etAlcohol.setVisibility(View.GONE);
+                    break;
+
+            }
+
+
+
+
+        });
+
+
+        binding.rgSmoking.setOnCheckedChangeListener((radioGroup, i) -> {
+
+            switch (i) {
+                case R.id.rb_yes_smoking:
+                    binding.etSmoking.setVisibility(View.VISIBLE);
+
+                    break;
+
+                case R.id.rb_no_smoking:
+                    binding.etSmoking.setVisibility(View.GONE);
+                    break;
+
+            }
+
+
+
+
+        });
         binding.rgDisease
                 .setOnCheckedChangeListener((radioGroup, i) -> {
 
@@ -334,32 +368,33 @@ public class PersonalDetailsActivity extends AppCompatActivity implements DatePi
             }
 
         });
-
-
-        final LabDB db = new LabDB(getApplicationContext());
-       newPatient = db.getPatient(device_id + duid, pt_id);
-
-        if (newPatient != null) {
-            txtPtno.setText(device_id + duid);
-            txtPtName.setText(newPatient.getPtName());
-            txtPtAddress.setText(newPatient.getPtAddress());
-            txtPtContactNo.setText(newPatient.getPtContactNo());
-            txtEmail.setText(newPatient.getPtEmail());
-            txtAge.setText(newPatient.getPtAge());
-            String gender = newPatient.getPtSex();
-            if (gender.equals("Male")) {
-                optMale.setChecked(true);
-            } else if (gender.equals("Female")) {
-                optFemale.setChecked(true);
-            } else if (gender.equals("Other")) {
-                optOther.setChecked(true);
-            }
-
-
-
-
-
-        }
+//        this block is commented we dont need to fetch previous recent data
+// this logic should be maintained clean
+// getting the previous db  while checking the sharedpreferences value in certain key
+//        final LabDB db = new LabDB(getApplicationContext());
+//       newPatient = db.getPatient(device_id + duid, pt_id);
+//
+//        if (newPatient != null) {
+//            txtPtno.setText(device_id + duid);
+//            txtPtName.setText(newPatient.getPtName());
+//            txtPtAddress.setText(newPatient.getPtAddress());
+//            txtPtContactNo.setText(newPatient.getPtContactNo());
+//            txtEmail.setText(newPatient.getPtEmail());
+//            txtAge.setText(newPatient.getPtAge());
+//            String gender = newPatient.getPtSex();
+//            if (gender.equals("Male")) {
+//                optMale.setChecked(true);
+//            } else if (gender.equals("Female")) {
+//                optFemale.setChecked(true);
+//            } else if (gender.equals("Other")) {
+//                optOther.setChecked(true);
+//            }
+//
+//
+//
+//
+//
+//        }
 
         btnSave = findViewById(R.id.btnSave);
         btnSave.setOnClickListener(v -> {
@@ -483,7 +518,7 @@ catch (Exception e){
             }
             newPatient.setPtnoofboys(getEdittextValue(noofboys));
 
-            if(drug_allergies.getText().toString().isEmpty()){
+            if(drug_allergies.getVisibility()==View.GONE){
                 newPatient.setPtdrugallergies("No");
 
             }else{
@@ -502,6 +537,7 @@ catch (Exception e){
               newPatient.setPtDob("nill");
 
 
+
            String medication;
             if (getRadioButtonValue(optyes)) {
                 medication = "Yes";
@@ -518,7 +554,7 @@ catch (Exception e){
 
             }
 
-            if(disease.getText().toString().isEmpty()){
+            if(disease.getVisibility()==View.GONE){
                 newPatient.setPtdiseases("No");
             }else{
                 newPatient.setPtdiseases(getEdittextValue(disease));

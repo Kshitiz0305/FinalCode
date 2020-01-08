@@ -1,4 +1,4 @@
-package com.agatsa.testsdknew;
+package com.agatsa.testsdknew.ui;
 
 import android.content.Context;
 import android.os.Bundle;
@@ -12,6 +12,7 @@ import com.agatsa.sanketlife.callbacks.ResponseCallback;
 import com.agatsa.sanketlife.development.Errors;
 import com.agatsa.sanketlife.development.InitiateEcg;
 import com.agatsa.sanketlife.development.Success;
+import com.agatsa.testsdknew.R;
 
 public class ECGactivity extends AppCompatActivity {
     Button l1,v1,v2,v3,v4,v5,v6,l2,pdf,smallPdf;

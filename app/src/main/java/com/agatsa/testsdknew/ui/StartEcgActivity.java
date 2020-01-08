@@ -1,4 +1,4 @@
-package com.agatsa.testsdknew;
+package com.agatsa.testsdknew.ui;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -13,6 +13,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.agatsa.sanketlife.callbacks.RegisterDeviceResponse;
 import com.agatsa.sanketlife.development.Errors;
 import com.agatsa.sanketlife.development.InitiateEcg;
+import com.agatsa.testsdknew.R;
 
 public class StartEcgActivity extends AppCompatActivity {
     int x = 1;

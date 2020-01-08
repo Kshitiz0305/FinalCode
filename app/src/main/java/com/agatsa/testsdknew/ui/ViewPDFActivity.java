@@ -1,4 +1,4 @@
-package com.agatsa.testsdknew;
+package com.agatsa.testsdknew.ui;
 
 import android.content.Intent;
 import android.net.Uri;
@@ -8,6 +8,9 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.FileProvider;
 import android.view.View;
 import android.widget.Button;
+
+import com.agatsa.testsdknew.BuildConfig;
+import com.agatsa.testsdknew.R;
 
 import java.io.File;
 

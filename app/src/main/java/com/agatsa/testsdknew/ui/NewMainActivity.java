@@ -1,4 +1,4 @@
-package com.agatsa.testsdknew;
+package com.agatsa.testsdknew.ui;
 
 import android.content.Context;
 import android.content.Intent;
@@ -19,7 +19,6 @@ import androidx.core.content.ContextCompat;
 
 import com.agatsa.sanketlife.callbacks.LongPdfCallBack;
 import com.agatsa.sanketlife.callbacks.PdfCallback;
-import com.agatsa.sanketlife.callbacks.RegisterDeviceResponse;
 import com.agatsa.sanketlife.callbacks.ResponseCallback;
 import com.agatsa.sanketlife.callbacks.SaveEcgCallBack;
 import com.agatsa.sanketlife.callbacks.SaveLongEcgCallBack;
@@ -32,6 +31,7 @@ import com.agatsa.sanketlife.development.UserDetails;
 import com.agatsa.sanketlife.models.EcgTypes;
 import com.agatsa.testsdknew.Models.ECGReport;
 import com.agatsa.testsdknew.Models.LongECGReport;
+import com.agatsa.testsdknew.R;
 import com.ontbee.legacyforks.cn.pedant.SweetAlert.SweetAlertDialog;
 
 public class NewMainActivity extends AppCompatActivity {

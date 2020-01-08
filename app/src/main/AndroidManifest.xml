@@ -8,33 +8,35 @@
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
 
     <application
+        tools:replace="label,name"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="Sunya.Health"
         android:roundIcon="@mipmap/ic_launcher"
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
-        tools:replace="label"
+        android:name=".LabInABagApplication"
+
         android:usesCleartextTraffic="true">
         <activity android:name=".userlogin.UserLogIn"></activity>
         <activity
-            android:name=".HistoryActivity"
+            android:name=".ui.HistoryActivity"
             android:label="@string/title_activity_history" />
-        <activity android:name=".SplashActivity">
+        <activity android:name=".ui.SplashActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".MainActivity" />
-        <activity android:name=".NewMainActivity" />
-        <activity android:name=".PatientActivity" />
-        <activity android:name=".PrintReport" />
-        <activity android:name=".PersonalDetailsActivity" />
+        <activity android:name=".ui.MainActivity" />
+        <activity android:name=".ui.NewMainActivity" />
+        <activity android:name=".ui.PatientActivity" />
+        <activity android:name=".ui.PrintReport" />
+        <activity android:name=".ui.PersonalDetailsActivity" />
         <activity android:name=".GlucoseActivity" />
-        <activity android:name=".RegisterDeviceActivity" />
-        <activity android:name=".VitalSignActivity" />
+        <activity android:name=".ui.RegisterDeviceActivity" />
+        <activity android:name=".ui.VitalSignActivity" />
 
         <provider
             android:name="androidx.core.content.FileProvider"
@@ -46,9 +48,9 @@
                 android:resource="@xml/filepaths" />
         </provider>
 
-        <activity android:name=".PdfViewActivity" />
-        <activity android:name=".ECGactivity" />
-        <activity android:name=".ViewPDFActivity" />
+        <activity android:name=".ui.PdfViewActivity" />
+        <activity android:name=".ui.ECGactivity" />
+        <activity android:name=".ui.ViewPDFActivity" />
     </application>
 
 </manifest>

@@ -1,4 +1,4 @@
-package com.agatsa.testsdknew;
+package com.agatsa.testsdknew.ui;
 
 import com.agatsa.sanketlife.development.EcgConfig;
 import com.agatsa.sanketlife.development.LongEcgConfig;
