@@ -32,7 +32,7 @@ public class PatientModel {
         user_id = "";
         ptName ="";
         ptAddress = "";
-        ptContactNo = "";
+        ptContactNo = "nil";
         ptEmail = "";
         ptAge = "";
         ptSex = "";

@@ -40,17 +40,18 @@ public class LabDB extends SQLiteOpenHelper {
     private static final int DATABASE_VERSION = 3;
 
     // Database Name
-    private static final String DATABASE_NAME = "LabInABagApplications.db";
+    private static final String DATABASE_NAME = "Test1.db";
 
 //     Common Column
-    private static final String COLUMN_PT_NO = "ptno";
+    private static final String COLUMN_PT_NO = "ptNo";
+    private static final String UUID = "ptUUID";
     private static final String COLUMN_ID = "id";
 
     // PatientTable
     private static final String TABLE_PT_DETAILS = "pt_details";
     // Columns for patient table
 
-    private static final String COLUMN_PT_USER_ID = "user_id";
+//    private static final String COLUMN_PT_USER_ID = "userId";
     private static final String COLUMN_PT_NAME = "ptName";
     private static final String COLUMN_PT_ADDRESS = "ptAddress";
     private static final String COLUMN_PT_CONTACTNO = "ptContactNo";
@@ -59,16 +60,16 @@ public class LabDB extends SQLiteOpenHelper {
     private static final String COLUMN_PT_DOB= "ptDob";
     private static final String COLUMN_PT_SEX = "ptSex";
     private static final String COLUMN_PT_MARITALSTATUS = "ptMaritalstatus";
-    private static final String COLUMN_PT_NO_OF_BOYS = "ptNoofboys";
-    private static final String COLUMN_PT_NO_OF_GIRLS = "ptNoofgirls";
+    private static final String COLUMN_PT_NO_OF_BOYS = "ptNoOfBoys";
+    private static final String COLUMN_PT_NO_OF_GIRLS = "ptNoOfGirls";
     private static final String COLUMN_PT_DRUG_ALLERGIES = "ptDrugAllergies";
     private static final String COLUMN_PT_DISEASE = "ptDisease";
     private static final String COLUMN_PT_MEDICATION = "ptMedication";
     private static final String COLUMN_PT_MEDICATION_MEDICINE = "ptMedicationMedicine";
     private static final String COLUMN_PT_SMOKING = "ptSmoking";
     private static final String COLUMN_PT_ALCOHOL = "ptAlcohol";
-    private static final String COLUMN_ADDEDDATE = "added_date";
-    private static final String COLUMN_UPDATEDDATE = "updated_date";
+    private static final String COLUMN_ADDEDDATE = "ptDateOfRegistration";
+    private static final String COLUMN_UPDATEDDATE = "ptUpdated_date";
 
     // Patient Vital Sign
     private static final String TABLE_VITAL_SIGN = "vital_sign";
@@ -141,6 +142,8 @@ public class LabDB extends SQLiteOpenHelper {
     private static final String COLUMN_URB = "urb";
     private static final String COLUMN_NITRATE = "nit";
     private static final String COLUMN_LEUK = "leuk";
+    private static final String CULUMN_Latitude = "ptLatitude";
+    private static final String CULUMN_Longitude = "ptLongitude";
 
     // DATA TABLE
     private static final String TABLE_DATA = "urine_data";
@@ -158,9 +161,8 @@ public class LabDB extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase db) {
         String CREATE_PATIENT_TABLE = "CREATE TABLE " + TABLE_PT_DETAILS + "("
-//                + COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT,"
-                + COLUMN_PT_NO + " TEXT,"
-                + COLUMN_PT_USER_ID + " TEXT,"
+                + COLUMN_PT_NO + " INTEGER PRIMARY KEY AUTOINCREMENT,"
+                + UUID + " TEXT  DEFAULT 'nil', "
                 + COLUMN_PT_NAME + " TEXT,"
                 + COLUMN_PT_ADDRESS + " TEXT,"
                 + COLUMN_PT_CONTACTNO + " TEXT,"
@@ -178,7 +180,11 @@ public class LabDB extends SQLiteOpenHelper {
                 + COLUMN_PT_SMOKING + " TEXT,"
                 + COLUMN_PT_ALCOHOL + " TEXT,"
                 + COLUMN_ADDEDDATE + " TEXT,"
-                + COLUMN_UPDATEDDATE + " TEXT)";
+                + CULUMN_Longitude + " DOUBLE DEFAULT 0,"
+                        + CULUMN_Latitude + " DOUBLE DEFAULT 0)";
+
+//                + COLUMN_ADDEDDATE + " TEXT,)";
+//                + COLUMN_UPDATEDDATE + " TEXT)";
         db.execSQL(CREATE_PATIENT_TABLE);
         String CREATE_VITAL_SIGN_TABLE = "CREATE TABLE " + TABLE_VITAL_SIGN + "("
                 + COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT,"
@@ -279,10 +285,11 @@ public class LabDB extends SQLiteOpenHelper {
         int result = 0;
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
-        values.put(COLUMN_PT_NO, ptdetail.getPtNo());
-        values.put(COLUMN_PT_USER_ID, ptdetail.getUser_id());
+//        values.put(COLUMN_PT_NO, ptdetail.getPtNo());
+//        values.put(COLUMN_PT_USER_ID, ptdetail.getUser_id());
         values.put(COLUMN_PT_NAME, ptdetail.getPtName());
         values.put(COLUMN_PT_ADDRESS, ptdetail.getPtAddress());
+        Log.d("rantest","it came here");
         values.put(COLUMN_PT_CONTACTNO, ptdetail.getPtContactNo());
         values.put(COLUMN_PT_EMAIL, ptdetail.getPtEmail());
         values.put(COLUMN_PT_AGE, ptdetail.getPtAge());
@@ -291,19 +298,42 @@ public class LabDB extends SQLiteOpenHelper {
         values.put(COLUMN_PT_MARITALSTATUS, ptdetail.getPtmaritalstatus());
         values.put(COLUMN_PT_NO_OF_BOYS, ptdetail.getPtnoofboys());
        values.put(COLUMN_PT_NO_OF_GIRLS, ptdetail.getPtnoofgirls());
-       values.put(COLUMN_PT_DRUG_ALLERGIES, ptdetail.getPtnoofgirls());
-       values.put(COLUMN_PT_MEDICATION, ptdetail.getPtnoofgirls());
-       values.put(COLUMN_PT_DRUG_ALLERGIES, ptdetail.getPtnoofgirls());
-       values.put(COLUMN_PT_DISEASE, ptdetail.getPtdiseases());
+       values.put(COLUMN_PT_DRUG_ALLERGIES, ptdetail.getPtdrugallergies());
        values.put(COLUMN_PT_MEDICATION, ptdetail.getPtmedication());
+       values.put(COLUMN_PT_DISEASE, ptdetail.getPtdiseases());
        values.put(COLUMN_PT_MEDICATION_MEDICINE, ptdetail.getPtmedicationmedicinename());
        values.put(COLUMN_PT_SMOKING, ptdetail.getPtsmoking());
        values.put(COLUMN_PT_ALCOHOL, ptdetail.getPtsmoking());
+
+//        + COLUMN_PT_NO + " INTEGER PRIMARY KEY AUTOINCREMENT,"
+//                + UUID + " TEXT  DEFAULT 'nil', "
+//                + COLUMN_PT_NAME + " TEXT,"
+//                + COLUMN_PT_ADDRESS + " TEXT,"
+//                + COLUMN_PT_CONTACTNO + " TEXT,"
+//                + COLUMN_PT_EMAIL + " TEXT,"
+//                + COLUMN_PT_AGE + " TEXT,"
+//                + COLUMN_PT_DOB + " TEXT,"
+//                + COLUMN_PT_SEX + " TEXT,"
+//                + COLUMN_PT_MARITALSTATUS + " TEXT,"
+//                + COLUMN_PT_NO_OF_BOYS + " TEXT,"
+//                + COLUMN_PT_NO_OF_GIRLS + " TEXT,"
+//                + COLUMN_PT_DRUG_ALLERGIES + " TEXT,"
+//                + COLUMN_PT_DISEASE + " TEXT,"
+//                + COLUMN_PT_MEDICATION + " TEXT,"
+//                + COLUMN_PT_MEDICATION_MEDICINE + " TEXT,"
+//                + COLUMN_PT_SMOKING + " TEXT,"
+//                + COLUMN_PT_ALCOHOL + " TEXT,"
+//                + COLUMN_ADDEDDATE + " TEXT,"
+//                + COLUMN_UPDATEDDATE + " TEXT)";
+
+
        Log.d("DOB",ptdetail.getPtDob());
 
 
 
-        values.put(COLUMN_UPDATEDDATE, Calendar.getInstance().getTimeInMillis() / 1000);
+
+//        values.put(COLUMN_UPDATEDDATE, Calendar.getInstance().getTimeInMillis() / 1000);
+//        values.put(COLUMN_UPDATEDDATE, "nil");
         if (ptdetail.getId() != 0) {
             db.update(TABLE_PT_DETAILS, values, COLUMN_ID + "=? AND " + COLUMN_PT_NO + "=?",
                     new String[]{String.valueOf(ptdetail.getId()), ptdetail.getPtNo()});
@@ -322,7 +352,6 @@ public class LabDB extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getReadableDatabase();
 
         Cursor cursor = db.query(TABLE_PT_DETAILS, new String[]{
-                        COLUMN_ID,
                         COLUMN_PT_NO,
                         COLUMN_PT_NAME,
                         COLUMN_PT_ADDRESS,
@@ -330,8 +359,10 @@ public class LabDB extends SQLiteOpenHelper {
                         COLUMN_PT_EMAIL,
                         COLUMN_PT_AGE,
                         COLUMN_PT_SEX
-                }, COLUMN_PT_NO + "=? AND " + COLUMN_ID + "=?",
-                new String[]{pt_no, String.valueOf(pt_id)}, null, null, COLUMN_ID + " DESC", String.valueOf(1));
+                }, COLUMN_PT_NO + "=? AND "
+//                        + COLUMN_ID + "=?"
+                ,
+                new String[]{pt_no, String.valueOf(pt_id)}, null, null, COLUMN_PT_NO + " DESC", String.valueOf(1));
         if (cursor.moveToFirst()) {
             patientModel.setId(cursor.getInt(0));
             patientModel.setPtNo(cursor.getString(1));
@@ -865,8 +896,8 @@ public class LabDB extends SQLiteOpenHelper {
 
     private int getLastID(String table, SQLiteDatabase db) {
         int last_id = 0;
-        Cursor cursor = db.rawQuery("SELECT " + COLUMN_ID + " FROM " + table
-                + " ORDER BY " + COLUMN_ID + " DESC LIMIT 1", new String[]{});
+        Cursor cursor = db.rawQuery("SELECT " + COLUMN_PT_NO + " FROM " + table
+                + " ORDER BY " + COLUMN_PT_NO + " DESC LIMIT 1", new String[]{});
         boolean exists = (cursor.getCount() > 0);
         if (exists) {
             cursor.moveToFirst();
@@ -890,38 +921,38 @@ public class LabDB extends SQLiteOpenHelper {
         return last_id;
     }
 
-    public String getLastUserID(String table) {
-        SQLiteDatabase db = this.getWritableDatabase();
-        String last_user_id = "00000";
-        Cursor cursor = db.rawQuery("SELECT " + COLUMN_PT_USER_ID + " FROM " + table
-                + " ORDER BY " + COLUMN_PT_NO + " DESC LIMIT 1", new String[]{});
-        boolean exists = (cursor.getCount() > 0);
-        if (exists) {
-            cursor.moveToFirst();
-            last_user_id = cursor.getString(0);
-        }
-        cursor.close();
-        db.close();
-        if (last_user_id == null || last_user_id.equals("null")) {
-            last_user_id = "00000";
-        }
-        return last_user_id;
-    }
+//    public String getLastUserID(String table) {
+//        SQLiteDatabase db = this.getWritableDatabase();
+//        String last_user_id = "00000";
+//        Cursor cursor = db.rawQuery("SELECT " + COLUMN_PT_USER_ID + " FROM " + table
+//                + " ORDER BY " + COLUMN_PT_NO + " DESC LIMIT 1", new String[]{});
+//        boolean exists = (cursor.getCount() > 0);
+//        if (exists) {
+//            cursor.moveToFirst();
+//            last_user_id = cursor.getString(0);
+//        }
+//        cursor.close();
+//        db.close();
+//        if (last_user_id == null || last_user_id.equals("null")) {
+//            last_user_id = "00000";
+//        }
+//        return last_user_id;
+//    }
 
-    public String getUserIdFromPtno(String table, int pt_id) {
-        SQLiteDatabase db = this.getWritableDatabase();
-        String user_id = "00000";
-        Cursor cursor = db.rawQuery("SELECT " + COLUMN_PT_USER_ID + " FROM " + table
-                + " WHERE " + COLUMN_ID + "=" + pt_id + " ORDER BY " + COLUMN_ID + " LIMIT 1", new String[]{});
-        boolean exists = (cursor.getCount() > 0);
-        if (exists) {
-            cursor.moveToFirst();
-            user_id = cursor.getString(0);
-        }
-        cursor.close();
-        db.close();
-        return user_id;
-    }
+//    public String getUserIdFromPtno(String table, int pt_id) {
+//        SQLiteDatabase db = this.getWritableDatabase();
+//        String user_id = "00000";
+//        Cursor cursor = db.rawQuery("SELECT " + COLUMN_PT_USER_ID + " FROM " + table
+//                + " WHERE " + COLUMN_ID + "=" + pt_id + " ORDER BY " + COLUMN_ID + " LIMIT 1", new String[]{});
+//        boolean exists = (cursor.getCount() > 0);
+//        if (exists) {
+//            cursor.moveToFirst();
+//            user_id = cursor.getString(0);
+//        }
+//        cursor.close();
+//        db.close();
+//        return user_id;
+//    }
 
     public void setUrineData(String data) {
         SQLiteDatabase db = this.getWritableDatabase();

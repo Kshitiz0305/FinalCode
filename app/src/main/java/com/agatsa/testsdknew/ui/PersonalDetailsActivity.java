@@ -54,6 +54,7 @@ public class PersonalDetailsActivity extends AppCompatActivity implements DatePi
     SharedPreferences pref;
     Button btnSave;
     private ProgressDialog dialog;
+    String contactData="nil";
     TextView txtPtno;
     PatientModel newPatient = new PatientModel();
     VitalSign vitalSign = new VitalSign();
@@ -400,6 +401,11 @@ public class PersonalDetailsActivity extends AppCompatActivity implements DatePi
         btnSave.setOnClickListener(v -> {
             if (validator.validate()) {
                 Toast.makeText(getApplicationContext(), "Saving Data", Toast.LENGTH_LONG).show();
+
+                if(!txtPtContactNo.getText().equals("")){
+                    contactData=txtPtContactNo.getText().toString();
+
+                }
                 new savedata().execute();
                 navigatenext();
             }
@@ -481,8 +487,13 @@ catch (Exception e){
             newPatient.setUser_id(duid);
             newPatient.setPtName(getEdittextValue(txtPtName));
             newPatient.setPtAddress(getEdittextValue(txtPtAddress));
-            newPatient.setPtContactNo(getEdittextValue(txtPtContactNo));
+                 newPatient.setPtContactNo(contactData);
+
+            if(txtEmail.getText().toString().equals(""))
+                newPatient.setPtEmail("nil");
+                else
             newPatient.setPtEmail(getEdittextValue(txtEmail));
+
             newPatient.setPtAge(getEdittextValue(txtAge));
             String sex = "Male";
             if (getRadioButtonValue(optFemale)) {
@@ -502,7 +513,7 @@ catch (Exception e){
                 maritalstatus="Widowed";
             }
             newPatient.setPtmaritalstatus(maritalstatus);
-            if(noofboys.getText().toString().isEmpty()){
+            if(noofboys.getText().toString().equals("")){
                 newPatient.setPtnoofboys("0");
 
             }else{
@@ -516,10 +527,10 @@ catch (Exception e){
                 newPatient.setPtnoofgirls(getEdittextValue(noofgirls));
 
             }
-            newPatient.setPtnoofboys(getEdittextValue(noofboys));
+//            newPatient.setPtnoofboys(getEdittextValue(noofboys));
 
             if(drug_allergies.getVisibility()==View.GONE){
-                newPatient.setPtdrugallergies("No");
+                newPatient.setPtdrugallergies("nil");
 
             }else{
                 newPatient.setPtdrugallergies(getEdittextValue(drug_allergies));
@@ -529,25 +540,25 @@ catch (Exception e){
           if(binding.etDob.getVisibility()==View.VISIBLE) {
 
               if(binding.etDob.getTag()==null)
-                  newPatient.setPtDob("nill");
+                  newPatient.setPtDob("nil");
               else
               newPatient.setPtDob((String) binding.etDob.getTag());
           }
           else
-              newPatient.setPtDob("nill");
+              newPatient.setPtDob("nil");
 
 
 
            String medication;
             if (getRadioButtonValue(optyes)) {
-                medication = "Yes";
+                medication = disease.getText().toString();
 
             }else{
-                medication="No";
+                medication="nil";
             }
             newPatient.setPtmedication(medication);
             if(medicationmedicinename.getText().toString().isEmpty()){
-                newPatient.setPtmedicationmedicinename("No");
+                newPatient.setPtmedicationmedicinename("nil");
             }else{
                 newPatient.setPtmedicationmedicinename(getEdittextValue(medicationmedicinename));
 
@@ -555,19 +566,19 @@ catch (Exception e){
             }
 
             if(disease.getVisibility()==View.GONE){
-                newPatient.setPtdiseases("No");
+                newPatient.setPtdiseases("nil");
             }else{
                 newPatient.setPtdiseases(getEdittextValue(disease));
             }
 
             if(smokepcs.getText().toString().isEmpty()){
-                newPatient.setPtsmoking("0");
+                newPatient.setPtsmoking("nil");
             }else{
                 newPatient.setPtsmoking(getEdittextValue(smokepcs));
             }
 
             if(alcoholpegs.getText().toString().isEmpty()){
-                newPatient.setPtalcohol("0");
+                newPatient.setPtalcohol("nil");
             }else{
                 newPatient.setPtalcohol(getEdittextValue(alcoholpegs));
             }
@@ -601,6 +612,8 @@ catch (Exception e){
                     e.printStackTrace();
                     return 3;
                 }
+
+            Log.d("rantest",newPatient.getPtContactNo());
             }
             return 1;
         }

@@ -573,7 +573,7 @@
                         <TextView
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
-                            android:layout_weight="4"
+                            android:layout_weight="5"
                             android:text="@string/drug_allergies"
                             android:fontFamily="@font/sfpro_display_semibold"
                             android:padding="8sp"
@@ -583,7 +583,7 @@
                         <RadioGroup
                             android:id="@+id/rg_drug"
                             android:layout_width="0dp"
-                            android:layout_weight="6"
+                            android:layout_weight="5"
                             android:layout_marginTop="2sp"
                             android:layout_height="wrap_content"
                             android:orientation="horizontal">
@@ -652,14 +652,14 @@
                             android:text="@string/do_you_have_any_diseases"
                             android:fontFamily="@font/sfpro_display_semibold"
                             android:padding="8sp"
-                            android:layout_weight="4"
+                            android:layout_weight="5"
                             android:textColor="@color/colorPrimaryDark"
                             android:textSize="15sp" />
                         <RadioGroup
                             android:id="@+id/rg_disease"
                             android:layout_width="0dp"
                             android:layout_marginTop="2sp"
-                            android:layout_weight="6"
+                            android:layout_weight="5"
                             android:layout_height="wrap_content"
                             android:orientation="horizontal">
 
@@ -718,7 +718,7 @@
                 <TextView
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_weight="4"
+                    android:layout_weight="5"
                     android:text="Current Medication"
                     android:fontFamily="@font/sfpro_display_semibold"
                     android:padding="8sp"
@@ -727,7 +727,7 @@
                 <RadioGroup
                     android:id="@+id/currentmedicationrg"
                     android:layout_width="0dp"
-                    android:layout_weight="6"
+                    android:layout_weight="5"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal">
 
@@ -835,7 +835,7 @@
                             <TextView
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
-                                android:layout_weight="4"
+                                android:layout_weight="5"
                                 android:text="Smoking"
                                 android:fontFamily="@font/sfpro_display_semibold"
                                 android:padding="8sp"
@@ -846,7 +846,7 @@
                             <RadioGroup
                                 android:id="@+id/rg_smoking"
                                 android:layout_width="0dp"
-                                android:layout_weight="6"
+                                android:layout_weight="5"
                                 android:layout_marginTop="2sp"
                                 android:layout_height="wrap_content"
                                 android:orientation="horizontal">
@@ -898,7 +898,7 @@
     <TextView
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_weight="4"
+        android:layout_weight="5"
         android:text="Alcohol"
         android:fontFamily="@font/sfpro_display_semibold"
         android:padding="8sp"
@@ -909,7 +909,7 @@
         android:id="@+id/rg_alcohol"
         android:layout_width="0dp"
         android:layout_marginTop="2sp"
-        android:layout_weight="6"
+        android:layout_weight="5"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
 
