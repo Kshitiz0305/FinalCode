@@ -58,4 +58,13 @@
     <string name="glucose">Glucose</string>
     <string name="message_text">Alert!</string>
     <string name="ok_text">OK</string>
+    <string-array name="search_option">
+        <item>  </item>
+        <item>
+            ID
+        </item>
+        <item>
+            Name
+        </item>
+    </string-array>
 </resources>

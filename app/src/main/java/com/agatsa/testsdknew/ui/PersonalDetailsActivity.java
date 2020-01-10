@@ -54,7 +54,6 @@ public class PersonalDetailsActivity extends AppCompatActivity implements DatePi
     SharedPreferences pref;
     Button btnSave;
     private ProgressDialog dialog;
-    String contactData="nil";
     TextView txtPtno;
     PatientModel newPatient = new PatientModel();
     VitalSign vitalSign = new VitalSign();
@@ -67,7 +66,7 @@ public class PersonalDetailsActivity extends AppCompatActivity implements DatePi
     Context thisContext;
     LabDB labDB;
 
-    LinearLayout noofhildrenll;
+    LinearLayout noofchildrenll;
     Calendar myCalendar;
     RadioGroup maritalstatusrg;
     RadioGroup currentmedicationrg;
@@ -79,6 +78,7 @@ public class PersonalDetailsActivity extends AppCompatActivity implements DatePi
     ActivityNewPatientDetailBinding binding;
 
  Validator validator;
+ int recentid;
 
 
 
@@ -90,6 +90,7 @@ public class PersonalDetailsActivity extends AppCompatActivity implements DatePi
         validator = new Validator(binding);
         validator.enableFormValidationMode();
 
+
         pref = this.getSharedPreferences("sunyahealth", Context.MODE_PRIVATE);
         device_id = pref.getString("device_id", "");
         duid = getIntent().getStringExtra("duid");
@@ -100,7 +101,7 @@ public class PersonalDetailsActivity extends AppCompatActivity implements DatePi
         dialog = new ProgressDialog(this);
         dialog.setCanceledOnTouchOutside(false);
         dialog.setCancelable(false);
-        noofhildrenll=findViewById(R.id.noofhildrenll);
+        noofchildrenll=findViewById(R.id.noofhildrenll);
         maritalstatusrg=findViewById(R.id.maritalstatusrg);
         smokell=findViewById(R.id.smokell);
         alcoholll=findViewById(R.id.alcoholll);
@@ -110,8 +111,8 @@ public class PersonalDetailsActivity extends AppCompatActivity implements DatePi
         txtPtContactNo = findViewById(R.id.txtContactNo);
         txtEmail = findViewById(R.id.txtemail);
 
-        smokepcs=findViewById(R.id.smokepcs);
-        alcoholpegs=findViewById(R.id.alcoholpegs);
+        smokepcs=findViewById(R.id.et_smoking);
+        alcoholpegs=findViewById(R.id.et_alcohol);
 
         txtAge = findViewById(R.id.txtAge);
         optMale = findViewById(R.id.optMale);
@@ -348,21 +349,21 @@ public class PersonalDetailsActivity extends AppCompatActivity implements DatePi
         maritalstatusrg.setOnCheckedChangeListener((group, checkedId) -> {
             switch (checkedId) {
                 case R.id.married:
-                    noofhildrenll.setVisibility(View.VISIBLE);
+                    noofchildrenll.setVisibility(View.VISIBLE);
 
 
                 case R.id.divorced:
-                    noofhildrenll.setVisibility(View.VISIBLE);
+                    noofchildrenll.setVisibility(View.VISIBLE);
 
 
                 case R.id.widowed:
-                    noofhildrenll.setVisibility(View.VISIBLE);
+                    noofchildrenll.setVisibility(View.VISIBLE);
 
 
                     break;
 
                 case R.id.unmarried:
-                    noofhildrenll.setVisibility(View.GONE);
+                    noofchildrenll.setVisibility(View.GONE);
 
                     break;
 
@@ -402,12 +403,16 @@ public class PersonalDetailsActivity extends AppCompatActivity implements DatePi
             if (validator.validate()) {
                 Toast.makeText(getApplicationContext(), "Saving Data", Toast.LENGTH_LONG).show();
 
-                if(!txtPtContactNo.getText().equals("")){
-                    contactData=txtPtContactNo.getText().toString();
-
-                }
+//                if(txtPtContactNo.getText().equals("")){
+//                    contactData="nil";
+//                    Log.d("nil",contactData);
+//
+//                }else{
+//                    contactData=txtPtContactNo.getText().toString();
+//                    Log.d("data",contactData);
+//                }
                 new savedata().execute();
-                navigatenext();
+//                navigatenext();
             }
             else {
 
@@ -420,6 +425,12 @@ public class PersonalDetailsActivity extends AppCompatActivity implements DatePi
 
     private void navigatenext() {
         Intent i = new Intent(PersonalDetailsActivity.this, PatientActivity.class);
+        startActivity(i);
+
+    }
+
+    private void navigatetoTest() {
+        Intent i = new Intent(this, PatientActivity.class);
         startActivity(i);
 
     }
@@ -487,7 +498,14 @@ catch (Exception e){
             newPatient.setUser_id(duid);
             newPatient.setPtName(getEdittextValue(txtPtName));
             newPatient.setPtAddress(getEdittextValue(txtPtAddress));
-                 newPatient.setPtContactNo(contactData);
+            if (txtPtContactNo.getText().toString().equals("")) {
+                newPatient.setPtContactNo("nil");
+
+            }else{
+                newPatient.setPtContactNo(getEdittextValue(txtPtContactNo));
+
+            }
+//            newPatient.setPtContactNo(contactData);
 
             if(txtEmail.getText().toString().equals(""))
                 newPatient.setPtEmail("nil");
@@ -533,9 +551,15 @@ catch (Exception e){
                 newPatient.setPtdrugallergies("nil");
 
             }else{
-                newPatient.setPtdrugallergies(getEdittextValue(drug_allergies));
+                if(drug_allergies.getText().toString().equals("")){
+                    newPatient.setPtdrugallergies("nil");
+                }else{
+                    newPatient.setPtdrugallergies(getEdittextValue(drug_allergies));
+
+                }
 
             }
+
 
           if(binding.etDob.getVisibility()==View.VISIBLE) {
 
@@ -549,39 +573,67 @@ catch (Exception e){
 
 
 
-           String medication;
-            if (getRadioButtonValue(optyes)) {
-                medication = disease.getText().toString();
+//           String medication;
+//            if (getRadioButtonValue(optyes)) {
+//                    medication = medicationmedicinename.getText().toString();
+//
+//            }else{
+//                medication="nil";
+//            }
+//            newPatient.setPtmedication(medication);
 
-            }else{
-                medication="nil";
-            }
-            newPatient.setPtmedication(medication);
-            if(medicationmedicinename.getText().toString().isEmpty()){
+            if(medicationmedicinename.getVisibility()==View.VISIBLE)
+            {
+                if(medicationmedicinename.getText().toString().equals("")){
                 newPatient.setPtmedicationmedicinename("nil");
-            }else{
+            }
+                else{
                 newPatient.setPtmedicationmedicinename(getEdittextValue(medicationmedicinename));
+            }
 
+            }
+            else {
+                newPatient.setPtmedicationmedicinename("nil");
 
             }
 
             if(disease.getVisibility()==View.GONE){
                 newPatient.setPtdiseases("nil");
             }else{
-                newPatient.setPtdiseases(getEdittextValue(disease));
+                if(disease.getText().toString().equals("")){
+                    newPatient.setPtdiseases("nil");
+
+                }else{
+                    newPatient.setPtdiseases(getEdittextValue(disease));
+                }
             }
 
-            if(smokepcs.getText().toString().isEmpty()){
+
+              if(smokepcs.getVisibility()==View.VISIBLE)
+              { if(smokepcs.getText().toString().equals("")){
                 newPatient.setPtsmoking("nil");
             }else{
                 newPatient.setPtsmoking(getEdittextValue(smokepcs));
-            }
 
-            if(alcoholpegs.getText().toString().isEmpty()){
+            }}
+              else {
+                  newPatient.setPtsmoking("nil");
+
+              }
+
+
+              if(alcoholpegs.getVisibility()==View.VISIBLE)
+              {
+                  if(alcoholpegs.getText().toString().equals("")){
                 newPatient.setPtalcohol("nil");
             }else{
                 newPatient.setPtalcohol(getEdittextValue(alcoholpegs));
             }
+              }
+              else {
+
+                  newPatient.setPtalcohol("nil");
+              }
 
 
 
@@ -595,8 +647,9 @@ catch (Exception e){
             LabDB db = new LabDB(getApplicationContext());
             if (db.getRowCount("pt_details", "") == 100) {
                 return 2;
-            } else {
-                newPatient.setPtNo(device_id + duid);
+            }
+            else {
+//                newPatient.setPtNo(device_id + duid);
                 pt_id = db.SavePatient(newPatient);
                 try {
                     Thread.sleep(1000);
@@ -605,7 +658,7 @@ catch (Exception e){
                     return 3;
                 }
                 String saved_id = String.valueOf(pt_id);
-                newPatient.setId(pt_id);
+//                newPatient.setId(pt_id);
                 try {
                     Thread.sleep(1000);
                 } catch (InterruptedException e) {
@@ -640,6 +693,11 @@ catch (Exception e){
                 editor.putInt("PTNO", pt_id);
                 editor.apply();
                 Toast.makeText(getApplicationContext(), "Patient Saved " + newPatient.getPtNo() + " V " + vitalSign.getRow_id(), Toast.LENGTH_LONG).show();
+                Intent intent = new Intent(PersonalDetailsActivity.this,TestActivity.class);
+                intent.putExtra("patient",newPatient);
+                intent.putExtra("ptid",pt_id);
+                startActivity(intent);
+
             }
         }
     }
@@ -822,7 +880,7 @@ catch (Exception e){
                 if (validator.validate()) {
                     Toast.makeText(getApplicationContext(), "Saving Data", Toast.LENGTH_LONG).show();
                     new savedata().execute();
-                    navigatenext();
+//                    navigatenext();
                 }
                 else {
 
@@ -857,7 +915,7 @@ catch (Exception e){
         int age = today.get(Calendar.YEAR) - dob.get(Calendar.YEAR);
         if (today.get(Calendar.DAY_OF_YEAR) < dob.get(Calendar.DAY_OF_YEAR)) {
             age--;
-        }
+    }
         return age;
     }
 

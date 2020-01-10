@@ -31,12 +31,15 @@
         </activity>
         <activity android:name=".ui.MainActivity" />
         <activity android:name=".ui.NewMainActivity" />
+        <activity android:name=".ui.LandingActivity" />
         <activity android:name=".ui.PatientActivity" />
         <activity android:name=".ui.PrintReport" />
         <activity android:name=".ui.PersonalDetailsActivity" />
         <activity android:name=".GlucoseActivity" />
         <activity android:name=".ui.RegisterDeviceActivity" />
         <activity android:name=".ui.VitalSignActivity" />
+        <activity android:name=".ui.TestListActivity" />
+        <activity android:name=".ui.TestActivity" />
 
         <provider
             android:name="androidx.core.content.FileProvider"

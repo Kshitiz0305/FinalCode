@@ -98,7 +98,7 @@ public class SplashActivity extends Activity {
             editor = pref.edit();
             editor.apply();
 // this is to be done now
-            Intent mainIntent = new Intent(SplashActivity.this, PatientActivity.class);
+            Intent mainIntent = new Intent(SplashActivity.this, LandingActivity.class);
             SplashActivity.this.startActivity(mainIntent);
             SplashActivity.this.finish();
 

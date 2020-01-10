@@ -175,7 +175,6 @@ public class LabDB extends SQLiteOpenHelper {
                 + COLUMN_PT_NO_OF_GIRLS + " TEXT,"
                 + COLUMN_PT_DRUG_ALLERGIES + " TEXT,"
                 + COLUMN_PT_DISEASE + " TEXT,"
-                + COLUMN_PT_MEDICATION + " TEXT,"
                 + COLUMN_PT_MEDICATION_MEDICINE + " TEXT,"
                 + COLUMN_PT_SMOKING + " TEXT,"
                 + COLUMN_PT_ALCOHOL + " TEXT,"
@@ -299,11 +298,11 @@ public class LabDB extends SQLiteOpenHelper {
         values.put(COLUMN_PT_NO_OF_BOYS, ptdetail.getPtnoofboys());
        values.put(COLUMN_PT_NO_OF_GIRLS, ptdetail.getPtnoofgirls());
        values.put(COLUMN_PT_DRUG_ALLERGIES, ptdetail.getPtdrugallergies());
-       values.put(COLUMN_PT_MEDICATION, ptdetail.getPtmedication());
+//       values.put(COLUMN_PT_MEDICATION, ptdetail.getPtmedication());
        values.put(COLUMN_PT_DISEASE, ptdetail.getPtdiseases());
        values.put(COLUMN_PT_MEDICATION_MEDICINE, ptdetail.getPtmedicationmedicinename());
        values.put(COLUMN_PT_SMOKING, ptdetail.getPtsmoking());
-       values.put(COLUMN_PT_ALCOHOL, ptdetail.getPtsmoking());
+       values.put(COLUMN_PT_ALCOHOL, ptdetail.getPtalcohol());
 
 //        + COLUMN_PT_NO + " INTEGER PRIMARY KEY AUTOINCREMENT,"
 //                + UUID + " TEXT  DEFAULT 'nil', "
@@ -656,7 +655,7 @@ public class LabDB extends SQLiteOpenHelper {
     public VitalSign getLastVitalSign(int pt_no) {
         VitalSign vitalSign = new VitalSign();
         SQLiteDatabase db = this.getReadableDatabase();
-
+//
         Cursor cursor = db.query(TABLE_VITAL_SIGN, new String[]{COLUMN_ID, COLUMN_WEIGHT,
                         COLUMN_HEIGHT, COLUMN_TEMP, COLUMN_PULSE,
                         COLUMN_BP_S, COLUMN_BP_D, COLUMN_STO2,COLUMN_VITAL_GLUCOSE}, COLUMN_PT_NO + "=?",

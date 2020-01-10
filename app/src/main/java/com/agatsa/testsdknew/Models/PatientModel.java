@@ -1,10 +1,13 @@
 package com.agatsa.testsdknew.Models;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 /**
  * Created by sanjiv on 1/12/19.
  */
 
-public class PatientModel {
+public class PatientModel implements Parcelable {
     int id = 0;
     String ptNo;
     String user_id;
@@ -32,7 +35,7 @@ public class PatientModel {
         user_id = "";
         ptName ="";
         ptAddress = "";
-        ptContactNo = "nil";
+        ptContactNo = "";
         ptEmail = "";
         ptAge = "";
         ptSex = "";
@@ -47,6 +50,68 @@ public class PatientModel {
         ptsmoking = "";
         ptalcohol = "";
     }
+
+    protected PatientModel(Parcel in) {
+        id = in.readInt();
+        ptNo = in.readString();
+        user_id = in.readString();
+        ptName = in.readString();
+        ptAddress = in.readString();
+        ptContactNo = in.readString();
+        ptEmail = in.readString();
+        ptAge = in.readString();
+        ptSex = in.readString();
+        ptmaritalstatus = in.readString();
+        ptnoofboys = in.readString();
+        ptnoofgirls = in.readString();
+        ptdrugallergies = in.readString();
+        ptDob = in.readString();
+        ptdiseases = in.readString();
+        ptmedication = in.readString();
+        ptmedicationmedicinename = in.readString();
+        ptsmoking = in.readString();
+        ptalcohol = in.readString();
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeInt(id);
+        dest.writeString(ptNo);
+        dest.writeString(user_id);
+        dest.writeString(ptName);
+        dest.writeString(ptAddress);
+        dest.writeString(ptContactNo);
+        dest.writeString(ptEmail);
+        dest.writeString(ptAge);
+        dest.writeString(ptSex);
+        dest.writeString(ptmaritalstatus);
+        dest.writeString(ptnoofboys);
+        dest.writeString(ptnoofgirls);
+        dest.writeString(ptdrugallergies);
+        dest.writeString(ptDob);
+        dest.writeString(ptdiseases);
+        dest.writeString(ptmedication);
+        dest.writeString(ptmedicationmedicinename);
+        dest.writeString(ptsmoking);
+        dest.writeString(ptalcohol);
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    public static final Creator<PatientModel> CREATOR = new Creator<PatientModel>() {
+        @Override
+        public PatientModel createFromParcel(Parcel in) {
+            return new PatientModel(in);
+        }
+
+        @Override
+        public PatientModel[] newArray(int size) {
+            return new PatientModel[size];
+        }
+    };
 
     public int getId() {
         return id;
