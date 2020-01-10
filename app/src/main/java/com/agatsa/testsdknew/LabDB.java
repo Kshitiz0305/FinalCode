@@ -10,7 +10,6 @@ import android.os.Build;
 import android.os.Environment;
 import android.util.Log;
 
-
 import com.agatsa.testsdknew.Models.BloodReport;
 import com.agatsa.testsdknew.Models.ECGReport;
 import com.agatsa.testsdknew.Models.LongECGReport;
@@ -293,8 +292,6 @@ public class LabDB extends SQLiteOpenHelper {
        values.put(COLUMN_PT_MEDICATION_MEDICINE, ptdetail.getPtmedicationmedicinename());
        values.put(COLUMN_PT_SMOKING, ptdetail.getPtsmoking());
        values.put(COLUMN_PT_ALCOHOL, ptdetail.getPtsmoking());
-       Log.d("smoking",ptdetail.getPtsmoking());
-       Log.d("alcohol",ptdetail.getPtalcohol());
 
 
 
@@ -512,7 +509,6 @@ public class LabDB extends SQLiteOpenHelper {
         ContentValues values = new ContentValues();
         values.put(COLUMN_PT_NO, ecgReport.getPt_no());
         values.put(COLUMN_HEARTRATE, ecgReport.getHeartrate());
-        Log.d("singleleadecg", String.valueOf(ecgReport.getHeartrate()));
         values.put(COLUMN_PR, ecgReport.getPr());
         values.put(COLUMN_QT, ecgReport.getQt());
         values.put(COLUMN_QTC, ecgReport.getQtc());
@@ -540,7 +536,6 @@ public class LabDB extends SQLiteOpenHelper {
         ContentValues values = new ContentValues();
         values.put(COLUMN_PT_NO, longECGReport.getPt_no());
         values.put(COLUMN_LONG_HEARTRATE, longECGReport.getHeartrate());
-        Log.d("longleadecg", String.valueOf(longECGReport.getHeartrate()));
         values.put(COLUMN_LONG_PR, longECGReport.getPr());
         values.put(COLUMN_LONG_QT, longECGReport.getQt());
         values.put(COLUMN_LONG_QTC, longECGReport.getQtc());

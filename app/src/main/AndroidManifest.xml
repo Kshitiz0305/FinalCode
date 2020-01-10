@@ -32,11 +32,17 @@
         <activity android:name=".PatientActivity"/>
         <activity android:name=".PrintReport"/>
         <activity android:name=".PersonalDetailsActivity"/>
-        <activity android:name=".GlucoseActivity"/>
+        <activity android:name=".EcgOptionsActivity"/>
+        <activity android:name=".SingleLeadECG"/>
 
         <activity android:name=".RegisterDeviceActivity"/>
 
         <activity android:name=".VitalSignActivity"/>
+        <activity android:name=".LimbSixLead"/>
+        <activity android:name=".FitnessECG"/>
+        <activity android:name=".ChestSixLead"/>
+        <activity android:name=".TwelveLeadEcg"/>
+
 
 
         <provider

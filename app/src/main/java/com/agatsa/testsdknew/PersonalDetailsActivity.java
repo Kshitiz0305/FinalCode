@@ -179,7 +179,7 @@ public class PersonalDetailsActivity extends AppCompatActivity {
        newPatient = db.getPatient(device_id + duid, pt_id);
 
         if (newPatient != null) {
-            txtPtno.setText(device_id + duid);
+            txtPtno.setText(duid);
             txtPtName.setText(newPatient.getPtName());
             txtPtAddress.setText(newPatient.getPtAddress());
             txtPtContactNo.setText(newPatient.getPtContactNo());

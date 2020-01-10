@@ -94,133 +94,121 @@ public class ECGactivity extends AppCompatActivity {
                 });
             }
         });
-        v1.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                initiateEcg.takeEcg(ECGactivity.this, authkey, 2, new ResponseCallback() {
+        v1.setOnClickListener(view -> {
+            initiateEcg.takeEcg(ECGactivity.this, authkey, 2, new ResponseCallback() {
 
-                    @Override
-                    public void onError(Errors errors) {
-                        Log.e("errors", errors.getErrorMsg());
+                @Override
+                public void onError(Errors errors) {
+                    Log.e("errors", errors.getErrorMsg());
 
-                    }
+                }
 
-                    @Override
-                    public void onSuccess(Success success) {
+                @Override
+                public void onSuccess(Success success) {
 
-                    }
-                });
-                /*initiateEcg.takeLongLead(ECGactivity.this,authkey ,2, 10,new ResponseCallback() {
+                }
+            });
+            /*initiateEcg.takeLongLead(ECGactivity.this,authkey ,2, 10,new ResponseCallback() {
 
-                    @Override
-                    public void onError(Errors errors) {
-                        Log.e("errors",errors.getErrorMsg());
+                @Override
+                public void onError(Errors errors) {
+                    Log.e("errors",errors.getErrorMsg());
 
-                    }
+                }
 
-                    @Override
-                    public void onSuccess(Success success) {
-                        Log.e("errors",success.getSuccessMsg());
+                @Override
+                public void onSuccess(Success success) {
+                    Log.e("errors",success.getSuccessMsg());
 
-                    }
-                });*/
-            }
+                }
+            });*/
         });
-        v2.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                initiateEcg.takeEcg(ECGactivity.this, authkey, 3, new ResponseCallback() {
+        v2.setOnClickListener(view -> {
+            initiateEcg.takeEcg(ECGactivity.this, authkey, 3, new ResponseCallback() {
 
-                    @Override
-                    public void onError(Errors errors) {
-                        Log.e("errors", errors.getErrorMsg());
+                @Override
+                public void onError(Errors errors) {
+                    Log.e("errors", errors.getErrorMsg());
 
-                    }
+                }
 
-                    @Override
-                    public void onSuccess(Success success) {
+                @Override
+                public void onSuccess(Success success) {
 
-                    }
-                });
-                /*initiateEcg.takeLongLead(ECGactivity.this,authkey ,3, 10,new ResponseCallback() {
+                }
+            });
+            /*initiateEcg.takeLongLead(ECGactivity.this,authkey ,3, 10,new ResponseCallback() {
 
-                    @Override
-                    public void onError(Errors errors) {
-                        Log.e("errors",errors.getErrorMsg());
+                @Override
+                public void onError(Errors errors) {
+                    Log.e("errors",errors.getErrorMsg());
 
-                    }
+                }
 
-                    @Override
-                    public void onSuccess(Success success) {
-                        Log.e("errors",success.getSuccessMsg());
+                @Override
+                public void onSuccess(Success success) {
+                    Log.e("errors",success.getSuccessMsg());
 
-                    }
-                });*/
-            }
+                }
+            });*/
         });
-        v3.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                initiateEcg.takeEcg(ECGactivity.this, authkey, 4, new ResponseCallback() {
+        v3.setOnClickListener(view -> {
+            initiateEcg.takeEcg(ECGactivity.this, authkey, 4, new ResponseCallback() {
 
-                    @Override
-                    public void onError(Errors errors) {
-                        Log.e("errors", errors.getErrorMsg());
+                @Override
+                public void onError(Errors errors) {
+                    Log.e("errors", errors.getErrorMsg());
 
-                    }
+                }
 
-                    @Override
-                    public void onSuccess(Success success) {
+                @Override
+                public void onSuccess(Success success) {
 
-                    }
-                });
-               /* initiateEcg.takeLongLead(ECGactivity.this,authkey ,4, 10,new ResponseCallback() {
+                }
+            });
+           /* initiateEcg.takeLongLead(ECGactivity.this,authkey ,4, 10,new ResponseCallback() {
 
-                    @Override
-                    public void onError(Errors errors) {
-                        Log.e("errors",errors.getErrorMsg());
+                @Override
+                public void onError(Errors errors) {
+                    Log.e("errors",errors.getErrorMsg());
 
-                    }
+                }
 
-                    @Override
-                    public void onSuccess(Success success) {
-                        Log.e("errors",success.getSuccessMsg());
+                @Override
+                public void onSuccess(Success success) {
+                    Log.e("errors",success.getSuccessMsg());
 
-                    }
-                });*/
-            }
+                }
+            });*/
         });
-        v4.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                initiateEcg.takeEcg(ECGactivity.this, authkey, 5, new ResponseCallback() {
+        v4.setOnClickListener(view -> {
+            initiateEcg.takeEcg(ECGactivity.this, authkey, 5, new ResponseCallback() {
 
-                    @Override
-                    public void onError(Errors errors) {
-                        Log.e("errors", errors.getErrorMsg());
+                @Override
+                public void onError(Errors errors) {
+                    Log.e("errors", errors.getErrorMsg());
 
-                    }
+                }
 
-                    @Override
-                    public void onSuccess(Success success) {
+                @Override
+                public void onSuccess(Success success) {
 
-                    }
-                });
-                /*initiateEcg.takeLongLead(ECGactivity.this,authkey ,5, 10,new ResponseCallback() {
+                }
+            });
+            /*initiateEcg.takeLongLead(ECGactivity.this,authkey ,5, 10,new ResponseCallback() {
 
-                    @Override
-                    public void onError(Errors errors) {
-                        Log.e("errors",errors.getErrorMsg());
+                @Override
+                public void onError(Errors errors) {
+                    Log.e("errors",errors.getErrorMsg());
 
-                    }
+                }
 
-                    @Override
-                    public void onSuccess(Success success) {
-                        Log.e("errors",success.getSuccessMsg());
+                @Override
+                public void onSuccess(Success success) {
+                    Log.e("errors",success.getSuccessMsg());
 
-                    }
-                });*/
-            }
+                }
+            });*/
         });
         v5.setOnClickListener(new View.OnClickListener() {
             @Override

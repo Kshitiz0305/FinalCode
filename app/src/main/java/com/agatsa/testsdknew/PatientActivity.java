@@ -10,12 +10,9 @@ import android.os.Bundle;
 import android.util.Log;
 import android.widget.Button;
 import android.widget.LinearLayout;
-import android.widget.Toast;
-
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
-
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -55,13 +52,13 @@ public class PatientActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         VitalTest=findViewById(R.id.VitalTest);
         llprintreport=findViewById(R.id.printreport);
-        llNewPatient = findViewById(R.id.btnNewPatient);
+       llNewPatient = findViewById(R.id.btnNewPatient);
         diabetesbtn=findViewById(R.id.diabetesbtn);
         llecg = findViewById(R.id.llecg);
         llNewPatient.setOnClickListener(v -> {
             Intent patientIntent = new Intent(getApplicationContext(), PersonalDetailsActivity.class);
-            patientIntent.putExtra("duid", duid);
             patientIntent.putExtra("PTNO", pt_id);
+            Log.d("ptno", String.valueOf(pt_id));
             startActivity(patientIntent);
         });
 
@@ -72,7 +69,7 @@ public class PatientActivity extends AppCompatActivity {
 //
 //
 //            }else{
-                Intent i = new Intent(PatientActivity.this, RegisterDeviceActivity.class);
+                Intent i = new Intent(PatientActivity.this, EcgOptionsActivity.class);
                 i.putExtra("PTNO", pt_id);
                 startActivity(i);
 
