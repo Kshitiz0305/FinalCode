@@ -41,6 +41,17 @@ binding.btnNewPatient.setOnClickListener(new View.OnClickListener() {
     }
 });
 
+        binding.existingBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                Intent i = new Intent(LandingActivity.this,SearchActivity.class);
+                startActivity(i);
+
+
+            }
+        });
+
 binding.logout.setOnClickListener(new View.OnClickListener() {
     @Override
     public void onClick(View view) {

@@ -27,7 +27,10 @@ import java.io.IOException;
 import java.nio.channels.FileChannel;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.List;
+import java.util.Observable;
 
+import io.reactivex.Flowable;
 
 
 /**
@@ -344,6 +347,60 @@ public class LabDB extends SQLiteOpenHelper {
         }
         db.close();
         return result;
+    }
+
+    public Flowable<List<PatientModel>> getPatientObservableByName(String name) {
+        name+="%";
+
+
+        List<PatientModel> patientModelList= new ArrayList<>();
+        Flowable<List<PatientModel>> patientModelFlowable= Flowable.just(patientModelList);
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.rawQuery("select * from " + TABLE_PT_DETAILS+" where ptName  like?", new String[]{name});
+        while (cursor.moveToNext()) {
+            PatientModel patientModel = new PatientModel();
+            patientModel.setId(cursor.getInt(0));
+            patientModel.setPtNo(cursor.getString(1));
+            patientModel.setPtName(cursor.getString(2));
+            patientModel.setPtAddress(cursor.getString(3));
+            patientModel.setPtContactNo(cursor.getString(4));
+            patientModel.setPtEmail(cursor.getString(5));
+            patientModel.setPtAge(cursor.getString(6));
+            patientModelList.add(patientModel);
+
+
+        }
+
+        cursor.close();
+        db.close();
+        patientModelFlowable= Flowable.just(patientModelList);
+        return patientModelFlowable;
+    }
+    public Flowable<List<PatientModel>> getPatientObservableId(String Id) {
+
+
+        List<PatientModel> patientModelList= new ArrayList<>();
+        Flowable<List<PatientModel>> patientModelFlowable= Flowable.just(patientModelList);
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.rawQuery("select * from " + TABLE_PT_DETAILS+" where ptNo  =?", new String[]{Id});
+        while (cursor.moveToNext()) {
+            PatientModel patientModel = new PatientModel();
+            patientModel.setId(cursor.getInt(0));
+            patientModel.setPtNo(cursor.getString(1));
+            patientModel.setPtName(cursor.getString(2));
+            patientModel.setPtAddress(cursor.getString(3));
+            patientModel.setPtContactNo(cursor.getString(4));
+            patientModel.setPtEmail(cursor.getString(5));
+            patientModel.setPtAge(cursor.getString(6));
+            patientModelList.add(patientModel);
+
+
+        }
+
+        cursor.close();
+        db.close();
+        patientModelFlowable= Flowable.just(patientModelList);
+        return patientModelFlowable;
     }
 
     public PatientModel getPatient(String pt_no, int pt_id) {

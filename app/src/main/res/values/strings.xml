@@ -48,6 +48,7 @@
     <string name="unhealthy_habits">Unhealthy Habits</string>
     <string name="smoke">Smoking</string>
     <string name="alcohol_consumption">Alcohol</string>
+    <string name="ptId">pt_ID</string>
     <string name="pieces">Pieces</string>
     <string name="pegs">Pegs</string>
     <string name="fitness_ecg_report">FITNESS ECG Report</string>
@@ -59,12 +60,12 @@
     <string name="message_text">Alert!</string>
     <string name="ok_text">OK</string>
     <string-array name="search_option">
-        <item>  </item>
+           <item>
+            Name
+        </item>
         <item>
             ID
         </item>
-        <item>
-            Name
-        </item>
+
     </string-array>
 </resources>

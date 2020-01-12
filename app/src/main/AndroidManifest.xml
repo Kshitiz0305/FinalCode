@@ -54,6 +54,7 @@
         <activity android:name=".ui.PdfViewActivity" />
         <activity android:name=".ui.ECGactivity" />
         <activity android:name=".ui.ViewPDFActivity" />
+        <activity android:name=".ui.SearchActivity" />
     </application>
 
 </manifest>
