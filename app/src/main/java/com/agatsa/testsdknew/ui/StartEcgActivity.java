@@ -3,8 +3,6 @@ package com.agatsa.testsdknew.ui;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.MotionEvent;
-import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
@@ -34,68 +32,43 @@ public class StartEcgActivity extends AppCompatActivity {
         //final String authKey= "5a3b4c16b4a56b000132f5d50aa253d8ebd34707a832ed4432413816";
         //final String authKey= "";
 
-        single.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(StartEcgActivity.this, ECGactivity.class);
-                intent.putExtra("ecgType", "single");
-                startActivity(intent);
-            }
+        single.setOnClickListener(view -> {
+            Intent intent = new Intent(StartEcgActivity.this, ECGactivity.class);
+            intent.putExtra("ecgType", "single");
+            startActivity(intent);
         });
-        limb.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(StartEcgActivity.this, ECGactivity.class);
-                intent.putExtra("ecgType", "limb");
-                startActivity(intent);
-            }
+        limb.setOnClickListener(view -> {
+            Intent intent = new Intent(StartEcgActivity.this, ECGactivity.class);
+            intent.putExtra("ecgType", "limb");
+            startActivity(intent);
         });
-        chest.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(StartEcgActivity.this, ECGactivity.class);
-                intent.putExtra("ecgType", "chest");
-                startActivity(intent);
-            }
+        chest.setOnClickListener(view -> {
+            Intent intent = new Intent(StartEcgActivity.this, ECGactivity.class);
+            intent.putExtra("ecgType", "chest");
+            startActivity(intent);
         });
-        twelve.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(StartEcgActivity.this, ECGactivity.class);
-                intent.putExtra("ecgType", "twelve");
-                startActivity(intent);
-            }
+        twelve.setOnClickListener(view -> {
+            Intent intent = new Intent(StartEcgActivity.this, ECGactivity.class);
+            intent.putExtra("ecgType", "twelve");
+            startActivity(intent);
         });
 
-        b3.setOnTouchListener(new View.OnTouchListener() {
+        b3.setOnTouchListener((view, motionEvent) -> false);
+        b3.setOnClickListener(view -> initiateEcg.registerDevice(StartEcgActivity.this, authKey, new RegisterDeviceResponse() {
             @Override
-            public boolean onTouch(View view, MotionEvent motionEvent) {
-                return false;
+            public void onSuccess(String msg) {
+                Toast.makeText(StartEcgActivity.this, "device registered " + msg, Toast.LENGTH_SHORT).show();
             }
-        });
-        b3.setOnClickListener(new View.OnClickListener() {
+
             @Override
-            public void onClick(View view) {
-                initiateEcg.registerDevice(StartEcgActivity.this, authKey, new RegisterDeviceResponse() {
-                    @Override
-                    public void onSuccess(String msg) {
-                        Toast.makeText(StartEcgActivity.this, "device registered " + msg, Toast.LENGTH_SHORT).show();
-                    }
-
-                    @Override
-                    public void onError(Errors errors) {
-                        Log.e("msg register", errors.getErrorMsg());
-
-                    }
-                });
-            }
-        });
-
-        b4.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
+            public void onError(Errors errors) {
+                Log.e("msg register", errors.getErrorMsg());
 
             }
+        }));
+
+        b4.setOnClickListener(view -> {
+
         });
 
     }

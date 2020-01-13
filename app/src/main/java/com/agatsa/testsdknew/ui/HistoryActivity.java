@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.util.Log;
+import android.view.MenuItem;
 import android.widget.Toast;
 
 import com.agatsa.sanketlife.callbacks.SyncEcgCallBack;
@@ -48,6 +49,7 @@ public class HistoryActivity extends AppCompatActivity implements HistoryCallbac
         setContentView(R.layout.activity_history);
         toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         initiateEcg = new InitiateEcg();
 
         recyclerView = findViewById(R.id.recyclerView);
@@ -169,5 +171,26 @@ public class HistoryActivity extends AppCompatActivity implements HistoryCallbac
         longEcgConfigInternals = initiateEcg.getListOfUnsyncedLongEcg(getApplicationContext(),"test");
         recyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext(),LinearLayoutManager.VERTICAL,false));
         recyclerView.setAdapter(new HistoryStressAdapter(getApplicationContext(), longEcgConfigInternals,this));
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                Intent intent = new Intent(HistoryActivity.this, EcgOptionsActivity.class);
+                startActivity(intent);
+                finish();
+                break;
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        Intent intent = new Intent(HistoryActivity.this, EcgOptionsActivity.class);
+        startActivity(intent);
+
     }
 }

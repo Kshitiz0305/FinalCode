@@ -43,7 +43,7 @@ public class NewMainActivity extends AppCompatActivity {
 //    btnRegisterDevice, btnTakeSingleLeadECG, btnCreatePDF, btnCreateLongPDF , btnLongECG
 //            ,  btnLeadTwo, btnV1, btnV2,btnV3,btnV4,btnV5,btnV6 ,btnHistoryStress
 
-    TextView LeadOne,btnLongECG;
+    TextView LeadOne,btnLongECG, btnLeadTwo;
     private Context mContext;
     private EditText editTextTime;
     int ptno = 0;
@@ -87,7 +87,7 @@ public class NewMainActivity extends AppCompatActivity {
         btnCreateLongPDF = findViewById(R.id.btnCreateLongPDF);
         btnLongECG = findViewById(R.id.btnLongECG);
         LeadOne = findViewById(R.id.LeadOne);
-//        btnLeadTwo = findViewById(R.id.btnLeadTwo);
+        btnLeadTwo = findViewById(R.id.btnLeadTwo);
 //
 //        btnV1 = findViewById(R.id.btnV1);
 //        btnV2 = findViewById(R.id.btnV2);
@@ -132,12 +132,7 @@ public class NewMainActivity extends AppCompatActivity {
 //
 //        });
 
-//        btnLeadTwo.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                getReadingForECG(8);
-//            }
-//        });
+        btnLeadTwo.setOnClickListener(v -> getReadingForECG(8));
 //
 //        btnV1.setOnClickListener(new View.OnClickListener() {
 //            @Override
@@ -268,7 +263,6 @@ public class NewMainActivity extends AppCompatActivity {
         initiateEcg.saveEcgData(mContext, "test", new SaveEcgCallBack() {
             @Override
             public void onSuccess(Success success, EcgConfig ecgConfig) {
-               Log.d("Heartrate", String.valueOf(ecgConfig.getHeartRate()));
                 LabDB db = new LabDB(getApplicationContext());
                 ecgReport.setPt_no(ptno);
                 ecgReport.setHeartrate(ecgConfig.getHeartRate());
@@ -331,7 +325,6 @@ public class NewMainActivity extends AppCompatActivity {
             @Override
             public void onSuccess(Success success, LongEcgConfig longEcgConfig) {
                 heartratevalue=String.valueOf(longEcgConfig.getHeartRate());
-                Log.d("LongecgHeartratevalue", heartratevalue);
                 LabDB db = new LabDB(getApplicationContext());
                 longECGReport.setPt_no(ptno);
                 longECGReport.setHeartrate(longEcgConfig.getHeartRate());

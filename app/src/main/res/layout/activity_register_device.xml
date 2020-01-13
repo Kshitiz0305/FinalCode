@@ -16,7 +16,7 @@
         <ImageView
             android:layout_width="match_parent"
             android:layout_height="400dp"
-            app:srcCompat="@drawable/sunya_logo" />
+            app:srcCompat="@drawable/ic_position_lead" />
 
 
         <LinearLayout
