@@ -10,6 +10,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/button_view"
+        android:textColor="@color/white"
+        android:background="@drawable/rect_orange"
         android:layout_gravity="center_horizontal|center_vertical"
         android:text="View pdf"/>
 

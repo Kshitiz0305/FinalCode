@@ -3,6 +3,7 @@ package com.agatsa.testsdknew;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
@@ -30,7 +31,7 @@ import com.ontbee.legacyforks.cn.pedant.SweetAlert.SweetAlertDialog;
  public  class SingleLeadECG extends AppCompatActivity implements ResponseCallback {
     private static final String CLIENT_ID = "5a3b4c16b4a56b000132f5d5b4580266565440bda51dcb4122d39844";
     private static final String SECRET_ID = "5a3b4c16b4a56b000132f5d5746be305d56c49e49cc88b12ccb05d71";
-    private Button btnsavereport;
+    private Button btnsavereport,btncreatepdf;
 
     LinearLayout LeadOne,txttakeagain,btnsavell,viewreportll;
     private Context mContext;
@@ -42,6 +43,7 @@ import com.ontbee.legacyforks.cn.pedant.SweetAlert.SweetAlertDialog;
     static int state=0;
 
     InitiateEcg initiateEcg;
+     String path = "/storage/emulated/0/DCIM/sanket/";
 
 
 
@@ -52,6 +54,7 @@ import com.ontbee.legacyforks.cn.pedant.SweetAlert.SweetAlertDialog;
         setContentView(R.layout.activity_single_lead);
         pref = this.getSharedPreferences("sunyahealth", Context.MODE_PRIVATE);
         ptno = pref.getInt("pt_id", 0);
+
 
         initiateEcg = new InitiateEcg();
         initViews();
@@ -88,6 +91,7 @@ import com.ontbee.legacyforks.cn.pedant.SweetAlert.SweetAlertDialog;
         txttakeagain=findViewById(R.id.txttakeagain);
         btnsavell=findViewById(R.id.btnsavell);
         viewreportll=findViewById(R.id.viewreportll);
+        btncreatepdf=findViewById(R.id.btncreatepdf);
 
 
 
@@ -141,9 +145,7 @@ import com.ontbee.legacyforks.cn.pedant.SweetAlert.SweetAlertDialog;
 //
 //        });
 
-
-
-//        btnCreatePDF.setOnClickListener(v -> createPDF());
+        btncreatepdf.setOnClickListener(v -> createPDF());
 
 //        btnHistory.setOnClickListener(view -> {
 //            Intent intent = new Intent(getApplicationContext(), HistoryActivity.class);
@@ -231,8 +233,11 @@ import com.ontbee.legacyforks.cn.pedant.SweetAlert.SweetAlertDialog;
             public void onPdfAvailable(EcgConfig ecgConfig) {
                 Log.e("makepdfpath", ecgConfig.getFileUrl());
                 String filePath = ecgConfig.getFileUrl();
-                Intent intent = new Intent(SingleLeadECG.this, PdfViewActivity.class);
-                intent.putExtra("fileUrl", filePath);
+//                Intent intent = new Intent(SingleLeadECG.this, PdfViewActivity.class);
+//                intent.putExtra("fileUrl", filePath);
+                Intent intent;
+                intent = new Intent(Intent.ACTION_VIEW);
+                intent.setDataAndType(Uri.parse(path), "application/pdf");
                 startActivity(intent);
 
             }
