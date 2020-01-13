@@ -28,7 +28,9 @@ import com.ontbee.legacyforks.cn.pedant.SweetAlert.SweetAlertDialog;
 
 
 
- public  class SingleLeadECG extends AppCompatActivity implements ResponseCallback {
+ public  class
+
+ SingleLeadECG extends AppCompatActivity implements ResponseCallback {
     private static final String CLIENT_ID = "5a3b4c16b4a56b000132f5d5b4580266565440bda51dcb4122d39844";
     private static final String SECRET_ID = "5a3b4c16b4a56b000132f5d5746be305d56c49e49cc88b12ccb05d71";
     private Button btnsavereport,btncreatepdf;
