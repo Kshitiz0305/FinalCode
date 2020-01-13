@@ -66,6 +66,14 @@
         <item>
             ID
         </item>
-
     </string-array>
+    <string name="lead_2">Lead 2</string>
+    <string name="lead_1">Lead 1</string>
+    <string name="fitness_test">Fitness Test</string>
+    <string name="single_lead">Single Lead</string>
+    <string name="pair_device">PAIR DEVICE</string>
+    <string name="save_report">SAVE REPORT</string>
+    <string name="take_again">Take Again</string>
+
+
 </resources>

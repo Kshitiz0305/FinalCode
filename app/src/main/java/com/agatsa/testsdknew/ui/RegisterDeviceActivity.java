@@ -93,7 +93,7 @@ public class RegisterDeviceActivity extends AppCompatActivity {
 
 
             nxtbtn.setOnClickListener(view1 -> {
-                Intent i = new Intent(RegisterDeviceActivity.this, NewMainActivity.class);
+                Intent i = new Intent(RegisterDeviceActivity.this, EcgOptionsActivity.class);
                 startActivity(i);
             });
 
@@ -155,6 +155,15 @@ public class RegisterDeviceActivity extends AppCompatActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        Intent intent = new Intent(RegisterDeviceActivity.this, PatientActivity.class);
+        startActivity(intent);
+
     }
 
 

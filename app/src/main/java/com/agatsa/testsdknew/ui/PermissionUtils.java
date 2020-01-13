@@ -56,13 +56,10 @@ public class PermissionUtils extends AppCompatActivity implements ActivityCompat
                     message = message + ", " + permissionsNeeded.get(i);
                 }
                 Alert("Permission Request!", message, context,
-                        new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                dialog.dismiss();
-                                ActivityCompat.requestPermissions((Activity) context, permissionsList.toArray(new String[permissionsList.size()]),
-                                        REQUEST_CODE_ASK_MULTIPLE_PERMISSIONS);
-                            }
+                        (dialog, which) -> {
+                            dialog.dismiss();
+                            ActivityCompat.requestPermissions((Activity) context, permissionsList.toArray(new String[permissionsList.size()]),
+                                    REQUEST_CODE_ASK_MULTIPLE_PERMISSIONS);
                         });
                 all_permission_allowed = false;
                 return;
