@@ -11,156 +11,163 @@
 
         <include layout="@layout/toolbar"/>
 
-        <LinearLayout
+        <ScrollView
             android:layout_width="match_parent"
-            android:orientation="vertical"
             android:layout_height="wrap_content">
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                >
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginRight="@dimen/_5sdp"
-                    android:fontFamily="@font/sfpro_display_semibold"
-                    android:gravity="right"
-                    android:padding="8sp"
-                    android:id="@+id/haName"
-                    android:text="Hi Ranjan"
-                    android:layout_alignParentEnd="true"
-                    android:textColor="@color/colorPrimaryDark"
-                    android:textSize="15sp" />
-            </RelativeLayout>
-
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-                <ImageView
-                    android:layout_width="@dimen/_200sdp"
-                    android:layout_height="@dimen/_150sdp"
-                    android:src="@drawable/sunyahealth"
-                    android:scaleType="fitXY"
-                    android:layout_centerInParent="true"
-                    />
-
-            </RelativeLayout>
-
-
             <LinearLayout
                 android:layout_width="match_parent"
                 android:orientation="vertical"
-                android:weightSum="10"
                 android:layout_height="wrap_content">
-                <LinearLayout
-                    android:layout_width="@dimen/_230sdp"
-                    android:layout_height="@dimen/_40sdp"
-                    android:orientation="horizontal"
-                    android:id="@+id/btnVItal"
-                    android:background="@drawable/bg_gray_border"
-                    android:gravity="center"
-                    android:layout_gravity="center">
-             <Spinner
-                 android:layout_width="match_parent"
-                 android:layout_height="wrap_content"
-                 android:id="@+id/sp_searchType"
-                 android:entries="@array/search_option"/>
-
-                </LinearLayout>
-
-                <LinearLayout
+                <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/_25sdp"
-                    android:gravity="center"
-                    android:orientation="horizontal"
                     >
-                    <LinearLayout
-                        android:layout_width="@dimen/_170sdp"
-                        android:layout_height="@dimen/_40sdp"
-                        android:orientation="horizontal"
-                        android:id="@+id/ll_id"
-                        android:background="@drawable/bg_gray_border"
-                        android:visibility="gone"
-                        android:layout_gravity="center">
-                        <EditText
-                            android:layout_width="match_parent"
-                            android:layout_height="@dimen/_40sdp"
-                            android:padding="@dimen/_5sdp"
-                            android:textSize="18sp"
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="@dimen/_5sdp"
+                        android:fontFamily="@font/sfpro_display_semibold"
+                        android:gravity="right"
+                        android:padding="8sp"
+                        android:id="@+id/haName"
+                        android:text="Hi Ranjan"
+                        android:layout_alignParentEnd="true"
+                        android:textColor="@color/colorPrimaryDark"
+                        android:textSize="15sp" />
+                </RelativeLayout>
 
-                            android:id="@+id/et_id"
-                            android:hint="id"
-                            android:fontFamily="@font/sfpro_display_semibold"
-                            />
-
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="@dimen/_170sdp"
-                        android:layout_height="@dimen/_40sdp"
-                        android:orientation="horizontal"
-                        android:id="@+id/ll_name"
-                        android:background="@drawable/bg_gray_border"
-                        android:layout_gravity="center">
-                        <EditText
-                            android:layout_width="@dimen/_180sdp"
-                            android:layout_height="@dimen/_40sdp"
-                            android:padding="@dimen/_5sdp"
-                            android:textSize="18sp"
-                            android:hint="@string/name"
-                            android:id="@+id/et_name"
-                            android:fontFamily="@font/sfpro_display_semibold"
-                            />
-
-
-
-                    </LinearLayout>
-
-
-<!--                    <CheckBox-->
-<!--                        android:layout_width="@dimen/_35sdp"-->
-<!--                        android:layout_height="@dimen/_35sdp"-->
-<!--                        android:layout_marginLeft="@dimen/_5sdp"-->
-<!--                        android:layout_gravity="center"-->
-<!--                        />-->
-
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
                     <ImageView
-                        android:layout_width="@dimen/_40sdp"
-                        android:layout_height="@dimen/_35sdp"
-                        android:layout_gravity="center"
-                        android:id="@+id/btnsearch"
-                        android:background="@drawable/rect_green"
-                        android:layout_marginLeft="@dimen/_10sdp"
-                        android:src="@drawable/ic_search_white_24dp" />
+                        android:layout_width="@dimen/_200sdp"
+                        android:layout_height="@dimen/_150sdp"
+                        android:src="@drawable/sunyahealth"
+                        android:scaleType="fitXY"
+                        android:layout_centerInParent="true"
+                        />
+
+                </RelativeLayout>
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:orientation="vertical"
+                    android:weightSum="10"
+                    android:layout_height="wrap_content">
+                    <LinearLayout
+                        android:layout_width="@dimen/_230sdp"
+                        android:layout_height="@dimen/_40sdp"
+                        android:orientation="horizontal"
+                        android:id="@+id/btnVItal"
+                        android:background="@drawable/bg_gray_border"
+                        android:gravity="center"
+                        android:layout_gravity="center">
+                        <Spinner
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/sp_searchType"
+                            android:entries="@array/search_option"/>
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/_25sdp"
+                        android:gravity="center"
+                        android:orientation="horizontal"
+                        >
+                        <LinearLayout
+                            android:layout_width="@dimen/_170sdp"
+                            android:layout_height="@dimen/_40sdp"
+                            android:orientation="horizontal"
+                            android:id="@+id/ll_id"
+                            android:background="@drawable/bg_gray_border"
+                            android:visibility="gone"
+                            android:layout_gravity="center">
+                            <EditText
+                                android:layout_width="match_parent"
+                                android:layout_height="@dimen/_40sdp"
+                                android:padding="@dimen/_5sdp"
+                                android:textSize="18sp"
+
+                                android:id="@+id/et_id"
+                                android:hint="id"
+                                android:fontFamily="@font/sfpro_display_semibold"
+                                />
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="@dimen/_170sdp"
+                            android:layout_height="@dimen/_40sdp"
+                            android:orientation="horizontal"
+                            android:id="@+id/ll_name"
+                            android:background="@drawable/bg_gray_border"
+                            android:layout_gravity="center">
+                            <EditText
+                                android:layout_width="@dimen/_180sdp"
+                                android:layout_height="@dimen/_40sdp"
+                                android:padding="@dimen/_5sdp"
+                                android:textSize="18sp"
+                                android:hint="@string/name"
+                                android:id="@+id/et_name"
+                                android:fontFamily="@font/sfpro_display_semibold"
+                                />
+
+
+
+                        </LinearLayout>
+
+
+                        <!--                    <CheckBox-->
+                        <!--                        android:layout_width="@dimen/_35sdp"-->
+                        <!--                        android:layout_height="@dimen/_35sdp"-->
+                        <!--                        android:layout_marginLeft="@dimen/_5sdp"-->
+                        <!--                        android:layout_gravity="center"-->
+                        <!--                        />-->
+
+                        <ImageView
+                            android:layout_width="@dimen/_40sdp"
+                            android:layout_height="@dimen/_35sdp"
+                            android:layout_gravity="center"
+                            android:id="@+id/btnsearch"
+                            android:background="@drawable/rect_green"
+                            android:layout_marginLeft="@dimen/_10sdp"
+                            android:src="@drawable/ic_search_white_24dp" />
+
+                    </LinearLayout>
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/rv_option"
+                        tools:listitem="@layout/table_item"
+
+                        />
+
+
+
+                    <Button
+                        android:layout_width="@dimen/_180sdp"
+                        android:layout_height="@dimen/_40sdp"
+                        android:orientation="horizontal"
+                        android:id="@+id/btnproceed"
+                        android:layout_marginTop="@dimen/_25sdp"
+                        android:text="Proceed"
+                        android:textColor="@color/white"
+                        android:background="@drawable/toast_backgraound"
+                        android:layout_marginBottom="@dimen/_5sdp"
+                        android:layout_gravity="center"/>
 
                 </LinearLayout>
 
-                <androidx.recyclerview.widget.RecyclerView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/rv_option"
-                    tools:listitem="@layout/table_item"
-
-                    />
-
-
-
-                <Button
-                    android:layout_width="@dimen/_180sdp"
-                    android:layout_height="@dimen/_40sdp"
-                    android:orientation="horizontal"
-                    android:id="@+id/btnproceed"
-                    android:layout_marginTop="@dimen/_25sdp"
-                    android:text="Proceed"
-                    android:textColor="@color/white"
-                    android:background="@drawable/toast_backgraound"
-                    android:layout_gravity="center"/>
 
             </LinearLayout>
 
+        </ScrollView>
 
-        </LinearLayout>
 
 
 

@@ -1,5 +1,6 @@
 package com.agatsa.testsdknew.ui;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -9,6 +10,7 @@ import androidx.databinding.DataBindingUtil;
 
 import com.agatsa.testsdknew.Models.PatientModel;
 import com.agatsa.testsdknew.R;
+import com.agatsa.testsdknew.customviews.DialogUtil;
 import com.agatsa.testsdknew.databinding.ActivityActionBinding;
 import com.agatsa.testsdknew.databinding.TestActionBinding;
 
@@ -17,6 +19,9 @@ public class TestActivity extends AppCompatActivity {
     TestActionBinding binding;
     PatientModel patientModel;
     int ptid;
+
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -63,12 +68,18 @@ binding.btnNewPatient.setOnClickListener(new View.OnClickListener() {
         });
 
 
+    }
+    @Override
+    public void onBackPressed() {
 
+        DialogUtil.getOKCancelDialog(this, "", "Do you want to discard the test of " + patientModel.getPtName(), "Yes","No", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                Intent intent = new Intent(TestActivity.this,LandingActivity.class);
+                startActivity(intent);
 
-
-
-
-
+            }
+        });
     }
 
 

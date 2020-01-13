@@ -60,7 +60,7 @@ binding.ecgTest.setOnClickListener(new View.OnClickListener() {
 //                startActivity(i);
 //
 //            }
-//        });
+
 
 
 

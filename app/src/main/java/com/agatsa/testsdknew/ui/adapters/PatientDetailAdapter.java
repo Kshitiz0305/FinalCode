@@ -68,16 +68,22 @@ public class PatientDetailAdapter extends RecyclerView.Adapter<PatientDetailAdap
 
             holder.tableItemBinding.checker.setChecked(position == lastCheckedPosition);
             if(position == lastCheckedPosition){
-
+                selectedPatient =patient;
                 holder.tableItemBinding.container.setBackgroundColor(context.getResources().getColor(R.color.blue_btn_bg_pressed_color));
             }
             else {
                 holder.tableItemBinding.container.setBackgroundColor(context.getResources().getColor(R.color.white));
 
             }
-            selectedPatient =patient;
+
         }
 
+        holder.tableItemBinding.checker.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+
+            }
+        });
 
 
 
