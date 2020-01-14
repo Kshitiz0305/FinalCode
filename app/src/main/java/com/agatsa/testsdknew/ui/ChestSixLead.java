@@ -6,6 +6,7 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.Toast;
@@ -32,6 +33,7 @@ public class ChestSixLead extends AppCompatActivity {
     private Button btnSavechestreport,btnchestHistory ;
 
     LinearLayout txtvone, txtvtwo,txtvthree,txtvfour,txtvfive,txtvsix;
+    LinearLayout txtvoneagain, txtvtwoagain,txtvthreeagain,txtvfouragain,txtvfiveagain,txtvsixagain;
     private Context mContext;
     int ptno = 0;
     SharedPreferences pref;
@@ -75,6 +77,12 @@ public class ChestSixLead extends AppCompatActivity {
         txtvsix = findViewById(R.id.txtvsix);
         btnSavechestreport = findViewById(R.id.btnSavechestreport);
         btnchestHistory = findViewById(R.id.btnchestHistory);
+        txtvoneagain=findViewById(R.id.txtvoneagain);
+        txtvtwoagain=findViewById(R.id.txtvtwoagain);
+        txtvthreeagain=findViewById(R.id.txtvthreeagain);
+        txtvfouragain=findViewById(R.id.txtvfouragain);
+        txtvfiveagain=findViewById(R.id.txtvfiveagain);
+        txtvsixagain=findViewById(R.id.txtvsixagain);
 
 
 
@@ -88,15 +96,29 @@ public class ChestSixLead extends AppCompatActivity {
 
        txtvone.setOnClickListener(v -> getReadingForECG(2));
 
+       txtvoneagain.setOnClickListener(v -> {
+           getReadingForECG(2);
+
+       });
+
         txtvtwo.setOnClickListener(v -> getReadingForECG(3));
+
+        txtvtwoagain.setOnClickListener(v -> getReadingForECG(3));
 
         txtvthree.setOnClickListener(v -> getReadingForECG(4));
 
+        txtvthreeagain.setOnClickListener(v -> getReadingForECG(4));
+
         txtvfour.setOnClickListener(v -> getReadingForECG(5));
+
+        txtvfouragain.setOnClickListener(v -> getReadingForECG(5));
 
         txtvfive.setOnClickListener(v -> getReadingForECG(6));
 
+        txtvfiveagain.setOnClickListener(v -> getReadingForECG(6));
+
         txtvsix.setOnClickListener(v -> getReadingForECG(7));
+        txtvsixagain.setOnClickListener(v -> getReadingForECG(7));
 
         btnSavechestreport.setOnClickListener(v -> createPDF());
 

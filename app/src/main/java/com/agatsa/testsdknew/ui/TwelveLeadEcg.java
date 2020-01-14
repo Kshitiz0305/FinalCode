@@ -33,6 +33,7 @@ public class TwelveLeadEcg extends AppCompatActivity {
     private Button twelvebtnSavechestreport,twelvebtnViewpdf ;
 
     LinearLayout txttwelveleadone, txttwelveleadtwo,txttwelvevone,txttwelvevtwo,txttwelvevthree,txttwelvevfour,txttwelvevfive,txttwelvevsix;
+    LinearLayout txttwelveleadoneagain, txttwelveleadtwoagain,txttwelvevoneagain,txttwelvevtwoagain,txttwelvevthreeagain,txttwelvevfouragain,txttwelvevfiveagain,txttwelvevsixagain;
     private Context mContext;
     int ptno = 0;
     SharedPreferences pref;
@@ -75,6 +76,14 @@ public class TwelveLeadEcg extends AppCompatActivity {
         txttwelvevsix = findViewById(R.id.txttwelvevsix);
         twelvebtnSavechestreport = findViewById(R.id.twelvebtnSavechestreport);
         twelvebtnViewpdf = findViewById(R.id.twelvebtnViewpdf);
+        txttwelveleadoneagain=findViewById(R.id.txttwelveleadoneagain);
+//        txttwelveleadtwoagain=findViewById(R.id.txttwelveleadtwoagain);
+//        txttwelvevoneagain=findViewById(R.id.txttwelvevoneagain);
+//        txttwelvevtwoagain=findViewById(R.id.txttwelvevtwoagain);
+//        txttwelvevthreeagain=findViewById(R.id.txttwelvevthreeagain);
+//        txttwelvevfouragain=findViewById(R.id.txttwelvevfouragain);
+//        txttwelvevfiveagain=findViewById(R.id.txttwelvevfouragain);
+//        txttwelvevsixagain=findViewById(R.id.txttwelvevfouragain);
 
 
 

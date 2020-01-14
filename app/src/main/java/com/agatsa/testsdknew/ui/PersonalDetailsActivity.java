@@ -14,6 +14,7 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
@@ -28,19 +29,30 @@ import androidx.databinding.DataBindingUtil;
 
 import com.agatsa.testsdknew.Models.PatientModel;
 import com.agatsa.testsdknew.Models.VitalSign;
+import com.agatsa.testsdknew.Models.districtsplaces.DistrictPlaces;
+import com.agatsa.testsdknew.Models.districtsplaces.Districts;
 import com.agatsa.testsdknew.R;
 import com.agatsa.testsdknew.customviews.DialogUtil;
 import com.agatsa.testsdknew.databinding.ActivityNewPatientDetailBinding;
+import com.google.gson.Gson;
 import com.hornet.dateconverter.DateConverter;
 import com.hornet.dateconverter.DatePicker.DatePickerDialog;
 import com.hornet.dateconverter.Model;
 
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.Reader;
+import java.io.StringWriter;
+import java.io.Writer;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import br.com.ilhasoft.support.validation.Validator;
@@ -77,8 +89,12 @@ public class PersonalDetailsActivity extends AppCompatActivity implements DatePi
     int changedage=-102;
     ActivityNewPatientDetailBinding binding;
 
+
+ArrayList<String> distictnames = new ArrayList<>();
  Validator validator;
  int recentid;
+
+ DistrictPlaces districtPlaces ;
 
 
 
@@ -168,7 +184,62 @@ public class PersonalDetailsActivity extends AppCompatActivity implements DatePi
             }
         });
 
+        String generatedjsonString="";
 
+        try {
+            generatedjsonString = getJsonStringfromFile("locationdetails", "raw", getPackageName());
+        }
+        catch (Exception e){
+
+
+
+        }
+
+        try{
+            if(!generatedjsonString.equals("")){
+
+                Gson gson = new Gson();
+                DistrictPlaces districtPlaces =gson.fromJson(generatedjsonString,DistrictPlaces.class);
+
+                for(Districts district:districtPlaces.getDistricts()){
+                    distictnames.add(district.getName());
+
+
+                }
+
+               if( distictnames.size()>0)
+                binding.spDistrict.setItem(distictnames);
+
+
+            }
+
+
+
+        }
+        catch (Exception e){
+            DialogUtil.getOKDialog(this,"","Please edit the json file in resource properly","Ok");
+
+
+
+
+        }
+
+
+
+//        binding.countrySpinner.setItem(countryName);
+
+//        mBinding.countrySpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+//            @Override
+//            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+//                selectedCountryIso = countryList.get(i).getIso1();
+//                selectedCountryName = countryName.get(i);
+//            }
+//
+//            @Override
+//            public void onNothingSelected(AdapterView<?> adapterView) {
+//
+//            }
+//        });
 
         binding.rgDobType.setOnCheckedChangeListener((radioGroup, i) -> {
 
@@ -917,6 +988,49 @@ catch (Exception e){
             age--;
     }
         return age;
+    }
+
+
+    public String getJsonStringfromFile(String jsonFileName, String resources, String packagename) {
+
+        InputStream is = getResources().openRawResource(getResourceId(jsonFileName,resources,packagename));
+        Writer writer = new StringWriter();
+        char[] buffer = new char[1024];
+        try {
+            Reader reader;
+            reader = new BufferedReader(new InputStreamReader(is, "UTF-8"));
+            int n;
+            while ((n = reader.read(buffer)) != -1) {
+                writer.write(buffer, 0, n);
+            }
+
+            is.close();
+          }
+        catch (Exception e){
+
+
+
+        }
+
+
+        finally {
+
+        }
+
+        String jsonString = writer.toString();
+      return  jsonString;
+    }
+    public  int getResourceId(String pVariableName, String pResourcename, String pPackageName)
+    {
+        try {
+            Log.d("rantestid",String.valueOf(getResources().getIdentifier(pVariableName, pResourcename, pPackageName)));
+            return getResources().getIdentifier(pVariableName, pResourcename, pPackageName);
+        } catch (Exception e) {
+            Log.d("rantest",e.getLocalizedMessage());
+            e.printStackTrace();
+            return -1;
+        }
+
     }
 
 

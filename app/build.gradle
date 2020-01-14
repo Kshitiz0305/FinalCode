@@ -87,6 +87,17 @@ dependencies {
     implementation 'androidx.room:room-runtime:2.2.0-alpha02'
     annotationProcessor "androidx.room:room-compiler:2.2.0-alpha02"
 
+//    for smart serchable spinner
+    implementation 'com.github.chivorns:smartmaterialspinner:1.1.6'
+
+//     for gson converter
+    implementation 'com.squareup.retrofit2:converter-gson:2.5.0'
+
+
+    implementation 'pl.droidsonroids.gif:android-gif-drawable:1.2.19'
+
+
+
 
 
 

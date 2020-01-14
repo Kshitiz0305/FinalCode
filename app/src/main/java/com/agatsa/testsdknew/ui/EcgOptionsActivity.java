@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -36,7 +37,7 @@ public class EcgOptionsActivity extends AppCompatActivity {
     Toolbar toolbar;
     Button pairbtn;
     ProgressDialog mpd;
-    ImageView syncimg;
+    ImageView syncimg,longsyncimg;
     private final static int REQUEST_CODE_ASK_PERMISSIONS = 1;
     private static final String CLIENT_ID = "5a3b4c16b4a56b000132f5d5b4580266565440bda51dcb4122d39844";
     private static final String[] REQUIRED_SDK_PERMISSIONS = new String[]{
@@ -61,6 +62,7 @@ public class EcgOptionsActivity extends AppCompatActivity {
         FitnessECG=findViewById(R.id.FitnessECG);
         pairbtn=findViewById(R.id.register);
         syncimg=findViewById(R.id.syncimg);
+        longsyncimg=findViewById(R.id.longsyncimg);
 
 
 
@@ -103,6 +105,13 @@ public class EcgOptionsActivity extends AppCompatActivity {
 
         });
 
+        longsyncimg.setOnClickListener(v -> {
+            Intent i=new Intent(EcgOptionsActivity.this, HistoryActivity.class);
+            i.putExtra("type", EcgTypes.LONG_ECG);
+            startActivity(i);
+
+        });
+
 
 
 
@@ -130,7 +139,7 @@ public class EcgOptionsActivity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-        Intent intent = new Intent(EcgOptionsActivity.this, RegisterDeviceActivity.class);
+        Intent intent = new Intent(EcgOptionsActivity.this, TestActivity.class);
         startActivity(intent);
 
     }
@@ -162,7 +171,7 @@ public class EcgOptionsActivity extends AppCompatActivity {
 
                 return true;
             case android.R.id.home:
-                Intent intent = new Intent(EcgOptionsActivity.this, RegisterDeviceActivity.class);
+                Intent intent = new Intent(EcgOptionsActivity.this, TestActivity.class);
                 startActivity(intent);
                 finish();
                 return true;

@@ -6,8 +6,10 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -32,7 +34,8 @@ public class LimbSixLead extends AppCompatActivity {
     private static final String SECRET_ID = "5a3b4c16b4a56b000132f5d5746be305d56c49e49cc88b12ccb05d71";
     private Button btnSavelimbreport,btnlimbHistory;
 
-    LinearLayout txtlimbleadone,txtlimbtwo;
+    LinearLayout txtlimbleadone,savell,completetaskll,
+            txtlimboneagain,txtlimbleadtwo,txtlimbtwoagain,txtlimbagain;
     private Context mContext;
     int ptno = 0;
     SharedPreferences pref;
@@ -55,6 +58,7 @@ public class LimbSixLead extends AppCompatActivity {
 //        ecgReport=labdb.getLastEcgSign(ptno);
         mContext = getApplicationContext();
         toolbar = findViewById(R.id.toolbar);
+
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle("Limb Six Lead");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -68,19 +72,34 @@ public class LimbSixLead extends AppCompatActivity {
     private void initViews() {
         btnSavelimbreport = findViewById(R.id.btnSavelimbreport);
         txtlimbleadone = findViewById(R.id.txtlimbleadone);
-        txtlimbtwo = findViewById(R.id.txtlimbtwo);
+        savell=findViewById(R.id.savell);
+        txtlimbleadtwo = findViewById(R.id.txtlimbleadtwo);
         btnlimbHistory = findViewById(R.id.btnlimbHistory);
+        completetaskll=findViewById(R.id.completetaskll);
+        txtlimboneagain=findViewById(R.id.txtlimboneagain);
+        txtlimbtwoagain=findViewById(R.id.txtlimbtwoagain);
+        txtlimbagain=findViewById(R.id.txtlimbagain);
+
 
 
     }
 
     private void initOnClickListener() {
 
+        txtlimboneagain.setOnClickListener(v -> getReadingForECG(1));
+
+       txtlimbtwoagain.setOnClickListener(v -> getReadingForECG(8));
+
 
         txtlimbleadone.setOnClickListener(v -> getReadingForECG(1));
-        txtlimbtwo.setOnClickListener(v -> getReadingForECG(8));
+        txtlimbleadtwo.setOnClickListener(v -> getReadingForECG(8));
 
-        btnSavelimbreport.setOnClickListener(v -> createPDF());
+     btnSavelimbreport.setOnClickListener(v -> {
+//         savell.setVisibility(View.GONE);
+//         completetaskll.setVisibility(View.VISIBLE);
+         createPDF();
+
+     });
 
         btnlimbHistory.setOnClickListener(view -> {
             Intent intent = new Intent(getApplicationContext(), HistoryActivity.class);
@@ -120,24 +139,24 @@ public class LimbSixLead extends AppCompatActivity {
         initiateEcg.saveEcgData(mContext, "test", new SaveEcgCallBack() {
             @Override
             public void onSuccess(Success success, EcgConfig ecgConfig) {
-                LabDB db = new LabDB(getApplicationContext());
-                ecgReport.setPt_no(ptno);
-                ecgReport.setHeartrate(ecgConfig.getHeartRate());
-                ecgReport.setPr((ecgConfig.getpR()));
-                ecgReport.setQt(ecgConfig.getqT());
-                ecgReport.setQtc(ecgConfig.getqTc());
-                ecgReport.setQrs(ecgConfig.getqRs());
-                ecgReport.setSdnn(ecgConfig.getSdnn());
-                ecgReport.setRmssd(ecgConfig.getRmssd());
-                ecgReport.setMrr(ecgConfig.getmRR());
-                ecgReport.setFinding(ecgConfig.getFinding());
-                int last_ecgsign_row_id = db.SaveSingleleadECGSign(ecgReport);
-                try {
-                    Thread.sleep(1000);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-                ecgReport.setRow_id(last_ecgsign_row_id);
+//                LabDB db = new LabDB(getApplicationContext());
+//                ecgReport.setPt_no(ptno);
+//                ecgReport.setHeartrate(ecgConfig.getHeartRate());
+//                ecgReport.setPr((ecgConfig.getpR()));
+//                ecgReport.setQt(ecgConfig.getqT());
+//                ecgReport.setQtc(ecgConfig.getqTc());
+//                ecgReport.setQrs(ecgConfig.getqRs());
+//                ecgReport.setSdnn(ecgConfig.getSdnn());
+//                ecgReport.setRmssd(ecgConfig.getRmssd());
+//                ecgReport.setMrr(ecgConfig.getmRR());
+//                ecgReport.setFinding(ecgConfig.getFinding());
+//                int last_ecgsign_row_id = db.SaveSingleleadECGSign(ecgReport);
+//                try {
+//                    Thread.sleep(1000);
+//                } catch (InterruptedException e) {
+//                    e.printStackTrace();
+//                }
+//                ecgReport.setRow_id(last_ecgsign_row_id);
                 makePDF(ecgConfig);
                 Toast.makeText(mContext, success.getSuccessMsg(), Toast.LENGTH_SHORT).show();
 

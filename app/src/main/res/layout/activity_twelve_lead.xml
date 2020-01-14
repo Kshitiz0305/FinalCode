@@ -50,7 +50,40 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:fontFamily="@font/sfpro_display_semibold"
-                    android:text="@string/lead_1"
+                    android:text="Take Lead 1"
+                    android:textColor="@color/colorPrimary"
+                    android:textSize="15.7sp" />
+
+
+                <ImageView
+                    android:layout_width="7.1dp"
+                    android:layout_height="12.6dp"
+                    android:layout_gravity="center"
+                    app:srcCompat="@drawable/grayarrow" />
+
+
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginTop="10dp"
+                android:background="@color/graylight" />
+
+            <LinearLayout
+                android:id="@+id/txttwelveleadoneagain"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="18.2dp"
+                android:orientation="horizontal">
+
+                <TextView
+
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:fontFamily="@font/sfpro_display_semibold"
+                    android:text="Take Lead 1 again"
                     android:textColor="@color/colorPrimary"
                     android:textSize="15.7sp" />
 
