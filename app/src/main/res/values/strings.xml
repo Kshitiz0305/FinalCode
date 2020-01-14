@@ -14,6 +14,8 @@
     <string name="title_activity_history">HistoryActivity</string>
     <string name="ecginfo">Place two thumbs on the front sensors.           As shown in the image.Keep your hands in the same position for 15 seconds. </string>
     <string name="name">Name</string>
+    <string name="fitnessecginfo">Place two thumbs on the front sensors.           As shown in the image.Keep your hands in the same position for 60 seconds. </string>
+
     <string name="address">Address</string>
     <string name="age_yrs">Age</string>
     <string name="sex">Sex</string>

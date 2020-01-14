@@ -114,33 +114,30 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        btnLongECG.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                hideSoftKeyboard();
-                if (!(editTextTime.getText().toString().trim().isEmpty())) {
-                    try {
-                        final int count = Integer.parseInt(editTextTime.getText().toString());
-                        if (count < 10) {
-                            editTextTime.setError("Long ECG Time should be greater than 10");
-                        } else if (count > 60) {
-                            editTextTime.setError("Long ECG Time should be less than 60");
-                        } else {
-                            editTextTime.setError(null);
-                            new Handler().postDelayed(new Runnable() {
-                                @Override
-                                public void run() {
-                                    getlongReadingForECG(1, count);
-                                }
-                            }, 2000);
+        btnLongECG.setOnClickListener(v -> {
+            hideSoftKeyboard();
+            if (!(editTextTime.getText().toString().trim().isEmpty())) {
+                try {
+                    final int count = Integer.parseInt(editTextTime.getText().toString());
+                    if (count < 10) {
+                        editTextTime.setError("Long ECG Time should be greater than 10");
+                    } else if (count > 60) {
+                        editTextTime.setError("Long ECG Time should be less than 60");
+                    } else {
+                        editTextTime.setError(null);
+                        new Handler().postDelayed(new Runnable() {
+                            @Override
+                            public void run() {
+                                getlongReadingForECG(1, count);
+                            }
+                        }, 2000);
 
-                        }
-                    } catch (Exception e) {
-                        editTextTime.setError("Please enter a number only");
                     }
-                } else {
-                    editTextTime.setError("Long ECG Time should not be empty");
+                } catch (Exception e) {
+                    editTextTime.setError("Please enter a number only");
                 }
+            } else {
+                editTextTime.setError("Long ECG Time should not be empty");
             }
         });
 
@@ -365,12 +362,7 @@ public class MainActivity extends AppCompatActivity {
             public void onSuccess(Success sucess) {
                 Log.e("Reading Success:", sucess.getSuccessMsg());
                 Toast.makeText(mContext, sucess.getSuccessMsg(), Toast.LENGTH_SHORT).show();
-                new Handler().postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        generateLongECGReportAndSave();
-                    }
-                }, 2000);
+                new Handler().postDelayed(() -> generateLongECGReportAndSave(), 2000);
             }
 
             @Override

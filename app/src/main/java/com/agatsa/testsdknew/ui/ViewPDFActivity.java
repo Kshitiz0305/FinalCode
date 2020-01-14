@@ -63,7 +63,7 @@ public class ViewPDFActivity extends AppCompatActivity {
         intent.setFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
 
         // generate URI, I defined authority as the application ID in the Manifest, the last param is file I want to open
-        Uri uri = FileProvider.getUriForFile(this, BuildConfig.APPLICATION_ID + ".fileprovider", file);
+        Uri uri = FileProvider.getUriForFile(this, BuildConfig.APPLICATION_ID + ".provider", file);
 
         // I am opening a PDF file so I give it a valid MIME type
         intent.setDataAndType(uri, "application/pdf");

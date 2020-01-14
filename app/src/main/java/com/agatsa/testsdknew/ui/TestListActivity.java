@@ -30,27 +30,21 @@ if(patientModel!=null){
 
 }
 
-binding.btnVItal.setOnClickListener(new View.OnClickListener() {
-    @Override
-    public void onClick(View view) {
+binding.btnVItal.setOnClickListener(view -> {
 
-        Intent i = new Intent(TestListActivity.this, VitalSignActivity.class);
-        i.putExtra("PTNO", pt_id);
-        startActivity(i);
+    Intent i = new Intent(TestListActivity.this, VitalSignActivity.class);
+    i.putExtra("PTNO", pt_id);
+    startActivity(i);
 
 
-    }
 }
 );
-binding.ecgTest.setOnClickListener(new View.OnClickListener() {
-    @Override
-    public void onClick(View view) {
+binding.ecgTest.setOnClickListener(view -> {
 
-        Intent i = new Intent(TestListActivity.this, ECGactivity.class);
-        i.putExtra("PTNO", pt_id);
-        startActivity(i);
+    Intent i = new Intent(TestListActivity.this, EcgOptionsActivity.class);
+    i.putExtra("PTNO", pt_id);
+    startActivity(i);
 
-    }
 });
 //        binding.ecgTest.setOnClickListener(new View.OnClickListener() {
 //            @Override

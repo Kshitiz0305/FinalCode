@@ -1,8 +1,10 @@
 package com.agatsa.testsdknew.ui;
 
+import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
@@ -11,9 +13,14 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.Toast;
+
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
+import androidx.core.content.FileProvider;
+
 import com.agatsa.sanketlife.callbacks.PdfCallback;
 import com.agatsa.sanketlife.callbacks.ResponseCallback;
 import com.agatsa.sanketlife.callbacks.SaveEcgCallBack;
@@ -22,18 +29,23 @@ import com.agatsa.sanketlife.development.Errors;
 import com.agatsa.sanketlife.development.InitiateEcg;
 import com.agatsa.sanketlife.development.Success;
 import com.agatsa.sanketlife.development.UserDetails;
+import com.agatsa.testsdknew.BuildConfig;
 import com.agatsa.testsdknew.Models.ECGReport;
 import com.agatsa.testsdknew.R;
 import com.ontbee.legacyforks.cn.pedant.SweetAlert.SweetAlertDialog;
 
+import java.io.File;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 
- public  class
+public  class
 
  SingleLeadECG extends AppCompatActivity implements ResponseCallback {
     private static final String CLIENT_ID = "5a3b4c16b4a56b000132f5d5b4580266565440bda51dcb4122d39844";
     private static final String SECRET_ID = "5a3b4c16b4a56b000132f5d5746be305d56c49e49cc88b12ccb05d71";
-    private Button btnsavereport,btncreatepdf;
+    private Button btnsavereport,back;
 
     LinearLayout LeadOne,txttakeagain,btnsavell,viewreportll;
     private Context mContext;
@@ -45,17 +57,27 @@ import com.ontbee.legacyforks.cn.pedant.SweetAlert.SweetAlertDialog;
     static int state=0;
 
     InitiateEcg initiateEcg;
-     String path = "/storage/emulated/0/DCIM/sanket/";
+     private static final String[] REQUIRED_SDK_PERMISSIONS = new String[]{
+             Manifest.permission.WRITE_EXTERNAL_STORAGE,
+             Manifest.permission.READ_EXTERNAL_STORAGE,
+            };
+
+     private final static int REQUEST_CODE_ASK_PERMISSIONS = 1;
 
 
 
 
-    @Override
+
+
+     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_single_lead);
+        checkPermissions();
         pref = this.getSharedPreferences("sunyahealth", Context.MODE_PRIVATE);
         ptno = pref.getInt("pt_id", 0);
+
+
 
 
         initiateEcg = new InitiateEcg();
@@ -93,11 +115,55 @@ import com.ontbee.legacyforks.cn.pedant.SweetAlert.SweetAlertDialog;
         txttakeagain=findViewById(R.id.txttakeagain);
         btnsavell=findViewById(R.id.btnsavell);
         viewreportll=findViewById(R.id.viewreportll);
-        btncreatepdf=findViewById(R.id.btncreatepdf);
+        back=findViewById(R.id.back);
+
 
 
 
     }
+
+    protected void checkPermissions() {
+        final List<String> missingPermissions = new ArrayList<String>();
+        // check all required dynamic permissions
+        for (final String permission : REQUIRED_SDK_PERMISSIONS) {
+            final int result = ContextCompat.checkSelfPermission(this, permission);
+            if (result != PackageManager.PERMISSION_GRANTED) {
+                missingPermissions.add(permission);
+            }
+        }
+        if (!missingPermissions.isEmpty()) {
+            // request all missing permissions
+            final String[] permissions = missingPermissions
+                    .toArray(new String[missingPermissions.size()]);
+            ActivityCompat.requestPermissions(this, permissions, REQUEST_CODE_ASK_PERMISSIONS);
+        } else {
+            final int[] grantResults = new int[REQUIRED_SDK_PERMISSIONS.length];
+            Arrays.fill(grantResults, PackageManager.PERMISSION_GRANTED);
+            onRequestPermissionsResult(REQUEST_CODE_ASK_PERMISSIONS, REQUIRED_SDK_PERMISSIONS,
+                    grantResults);
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String permissions[],
+                                           @NonNull int[] grantResults) {
+        switch (requestCode) {
+            case REQUEST_CODE_ASK_PERMISSIONS:
+                for (int index = permissions.length - 1; index >= 0; --index) {
+                    if (grantResults[index] != PackageManager.PERMISSION_GRANTED) {
+                        // exit the app if one permission is not granted
+                        Toast.makeText(this, "Required permission '" + permissions[index]
+                                + "' not granted, exiting", Toast.LENGTH_LONG).show();
+                        finish();
+                        return;
+                    }
+                }
+                // all permissions were granted
+//                initialize();
+                break;
+        }
+    }
+
 
     public void onResume(){
         super.onResume();
@@ -128,6 +194,11 @@ import com.ontbee.legacyforks.cn.pedant.SweetAlert.SweetAlertDialog;
 
         });
 
+        back.setOnClickListener(v -> {
+            Intent i=new Intent(this,EcgOptionsActivity.class);
+            startActivity(i);
+        });
+
         txttakeagain.setOnClickListener(v -> {
          initiateEcg.takeEcg(mContext, SECRET_ID, 1,this);
 
@@ -147,7 +218,8 @@ import com.ontbee.legacyforks.cn.pedant.SweetAlert.SweetAlertDialog;
 //
 //        });
 
-        btncreatepdf.setOnClickListener(v -> createPDF());
+//        btncreatepdf.setOnClickListener(v ->
+//                createPDF());
 
 //        btnHistory.setOnClickListener(view -> {
 //            Intent intent = new Intent(getApplicationContext(), HistoryActivity.class);
@@ -235,12 +307,27 @@ import com.ontbee.legacyforks.cn.pedant.SweetAlert.SweetAlertDialog;
             public void onPdfAvailable(EcgConfig ecgConfig) {
                 Log.e("makepdfpath", ecgConfig.getFileUrl());
                 String filePath = ecgConfig.getFileUrl();
-//                Intent intent = new Intent(SingleLeadECG.this, PdfViewActivity.class);
-//                intent.putExtra("fileUrl", filePath);
-                Intent intent;
-                intent = new Intent(Intent.ACTION_VIEW);
-                intent.setDataAndType(Uri.parse(path), "application/pdf");
+
+                File file = new File(filePath);
+                Intent intent = new Intent(Intent.ACTION_VIEW);
+
+                // set flag to give temporary permission to external app to use your FileProvider
+                intent.setFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+
+                // generate URI, I defined authority as the application ID in the Manifest, the last param is file I want to open
+                Uri photoURI = FileProvider.getUriForFile(SingleLeadECG.this,
+                        BuildConfig.APPLICATION_ID + ".provider",
+                        file);
+                // I am opening a PDF file so I give it a valid MIME type
+                intent.setDataAndType(photoURI, "application/pdf");
+
+                // validate that the device can open your File!
                 startActivity(intent);
+
+//                Intent intent;
+//                intent = new Intent(Intent.ACTION_VIEW);
+//                intent.setDataAndType(Uri.parse(filePath), "application/pdf");
+//                startActivity(intent);
 
             }
 
@@ -302,4 +389,7 @@ import com.ontbee.legacyforks.cn.pedant.SweetAlert.SweetAlertDialog;
          Log.d("ktest","Seek and Destroy");
 
      }
+
+
+
  }

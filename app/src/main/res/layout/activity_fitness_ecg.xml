@@ -12,7 +12,7 @@
 
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
-        android:layout_height="435dp"
+        android:layout_height="461dp"
         android:layout_marginLeft="@dimen/_10sdp"
         android:layout_marginTop="5dp"
         android:layout_marginRight="@dimen/_10sdp">
@@ -20,7 +20,7 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="457dp"
             android:layout_marginLeft="20dp"
             android:layout_marginRight="20dp"
             android:orientation="vertical">
@@ -29,7 +29,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="200dp"
                 android:layout_marginTop="30dp"
-                app:srcCompat="@drawable/ecgimg" />
+                android:src="@drawable/ecgimg"
+                android:visibility="visible" />
 
             <TextView
 
@@ -37,7 +38,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/_5sdp"
                 android:fontFamily="@font/sfpro_display_semibold"
-                android:text="@string/ecginfo"
+                android:text="@string/fitnessecginfo"
                 android:textColor="@color/colorPrimary"
                 android:textSize="15.7sp" />
 
@@ -49,7 +50,7 @@
 
 
             <LinearLayout
-                android:id="@+id/txtfitnessLeadOne"
+                android:id="@+id/fitnesstxtLeadOne"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="18.2dp"
@@ -61,7 +62,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:fontFamily="@font/sfpro_display_semibold"
-                    android:text="@string/lead_1"
+                    android:text="Take Fitness Lead"
                     android:textColor="@color/colorPrimary"
                     android:textSize="15.7sp" />
 
@@ -73,11 +74,32 @@
                     app:srcCompat="@drawable/grayarrow" />
             </LinearLayout>
 
-            <View
+
+            <LinearLayout
+                android:id="@+id/fitnesstxttakeagain"
                 android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:layout_marginTop="10dp"
-                android:background="@color/graylight" />
+                android:layout_height="wrap_content"
+                android:layout_marginTop="18.2dp"
+                android:orientation="horizontal"
+                android:visibility="gone">
+
+                <TextView
+
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:fontFamily="@font/sfpro_display_semibold"
+                    android:text="@string/take_again"
+                    android:textColor="@color/colorPrimary"
+                    android:textSize="15.7sp" />
+
+
+                <ImageView
+                    android:layout_width="7.1dp"
+                    android:layout_height="12.6dp"
+                    android:layout_gravity="center"
+                    app:srcCompat="@drawable/grayarrow" />
+            </LinearLayout>
 
 
             <LinearLayout
@@ -96,62 +118,77 @@
                     android:orientation="vertical">
 
                     <LinearLayout
+                        android:id="@+id/fitnessbtnsavell"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_marginRight="10dp"
                         android:orientation="horizontal"
-                        android:visibility="visible">
+                        android:visibility="gone">
 
                         <Button
-                            android:id="@+id/btnSavefitnessreport"
+                            android:id="@+id/fitnessbtnSavereport"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
                             android:background="@drawable/rect_orange"
                             android:fontFamily="@font/sfpro_display_semibold"
-                            android:text="SAVE REPORT"
+                            android:text="@string/save_report"
                             android:textColor="@color/white"
                             android:visibility="visible" />
 
 
                     </LinearLayout>
-
-                </LinearLayout>
-
-
-                <LinearLayout
-
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:orientation="vertical">
 
                     <LinearLayout
+                        android:id="@+id/fitnessviewreportll"
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:background="@drawable/bg_gray_border"
-                        android:orientation="horizontal">
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginTop="15dp"
+                        android:orientation="horizontal"
+                        android:visibility="gone">
 
-                        <Button
-                            android:id="@+id/btnfitnessHistory"
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:layout_gravity="center"
-                            android:background="@drawable/rect_orange"
-                            android:fontFamily="@font/sfpro_display_semibold"
-                            android:text="VIEW PDF"
-                            android:textColor="@color/white"
-                            android:visibility="visible" />
+
+
+                        <LinearLayout
+
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:orientation="vertical">
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:orientation="horizontal">
+
+                                <Button
+                                    android:id="@+id/fitnessback"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center"
+                                    android:layout_marginRight="@dimen/_5sdp"
+                                    android:background="@drawable/rect_orange"
+                                    android:fontFamily="@font/sfpro_display_semibold"
+                                    android:text="COMPLETE SINGLE  LEAD"
+                                    android:textColor="@color/white"
+                                    android:visibility="visible" />
+
+
+                            </LinearLayout>
+
+                            <View
+                                android:id="@+id/view2"
+                                android:layout_width="match_parent"
+                                android:layout_height="2dp"
+                                android:background="@color/white"
+                                android:visibility="gone" />
+
+                        </LinearLayout>
 
 
                     </LinearLayout>
 
-                    <View
-                        android:id="@+id/view2"
-                        android:layout_width="match_parent"
-                        android:layout_height="2dp"
-                        android:background="@color/white"
-                        android:visibility="gone" />
 
                 </LinearLayout>
 
