@@ -76,6 +76,7 @@
     <string name="pair_device">PAIR DEVICE</string>
     <string name="save_report">SAVE REPORT</string>
     <string name="take_again">Take Again</string>
+    <string name="or">OR</string>
 
 
 </resources>

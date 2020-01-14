@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
 
     <LinearLayout
         android:layout_width="match_parent"
         android:orientation="vertical"
-        android:background="@color/white"
+        android:background="@color/colorOffWhite"
         android:layout_height="match_parent">
 
         <include layout="@layout/toolbar"/>
@@ -44,107 +45,152 @@
                     android:textSize="15sp" />
             </RelativeLayout>
 
-            <RelativeLayout
+            <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/_200kdp">
-                <ImageView
+                android:layout_height="191dp"
+                android:layout_margin="@dimen/_8kdp"
+                app:cardCornerRadius="@dimen/_10kdp"
+                app:cardElevation="@dimen/_2kdp"
+                app:cardMaxElevation="@dimen/_4kdp">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/_150kdp">
+
+                    <ImageView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:scaleType="fitXY"
+                        android:src="@drawable/sunyahealth" />
+
+                </RelativeLayout>
+            </androidx.cardview.widget.CardView>
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="245dp"
+                android:layout_margin="@dimen/_8kdp"
+                app:cardCornerRadius="@dimen/_10kdp"
+                app:cardElevation="@dimen/_2kdp"
+                app:cardMaxElevation="@dimen/_4kdp">
+
+
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:src="@drawable/sunyahealth"
-                    android:scaleType="fitXY"
-                    />
+                    android:layout_marginTop="@dimen/_10sdp"
+                    android:orientation="vertical"
+                    android:weightSum="10">
 
-            </RelativeLayout>
-
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:orientation="vertical"
-                android:weightSum="10"
-                android:layout_height="wrap_content">
-                <LinearLayout
-                    android:layout_width="@dimen/_210sdp"
-                    android:layout_height="@dimen/_40sdp"
-                    android:orientation="horizontal"
-                    android:id="@+id/btnVItal"
-                    android:background="@color/green"
-                    android:layout_gravity="center">
-                    <TextView
-                        android:layout_width="@dimen/_150sdp"
-                        android:layout_height="wrap_content"
-                        android:padding="@dimen/_5sdp"
-                        android:textSize="18sp"
-                        android:gravity="center"
-                        android:fontFamily="@font/sfpro_display_semibold"
-                        android:textColor="@color/white"
-                        android:text="Vital Test"/>
-                    <ImageView
-                        android:layout_width="@dimen/_65kdp"
-                        android:layout_height="@dimen/_65kdp"
+                    <LinearLayout
+                        android:id="@+id/btnVItal"
+                        android:layout_width="@dimen/_210sdp"
+                        android:layout_height="@dimen/_40sdp"
                         android:layout_gravity="center"
-                        />
+                        android:background="@drawable/bg_gray_border"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:layout_width="210dp"
+                            android:layout_height="match_parent"
+                            android:fontFamily="@font/sfpro_display_semibold"
+                            android:gravity="center"
+                            android:padding="@dimen/_5sdp"
+                            android:text="Vital Test"
+                            android:textColor="@color/colorPrimary"
+                            android:textSize="@dimen/_18sdp" />
+
+                        <View
+                            android:layout_width="1dp"
+                            android:layout_height="match_parent"
+                            android:layout_marginLeft="5dp"
+                            android:layout_marginRight="5dp"
+                            android:background="@drawable/gradient_vertical" />
+
+                        <ImageView
+                            android:layout_width="@dimen/_40kdp"
+                            android:layout_height="@dimen/_40kdp"
+                            android:layout_gravity="end"
+                            android:paddingRight="@dimen/_3sdp"
+                            android:src="@drawable/vital_icon" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/ecgTest"
+                        android:layout_width="@dimen/_210sdp"
+                        android:layout_height="@dimen/_40sdp"
+                        android:layout_gravity="center"
+                        android:layout_marginTop="@dimen/_25sdp"
+                        android:background="@drawable/bg_gray_border"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:layout_width="210dp"
+                            android:layout_height="match_parent"
+                            android:fontFamily="@font/sfpro_display_semibold"
+                            android:gravity="center"
+                            android:padding="@dimen/_5sdp"
+                            android:text="ECG Test"
+                            android:textColor="@color/colorPrimary"
+                            android:textSize="@dimen/_18sdp" />
+
+                        <View
+                            android:layout_width="1dp"
+                            android:layout_height="match_parent"
+                            android:layout_marginLeft="5dp"
+                            android:layout_marginRight="5dp"
+                            android:background="@drawable/gradient_vertical" />
+
+                        <ImageView
+                            android:layout_width="@dimen/_40sdp"
+                            android:layout_height="@dimen/_40sdp"
+                            android:layout_gravity="end"
+                            android:paddingRight="@dimen/_3sdp"
+                            android:src="@drawable/ecg_icon" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/tblUrineTest"
+                        android:layout_width="@dimen/_210sdp"
+                        android:layout_height="@dimen/_40sdp"
+                        android:layout_gravity="center"
+                        android:layout_marginTop="@dimen/_25sdp"
+                        android:background="@drawable/bg_gray_border"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:layout_width="210dp"
+                            android:layout_height="match_parent"
+                            android:fontFamily="@font/sfpro_display_semibold"
+                            android:gravity="center"
+                            android:padding="@dimen/_5sdp"
+                            android:text="Urine Test"
+                            android:textColor="@color/colorPrimary"
+                            android:textSize="@dimen/_18sdp" />
+
+
+                        <View
+                            android:layout_width="1dp"
+                            android:layout_height="match_parent"
+                            android:layout_marginLeft="5dp"
+                            android:layout_marginRight="5dp"
+                            android:background="@drawable/gradient_vertical" />
+
+                        <ImageView
+
+                            android:layout_width="@dimen/_40sdp"
+                            android:layout_height="@dimen/_40sdp"
+                            android:layout_gravity="end"
+                            android:paddingRight="@dimen/_3sdp"
+                            android:src="@drawable/ecg_icon" />
+
+                    </LinearLayout>
+
 
                 </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="@dimen/_210sdp"
-                    android:layout_height="@dimen/_40sdp"
-                    android:orientation="horizontal"
-                    android:background="@color/green"
-                    android:id="@+id/ecgTest"
-                    android:layout_marginTop="@dimen/_25sdp"
-                    android:layout_gravity="center">
-                    <TextView
-                        android:layout_width="@dimen/_150sdp"
-                        android:layout_height="wrap_content"
-                        android:padding="@dimen/_5sdp"
-                        android:textSize="18sp"
-
-                        android:gravity="center"
-                        android:fontFamily="@font/sfpro_display_semibold"
-                        android:textColor="@color/white"
-                        android:text="ECG Test"/>
-<!--                    <ImageView-->
-<!--                        android:layout_width="@dimen/_40sdp"-->
-<!--                        android:layout_height="@dimen/_40sdp"-->
-<!--                        android:layout_gravity="end"-->
-<!--                        android:layout_marginLeft="@dimen/_20sdp"-->
-<!--                        android:src="@drawable/ic_search_white_24dp" />-->
-
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="@dimen/_210sdp"
-                    android:layout_height="@dimen/_40sdp"
-                    android:orientation="horizontal"
-                    android:background="@color/green"
-                    android:id="@+id/tblUrineTest"
-                    android:layout_marginTop="@dimen/_25sdp"
-                    android:layout_gravity="center">
-                    <TextView
-                        android:layout_width="@dimen/_150sdp"
-                        android:layout_height="wrap_content"
-                        android:padding="@dimen/_5sdp"
-                        android:textSize="18sp"
-
-                        android:gravity="center"
-                        android:fontFamily="@font/sfpro_display_semibold"
-                        android:textColor="@color/white"
-                        android:text="Urine Test"/>
-                    <!--                    <ImageView-->
-                    <!--                        android:layout_width="@dimen/_40sdp"-->
-                    <!--                        android:layout_height="@dimen/_40sdp"-->
-                    <!--                        android:layout_gravity="end"-->
-                    <!--                        android:layout_marginLeft="@dimen/_20sdp"-->
-                    <!--                        android:src="@drawable/ic_search_white_24dp" />-->
-
-                </LinearLayout>
-
-
-
-
-            </LinearLayout>
-
+            </androidx.cardview.widget.CardView>
 
         </LinearLayout>
 
@@ -159,12 +205,12 @@
                 android:fontFamily="@font/sfpro_display_semibold"
                 android:padding="8sp"
                 android:layout_alignParentBottom="true"
-                android:textColor="@color/white"
+                android:textColor="@color/colorPrimary"
                 android:textSize="18sp"
                 android:id="@+id/logout"
                 android:layout_marginLeft="@dimen/_5sdp"
-                android:background="@drawable/rect_green"
-                android:layout_height="@dimen/_40sdp"
+                android:background="@drawable/bg_gray_border"
+                android:layout_height="@dimen/_30sdp"
                 />
 
         </RelativeLayout>

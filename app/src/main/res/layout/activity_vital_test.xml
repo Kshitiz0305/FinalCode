@@ -56,11 +56,13 @@
                 android:layout_width="100dp"
                 android:layout_height="40sp"
                 android:layout_weight="1"
+                android:layout_marginLeft="@dimen/_5sdp"
+                android:layout_marginRight="@dimen/_5sdp"
                 android:textSize="13sp"
                 android:fontFamily="@font/sf_pro_display_medium"
                 android:inputType="numberDecimal"
                 android:padding="8sp"
-                android:layout_marginRight="2sp"
+
                 android:background="@drawable/bg_gray_border"
                 />
 
@@ -104,7 +106,8 @@
                 android:inputType="numberDecimal"
 
                 android:padding="8sp"
-                android:layout_marginRight="2sp"
+                android:layout_marginLeft="@dimen/_5sdp"
+                android:layout_marginRight="@dimen/_5sdp"
                 android:background="@drawable/bg_gray_border"
                 />
 
@@ -147,7 +150,8 @@
                 android:fontFamily="@font/sf_pro_display_medium"
                 android:inputType="numberDecimal"
                 android:padding="8sp"
-                android:layout_marginRight="2sp"
+                android:layout_marginLeft="@dimen/_5sdp"
+                android:layout_marginRight="@dimen/_5sdp"
                 android:background="@drawable/bg_gray_border"
                 />
 
@@ -190,7 +194,8 @@
                 android:fontFamily="@font/sf_pro_display_medium"
                 android:inputType="numberDecimal"
                 android:padding="8sp"
-                android:layout_marginRight="2sp"
+                android:layout_marginLeft="@dimen/_5sdp"
+                android:layout_marginRight="@dimen/_5sdp"
                 android:background="@drawable/bg_gray_border"
                 />
 
@@ -233,7 +238,8 @@
                 android:fontFamily="@font/sf_pro_display_medium"
                 android:inputType="numberDecimal"
                 android:padding="8sp"
-                android:layout_marginRight="2sp"
+                android:layout_marginLeft="@dimen/_5sdp"
+                android:layout_marginRight="@dimen/_5sdp"
                 android:background="@drawable/bg_gray_border"
                 />
 
@@ -276,7 +282,8 @@
                 android:fontFamily="@font/sf_pro_display_medium"
                 android:inputType="numberDecimal"
                 android:padding="8sp"
-                android:layout_marginRight="2sp"
+                android:layout_marginLeft="@dimen/_5sdp"
+                android:layout_marginRight="@dimen/_5sdp"
                 android:background="@drawable/bg_gray_border"
                 />
 
@@ -319,7 +326,8 @@
                 android:fontFamily="@font/sf_pro_display_medium"
                 android:inputType="numberDecimal"
                 android:padding="8sp"
-                android:layout_marginRight="2sp"
+                android:layout_marginLeft="@dimen/_5sdp"
+                android:layout_marginRight="@dimen/_5sdp"
                 android:background="@drawable/bg_gray_border"
                 />
 
@@ -362,7 +370,8 @@
                 android:fontFamily="@font/sf_pro_display_medium"
                 android:inputType="numberDecimal"
                 android:padding="8sp"
-                android:layout_marginRight="2sp"
+                android:layout_marginLeft="@dimen/_5sdp"
+                android:layout_marginRight="@dimen/_5sdp"
                 android:background="@drawable/bg_gray_border"
                 />
 
