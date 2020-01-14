@@ -40,7 +40,7 @@ public class FitnessECG extends AppCompatActivity implements ResponseCallback {
 
     LinearLayout fitnesstxtLeadOne,fitnessbtnsavell,fitnesstxttakeagain,fitnessviewreportll;
     private Context mContext;
-    int ptno = 0;
+    String ptno = "";
     SharedPreferences pref;
     ECGReport ecgReport=new ECGReport();
     SweetAlertDialog pDialog;
@@ -58,7 +58,7 @@ public class FitnessECG extends AppCompatActivity implements ResponseCallback {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_fitness_ecg);
         pref = this.getSharedPreferences("sunyahealth", Context.MODE_PRIVATE);
-        ptno = pref.getInt("pt_id", 0);
+        ptno = pref.getString("PTNO", "");
 //        labdb = new LabDB(getApplicationContext());
 //        ecgReport=labdb.getLastEcgSign(ptno);
         mContext = getApplicationContext();
