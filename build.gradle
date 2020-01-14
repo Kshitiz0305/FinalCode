@@ -22,6 +22,9 @@ allprojects {
         jcenter()
         maven { url 'https://jitpack.io' }
 
+        maven { url "https://oss.sonatype.org/content/repositories/snapshots" }
+
+
 
         maven {
             url "http://35.234.214.192:8081/artifactory/sanketlife-sdk-release"
