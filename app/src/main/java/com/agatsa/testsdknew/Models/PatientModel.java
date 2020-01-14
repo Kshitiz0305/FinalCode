@@ -8,7 +8,7 @@ import android.os.Parcelable;
  */
 
 public class PatientModel implements Parcelable {
-    int id = 0;
+    String id ;
     String ptNo;
     String user_id;
     String ptName;
@@ -27,32 +27,16 @@ public class PatientModel implements Parcelable {
     String ptmedicationmedicinename;
     String ptsmoking;
     String ptalcohol;
+    String mUuid;
 
-    // Constructor
-    public PatientModel(){
-        id = 0;
-        ptNo = "";
-        user_id = "";
-        ptName ="";
-        ptAddress = "";
-        ptContactNo = "";
-        ptEmail = "";
-        ptAge = "";
-        ptSex = "";
-        ptmaritalstatus = "";
-        ptDob ="";
-        ptnoofboys = "";
-        ptnoofgirls = "";
-        ptdrugallergies = "";
-        ptmedication = "";
-        ptmedicationmedicinename = "";
-        ptdiseases = "";
-        ptsmoking = "";
-        ptalcohol = "";
-    }
+public PatientModel(){
 
-    protected PatientModel(Parcel in) {
-        id = in.readInt();
+
+}
+
+
+    public PatientModel(Parcel in) {
+        id = in.readString();
         ptNo = in.readString();
         user_id = in.readString();
         ptName = in.readString();
@@ -71,11 +55,12 @@ public class PatientModel implements Parcelable {
         ptmedicationmedicinename = in.readString();
         ptsmoking = in.readString();
         ptalcohol = in.readString();
+        mUuid = in.readString();
     }
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
-        dest.writeInt(id);
+        dest.writeString(id);
         dest.writeString(ptNo);
         dest.writeString(user_id);
         dest.writeString(ptName);
@@ -94,6 +79,7 @@ public class PatientModel implements Parcelable {
         dest.writeString(ptmedicationmedicinename);
         dest.writeString(ptsmoking);
         dest.writeString(ptalcohol);
+        dest.writeString(mUuid);
     }
 
     @Override
@@ -113,11 +99,19 @@ public class PatientModel implements Parcelable {
         }
     };
 
-    public int getId() {
+    public void setmUuid(String mUuid) {
+        this.mUuid = mUuid;
+    }
+
+    public String getmUuid() {
+        return mUuid;
+    }
+
+    public String getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(String id) {
         this.id = id;
     }
 

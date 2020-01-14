@@ -31,9 +31,11 @@ import com.agatsa.testsdknew.Models.PatientModel;
 import com.agatsa.testsdknew.Models.VitalSign;
 import com.agatsa.testsdknew.Models.districtsplaces.DistrictPlaces;
 import com.agatsa.testsdknew.Models.districtsplaces.Districts;
+import com.agatsa.testsdknew.Models.districtsplaces.Places;
 import com.agatsa.testsdknew.R;
 import com.agatsa.testsdknew.customviews.DialogUtil;
 import com.agatsa.testsdknew.databinding.ActivityNewPatientDetailBinding;
+import com.agatsa.testsdknew.utils.StrictEncryption;
 import com.google.gson.Gson;
 import com.hornet.dateconverter.DateConverter;
 import com.hornet.dateconverter.DatePicker.DatePickerDialog;
@@ -91,6 +93,7 @@ public class PersonalDetailsActivity extends AppCompatActivity implements DatePi
 
 
 ArrayList<String> distictnames = new ArrayList<>();
+ArrayList<String>  placesnames = new ArrayList<>();
  Validator validator;
  int recentid;
 
@@ -105,8 +108,6 @@ ArrayList<String> distictnames = new ArrayList<>();
         binding = DataBindingUtil.setContentView(this, R.layout.activity_new_patient_detail);
         validator = new Validator(binding);
         validator.enableFormValidationMode();
-
-
         pref = this.getSharedPreferences("sunyahealth", Context.MODE_PRIVATE);
         device_id = pref.getString("device_id", "");
         duid = getIntent().getStringExtra("duid");
@@ -123,7 +124,7 @@ ArrayList<String> distictnames = new ArrayList<>();
         alcoholll=findViewById(R.id.alcoholll);
         txtPtno = findViewById(R.id.txtPatientNo);
         txtPtName = findViewById(R.id.txtPatientName);
-        txtPtAddress = findViewById(R.id.txtAddress);
+        txtPtAddress = findViewById(R.id.wardNo);
         txtPtContactNo = findViewById(R.id.txtContactNo);
         txtEmail = findViewById(R.id.txtemail);
 
@@ -199,7 +200,7 @@ ArrayList<String> distictnames = new ArrayList<>();
             if(!generatedjsonString.equals("")){
 
                 Gson gson = new Gson();
-                DistrictPlaces districtPlaces =gson.fromJson(generatedjsonString,DistrictPlaces.class);
+                 districtPlaces =gson.fromJson(generatedjsonString,DistrictPlaces.class);
 
                 for(Districts district:districtPlaces.getDistricts()){
                     distictnames.add(district.getName());
@@ -223,6 +224,42 @@ ArrayList<String> distictnames = new ArrayList<>();
 
 
         }
+
+        binding.spDistrict.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+
+
+                placesnames.clear();
+                String selectedDistrict = distictnames.get(i);
+                if(districtPlaces!=null)
+                {
+                    for (Districts district : districtPlaces.getDistricts()) {
+                        if (district.getName().equals(selectedDistrict)) {
+                            for(Places place:district.getPlaces()){
+                                placesnames.add(place.getPlacename());
+
+                            }
+
+
+
+
+                            }
+
+                        }
+
+
+
+                }
+
+                binding.spPlace.setItem(placesnames);
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
 
 
 
@@ -472,17 +509,52 @@ ArrayList<String> distictnames = new ArrayList<>();
         btnSave = findViewById(R.id.btnSave);
         btnSave.setOnClickListener(v -> {
             if (validator.validate()) {
-                Toast.makeText(getApplicationContext(), "Saving Data", Toast.LENGTH_LONG).show();
 
-//                if(txtPtContactNo.getText().equals("")){
-//                    contactData="nil";
-//                    Log.d("nil",contactData);
-//
-//                }else{
-//                    contactData=txtPtContactNo.getText().toString();
-//                    Log.d("data",contactData);
-//                }
-                new savedata().execute();
+
+
+                if(binding.spDistrict.getSelectedItemId()==-1){
+                    Toast.makeText(getApplicationContext(), "Validation Error in District", Toast.LENGTH_LONG).show();
+
+                }else {
+                    if(binding.spPlace.getSelectedItemId()==-1){
+
+                        Toast.makeText(getApplicationContext(), "Validation Error in Municipality/VDC", Toast.LENGTH_LONG).show();
+
+
+                    }
+                    else {
+
+                        String sex = "Male";
+                        if (getRadioButtonValue(optFemale)) {
+                            sex = "Female";
+                            System.out.println("Female Selected");
+                        } else if (getRadioButtonValue(optOther))
+                            sex = "Other";
+
+                        try{
+                            String encrypteddata = StrictEncryption.encrypt(txtPtName.getText().toString()+","+binding.spDistrict.getSelectedItem().toString()+" "+binding.spPlace.getSelectedItem().toString()+" "+binding.wardNo.getText().toString()+","+sex);
+                            Log.d("rantest",  encrypteddata);
+                            Log.d("rantest",  txtPtName.getText().toString()+","+binding.spDistrict.getSelectedItem().toString()+" "+binding.spPlace.getSelectedItem().toString()+" "+binding.wardNo.getText().toString()+","+sex);
+                            Toast.makeText(getApplicationContext(), "Saving Data", Toast.LENGTH_LONG).show();
+                            newPatient.setId(encrypteddata);
+                            new savedata().execute();
+
+
+                        }
+                        catch (Exception e){
+                            Toast.makeText(getApplicationContext(), "Something went wrong while encrypting ", Toast.LENGTH_LONG).show();
+
+
+                        }
+
+
+
+
+
+                    }
+
+                }
+
 //                navigatenext();
             }
             else {
@@ -568,7 +640,7 @@ catch (Exception e){
 //            newPatient = new PatientModel();
             newPatient.setUser_id(duid);
             newPatient.setPtName(getEdittextValue(txtPtName));
-            newPatient.setPtAddress(getEdittextValue(txtPtAddress));
+            newPatient.setPtAddress(binding.spDistrict.getSelectedItem().toString()+ " "+binding.spPlace.getSelectedItem().toString()+" "+binding.wardNo.getText().toString());
             if (txtPtContactNo.getText().toString().equals("")) {
                 newPatient.setPtContactNo("nil");
 
