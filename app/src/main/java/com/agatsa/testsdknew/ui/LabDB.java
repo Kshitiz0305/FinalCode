@@ -147,6 +147,7 @@ public class LabDB extends SQLiteOpenHelper {
     private static final String COLUMN_LEUK = "leuk";
     private static final String CULUMN_Latitude = "ptLatitude";
     private static final String CULUMN_Longitude = "ptLongitude";
+    private static final String COLUMN_MUID = "MUID";
 
     // DATA TABLE
     private static final String TABLE_DATA = "urine_data";
@@ -164,7 +165,7 @@ public class LabDB extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase db) {
         String CREATE_PATIENT_TABLE = "CREATE TABLE " + TABLE_PT_DETAILS + "("
-                + COLUMN_PT_NO + " INTEGER PRIMARY KEY AUTOINCREMENT,"
+                + COLUMN_PT_NO + " TEXT PRIMARY KEY ,"
                 + UUID + " TEXT  DEFAULT 'nil', "
                 + COLUMN_PT_NAME + " TEXT,"
                 + COLUMN_PT_ADDRESS + " TEXT,"
@@ -183,10 +184,9 @@ public class LabDB extends SQLiteOpenHelper {
                 + COLUMN_PT_ALCOHOL + " TEXT,"
                 + COLUMN_ADDEDDATE + " TEXT,"
                 + CULUMN_Longitude + " DOUBLE DEFAULT 0,"
-                        + CULUMN_Latitude + " DOUBLE DEFAULT 0)";
+                + CULUMN_Latitude + " DOUBLE DEFAULT 0)";
 
-//                + COLUMN_ADDEDDATE + " TEXT,)";
-//                + COLUMN_UPDATEDDATE + " TEXT)";
+
         db.execSQL(CREATE_PATIENT_TABLE);
         String CREATE_VITAL_SIGN_TABLE = "CREATE TABLE " + TABLE_VITAL_SIGN + "("
                 + COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT,"
@@ -283,15 +283,14 @@ public class LabDB extends SQLiteOpenHelper {
 
     }
 
-    public int SavePatient(PatientModel ptdetail) {
-        int result = 0;
+    public String SavePatient(PatientModel ptdetail) {
+        String result = "";
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
-//        values.put(COLUMN_PT_NO, ptdetail.getPtNo());
-//        values.put(COLUMN_PT_USER_ID, ptdetail.getUser_id());
+
+        values.put(COLUMN_PT_NO, ptdetail.getId());
         values.put(COLUMN_PT_NAME, ptdetail.getPtName());
         values.put(COLUMN_PT_ADDRESS, ptdetail.getPtAddress());
-        Log.d("rantest","it came here");
         values.put(COLUMN_PT_CONTACTNO, ptdetail.getPtContactNo());
         values.put(COLUMN_PT_EMAIL, ptdetail.getPtEmail());
         values.put(COLUMN_PT_AGE, ptdetail.getPtAge());
@@ -301,11 +300,12 @@ public class LabDB extends SQLiteOpenHelper {
         values.put(COLUMN_PT_NO_OF_BOYS, ptdetail.getPtnoofboys());
        values.put(COLUMN_PT_NO_OF_GIRLS, ptdetail.getPtnoofgirls());
        values.put(COLUMN_PT_DRUG_ALLERGIES, ptdetail.getPtdrugallergies());
-//       values.put(COLUMN_PT_MEDICATION, ptdetail.getPtmedication());
+//
        values.put(COLUMN_PT_DISEASE, ptdetail.getPtdiseases());
        values.put(COLUMN_PT_MEDICATION_MEDICINE, ptdetail.getPtmedicationmedicinename());
        values.put(COLUMN_PT_SMOKING, ptdetail.getPtsmoking());
        values.put(COLUMN_PT_ALCOHOL, ptdetail.getPtalcohol());
+//       values.put(COLUMN_MUID, ptdetail.getmUuid());
 
 //        + COLUMN_PT_NO + " INTEGER PRIMARY KEY AUTOINCREMENT,"
 //                + UUID + " TEXT  DEFAULT 'nil', "
@@ -334,17 +334,23 @@ public class LabDB extends SQLiteOpenHelper {
 
 
 
-//        values.put(COLUMN_UPDATEDDATE, Calendar.getInstance().getTimeInMillis() / 1000);
-//        values.put(COLUMN_UPDATEDDATE, "nil");
-        if (ptdetail.getId() != 0) {
-            db.update(TABLE_PT_DETAILS, values, COLUMN_ID + "=? AND " + COLUMN_PT_NO + "=?",
-                    new String[]{String.valueOf(ptdetail.getId()), ptdetail.getPtNo()});
-            result = ptdetail.getId();
-        } else {
+
+//        This is trying to update previous line
+//        if (!ptdetail.getId().equals("")) {
+//
+//            Log.d("rantest",ptdetail.getId());
+//            db.update(TABLE_PT_DETAILS, values,  COLUMN_PT_NO + "=?",
+//                    new String[]{(ptdetail.getId())});
+//            result = ptdetail.getId();
+//        } else {
+
+//         Remaiing to pop message incase of failure in insertion
+//     This is trying to insert new data
+            Log.d("rantest","pateint is  blank");
             values.put(COLUMN_ADDEDDATE, Calendar.getInstance().getTimeInMillis() / 1000);
             db.insert(TABLE_PT_DETAILS, null, values);
             result = getLastID(TABLE_PT_DETAILS, db);
-        }
+//        }
         db.close();
         return result;
     }
@@ -359,7 +365,7 @@ public class LabDB extends SQLiteOpenHelper {
         Cursor cursor = db.rawQuery("select * from " + TABLE_PT_DETAILS+" where ptName  like?", new String[]{name});
         while (cursor.moveToNext()) {
             PatientModel patientModel = new PatientModel();
-            patientModel.setId(cursor.getInt(0));
+            patientModel.setId(cursor.getString(0));
             patientModel.setPtNo(cursor.getString(1));
             patientModel.setPtName(cursor.getString(2));
             patientModel.setPtAddress(cursor.getString(3));
@@ -385,7 +391,7 @@ public class LabDB extends SQLiteOpenHelper {
         Cursor cursor = db.rawQuery("select * from " + TABLE_PT_DETAILS+" where ptNo  =?", new String[]{Id});
         while (cursor.moveToNext()) {
             PatientModel patientModel = new PatientModel();
-            patientModel.setId(cursor.getInt(0));
+            patientModel.setId(cursor.getString(0));
             patientModel.setPtNo(cursor.getString(1));
             patientModel.setPtName(cursor.getString(2));
             patientModel.setPtAddress(cursor.getString(3));
@@ -403,7 +409,7 @@ public class LabDB extends SQLiteOpenHelper {
         return patientModelFlowable;
     }
 
-    public PatientModel getPatient(String pt_no, int pt_id) {
+    public PatientModel getPatient( String pt_id) {
         PatientModel patientModel = new PatientModel();
         SQLiteDatabase db = this.getReadableDatabase();
 
@@ -415,12 +421,12 @@ public class LabDB extends SQLiteOpenHelper {
                         COLUMN_PT_EMAIL,
                         COLUMN_PT_AGE,
                         COLUMN_PT_SEX
-                }, COLUMN_PT_NO + "=? AND "
+                }, COLUMN_PT_NO + "=?  "
 //                        + COLUMN_ID + "=?"
                 ,
-                new String[]{pt_no, String.valueOf(pt_id)}, null, null, COLUMN_PT_NO + " DESC", String.valueOf(1));
+                new String[]{ (pt_id)}, null, null, COLUMN_PT_NO + " DESC", String.valueOf(1));
         if (cursor.moveToFirst()) {
-            patientModel.setId(cursor.getInt(0));
+            patientModel.setId(cursor.getString(0));
             patientModel.setPtNo(cursor.getString(1));
             patientModel.setPtName(cursor.getString(2));
             patientModel.setPtAddress(cursor.getString(3));
@@ -535,7 +541,7 @@ public class LabDB extends SQLiteOpenHelper {
         if (cursor.moveToFirst()) {
             do {
                 PatientModel patientModel = new PatientModel();
-                patientModel.setId(cursor.getInt(0));
+                patientModel.setId(cursor.getString(0));
                 patientModel.setPtNo(cursor.getString(1));
                 patientModel.setPtName(cursor.getString(2));
                 patientModel.setPtAddress(cursor.getString(3));
@@ -551,8 +557,8 @@ public class LabDB extends SQLiteOpenHelper {
         return pm;
     }
 
-    public int SaveVitalSign(VitalSign vitalSign) {
-        int result = 0;
+    public String SaveVitalSign(VitalSign vitalSign) {
+        String result = "";
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
         values.put(COLUMN_PT_NO, vitalSign.getPt_no());
@@ -566,7 +572,7 @@ public class LabDB extends SQLiteOpenHelper {
         values.put(COLUMN_VITAL_GLUCOSE, vitalSign.getGlucose());
         Log.d("glucose", String.valueOf(vitalSign.getGlucose()));
         values.put(COLUMN_UPDATEDDATE, Calendar.getInstance().getTimeInMillis() / 1000);
-        if (vitalSign.getRow_id() != 0) {
+        if (!vitalSign.getRow_id() .equals("")) {
             db.update(TABLE_VITAL_SIGN, values, COLUMN_ID + "=?", new String[]{String.valueOf(vitalSign.getRow_id())});
             result = vitalSign.getRow_id();
         } else {
@@ -598,8 +604,8 @@ public class LabDB extends SQLiteOpenHelper {
 //    }
 
 
-    public int SaveSingleleadECGSign(ECGReport ecgReport) {
-        int result = 0;
+    public String SaveSingleleadECGSign(ECGReport ecgReport) {
+        String result = "";
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
         values.put(COLUMN_PT_NO, ecgReport.getPt_no());
@@ -614,7 +620,7 @@ public class LabDB extends SQLiteOpenHelper {
         values.put(COLUMN_MRR, ecgReport.getMrr());
         values.put(COLUMN_FINDING, ecgReport.getFinding());
         values.put(COLUMN_UPDATEDDATE, Calendar.getInstance().getTimeInMillis() / 1000);
-        if (ecgReport.getRow_id() != 0) {
+        if (!ecgReport.getRow_id().equals("")) {
             db.update(TABLE_ECG_SIGN, values, COLUMN_ID + "=?", new String[]{String.valueOf(ecgReport.getRow_id())});
             result = ecgReport.getRow_id();
         } else {
@@ -626,8 +632,8 @@ public class LabDB extends SQLiteOpenHelper {
         return result;
     }
 
-    public int SavelongleadECGSign(LongECGReport longECGReport) {
-        int result = 0;
+    public String SavelongleadECGSign(LongECGReport longECGReport) {
+        String result = "";
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
         values.put(COLUMN_PT_NO, longECGReport.getPt_no());
@@ -642,7 +648,7 @@ public class LabDB extends SQLiteOpenHelper {
         values.put(COLUMN_LONG_MRR, longECGReport.getMrr());
         values.put(COLUMN_LONG_FINDING, longECGReport.getFinding());
         values.put(COLUMN_UPDATEDDATE, Calendar.getInstance().getTimeInMillis() / 1000);
-        if (longECGReport.getRow_id() != 0) {
+        if (!longECGReport.getRow_id() .equals("")) {
             db.update(TABLE_LONG_ECG_SIGN, values, COLUMN_ID + "=?", new String[]{String.valueOf(longECGReport.getRow_id())});
             result = longECGReport.getRow_id();
         } else {
@@ -654,7 +660,7 @@ public class LabDB extends SQLiteOpenHelper {
         return result;
     }
 
-    public LongECGReport getlongLeadEcgSign(int pt_no) {
+    public LongECGReport getlongLeadEcgSign(String pt_no) {
         LongECGReport longECGReport = new LongECGReport();
         SQLiteDatabase db = this.getReadableDatabase();
 
@@ -663,7 +669,7 @@ public class LabDB extends SQLiteOpenHelper {
                         COLUMN_LONG_QRS, COLUMN_LONG_SDNN, COLUMN_LONG_RMSSD,COLUMN_LONG_MRR,COLUMN_LONG_FINDING}, COLUMN_PT_NO + "=?",
                 new String[]{String.valueOf(pt_no)}, null, null, COLUMN_ID + " DESC", String.valueOf(1));
         if (cursor.moveToFirst()) {
-            longECGReport.setRow_id(Integer.parseInt(cursor.getString(0)));
+            longECGReport.setRow_id((cursor.getString(0)));
             longECGReport.setHeartrate((float) Double.parseDouble(cursor.getString(1)));
             longECGReport.setPr((float) Double.parseDouble(cursor.getString(2)));
             longECGReport.setQt((float) Double.parseDouble(cursor.getString(3)));
@@ -681,7 +687,7 @@ public class LabDB extends SQLiteOpenHelper {
     }
 
 
-    public ECGReport getSingleLeadEcgSign(int pt_no) {
+    public ECGReport getSingleLeadEcgSign(String pt_no) {
         ECGReport ecgReport = new ECGReport();
         SQLiteDatabase db = this.getReadableDatabase();
 
@@ -690,7 +696,7 @@ public class LabDB extends SQLiteOpenHelper {
                         COLUMN_QRS, COLUMN_SDNN, COLUMN_RMSSD,COLUMN_MRR,COLUMN_FINDING}, COLUMN_PT_NO + "=?",
                 new String[]{String.valueOf(pt_no)}, null, null, COLUMN_ID + " DESC", String.valueOf(1));
         if (cursor.moveToFirst()) {
-            ecgReport.setRow_id(Integer.parseInt(cursor.getString(0)));
+            ecgReport.setRow_id((cursor.getString(0)));
             ecgReport.setHeartrate((float) Double.parseDouble(cursor.getString(1)));
             ecgReport.setPr((float) Double.parseDouble(cursor.getString(2)));
             ecgReport.setQt((float) Double.parseDouble(cursor.getString(3)));
@@ -709,7 +715,7 @@ public class LabDB extends SQLiteOpenHelper {
 
 
 
-    public VitalSign getLastVitalSign(int pt_no) {
+    public VitalSign getLastVitalSign(String pt_no) {
         VitalSign vitalSign = new VitalSign();
         SQLiteDatabase db = this.getReadableDatabase();
 //
@@ -718,7 +724,7 @@ public class LabDB extends SQLiteOpenHelper {
                         COLUMN_BP_S, COLUMN_BP_D, COLUMN_STO2,COLUMN_VITAL_GLUCOSE}, COLUMN_PT_NO + "=?",
                 new String[]{String.valueOf(pt_no)}, null, null, COLUMN_ID + " DESC", String.valueOf(1));
         if (cursor.moveToFirst()) {
-            vitalSign.setRow_id(Integer.parseInt(cursor.getString(0)));
+            vitalSign.setRow_id((cursor.getString(0)));
             vitalSign.setWeight((float) Double.parseDouble(cursor.getString(1)));
             vitalSign.setHeight((float) Double.parseDouble(cursor.getString(2)));
             vitalSign.setTempt((float) Double.parseDouble(cursor.getString(3)));
@@ -746,8 +752,8 @@ public class LabDB extends SQLiteOpenHelper {
         if (cursor.moveToFirst()) {
             do {
                 VitalSign vitalSign = new VitalSign();
-                vitalSign.setRow_id(cursor.getInt(0));
-                 vitalSign.setPt_no(cursor.getInt(1));
+                vitalSign.setRow_id(cursor.getString(0));
+                 vitalSign.setPt_no(cursor.getString(1));
                 vitalSign.setWeight((float) Double.parseDouble(cursor.getString(2)));
                 vitalSign.setHeight((float) Double.parseDouble(cursor.getString(3)));
                 vitalSign.setTempt((float) Double.parseDouble(cursor.getString(4)));
@@ -763,8 +769,8 @@ public class LabDB extends SQLiteOpenHelper {
         return vs;
     }
 
-    public int SaveBloodReport(BloodReport bloodReport) {
-        int result = 0;
+    public String SaveBloodReport(BloodReport bloodReport) {
+        String result = "";
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
         values.put(COLUMN_PT_NO, bloodReport.getPt_no());
@@ -772,7 +778,7 @@ public class LabDB extends SQLiteOpenHelper {
         values.put(COLUMN_CHLORESTROL, bloodReport.getChlorestrol());
         values.put(COLUMN_GLUCOSE, bloodReport.getGlucose());
         values.put(COLUMN_UPDATEDDATE, Calendar.getInstance().getTimeInMillis() / 1000);
-        if (bloodReport.getRow_id() != 0) {
+        if (!bloodReport.getRow_id() .equals("")) {
             db.update(TABLE_BLOOD_TEST, values, COLUMN_ID + "=?", new String[]{String.valueOf(bloodReport.getRow_id())});
             result = bloodReport.getRow_id();
         } else {
@@ -792,7 +798,7 @@ public class LabDB extends SQLiteOpenHelper {
                         COLUMN_URIC_ACID, COLUMN_CHLORESTROL}, COLUMN_PT_NO + "=?",
                 new String[]{String.valueOf(pt_no)}, null, null, COLUMN_ID + " DESC", String.valueOf(1));
         if (cursor.moveToFirst()) {
-            bloodReport.setRow_id(Integer.parseInt(cursor.getString(0)));
+            bloodReport.setRow_id((cursor.getString(0)));
             bloodReport.setGlucose((float) Double.parseDouble(cursor.getString(1)));
             bloodReport.setUric_acid((float) Double.parseDouble(cursor.getString(2)));
             bloodReport.setChlorestrol((float) Double.parseDouble(cursor.getString(3)));
@@ -814,7 +820,7 @@ public class LabDB extends SQLiteOpenHelper {
         if (cursor.moveToFirst()) {
             do {
                 BloodReport bloodReport = new BloodReport();
-                bloodReport.setRow_id(Integer.parseInt(cursor.getString(0)));
+                bloodReport.setRow_id((cursor.getString(0)));
 //            bloodReport.setPt_no(cursor.getInt(1));
                 bloodReport.setGlucose((float) Double.parseDouble(cursor.getString(1)));
                 bloodReport.setUric_acid((float) Double.parseDouble(cursor.getString(2)));
@@ -827,8 +833,8 @@ public class LabDB extends SQLiteOpenHelper {
         return br;
     }
 
-    public int SaveUrineReport(UrineReport urineReport) {
-        int result = 0;
+    public String SaveUrineReport(UrineReport urineReport) {
+        String result = "";
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
         values.put(COLUMN_PT_NO, urineReport.getPt_no());
@@ -844,7 +850,7 @@ public class LabDB extends SQLiteOpenHelper {
         values.put(COLUMN_URINE_GLUCOSE, urineReport.getGlucose());
         values.put(COLUMN_AA, urineReport.getAsc());
         values.put(COLUMN_UPDATEDDATE, Calendar.getInstance().getTimeInMillis() / 1000);
-        if (urineReport.getRow_id() != 0) {
+        if (urineReport.getRow_id().equals("")) {
             db.update(TABLE_URINE_TEST, values, COLUMN_ID + "=?", new String[]{String.valueOf(urineReport.getRow_id())});
             result = urineReport.getRow_id();
         } else {
@@ -876,7 +882,7 @@ public class LabDB extends SQLiteOpenHelper {
                 }, COLUMN_PT_NO + "=?",
                 new String[]{String.valueOf(pt_no)}, null, null, COLUMN_ID + " DESC", String.valueOf(1));
         if (cursor.moveToFirst()) {
-            urineReport.setRow_id(Integer.parseInt(cursor.getString(0)));
+            urineReport.setRow_id((cursor.getString(0)));
             urineReport.setLeuko((float) Double.parseDouble(cursor.getString(1)));
             urineReport.setNit((float) Double.parseDouble(cursor.getString(2)));
             urineReport.setUrb((float) Double.parseDouble(cursor.getString(3)));
@@ -919,7 +925,7 @@ public class LabDB extends SQLiteOpenHelper {
         if (cursor.moveToFirst()) {
             do {
                 UrineReport urineReport = new UrineReport();
-                urineReport.setRow_id(Integer.parseInt(cursor.getString(0)));
+                urineReport.setRow_id((cursor.getString(0)));
 //            urineReport.setPt_no(Integer.parseInt(cursor.getString(1)));
                 urineReport.setLeuko((float) Double.parseDouble(cursor.getString(1)));
                 urineReport.setNit((float) Double.parseDouble(cursor.getString(2)));
@@ -950,14 +956,14 @@ public class LabDB extends SQLiteOpenHelper {
         return exists;
     }
 
-    private int getLastID(String table, SQLiteDatabase db) {
-        int last_id = 0;
+    private String getLastID(String table, SQLiteDatabase db) {
+        String last_id = "";
         Cursor cursor = db.rawQuery("SELECT " + COLUMN_PT_NO + " FROM " + table
                 + " ORDER BY " + COLUMN_PT_NO + " DESC LIMIT 1", new String[]{});
         boolean exists = (cursor.getCount() > 0);
         if (exists) {
             cursor.moveToFirst();
-            last_id = Integer.parseInt(cursor.getString(0));
+            last_id = (cursor.getString(0));
         }
         cursor.close();
         return last_id;
@@ -1012,10 +1018,10 @@ public class LabDB extends SQLiteOpenHelper {
 
     public void setUrineData(String data) {
         SQLiteDatabase db = this.getWritableDatabase();
-        int last_id = getLastID(TABLE_DATA, db);
+        String last_id = getLastID(TABLE_DATA, db);
         ContentValues values = new ContentValues();
         values.put(COLUMN_DATA, data);
-        if (last_id == 0) {
+        if (!last_id.equals("")) {
             // insert data
             db.insert(TABLE_DATA, null, values);
         } else {

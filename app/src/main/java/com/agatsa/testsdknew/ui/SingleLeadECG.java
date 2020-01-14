@@ -49,7 +49,7 @@ public  class
 
     LinearLayout LeadOne,txttakeagain,btnsavell,viewreportll;
     private Context mContext;
-    int ptno = 0;
+    String  ptno = "";
     SharedPreferences pref;
     ECGReport ecgReport=new ECGReport();
     SweetAlertDialog pDialog;
@@ -75,7 +75,7 @@ public  class
         setContentView(R.layout.activity_single_lead);
         checkPermissions();
         pref = this.getSharedPreferences("sunyahealth", Context.MODE_PRIVATE);
-        ptno = pref.getInt("pt_id", 0);
+        ptno = pref.getString("PTNO","");
 
 
 
@@ -264,24 +264,24 @@ public  class
         initiateEcg.saveEcgData(mContext, "test", new SaveEcgCallBack() {
             @Override
             public void onSuccess(Success success, EcgConfig ecgConfig) {
-//                LabDB db = new LabDB(getApplicationContext());
-//                ecgReport.setPt_no(ptno);
-//                ecgReport.setHeartrate(ecgConfig.getHeartRate());
-//                ecgReport.setPr((ecgConfig.getpR()));
-//                ecgReport.setQt(ecgConfig.getqT());
-//                ecgReport.setQtc(ecgConfig.getqTc());
-//                ecgReport.setQrs(ecgConfig.getqRs());
-//                ecgReport.setSdnn(ecgConfig.getSdnn());
-//                ecgReport.setRmssd(ecgConfig.getRmssd());
-//                ecgReport.setMrr(ecgConfig.getmRR());
-//                ecgReport.setFinding(ecgConfig.getFinding());
-//                int last_ecgsign_row_id = db.SaveSingleleadECGSign(ecgReport);
-//                try {
-//                    Thread.sleep(1000);
-//                } catch (InterruptedException e) {
-//                    e.printStackTrace();
-//                }
-//                ecgReport.setRow_id(last_ecgsign_row_id);
+                LabDB db = new LabDB(getApplicationContext());
+                ecgReport.setPt_no(ptno);
+                ecgReport.setHeartrate(ecgConfig.getHeartRate());
+                ecgReport.setPr((ecgConfig.getpR()));
+                ecgReport.setQt(ecgConfig.getqT());
+                ecgReport.setQtc(ecgConfig.getqTc());
+                ecgReport.setQrs(ecgConfig.getqRs());
+                ecgReport.setSdnn(ecgConfig.getSdnn());
+                ecgReport.setRmssd(ecgConfig.getRmssd());
+                ecgReport.setMrr(ecgConfig.getmRR());
+                ecgReport.setFinding(ecgConfig.getFinding());
+                String last_ecgsign_row_id = db.SaveSingleleadECGSign(ecgReport);
+                try {
+                    Thread.sleep(1000);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                ecgReport.setRow_id(last_ecgsign_row_id);
                 makePDF(ecgConfig);
                 Toast.makeText(mContext, success.getSuccessMsg(), Toast.LENGTH_SHORT).show();
 

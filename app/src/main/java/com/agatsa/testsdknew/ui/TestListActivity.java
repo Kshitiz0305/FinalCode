@@ -2,6 +2,7 @@ package com.agatsa.testsdknew.ui;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -15,14 +16,14 @@ import com.agatsa.testsdknew.databinding.TestActionBinding;
 public class TestListActivity extends AppCompatActivity {
 
     ActivityActionDashBinding binding;
-    int pt_id;
+    String pt_id;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = DataBindingUtil.setContentView(this, R.layout.activity_action_dash);
         PatientModel patientModel = getIntent().getParcelableExtra("patient");
-        pt_id = getIntent().getIntExtra("ptid",0);
+        pt_id = getIntent().getStringExtra("ptid");
 
 if(patientModel!=null){
 

@@ -5,8 +5,8 @@ package com.agatsa.testsdknew.Models;
  */
 
 public class VitalSign {
-    int pt_no;
-    int row_id;
+    String pt_no;
+    String row_id;
     float weight;
     float height;
     float tempt;
@@ -17,8 +17,8 @@ public class VitalSign {
     float glucose;
 
     public VitalSign(){
-        pt_no = 0;
-        row_id =0;
+        pt_no = "";
+        row_id ="";
         weight =0;
         height =0;
         tempt =0;
@@ -38,19 +38,19 @@ public class VitalSign {
         this.glucose = glucose;
     }
 
-    public int getPt_no() {
+    public String getPt_no() {
         return pt_no;
     }
 
-    public void setPt_no(int pt_no) {
+    public void setPt_no(String pt_no) {
         this.pt_no = pt_no;
     }
 
-    public int getRow_id() {
+    public String getRow_id() {
         return row_id;
     }
 
-    public void setRow_id(int row_id) {
+    public void setRow_id(String row_id) {
         this.row_id = row_id;
     }
 

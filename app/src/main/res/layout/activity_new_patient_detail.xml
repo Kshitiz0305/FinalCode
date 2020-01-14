@@ -174,17 +174,19 @@
                             android:layout_height="40sp"
                             android:layout_weight="4"
                             android:background="@drawable/bg_gray_border"
+                            android:fontFamily="@font/sf_pro_display_medium"
                             app:smsp_alwaysShowFloatingLabel="false"
                             app:smsp_enableErrorLabel="false"
                             app:smsp_enableFloatingLabel="false"
-                            app:smsp_hint="Select Municipality/VDC"
-                            app:smsp_searchHint="Select Municipality/VDC"                            app:smsp_isSearchable="true"
+                            android:padding="@dimen/_2sdp"
+                            app:smsp_hint="Select District"
+                            app:smsp_searchHint="Select District"                            app:smsp_isSearchable="true"
                             app:smsp_itemListColor="#7C4DFF"
                             app:smsp_itemListHintBackgroundColor="#808080"
                             app:smsp_itemListHintColor="#FFFFFF"
                             app:smsp_multilineError="false"
                             app:smsp_selectedItemListColor="#FF5252"
-                            app:smsp_underlineSize="@dimen/_1sdp"
+
                             />
 
                         <com.chivorn.smartmaterialspinner.SmartMaterialSpinner
@@ -198,29 +200,32 @@
                             app:smsp_enableFloatingLabel="false"
                             app:smsp_hint="Select Municipality/VDC"
                             app:smsp_searchHint="Select Municipality/VDC"
+                            android:padding="@dimen/_2sdp"
                             app:smsp_isSearchable="true"
                             app:smsp_itemListColor="#7C4DFF"
+                            android:layout_marginLeft="@dimen/_2sdp"
                             app:smsp_itemListHintBackgroundColor="#808080"
+                            android:fontFamily="@font/sf_pro_display_medium"
                             app:smsp_itemListHintColor="#FFFFFF"
                             app:smsp_multilineError="false"
                             app:smsp_selectedItemListColor="#FF5252"
-                            app:smsp_underlineSize="@dimen/_1sdp"
                             />
 
 
                         <EditText
-                            android:id="@+id/txtAddress"
+                            android:id="@+id/wardNo"
                             android:layout_width="0dp"
                             android:layout_height="40sp"
                             android:layout_weight="2"
+                           android:maxLength="2"
                             android:textSize="13sp"
+
                             android:fontFamily="@font/sf_pro_display_medium"
                             android:inputType="text"
                             android:drawableRight="@drawable/ic_address"
                             android:layout_marginRight="2sp"
                             android:layout_marginLeft="@dimen/_3sdp"
                             app:validateEmpty="@{true}"
-
                             android:background="@drawable/bg_gray_border"
                             android:padding="8sp"
                             />

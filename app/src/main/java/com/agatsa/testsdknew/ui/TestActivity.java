@@ -18,7 +18,7 @@ public class TestActivity extends AppCompatActivity {
 
     TestActionBinding binding;
     PatientModel patientModel;
-    int ptid;
+    String ptid;
 
 
 
@@ -27,7 +27,7 @@ public class TestActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         binding = DataBindingUtil.setContentView(this, R.layout.test_action);
          patientModel = getIntent().getParcelableExtra("patient");
-         ptid = getIntent().getIntExtra("ptid",0);
+         ptid = getIntent().getStringExtra("ptid");
 
 if(patientModel!=null){
 

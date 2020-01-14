@@ -37,7 +37,7 @@ public class LimbSixLead extends AppCompatActivity {
     LinearLayout txtlimbleadone,savell,completetaskll,
             txtlimboneagain,txtlimbleadtwo,txtlimbtwoagain,txtlimbagain;
     private Context mContext;
-    int ptno = 0;
+    String ptno = "";
     SharedPreferences pref;
     ECGReport ecgReport=new ECGReport();
     SweetAlertDialog pDialog;
@@ -53,12 +53,11 @@ public class LimbSixLead extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_limb_lead);
         pref = this.getSharedPreferences("sunyahealth", Context.MODE_PRIVATE);
-        ptno = pref.getInt("pt_id", 0);
+        ptno = pref.getString("PTNO", "");
 //        labdb = new LabDB(getApplicationContext());
 //        ecgReport=labdb.getLastEcgSign(ptno);
         mContext = getApplicationContext();
         toolbar = findViewById(R.id.toolbar);
-
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle("Limb Six Lead");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -139,24 +138,24 @@ public class LimbSixLead extends AppCompatActivity {
         initiateEcg.saveEcgData(mContext, "test", new SaveEcgCallBack() {
             @Override
             public void onSuccess(Success success, EcgConfig ecgConfig) {
-//                LabDB db = new LabDB(getApplicationContext());
-//                ecgReport.setPt_no(ptno);
-//                ecgReport.setHeartrate(ecgConfig.getHeartRate());
-//                ecgReport.setPr((ecgConfig.getpR()));
-//                ecgReport.setQt(ecgConfig.getqT());
-//                ecgReport.setQtc(ecgConfig.getqTc());
-//                ecgReport.setQrs(ecgConfig.getqRs());
-//                ecgReport.setSdnn(ecgConfig.getSdnn());
-//                ecgReport.setRmssd(ecgConfig.getRmssd());
-//                ecgReport.setMrr(ecgConfig.getmRR());
-//                ecgReport.setFinding(ecgConfig.getFinding());
-//                int last_ecgsign_row_id = db.SaveSingleleadECGSign(ecgReport);
-//                try {
-//                    Thread.sleep(1000);
-//                } catch (InterruptedException e) {
-//                    e.printStackTrace();
-//                }
-//                ecgReport.setRow_id(last_ecgsign_row_id);
+                LabDB db = new LabDB(getApplicationContext());
+                ecgReport.setPt_no(ptno);
+                ecgReport.setHeartrate(ecgConfig.getHeartRate());
+                ecgReport.setPr((ecgConfig.getpR()));
+                ecgReport.setQt(ecgConfig.getqT());
+                ecgReport.setQtc(ecgConfig.getqTc());
+                ecgReport.setQrs(ecgConfig.getqRs());
+                ecgReport.setSdnn(ecgConfig.getSdnn());
+                ecgReport.setRmssd(ecgConfig.getRmssd());
+                ecgReport.setMrr(ecgConfig.getmRR());
+                ecgReport.setFinding(ecgConfig.getFinding());
+                String last_ecgsign_row_id = db.SaveSingleleadECGSign(ecgReport);
+                try {
+                    Thread.sleep(1000);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                ecgReport.setRow_id(last_ecgsign_row_id);
                 makePDF(ecgConfig);
                 Toast.makeText(mContext, success.getSuccessMsg(), Toast.LENGTH_SHORT).show();
 

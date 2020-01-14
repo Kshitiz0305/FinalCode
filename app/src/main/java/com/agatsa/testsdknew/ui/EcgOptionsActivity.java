@@ -25,6 +25,7 @@ import com.agatsa.sanketlife.callbacks.RegisterDeviceResponse;
 import com.agatsa.sanketlife.development.Errors;
 import com.agatsa.sanketlife.development.InitiateEcg;
 import com.agatsa.sanketlife.models.EcgTypes;
+import com.agatsa.testsdknew.Models.PatientModel;
 import com.agatsa.testsdknew.R;
 
 import java.util.ArrayList;
@@ -44,6 +45,8 @@ public class EcgOptionsActivity extends AppCompatActivity {
             Manifest.permission.ACCESS_FINE_LOCATION,
             Manifest.permission.ACCESS_COARSE_LOCATION};
 
+    String pt_id;
+
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -54,6 +57,9 @@ public class EcgOptionsActivity extends AppCompatActivity {
         mpd=new ProgressDialog(this);
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle("ECG");
+
+        PatientModel patientModel = getIntent().getParcelableExtra("patient");
+        pt_id = getIntent().getStringExtra("ptid");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         singleleadecg=findViewById(R.id.singleleadecg);
         chestleadecg=findViewById(R.id.chestleadecg);
@@ -70,12 +76,14 @@ public class EcgOptionsActivity extends AppCompatActivity {
 
         singleleadecg.setOnClickListener(v -> {
             Intent i=new Intent(EcgOptionsActivity.this,SingleLeadECG.class);
+            i.putExtra("pt_id",pt_id);
             startActivity(i);
 
         });
 
         limbsixlead.setOnClickListener(v -> {
             Intent i=new Intent(EcgOptionsActivity.this, LimbSixLead.class);
+            i.putExtra("pt_id",pt_id);
             startActivity(i);
 
         });
@@ -88,12 +96,14 @@ public class EcgOptionsActivity extends AppCompatActivity {
 
         chestleadecg.setOnClickListener(v -> {
             Intent i=new Intent(EcgOptionsActivity.this,ChestSixLead.class);
+            i.putExtra("pt_id",pt_id);
             startActivity(i);
 
         });
 
         Twelvelead.setOnClickListener(v -> {
             Intent i=new Intent(EcgOptionsActivity.this,TwelveLeadEcg.class);
+            i.putExtra("pt_id",pt_id);
             startActivity(i);
 
         });

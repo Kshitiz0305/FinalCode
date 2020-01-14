@@ -1,8 +1,8 @@
 package com.agatsa.testsdknew.Models;
 
 public class LongECGReport {
-    int pt_no;
-    int row_id;
+    String pt_no;
+    String row_id;
     double heartrate;
     double pr;
     double qt;
@@ -14,8 +14,8 @@ public class LongECGReport {
     String finding;
 
     public LongECGReport() {
-        pt_no = 0;
-        row_id = 0;
+        pt_no = "";
+        row_id = "";
         heartrate = 0;
         pr=0;
         qt = 0;
@@ -27,19 +27,19 @@ public class LongECGReport {
         finding = "";
     }
 
-    public int getPt_no() {
+    public String getPt_no() {
         return pt_no;
     }
 
-    public void setPt_no(int pt_no) {
+    public void setPt_no(String pt_no) {
         this.pt_no = pt_no;
     }
 
-    public int getRow_id() {
+    public String getRow_id() {
         return row_id;
     }
 
-    public void setRow_id(int row_id) {
+    public void setRow_id(String row_id) {
         this.row_id = row_id;
     }
 
