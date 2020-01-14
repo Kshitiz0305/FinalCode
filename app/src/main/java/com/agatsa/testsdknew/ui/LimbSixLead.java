@@ -34,7 +34,7 @@ public class LimbSixLead extends AppCompatActivity {
 
     LinearLayout txtlimbleadone,txtlimbtwo;
     private Context mContext;
-    int ptno = 0;
+    String ptno = "";
     SharedPreferences pref;
     ECGReport ecgReport=new ECGReport();
     SweetAlertDialog pDialog;
@@ -50,7 +50,7 @@ public class LimbSixLead extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_limb_lead);
         pref = this.getSharedPreferences("sunyahealth", Context.MODE_PRIVATE);
-        ptno = pref.getInt("pt_id", 0);
+        ptno = pref.getString("PTNO", "");
 //        labdb = new LabDB(getApplicationContext());
 //        ecgReport=labdb.getLastEcgSign(ptno);
         mContext = getApplicationContext();
@@ -131,7 +131,7 @@ public class LimbSixLead extends AppCompatActivity {
                 ecgReport.setRmssd(ecgConfig.getRmssd());
                 ecgReport.setMrr(ecgConfig.getmRR());
                 ecgReport.setFinding(ecgConfig.getFinding());
-                int last_ecgsign_row_id = db.SaveSingleleadECGSign(ecgReport);
+                String last_ecgsign_row_id = db.SaveSingleleadECGSign(ecgReport);
                 try {
                     Thread.sleep(1000);
                 } catch (InterruptedException e) {

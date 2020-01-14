@@ -64,7 +64,7 @@ public class PersonalDetailsActivity extends AppCompatActivity implements DatePi
 
     String TAG = "PATIENTDETAIL";
     String device_id = "", duid = "", suid = "";
-    int pt_id = 0;
+    String pt_id = "";
     SharedPreferences pref;
     Button btnSave;
     private ProgressDialog dialog;
@@ -111,7 +111,7 @@ ArrayList<String>  placesnames = new ArrayList<>();
         pref = this.getSharedPreferences("sunyahealth", Context.MODE_PRIVATE);
         device_id = pref.getString("device_id", "");
         duid = getIntent().getStringExtra("duid");
-        pt_id = pref.getInt("pt_id", 0);
+        pt_id = pref.getString("PTNO", "");
 
         thisContext = PersonalDetailsActivity.this;
         labDB = new LabDB(getApplicationContext());
@@ -833,7 +833,7 @@ catch (Exception e){
                 txtPtno.setText(String.valueOf(newPatient.getPtNo()));
                 pref = thisContext.getSharedPreferences("sunyahealth", MODE_PRIVATE);
                 SharedPreferences.Editor editor = pref.edit();
-                editor.putInt("PTNO", pt_id);
+                editor.putString("PTNO", pt_id);
                 editor.apply();
                 Toast.makeText(getApplicationContext(), "Patient Saved " + newPatient.getPtNo() + " V " + vitalSign.getRow_id(), Toast.LENGTH_LONG).show();
                 Intent intent = new Intent(PersonalDetailsActivity.this,TestActivity.class);

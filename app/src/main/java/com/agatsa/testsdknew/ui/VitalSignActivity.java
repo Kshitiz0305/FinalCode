@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -21,7 +22,7 @@ import com.agatsa.testsdknew.R;
 public class VitalSignActivity extends AppCompatActivity {
     String TAG = "PATIENTDETAIL";
     String device_id = "", duid = "", suid = "";
-    int ptno = 0;
+    String ptno = " ";
     SharedPreferences pref;
     Button btnSave;
     private ProgressDialog dialog;
@@ -36,7 +37,9 @@ public class VitalSignActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_vital_test);
         pref = this.getSharedPreferences("sunyahealth", Context.MODE_PRIVATE);
-        ptno = pref.getInt("pt_id", 0);
+
+        ptno = pref.getString("PTNO", "");
+        Log.d("rantestvitalpt",ptno);
 
         labDB = new LabDB(getApplicationContext());
         vitalSign = labDB.getLastVitalSign(ptno);
@@ -70,13 +73,13 @@ public class VitalSignActivity extends AppCompatActivity {
 
                 Toast.makeText(getApplicationContext(), "Saving Data", Toast.LENGTH_LONG).show();
                 new SaveData().execute();
-                navigatenext();
+
 
         });
     }
 
     private void navigatenext() {
-        Intent i = new Intent(VitalSignActivity.this, PatientActivity.class);
+        Intent i = new Intent(VitalSignActivity.this, LandingActivity.class);
         startActivity(i);
 
     }
@@ -153,7 +156,7 @@ public class VitalSignActivity extends AppCompatActivity {
                 vitalSign.setGlucose(0);
 
             }
-            int last_vitalsign_row_id = db.SaveVitalSign(vitalSign);
+            String last_vitalsign_row_id = db.SaveVitalSign(vitalSign);
             try {
                 Thread.sleep(1000);
             } catch (InterruptedException e) {
@@ -171,6 +174,7 @@ public class VitalSignActivity extends AppCompatActivity {
                 if (dialog.isShowing())
                     dialog.dismiss();
                 Toast.makeText(getApplicationContext(), "Already saved " + newPatient.getPtNo() + " V " + vitalSign.getRow_id(), Toast.LENGTH_LONG).show();
+                navigatenext();
 
             } else if (s == 3) {
                 if (dialog.isShowing())
@@ -180,6 +184,7 @@ public class VitalSignActivity extends AppCompatActivity {
             } else {
                 if (dialog.isShowing())
                     dialog.dismiss();
+                navigatenext();
                 Toast.makeText(getApplicationContext(), "Patient Saved " + newPatient.getPtNo() + " V " + vitalSign.getRow_id(), Toast.LENGTH_LONG).show();
             }
         }

@@ -46,7 +46,7 @@ public class NewMainActivity extends AppCompatActivity {
     TextView LeadOne,btnLongECG, btnLeadTwo;
     private Context mContext;
     private EditText editTextTime;
-    int ptno = 0;
+    String ptno = "";
     SharedPreferences pref;
 
     ECGReport ecgReport=new ECGReport();
@@ -67,7 +67,7 @@ public class NewMainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_new_main);
         pref = this.getSharedPreferences("sunyahealth", Context.MODE_PRIVATE);
-        ptno = pref.getInt("pt_id", 0);
+        ptno = pref.getString("PTNO", "");
 //        labdb = new LabDB(getApplicationContext());
 //        ecgReport=labdb.getLastEcgSign(ptno);
         mContext = getApplicationContext();
@@ -274,7 +274,7 @@ public class NewMainActivity extends AppCompatActivity {
                 ecgReport.setRmssd(ecgConfig.getRmssd());
                 ecgReport.setMrr(ecgConfig.getmRR());
                 ecgReport.setFinding(ecgConfig.getFinding());
-                int last_ecgsign_row_id = db.SaveSingleleadECGSign(ecgReport);
+                String last_ecgsign_row_id = db.SaveSingleleadECGSign(ecgReport);
                 try {
                     Thread.sleep(1000);
                 } catch (InterruptedException e) {
@@ -336,7 +336,7 @@ public class NewMainActivity extends AppCompatActivity {
                 longECGReport.setRmssd(longEcgConfig.getRmssd());
                 longECGReport.setMrr(longEcgConfig.getmRR());
                 longECGReport.setFinding(longEcgConfig.getFinding());
-                int last_long_ecgsign_row_id = db.SavelongleadECGSign(longECGReport);
+                String last_long_ecgsign_row_id = db.SavelongleadECGSign(longECGReport);
                 try {
                     Thread.sleep(1000);
                 } catch (InterruptedException e) {

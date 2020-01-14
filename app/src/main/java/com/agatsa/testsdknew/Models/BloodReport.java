@@ -6,14 +6,14 @@ package com.agatsa.testsdknew.Models;
 
 public class BloodReport {
     int pt_no;
-    int row_id;
+    String row_id;
     float uric_acid;
     float chlorestrol;
     float glucose;
 
     public BloodReport(){
         pt_no = 0;
-        row_id =0;
+        row_id ="";
         uric_acid=0;
         chlorestrol =0;
         glucose=0;
@@ -27,11 +27,11 @@ public class BloodReport {
         this.pt_no = pt_no;
     }
 
-    public int getRow_id() {
+    public String getRow_id() {
         return row_id;
     }
 
-    public void setRow_id(int row_id) {
+    public void setRow_id(String row_id) {
         this.row_id = row_id;
     }
 

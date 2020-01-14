@@ -33,7 +33,7 @@ import java.util.Set;
 import java.util.UUID;
 
 public class PrintReport extends AppCompatActivity {
-    int pt_no = 0;
+    String pt_no = "";
     PatientModel patientModel;
     VitalSign vitalSign;
     BloodReport bloodReport;
@@ -76,9 +76,9 @@ public class PrintReport extends AppCompatActivity {
         pref = this.getSharedPreferences("sunyahealth", Context.MODE_PRIVATE);
         device_id = pref.getString("device_id", "");
         duid = getIntent().getStringExtra("duid");
-        pt_no = getIntent().getIntExtra("PTNO", 0);
+        pt_no = getIntent().getStringExtra("PTNO");
 //        if (pt_no == null) pt_no = "";
-        if (pt_no == 0) {
+        if (pt_no.equals("")) {
             Toast.makeText(getApplicationContext(), "No Patient Selected", Toast.LENGTH_SHORT).show();
             return;
         }
@@ -154,7 +154,7 @@ public class PrintReport extends AppCompatActivity {
         // Retrive From Database
         LabDB db = new LabDB(getApplicationContext());
         // ***************
-        patientModel = db.getPatient(device_id + duid, pt_no);
+        patientModel = db.getPatient(  pt_no);
         //System.out.println("Patient Sex " + patientModel.getPtSex());
         vitalSign = db.getLastVitalSign(pt_no);
 

@@ -6,7 +6,7 @@ package com.agatsa.testsdknew.Models;
 
 public class UrineReport {
     int pt_no;
-    int row_id;
+    String row_id;
     float leuko;
     float nit;
     float urb;
@@ -21,7 +21,7 @@ public class UrineReport {
 
     public UrineReport(){
         pt_no = 0;
-        row_id =0;
+        row_id ="";
         glucose=0;
     }
 
@@ -33,11 +33,11 @@ public class UrineReport {
         this.pt_no = pt_no;
     }
 
-    public int getRow_id() {
+    public String getRow_id() {
         return row_id;
     }
 
-    public void setRow_id(int row_id) {
+    public void setRow_id(String row_id) {
         this.row_id = row_id;
     }
 
