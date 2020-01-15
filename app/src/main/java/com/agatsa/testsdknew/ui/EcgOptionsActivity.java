@@ -8,7 +8,6 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -75,6 +74,8 @@ public class EcgOptionsActivity extends AppCompatActivity {
 
 
         singleleadecg.setOnClickListener(v -> {
+//            intiaializing the first state in navigation
+            SingleLeadECG.state=0;
             Intent i=new Intent(EcgOptionsActivity.this,SingleLeadECG.class);
             i.putExtra("pt_id",pt_id);
             startActivity(i);
@@ -82,6 +83,11 @@ public class EcgOptionsActivity extends AppCompatActivity {
         });
 
         limbsixlead.setOnClickListener(v -> {
+//            initializing first state in navigation
+            LimbSixLead.again=false;
+            LimbSixLead.leadIndex =0;
+            LimbSixLead.x=0;
+
             Intent i=new Intent(EcgOptionsActivity.this, LimbSixLead.class);
             i.putExtra("pt_id",pt_id);
             startActivity(i);

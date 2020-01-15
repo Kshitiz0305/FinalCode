@@ -59,7 +59,7 @@ public class ViewPDFActivity extends AppCompatActivity {
         File file = new File(filePath);
         Intent intent = new Intent(Intent.ACTION_VIEW);
 
-        // set flag to give temporary permission to external app to use your FileProvider
+        // set leadIndex to give temporary permission to external app to use your FileProvider
         intent.setFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
 
         // generate URI, I defined authority as the application ID in the Manifest, the last param is file I want to open

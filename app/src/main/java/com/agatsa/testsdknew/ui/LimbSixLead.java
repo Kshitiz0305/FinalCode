@@ -24,18 +24,10 @@ import com.agatsa.sanketlife.development.Errors;
 import com.agatsa.sanketlife.development.InitiateEcg;
 import com.agatsa.sanketlife.development.Success;
 import com.agatsa.sanketlife.development.UserDetails;
-import com.agatsa.sanketlife.models.EcgTypes;
 import com.agatsa.testsdknew.Models.ECGReport;
 import com.agatsa.testsdknew.R;
 import com.ontbee.legacyforks.cn.pedant.SweetAlert.SweetAlertDialog;
 
-import java.io.BufferedReader;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.Reader;
-import java.io.StringWriter;
-import java.io.Writer;
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
 
@@ -55,18 +47,13 @@ public class LimbSixLead extends AppCompatActivity {
     SweetAlertDialog pDialog;
     Toolbar toolbar;
     TextView description;
-    public  static  final String imagesrc = "gif_lead1";
-    public  static  final String descriptionsrc = "ecginfo";
+
+    public   static  int leadIndex = 0,x=0;
+    public   static  boolean again =false;
+
     GifImageView gifImageView;
     ArrayList<String> buttoncollectionshide = new ArrayList<String>(Arrays.asList("txtlimbleadone","txtlimboneagain","txtlimbleadtwo","txtlimbtwoagain","txtlimbagain","ll_savereport","ll_report","ll_complete"));
     ArrayList<String> buttoncollectionsshow=new ArrayList<String>(Arrays.asList("txtlimbleadone","txtlimboneagain"));
-
-
-
-
-
-
-
 
 
 
@@ -84,14 +71,19 @@ public class LimbSixLead extends AppCompatActivity {
         getSupportActionBar().setTitle("Limb Six Lead");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         hideAndSeek(buttoncollectionshide,true);
-        hideAndSeek(buttoncollectionsshow,false);
+        ArrayList<String> buttoncollectionsshowstart=new ArrayList<String>(Arrays.asList("txtlimbleadone"));
+        hideAndSeek(buttoncollectionsshowstart,false);
+
+
+
+
 
         initViews();
         initOnClickListener();
     }
 
     public void hideAndSeek(ArrayList<String> idsarray,boolean ishide){
-
+try{
         if(ishide){
             for(String selectedString:idsarray){
 
@@ -117,6 +109,15 @@ public class LimbSixLead extends AppCompatActivity {
 
         }
 
+}
+catch (Exception e){
+    Log.d("rantest",e.getLocalizedMessage());
+
+
+
+}
+
+
     }
 
 
@@ -133,8 +134,7 @@ public class LimbSixLead extends AppCompatActivity {
         gifImageView=findViewById(R.id.gif_holder);
         description=findViewById(R.id.tv_description);
 
-        showDynamicimage(imagesrc);
-        showDynamicDescription(descriptionsrc);
+
 
 
 
@@ -146,24 +146,75 @@ public class LimbSixLead extends AppCompatActivity {
     }
 
     public void showDynamicimage(String imagesrcs){
+        try{
 
-        gifImageView.setImageResource((getResourceId(imagesrcs,"drawable",getPackageName())));
+        gifImageView.setImageResource((getResourceId(imagesrcs,"drawable",getPackageName())));}
+        catch (Exception e){
+
+
+            Log.d("rantest",e.getLocalizedMessage());
+        }
 
     }
 
     private void initOnClickListener() {
 
-        txtlimboneagain.setOnClickListener(v -> getReadingForECG(1));
+        txtlimboneagain.setOnClickListener(v ->{
+leadIndex =1;
+again=true;
 
-       txtlimbtwoagain.setOnClickListener(v -> getReadingForECG(8));
+
+            getReadingForECG(1);
 
 
-        txtlimbleadone.setOnClickListener(v -> getReadingForECG(1));
-        txtlimbleadtwo.setOnClickListener(v -> getReadingForECG(8));
+
+        });
+
+       txtlimbtwoagain.setOnClickListener(v ->{
+           leadIndex =2;
+           again=true;
+
+
+           getReadingForECG(8);
+
+
+       });
+       txtlimbagain.setOnClickListener(v ->{
+            leadIndex =0;
+            again=true;
+
+            getReadingForECG(8);
+
+
+        });
+
+
+        txtlimbleadone.setOnClickListener(v -> {
+//            this is for lead one already tested
+            leadIndex =1;
+            again=false;
+
+            getReadingForECG(1);
+
+
+
+        });
+        txtlimbleadtwo.setOnClickListener(v ->{
+            leadIndex =2;
+            again=false;
+            getReadingForECG(8);
+
+
+
+        });
 
      btnSavelimbreport.setOnClickListener(v -> {
 //         savell.setVisibility(View.GONE);
 //         completetaskll.setVisibility(View.VISIBLE);
+//         ","txtlimbagain","ll_savereport","ll_report","ll_complete")
+         hideAndSeek(buttoncollectionshide,true);
+         ArrayList <String> limbreport = new ArrayList<>(Arrays.asList("txtlimbagain","ll_report","ll_complete"));
+         hideAndSeek(limbreport,false);
          createPDF();
 
      });
@@ -184,6 +235,8 @@ public class LimbSixLead extends AppCompatActivity {
 
     public void getReadingForECG(int count) {
 
+
+
         InitiateEcg initiateEcg = new InitiateEcg();
         initiateEcg.takeEcg(mContext, SECRET_ID, count, new ResponseCallback() {
             @Override
@@ -194,7 +247,7 @@ public class LimbSixLead extends AppCompatActivity {
 
             @Override
             public void onError(Errors errors) {
-                Log.e("Reading failure:", errors.getErrorMsg());
+                Log.d("Reading failure:", errors.getErrorMsg());
             }
         });
 
@@ -263,6 +316,80 @@ public class LimbSixLead extends AppCompatActivity {
     }
 
     @Override
+    protected void onResume() {
+  buttoncollectionshide = new ArrayList<String>(Arrays.asList("txtlimbleadone","txtlimboneagain","txtlimbleadtwo","txtlimbtwoagain","txtlimbagain","ll_savereport","ll_report","ll_complete"));
+//
+        if(leadIndex ==0&&again){
+//
+            again =false;
+            showDynamicimage("gif_lead1");
+            showDynamicDescription("ecginfo");
+            hideAndSeek(buttoncollectionshide,true);
+            ArrayList<String> buttoncollectionsshow0=new ArrayList<String>(Arrays.asList("txtlimbleadone"));
+            hideAndSeek(buttoncollectionsshow0,false);
+        }
+        else if(leadIndex ==2)
+        {
+
+            x++;
+            if(!again&&x==2){
+                leadIndex =0;
+                x=0;
+                showDynamicimage("gif_lead2");
+                showDynamicDescription("ecginfo");
+                hideAndSeek(buttoncollectionshide,true);
+                ArrayList<String> buttoncollectionsshow11=new ArrayList<String>(Arrays.asList("txtlimbtwoagain","ll_savereport"));
+                hideAndSeek(buttoncollectionsshow11,false);
+
+            }
+
+            else if(again&&x==2) {
+                leadIndex =0;
+                x=0;
+                again=false;
+                showDynamicimage("gif_lead2");
+                showDynamicDescription("ecginfo");
+                hideAndSeek(buttoncollectionshide,true);
+                ArrayList<String> buttoncollectionsshow12=new ArrayList<String>(Arrays.asList("txtlimbtwoagain","ll_savereport"));
+                hideAndSeek(buttoncollectionsshow12,false);
+
+            }
+
+
+
+        }
+        else if(leadIndex ==1){
+            x++;
+            if(!again&&x==2){
+//                 this is as lead one pressed and performed test for the fir5st time
+                leadIndex =0;
+                x=0;
+                showDynamicimage("gif_lead2");
+                showDynamicDescription("ecginfo");
+                hideAndSeek(buttoncollectionshide,true);
+                ArrayList<String> buttoncollectionsshow21=new ArrayList<String>(Arrays.asList("txtlimboneagain","txtlimbleadtwo"));
+                hideAndSeek(buttoncollectionsshow21,false);
+
+            }
+
+            else if(again&&x==2) {
+                leadIndex =0;
+                x=0;
+                again=false;
+                showDynamicimage("gif_lead2");
+                showDynamicDescription("ecginfo");
+                hideAndSeek(buttoncollectionshide,true);
+                ArrayList<String> buttoncollectionsshow22=new ArrayList<String>(Arrays.asList("txtlimboneagain","txtlimbleadtwo"));
+                hideAndSeek(buttoncollectionsshow22,false);
+
+            }
+
+
+        }
+        super.onResume();
+    }
+
+    @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case android.R.id.home:
@@ -326,6 +453,10 @@ public class LimbSixLead extends AppCompatActivity {
 
     }
 
+    @Override
+    protected void onDestroy() {
+        Log.d("destroy","seek n destroy");
+        super.onDestroy();
 
-
+    }
 }

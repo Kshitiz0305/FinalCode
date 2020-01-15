@@ -83,9 +83,11 @@ public  class
         initiateEcg = new InitiateEcg();
         initViews();
         if(state%3==1){
+            Log.d("rantest","equals1");
             state=state+1;
         }
         else if(state%3==2){
+            Log.d("rantest","equals2");
             btnsavell.setVisibility(View.VISIBLE);
             txttakeagain.setVisibility(View.VISIBLE);
             LeadOne.setVisibility(View.GONE);
@@ -168,6 +170,7 @@ public  class
     public void onResume(){
         super.onResume();
         if(state!=0){
+            Log.d("rantest","onresume");
             btnsavell.setVisibility(View.VISIBLE);
             txttakeagain.setVisibility(View.VISIBLE);
             LeadOne.setVisibility(View.GONE);
@@ -311,7 +314,7 @@ public  class
                 File file = new File(filePath);
                 Intent intent = new Intent(Intent.ACTION_VIEW);
 
-                // set flag to give temporary permission to external app to use your FileProvider
+                // set leadIndex to give temporary permission to external app to use your FileProvider
                 intent.setFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
 
                 // generate URI, I defined authority as the application ID in the Manifest, the last param is file I want to open
@@ -376,9 +379,9 @@ public  class
        this.recreate();
          Toast.makeText(mContext, success.getSuccessMsg(), Toast.LENGTH_SHORT).show();
 //         Log.d("ktest","came in success");
-         btnsavell.setVisibility(View.VISIBLE);
-         txttakeagain.setVisibility(View.VISIBLE);
-         LeadOne.setVisibility(View.GONE);
+//         btnsavell.setVisibility(View.VISIBLE);
+//         txttakeagain.setVisibility(View.VISIBLE);
+//         LeadOne.setVisibility(View.GONE);
 
      }
 
