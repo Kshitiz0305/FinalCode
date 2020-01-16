@@ -1,38 +1,38 @@
 package com.agatsa.testsdknew.Models;
 
 public class GlucoseModel {
-    int pt_no;
-    int row_id;
-    double ptGlucose;
+    String pt_no;
+    String  row_id;
+    String ptGlucose;
 
     public GlucoseModel() {
-        pt_no = 0;
-        ptGlucose =0;
-        row_id=0;
+        pt_no = "";
+        row_id="";
+        ptGlucose ="";
 
     }
 
-    public int getRow_id() {
-        return row_id;
-    }
-
-    public void setRow_id(int row_id) {
-        this.row_id = row_id;
-    }
-
-    public int getPt_no() {
+    public String getPt_no() {
         return pt_no;
     }
 
-    public void setPt_no(int pt_no) {
+    public void setPt_no(String pt_no) {
         this.pt_no = pt_no;
     }
 
-    public double getPtGlucose() {
+    public String getRow_id() {
+        return row_id;
+    }
+
+    public void setRow_id(String row_id) {
+        this.row_id = row_id;
+    }
+
+    public String getPtGlucose() {
         return ptGlucose;
     }
 
-    public void setPtGlucose(double ptGlucose) {
+    public void setPtGlucose(String ptGlucose) {
         this.ptGlucose = ptGlucose;
     }
 }

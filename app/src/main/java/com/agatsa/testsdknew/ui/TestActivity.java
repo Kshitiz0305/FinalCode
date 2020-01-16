@@ -3,9 +3,11 @@ package com.agatsa.testsdknew.ui;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.view.View;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.databinding.DataBindingUtil;
 
 import com.agatsa.testsdknew.Models.PatientModel;
@@ -19,6 +21,7 @@ public class TestActivity extends AppCompatActivity {
     TestActionBinding binding;
     PatientModel patientModel;
     String ptid;
+    Toolbar toolbar;
 
 
 
@@ -26,6 +29,10 @@ public class TestActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = DataBindingUtil.setContentView(this, R.layout.test_action);
+        toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setTitle("Perform test");
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
          patientModel = getIntent().getParcelableExtra("patient");
          ptid = getIntent().getStringExtra("ptid");
 
@@ -80,6 +87,17 @@ binding.btnNewPatient.setOnClickListener(new View.OnClickListener() {
 
             }
         });
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+               onBackPressed();
+                break;
+        }
+
+        return super.onOptionsItemSelected(item);
     }
 
 

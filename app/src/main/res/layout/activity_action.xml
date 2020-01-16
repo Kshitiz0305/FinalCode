@@ -32,6 +32,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="191dp"
                 android:layout_margin="@dimen/_8kdp"
+                android:visibility="gone"
                 app:cardCornerRadius="@dimen/_10kdp"
                 app:cardElevation="@dimen/_2kdp"
                 app:cardMaxElevation="@dimen/_4kdp">
@@ -53,6 +54,7 @@
                 android:layout_width="match_parent"
                 android:layout_margin="@dimen/_8kdp"
                 app:cardCornerRadius="@dimen/_10kdp"
+                android:layout_marginTop="@dimen/_20sdp"
                 app:cardElevation="@dimen/_2kdp"
                 app:cardMaxElevation="@dimen/_4kdp"
                 android:layout_height="match_parent">
@@ -60,21 +62,21 @@
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="222dp"
-                    android:layout_marginTop="@dimen/_10sdp"
+                    android:layout_height="@dimen/_180sdp"
+                    android:layout_marginTop="@dimen/_20sdp"
                     android:orientation="vertical"
                     android:weightSum="10">
 
                     <LinearLayout
                         android:id="@+id/btnNewPatient"
-                        android:layout_width="@dimen/_210sdp"
-                        android:layout_height="60dp"
+                        android:layout_width="@dimen/_225sdp"
+                        android:layout_height="@dimen/_40sdp"
                         android:layout_gravity="center"
                         android:background="@drawable/bg_gray_border"
                         android:orientation="horizontal">
 
                         <TextView
-                            android:layout_width="205dp"
+                            android:layout_width="@dimen/_175sdp"
                             android:layout_height="match_parent"
                             android:fontFamily="@font/sfpro_display_semibold"
                             android:gravity="center"
@@ -92,8 +94,8 @@
 
 
                         <ImageView
-                            android:layout_width="@dimen/_40kdp"
-                            android:layout_height="match_parent"
+                            android:layout_width="@dimen/_40sdp"
+                            android:layout_height="@dimen/_40sdp"
                             android:layout_gravity="end"
                             android:paddingRight="@dimen/_5sdp"
                             android:src="@drawable/ic_user" />
@@ -136,15 +138,15 @@
 
                     <LinearLayout
                         android:id="@+id/existingBtn"
-                        android:layout_width="@dimen/_210sdp"
-                        android:layout_height="60dp"
+                        android:layout_width="@dimen/_225sdp"
+                        android:layout_height="@dimen/_40sdp"
                         android:layout_gravity="center"
                         android:layout_marginTop="@dimen/_25sdp"
                         android:background="@drawable/bg_gray_border"
                         android:orientation="horizontal">
 
                         <TextView
-                            android:layout_width="205dp"
+                            android:layout_width="@dimen/_175sdp"
                             android:layout_height="match_parent"
                             android:fontFamily="@font/sfpro_display_semibold"
                             android:gravity="center"
@@ -162,8 +164,8 @@
 
 
                         <ImageView
-                            android:layout_width="@dimen/_40kdp"
-                            android:layout_height="match_parent"
+                            android:layout_width="@dimen/_40sdp"
+                            android:layout_height="@dimen/_40sdp"
                             android:layout_gravity="end"
                             android:paddingRight="@dimen/_10sdp"
                             android:src="@drawable/ic_search" />
@@ -178,22 +180,22 @@
 
 
         <RelativeLayout
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_marginBottom="5sp"
-            android:layout_height="wrap_content">
+            android:layout_height="match_parent">
 
             <TextView
                 android:layout_width="wrap_content"
                 android:text="Log Out"
                 android:fontFamily="@font/sfpro_display_semibold"
-                android:padding="8sp"
+                android:padding="5sp"
                 android:layout_alignParentBottom="true"
                 android:textColor="@color/colorPrimary"
-                android:textSize="18sp"
+                android:textSize="14sp"
                 android:id="@+id/logout"
                 android:layout_marginLeft="@dimen/_5sdp"
                 android:background="@drawable/bg_gray_border"
-                android:layout_height="@dimen/_30sdp"
+                android:layout_height="wrap_content"
                 />
 
         </RelativeLayout>

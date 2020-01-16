@@ -99,7 +99,7 @@ public class PrintReport extends AppCompatActivity {
         txtBP = findViewById(R.id.txtBP);
         txtSTO2 = findViewById(R.id.txtSto2);
         txtBMI = findViewById(R.id.txtBMI);
-        txtglucose=findViewById(R.id.txtglucose);
+//        txtglucose=findViewById(R.id.txtglucose);
 
         //ECG Report
 
@@ -178,27 +178,27 @@ public class PrintReport extends AppCompatActivity {
 //        txtSex.setText(patientModel.getPtSex());
         // Fillup Vital Sign
         txtTemp.setText(String.valueOf(vitalSign.getTempt()));
-        txtWeight.setText(String.valueOf(vitalSign.getWeight()) + " Kg");
-        txtHeight.setText(String.valueOf(vitalSign.getHeight()) + " feet");
+        txtWeight.setText(vitalSign.getWeight() + " Kg");
+        txtHeight.setText(vitalSign.getHeight() + " feet");
         txtPulse.setText( String.valueOf(vitalSign.getPulse()));
         txtSTO2.setText(String.valueOf(vitalSign.getSto2()));
-        txtglucose.setText(String.valueOf(vitalSign.getGlucose()));
+//        txtglucose.setText(String.valueOf(vitalSign.getGlucose()));
         // For BMI
-        double heightinmeter = vitalSign.getHeight() * 0.0254;
-        double m2 = heightinmeter * heightinmeter;
-        double weight = vitalSign.getWeight();
-        double bmi = weight / m2;
-        String BMI = String.format("%.2f", bmi);
-        if (bmi < 18.5) {
-            BMI += "(Under Weight Range)";
-        } else if (bmi < 24.9) {
-            BMI += "(Healthy Weight Range)";
-        } else if (bmi < 29.9) {
-            BMI += "(Over Weight Range)";
-        } else if (bmi < 39.9) {
-            BMI += "(Obese Range)";
-        }
-        txtBMI.setText(BMI);
+//        String heightinmeter = String.valueOf(vitalSign.getHeight() * 0.0254);
+//        double m2 = heightinmeter * heightinmeter;
+//        double weight = vitalSign.getWeight();
+//        double bmi = weight / m2;
+//        String BMI = String.format("%.2f", bmi);
+//        if (bmi < 18.5) {
+//            BMI += "(Under Weight Range)";
+//        } else if (bmi < 24.9) {
+//            BMI += "(Healthy Weight Range)";
+//        } else if (bmi < 29.9) {
+//            BMI += "(Over Weight Range)";
+//        } else if (bmi < 39.9) {
+//            BMI += "(Obese Range)";
+//        }
+//        txtBMI.setText(BMI);
         String bp = String.valueOf(vitalSign.getBps());
         bp = bp + "/";
         bp = bp + String.valueOf(vitalSign.getBpd());

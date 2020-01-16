@@ -45,30 +45,10 @@
                     android:textSize="15sp" />
             </RelativeLayout>
 
-            <androidx.cardview.widget.CardView
-                android:layout_width="match_parent"
-                android:layout_height="191dp"
-                android:layout_margin="@dimen/_8kdp"
-                app:cardCornerRadius="@dimen/_10kdp"
-                app:cardElevation="@dimen/_2kdp"
-                app:cardMaxElevation="@dimen/_4kdp">
-
-                <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/_150kdp">
-
-                    <ImageView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:scaleType="fitXY"
-                        android:src="@drawable/sunyahealth" />
-
-                </RelativeLayout>
-            </androidx.cardview.widget.CardView>
 
             <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
-                android:layout_height="245dp"
+                android:layout_height="wrap_content"
                 android:layout_margin="@dimen/_8kdp"
                 app:cardCornerRadius="@dimen/_10kdp"
                 app:cardElevation="@dimen/_2kdp"
@@ -77,21 +57,21 @@
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="@dimen/_260sdp"
                     android:layout_marginTop="@dimen/_10sdp"
                     android:orientation="vertical"
                     android:weightSum="10">
 
                     <LinearLayout
                         android:id="@+id/btnVItal"
-                        android:layout_width="@dimen/_210sdp"
-                        android:layout_height="@dimen/_40sdp"
+                        android:layout_width="@dimen/_225sdp"
+                        android:layout_height="@dimen/_42sdp"
                         android:layout_gravity="center"
                         android:background="@drawable/bg_gray_border"
                         android:orientation="horizontal">
 
                         <TextView
-                            android:layout_width="210dp"
+                            android:layout_width="@dimen/_175sdp"
                             android:layout_height="match_parent"
                             android:fontFamily="@font/sfpro_display_semibold"
                             android:gravity="center"
@@ -108,25 +88,31 @@
                             android:background="@drawable/gradient_vertical" />
 
                         <ImageView
-                            android:layout_width="@dimen/_40kdp"
-                            android:layout_height="@dimen/_40kdp"
+                            android:layout_width="@dimen/_40sdp"
+                            android:layout_height="@dimen/_40sdp"
                             android:layout_gravity="end"
                             android:paddingRight="@dimen/_3sdp"
                             android:src="@drawable/vital_icon" />
 
                     </LinearLayout>
 
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="2dp"
+                        android:layout_marginTop="@dimen/_10kdp"
+                        android:background="@color/graylight" />
+
                     <LinearLayout
                         android:id="@+id/ecgTest"
-                        android:layout_width="@dimen/_210sdp"
-                        android:layout_height="@dimen/_40sdp"
+                        android:layout_width="@dimen/_225sdp"
+                        android:layout_height="@dimen/_42sdp"
                         android:layout_gravity="center"
-                        android:layout_marginTop="@dimen/_25sdp"
+                        android:layout_marginTop="@dimen/_15sdp"
                         android:background="@drawable/bg_gray_border"
                         android:orientation="horizontal">
 
                         <TextView
-                            android:layout_width="210dp"
+                            android:layout_width="@dimen/_175sdp"
                             android:layout_height="match_parent"
                             android:fontFamily="@font/sfpro_display_semibold"
                             android:gravity="center"
@@ -151,17 +137,24 @@
 
                     </LinearLayout>
 
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="2dp"
+                        android:layout_marginTop="@dimen/_10kdp"
+                        android:background="@color/graylight" />
+
+
                     <LinearLayout
                         android:id="@+id/tblUrineTest"
-                        android:layout_width="@dimen/_210sdp"
-                        android:layout_height="@dimen/_40sdp"
+                        android:layout_width="@dimen/_225sdp"
+                        android:layout_height="@dimen/_42sdp"
                         android:layout_gravity="center"
-                        android:layout_marginTop="@dimen/_25sdp"
+                        android:layout_marginTop="@dimen/_15sdp"
                         android:background="@drawable/bg_gray_border"
                         android:orientation="horizontal">
 
                         <TextView
-                            android:layout_width="210dp"
+                            android:layout_width="@dimen/_175sdp"
                             android:layout_height="match_parent"
                             android:fontFamily="@font/sfpro_display_semibold"
                             android:gravity="center"
@@ -184,7 +177,51 @@
                             android:layout_height="@dimen/_40sdp"
                             android:layout_gravity="end"
                             android:paddingRight="@dimen/_3sdp"
-                            android:src="@drawable/ecg_icon" />
+                            android:src="@drawable/urine_icon" />
+
+                    </LinearLayout>
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="2dp"
+
+                        android:layout_marginTop="@dimen/_10kdp"
+                        android:background="@color/graylight" />
+
+                    <LinearLayout
+                        android:id="@+id/diabetesTest"
+                        android:layout_width="@dimen/_225sdp"
+                        android:layout_height="@dimen/_42sdp"
+                        android:layout_gravity="center"
+                        android:layout_marginTop="@dimen/_15sdp"
+                        android:background="@drawable/bg_gray_border"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:layout_width="@dimen/_175sdp"
+                            android:layout_height="match_parent"
+                            android:fontFamily="@font/sfpro_display_semibold"
+                            android:gravity="center"
+                            android:padding="@dimen/_5sdp"
+                            android:text="Diabetes"
+                            android:textColor="@color/colorPrimary"
+                            android:textSize="@dimen/_18sdp" />
+
+
+                        <View
+                            android:layout_width="1dp"
+                            android:layout_height="match_parent"
+                            android:layout_marginLeft="5dp"
+                            android:layout_marginRight="5dp"
+                            android:background="@drawable/gradient_vertical" />
+
+                        <ImageView
+
+                            android:layout_width="@dimen/_40sdp"
+                            android:layout_height="@dimen/_40sdp"
+                            android:layout_gravity="end"
+                            android:paddingRight="@dimen/_3sdp"
+                            android:src="@drawable/ic_diabetes" />
 
                     </LinearLayout>
 
@@ -195,6 +232,7 @@
         </LinearLayout>
 
         <RelativeLayout
+            android:layout_marginTop="@dimen/_20sdp"
             android:layout_width="wrap_content"
             android:layout_marginBottom="5sp"
             android:layout_height="wrap_content">
@@ -210,7 +248,7 @@
                 android:id="@+id/logout"
                 android:layout_marginLeft="@dimen/_5sdp"
                 android:background="@drawable/bg_gray_border"
-                android:layout_height="@dimen/_30sdp"
+                android:layout_height="@dimen/_40sdp"
                 />
 
         </RelativeLayout>

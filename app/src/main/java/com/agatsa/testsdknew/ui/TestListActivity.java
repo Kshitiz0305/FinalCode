@@ -6,6 +6,7 @@ import android.util.Log;
 import android.view.View;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.databinding.DataBindingUtil;
 
 import com.agatsa.testsdknew.Models.PatientModel;
@@ -17,11 +18,17 @@ public class TestListActivity extends AppCompatActivity {
 
     ActivityActionDashBinding binding;
     String pt_id;
+    Toolbar toolbar;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = DataBindingUtil.setContentView(this, R.layout.activity_action_dash);
+        toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setTitle("Start Test");
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         PatientModel patientModel = getIntent().getParcelableExtra("patient");
         pt_id = getIntent().getStringExtra("ptid");
 
@@ -35,6 +42,7 @@ binding.btnVItal.setOnClickListener(view -> {
 
     Intent i = new Intent(TestListActivity.this, VitalSignActivity.class);
     i.putExtra("PTNO", pt_id);
+    i.putExtra("patient",patientModel);
     startActivity(i);
 
 
@@ -47,15 +55,15 @@ binding.ecgTest.setOnClickListener(view -> {
     startActivity(i);
 
 });
-//        binding.ecgTest.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                Intent i = new Intent(TestListActivity.this, ECGactivity.class);
-//                i.putExtra("PTNO", pt_id);
-//                startActivity(i);
-//
-//            }
 
+binding.diabetesTest.setOnClickListener(v -> {
+    Intent i = new Intent(TestListActivity.this, DiabetesActivity.class);
+    i.putExtra("PTNO", pt_id);
+    i.putExtra("patient",patientModel);
+    startActivity(i);
+
+
+});
 
 
 
