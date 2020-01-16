@@ -20,6 +20,7 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.core.content.FileProvider;
+import androidx.databinding.DataBindingUtil;
 
 import com.agatsa.sanketlife.callbacks.PdfCallback;
 import com.agatsa.sanketlife.callbacks.ResponseCallback;
@@ -32,6 +33,7 @@ import com.agatsa.sanketlife.development.UserDetails;
 import com.agatsa.testsdknew.BuildConfig;
 import com.agatsa.testsdknew.Models.ECGReport;
 import com.agatsa.testsdknew.R;
+import com.agatsa.testsdknew.databinding.ActivitySingleLeadBinding;
 import com.ontbee.legacyforks.cn.pedant.SweetAlert.SweetAlertDialog;
 
 import java.io.File;
@@ -54,7 +56,9 @@ public  class
     ECGReport ecgReport=new ECGReport();
     SweetAlertDialog pDialog;
     Toolbar toolbar;
+        ActivitySingleLeadBinding binding;
     static int state=0;
+   public static String pdfuri;
 
     InitiateEcg initiateEcg;
      private static final String[] REQUIRED_SDK_PERMISSIONS = new String[]{
@@ -72,7 +76,7 @@ public  class
      @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_single_lead);
+        binding = DataBindingUtil.setContentView(this,R.layout.activity_single_lead);
         checkPermissions();
         pref = this.getSharedPreferences("sunyahealth", Context.MODE_PRIVATE);
         ptno = pref.getString("PTNO","");
@@ -105,6 +109,32 @@ public  class
         getSupportActionBar().setTitle("Single Lead");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
+       binding.btViewreport.setOnClickListener(new View.OnClickListener() {
+           @Override
+           public void onClick(View view) {
+               if(!pdfuri.equals(""))
+               {
+                   File file = new File(pdfuri);
+               Intent intent = new Intent(Intent.ACTION_VIEW);
+
+               // set leadIndex to give temporary permission to external app to use your FileProvider
+               intent.setFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+
+               // generate URI, I defined authority as the application ID in the Manifest, the last param is file I want to open
+               Uri photoURI = FileProvider.getUriForFile(SingleLeadECG.this,
+                       BuildConfig.APPLICATION_ID + ".provider",
+                       file);
+               // I am opening a PDF file so I give it a valid MIME type
+               intent.setDataAndType(photoURI, "application/pdf");
+
+               // validate that the device can open your File!
+               startActivity(intent);
+
+
+
+
+           }}
+       });
         initOnClickListener();
     }
 
@@ -292,6 +322,8 @@ public  class
 
 
 
+
+
             }
 
             @Override
@@ -308,29 +340,13 @@ public  class
         initiateEcg.makeEcgReport(mContext, new UserDetails("Vikas", "24", "Male"), true, SECRET_ID, ecgConfig, new PdfCallback() {
             @Override
             public void onPdfAvailable(EcgConfig ecgConfig) {
+
                 Log.e("makepdfpath", ecgConfig.getFileUrl());
                 String filePath = ecgConfig.getFileUrl();
+                 pdfuri = ecgConfig.getFileUrl();
+                 binding.viewreportll.setVisibility(View.VISIBLE);
+                 binding.btViewreport.setVisibility(View.VISIBLE);
 
-                File file = new File(filePath);
-                Intent intent = new Intent(Intent.ACTION_VIEW);
-
-                // set leadIndex to give temporary permission to external app to use your FileProvider
-                intent.setFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
-
-                // generate URI, I defined authority as the application ID in the Manifest, the last param is file I want to open
-                Uri photoURI = FileProvider.getUriForFile(SingleLeadECG.this,
-                        BuildConfig.APPLICATION_ID + ".provider",
-                        file);
-                // I am opening a PDF file so I give it a valid MIME type
-                intent.setDataAndType(photoURI, "application/pdf");
-
-                // validate that the device can open your File!
-                startActivity(intent);
-
-//                Intent intent;
-//                intent = new Intent(Intent.ACTION_VIEW);
-//                intent.setDataAndType(Uri.parse(filePath), "application/pdf");
-//                startActivity(intent);
 
             }
 
@@ -392,6 +408,8 @@ public  class
          Log.d("ktest","Seek and Destroy");
 
      }
+
+
 
 
 

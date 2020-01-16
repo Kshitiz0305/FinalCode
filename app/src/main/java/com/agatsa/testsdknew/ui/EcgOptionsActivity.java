@@ -95,12 +95,17 @@ public class EcgOptionsActivity extends AppCompatActivity {
         });
 
         FitnessECG.setOnClickListener(v -> {
+
+
             Intent i=new Intent(EcgOptionsActivity.this,FitnessECG.class);
             startActivity(i);
 
         });
 
         chestleadecg.setOnClickListener(v -> {
+            ChestSixLead.x=0;
+            ChestSixLead.leadIndex=0;
+            ChestSixLead.again=false;
             Intent i=new Intent(EcgOptionsActivity.this,ChestSixLead.class);
             i.putExtra("pt_id",pt_id);
             startActivity(i);
@@ -108,6 +113,9 @@ public class EcgOptionsActivity extends AppCompatActivity {
         });
 
         Twelvelead.setOnClickListener(v -> {
+            TwelveLeadEcg.x=0;
+            TwelveLeadEcg.leadIndex=0;
+            TwelveLeadEcg.again=false;
             Intent i=new Intent(EcgOptionsActivity.this,TwelveLeadEcg.class);
             i.putExtra("pt_id",pt_id);
             startActivity(i);

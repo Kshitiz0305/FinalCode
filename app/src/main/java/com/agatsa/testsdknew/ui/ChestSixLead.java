@@ -3,6 +3,7 @@ package com.agatsa.testsdknew.ui;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
@@ -15,6 +16,9 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.content.ContextCompat;
+import androidx.core.content.FileProvider;
+import androidx.databinding.DataBindingUtil;
+
 import com.agatsa.sanketlife.callbacks.PdfCallback;
 import com.agatsa.sanketlife.callbacks.ResponseCallback;
 import com.agatsa.sanketlife.callbacks.SaveEcgCallBack;
@@ -24,10 +28,13 @@ import com.agatsa.sanketlife.development.InitiateEcg;
 import com.agatsa.sanketlife.development.Success;
 import com.agatsa.sanketlife.development.UserDetails;
 import com.agatsa.sanketlife.models.EcgTypes;
+import com.agatsa.testsdknew.BuildConfig;
 import com.agatsa.testsdknew.Models.ECGReport;
 import com.agatsa.testsdknew.R;
+import com.agatsa.testsdknew.databinding.ActivityChestLeadBinding;
 import com.ontbee.legacyforks.cn.pedant.SweetAlert.SweetAlertDialog;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
 
@@ -36,7 +43,6 @@ import pl.droidsonroids.gif.GifImageView;
 public class ChestSixLead extends AppCompatActivity {
     private static final String CLIENT_ID = "5a3b4c16b4a56b000132f5d5b4580266565440bda51dcb4122d39844";
     private static final String SECRET_ID = "5a3b4c16b4a56b000132f5d5746be305d56c49e49cc88b12ccb05d71";
-    private Button btnSavechestreport,btnchestHistory ;
 
     TextView description;
     LinearLayout txtvone, txtvtwo,txtvthree,txtvfour,txtvfive,txtvsix;
@@ -50,7 +56,8 @@ public class ChestSixLead extends AppCompatActivity {
     public   static  int leadIndex = 0,x=0;
     public   static  boolean again =false;
     GifImageView gifImageView;
-    ArrayList<String> buttoncollectionshide = new ArrayList<String>(Arrays.asList("txtvone",
+    static String pdfUrl="";
+    ArrayList<String>  buttoncollectionshide =  new ArrayList<String>(Arrays.asList("txtvone",
             "txtvoneagain",
             "txtvtwo",
             "txtvtwoagain",
@@ -62,20 +69,22 @@ public class ChestSixLead extends AppCompatActivity {
             "txtvfiveagain",
             "txtvsix",
             "txtvsixagain",
-            "txtlimbagain",
-            "ll_savereport",
-            "ll_report",
+            "sixleadagain",
+            "btnSavelimbreport",
+            "btnviewreport",
             "ll_complete"));
-    ArrayList<String> buttoncollectionsshow=new ArrayList<String>(Arrays.asList("txtlimbleadone","txtlimboneagain"));
 
 
 
+    ActivityChestLeadBinding binding;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_chest_lead);
+
+        binding = DataBindingUtil.setContentView(this,R.layout.activity_chest_lead);
+
         pref = this.getSharedPreferences("sunyahealth", Context.MODE_PRIVATE);
         ptno = pref.getInt("pt_id", 0);
 //        labdb = new LabDB(getApplicationContext());
@@ -89,6 +98,66 @@ public class ChestSixLead extends AppCompatActivity {
         hideAndSeek(buttoncollectionshide,true);
         ArrayList<String> buttoncollectionsshowstart=new ArrayList<String>(Arrays.asList("txtvone"));
         hideAndSeek(buttoncollectionsshowstart,false);
+//         hideshow is to be deleted
+
+        binding.btRprt.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Log.d("rantest","viewing pdf");
+
+                if(!pdfUrl.equals(""))
+                {
+                    Log.d("rantest","url available");
+                    File file = new File(pdfUrl);
+                    Intent intent = new Intent(Intent.ACTION_VIEW);
+
+                    // set leadIndex to give temporary permission to external app to use your FileProvider
+                    intent.setFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+
+                    // generate URI, I defined authority as the application ID in the Manifest, the last param is file I want to open
+                    Uri photoURI = FileProvider.getUriForFile(ChestSixLead.this,
+                            BuildConfig.APPLICATION_ID + ".provider",
+                            file);
+                    // I am opening a PDF file so I give it a valid MIME type
+                    intent.setDataAndType(photoURI, "application/pdf");
+
+                    // validate that the device can open your File!
+                    startActivity(intent);
+
+
+
+
+                }
+
+
+
+
+            }
+        });
+        binding.btsavePdfReport.setOnClickListener(v ->{
+
+
+            Log.d("rantest","Clicked on save");
+            hideAndSeek(buttoncollectionshide,true);
+
+// to be changed
+            ArrayList<String> buttoncollectionsshow21 = new ArrayList<String>(Arrays.asList("sixleadagain","ll_complete"));
+            hideAndSeek(buttoncollectionsshow21, false);
+
+            createPDF();
+        });
+        binding.sixleadagain.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                Log.d("rantest","Clicked on six again");
+                showDynamicimage("gif_lead1");
+                showDynamicDescription("ecginfo");
+                hideAndSeek(buttoncollectionshide,true);
+                ArrayList<String> buttoncollectionsshow0=new ArrayList<String>(Arrays.asList("txtvone"));
+                hideAndSeek(buttoncollectionsshow0,false);
+            }
+        });
 
 
         initViews();
@@ -251,15 +320,6 @@ public class ChestSixLead extends AppCompatActivity {
 
 //         this is to be seen null
 
-//        btnSavechestreport.setOnClickListener(v ->{
-//
-//            hideAndSeek(buttoncollectionshide,true);
-//
-//            ArrayList<String> buttoncollectionsshow21 = new ArrayList<String>(Arrays.asList("txtlimbagain", "ll_report","ll_complete"));
-//            hideAndSeek(buttoncollectionsshow21, false);
-//
-//            createPDF();
-//        });
 //
 //        btnchestHistory.setOnClickListener(view -> {
 //            Intent intent = new Intent(getApplicationContext(), HistoryActivity.class);
@@ -352,11 +412,11 @@ public class ChestSixLead extends AppCompatActivity {
         initiateEcg.makeEcgReport(mContext, new UserDetails("Vikas", "24", "Male"), true, SECRET_ID, ecgConfig, new PdfCallback() {
             @Override
             public void onPdfAvailable(EcgConfig ecgConfig) {
-                Log.e("makepdfpath", ecgConfig.getFileUrl());
-                String filePath = ecgConfig.getFileUrl();
-                Intent intent = new Intent(ChestSixLead.this, PdfViewActivity.class);
-                intent.putExtra("fileUrl", filePath);
-                startActivity(intent);
+                Log.d("rantest", ecgConfig.getFileUrl());
+
+                pdfUrl = ecgConfig.getFileUrl();
+
+
 
             }
 
@@ -403,9 +463,9 @@ public class ChestSixLead extends AppCompatActivity {
                 "txtvfiveagain",
                 "txtvsix",
                 "txtvsixagain",
-                "txtlimbagain",
-                "ll_savereport",
-                "ll_report",
+                "sixleadagain",
+                "btnSavelimbreport",
+                "btnviewreport",
                 "ll_complete"));
 //
         if(leadIndex ==0&&again){
@@ -554,6 +614,11 @@ public class ChestSixLead extends AppCompatActivity {
             }
         }
 
+//        "sixleadagain",
+//                "btnSavelimbreport",
+//                "btnviewreport",
+//                "ll_complete"));
+
         else if(leadIndex ==6) {
             x++;
             if (!again && x == 2) {
@@ -563,7 +628,7 @@ public class ChestSixLead extends AppCompatActivity {
                 showDynamicimage("gif_lead2");
                 showDynamicDescription("ecginfo");
                 hideAndSeek(buttoncollectionshide, true);
-                ArrayList<String> buttoncollectionsshow21 = new ArrayList<String>(Arrays.asList("txtvsixagain","ll_savereport"));
+                ArrayList<String> buttoncollectionsshow21 = new ArrayList<String>(Arrays.asList("txtvsixagain","btnSavelimbreport"));
                 hideAndSeek(buttoncollectionsshow21, false);
 
             } else if (again && x == 2) {
@@ -573,11 +638,12 @@ public class ChestSixLead extends AppCompatActivity {
                 showDynamicimage("gif_lead2");
                 showDynamicDescription("ecginfo");
                 hideAndSeek(buttoncollectionshide, true);
-                ArrayList<String> buttoncollectionsshow22 = new ArrayList<String>(Arrays.asList("txtvsixagain","ll_savereport"));
+                ArrayList<String> buttoncollectionsshow22 = new ArrayList<String>(Arrays.asList("txtvsixagain","btnSavelimbreport"));
                 hideAndSeek(buttoncollectionsshow22, false);
 
             }
         }
+
 
         else if(leadIndex ==7) {
             x++;
@@ -588,7 +654,7 @@ public class ChestSixLead extends AppCompatActivity {
                 showDynamicimage("gif_lead2");
                 showDynamicDescription("ecginfo");
                 hideAndSeek(buttoncollectionshide, true);
-                ArrayList<String> buttoncollectionsshow21 = new ArrayList<String>(Arrays.asList("txtlimbagain", "ll_report","ll_complete"));
+                ArrayList<String> buttoncollectionsshow21 = new ArrayList<String>(Arrays.asList("sixleadagain", "btnviewreport","ll_complete"));
                 hideAndSeek(buttoncollectionsshow21, false);
 
             } else if (again && x == 2) {
@@ -598,12 +664,56 @@ public class ChestSixLead extends AppCompatActivity {
                 showDynamicimage("gif_lead2");
                 showDynamicDescription("ecginfo");
                 hideAndSeek(buttoncollectionshide, true);
-                ArrayList<String> buttoncollectionsshow22 = new ArrayList<String>(Arrays.asList("txtlimbagain", "ll_report","ll_complete"));
+                ArrayList<String> buttoncollectionsshow22 = new ArrayList<String>(Arrays.asList("sixleadagain", "btnviewreport","ll_complete"));
                 hideAndSeek(buttoncollectionsshow22, false);
 
             }
         }
 
+//        binding.btRprt.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//
+//                if(!pdfUrl.equals(""))
+//                {
+//                    File file = new File(pdfUrl);
+//                    Intent intent = new Intent(Intent.ACTION_VIEW);
+//
+//                    // set leadIndex to give temporary permission to external app to use your FileProvider
+//                    intent.setFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+//
+//                    // generate URI, I defined authority as the application ID in the Manifest, the last param is file I want to open
+//                    Uri photoURI = FileProvider.getUriForFile(ChestSixLead.this,
+//                            BuildConfig.APPLICATION_ID + ".provider",
+//                            file);
+//                    // I am opening a PDF file so I give it a valid MIME type
+//                    intent.setDataAndType(photoURI, "application/pdf");
+//
+//                    // validate that the device can open your File!
+//                    startActivity(intent);
+//
+//
+//
+//
+//                }
+//
+//
+//
+//
+//            }
+//        });
+        binding.btsavePdfReport.setOnClickListener(v ->{
+
+
+            Log.d("rantest","Clicked on save");
+            hideAndSeek(buttoncollectionshide,true);
+
+// to be changed
+            ArrayList<String> buttoncollectionsshow21 = new ArrayList<String>(Arrays.asList("sixleadagain", "btnviewreport","ll_complete"));
+            hideAndSeek(buttoncollectionsshow21, false);
+
+            createPDF();
+        });
 
         super.onResume();
     }
@@ -615,7 +725,7 @@ public class ChestSixLead extends AppCompatActivity {
     public void showDynamicimage(String imagesrcs){
         try{
 
-            gifImageView.setImageResource((getResourceId(imagesrcs,"drawable",getPackageName())));}
+            binding.gifHolder.setImageResource((getResourceId(imagesrcs,"drawable",getPackageName())));}
         catch (Exception e){
 
 
