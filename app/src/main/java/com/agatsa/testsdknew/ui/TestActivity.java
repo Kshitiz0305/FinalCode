@@ -72,14 +72,17 @@ binding.btnNewPatient.setOnClickListener(new View.OnClickListener() {
     @Override
     public void onBackPressed() {
 
-        DialogUtil.getOKCancelDialog(this, "", "Do you want to discard the test of " + patientModel.getPtName(), "Yes","No", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialogInterface, int i) {
-                Intent intent = new Intent(TestActivity.this,LandingActivity.class);
-                startActivity(intent);
+        if (patientModel != null) {
+            DialogUtil.getOKCancelDialog(this, "", "Do you want to discard the test of " + patientModel.getPtName(), "Yes", "No", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialogInterface, int i) {
+                    Intent intent = new Intent(TestActivity.this, LandingActivity.class);
+                    startActivity(intent);
 
-            }
-        });
+                }
+            });
+        }
+
     }
 
 

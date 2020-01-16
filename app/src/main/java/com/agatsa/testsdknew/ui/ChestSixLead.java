@@ -40,7 +40,7 @@ public class ChestSixLead extends AppCompatActivity {
 
     TextView description;
     LinearLayout txtvone, txtvtwo,txtvthree,txtvfour,txtvfive,txtvsix;
-    LinearLayout txtvoneagain, txtvtwoagain,txtvthreeagain,txtvfouragain,txtvfiveagain,txtvsixagain;
+    LinearLayout txtvoneagain, txtvtwoagain,txtvthreeagain,txtvfouragain,txtvfiveagain,txtvsixagain,sixleadagain;
     private Context mContext;
     int ptno = 0;
     SharedPreferences pref;
@@ -150,7 +150,7 @@ public class ChestSixLead extends AppCompatActivity {
         txtvfouragain=findViewById(R.id.txtvfouragain);
         txtvfiveagain=findViewById(R.id.txtvfiveagain);
         txtvsixagain=findViewById(R.id.txtvsixagain);
-
+        sixleadagain=findViewById(R.id.sixleadagain);
 
 
 

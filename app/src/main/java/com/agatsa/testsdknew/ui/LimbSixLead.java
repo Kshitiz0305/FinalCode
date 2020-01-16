@@ -183,8 +183,6 @@ again=true;
             leadIndex =0;
             again=true;
 
-            getReadingForECG(8);
-
 
         });
 
