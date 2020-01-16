@@ -1,8 +1,10 @@
 package com.agatsa.testsdknew.ui;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
@@ -15,6 +17,8 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.content.ContextCompat;
+import androidx.core.content.FileProvider;
+import androidx.databinding.DataBindingUtil;
 
 import com.agatsa.sanketlife.callbacks.PdfCallback;
 import com.agatsa.sanketlife.callbacks.ResponseCallback;
@@ -25,9 +29,13 @@ import com.agatsa.sanketlife.development.InitiateEcg;
 import com.agatsa.sanketlife.development.Success;
 import com.agatsa.sanketlife.development.UserDetails;
 import com.agatsa.sanketlife.models.EcgTypes;
+import com.agatsa.testsdknew.BuildConfig;
 import com.agatsa.testsdknew.R;
+import com.agatsa.testsdknew.customviews.DialogUtil;
+import com.agatsa.testsdknew.databinding.ActivityTwelveLeadBinding;
 import com.ontbee.legacyforks.cn.pedant.SweetAlert.SweetAlertDialog;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
 
@@ -37,7 +45,7 @@ public class TwelveLeadEcg extends AppCompatActivity {
 
     private static final String CLIENT_ID = "5a3b4c16b4a56b000132f5d5b4580266565440bda51dcb4122d39844";
     private static final String SECRET_ID = "5a3b4c16b4a56b000132f5d5746be305d56c49e49cc88b12ccb05d71";
-    private Button twelvebtnViewpdf,btnSaveTwelveLeadRecord;
+    private Button btnSaveTwelveLeadRecord;
 
     LinearLayout txttwelveleadone, txttwelveleadtwo,txttwelvevone,txttwelvevtwo,txttwelvevthree,txttwelvevfour,txttwelvevfive,txttwelvevsix,completeTestll;
     LinearLayout txttwelveleadoneagain, txttwelveleadtwoagain,txttwelvevoneagain,txttwelvevtwoagain,txttwelvevthreeagain,txttwelvevfouragain,txttwelvevfiveagain,txttwelvevsixagain,txttwelveleadagain;
@@ -47,20 +55,21 @@ public class TwelveLeadEcg extends AppCompatActivity {
     SweetAlertDialog pDialog;
     Toolbar toolbar;
     public   static  int leadIndex = 0,x=0;
+    static String pdfurl = "";
     public   static  boolean again =false;
     TextView description;
     ArrayList<String> buttoncollectionshide = new ArrayList<String>(Arrays.asList("txttwelveleadone","txttwelveleadoneagain","txttwelveleadtwo","txttwelveleadtwoagain","txttwelvevone","txttwelvevoneagain","txttwelvevtwo","txttwelvevtwoagain","txttwelvevthree","txttwelvevthreeagain","txttwelvevfour","txttwelvevfouragain","txttwelvevfive","txttwelvevfiveagain","txttwelvevsix","txttwelvevsixagain","txttwelveleadagain","completetaskll","btnSaveTwelveLeadrecord"));
 
 
     GifImageView gifImageView;
-
+ActivityTwelveLeadBinding binding;
 
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_twelve_lead);
+       binding = DataBindingUtil.setContentView(this,R.layout.activity_twelve_lead);
         pref = this.getSharedPreferences("sunyahealth", Context.MODE_PRIVATE);
         ptno = pref.getInt("pt_id", 0);
 //        labdb = new LabDB(getApplicationContext());
@@ -71,13 +80,77 @@ public class TwelveLeadEcg extends AppCompatActivity {
         getSupportActionBar().setTitle("Twelve Lead");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         hideAndSeek(buttoncollectionshide,true);
+
         hideAndSeek(new ArrayList<>(Arrays.asList("txttwelveleadone")),false);
+
+   binding.btnReport.setOnClickListener(new View.OnClickListener() {
+       @Override
+       public void onClick(View view) {
+           Log.d("rantest","viewing pdf");
+
+           if(!pdfurl.equals(""))
+           {
+               Log.d("rantest","url available");
+               File file = new File(pdfurl);
+               Intent intent = new Intent(Intent.ACTION_VIEW);
+
+               // set leadIndex to give temporary permission to external app to use your FileProvider
+               intent.setFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+
+               // generate URI, I defined authority as the application ID in the Manifest, the last param is file I want to open
+               Uri photoURI = FileProvider.getUriForFile(TwelveLeadEcg.this,
+                       BuildConfig.APPLICATION_ID + ".provider",
+                       file);
+               // I am opening a PDF file so I give it a valid MIME type
+               intent.setDataAndType(photoURI, "application/pdf");
+
+               // validate that the device can open your File!
+               startActivity(intent);
+
+
+
+       }}
+   });
+   binding.btnComplete.setOnClickListener(new View.OnClickListener() {
+       @Override
+       public void onClick(View view) {
+
+           TwelveLeadEcg.this.onBackPressed();
+       }
+   });
+
+
 
 
         initViews();
         initOnClickListener();
     }
 
+    @Override
+    public void onBackPressed() {
+
+        DialogUtil.getOKCancelDialog(this, "Warning", "Do you want to complete Twelve Lead Test?", "Yes", "No", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+
+                TwelveLeadEcg.super.onBackPressed();
+
+
+
+
+            }
+        }, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+
+
+            }
+        });
+
+
+
+
+    }
 
     private void initViews() {
 
@@ -101,7 +174,6 @@ public class TwelveLeadEcg extends AppCompatActivity {
         txttwelvevfiveagain=findViewById(R.id.txttwelvevfouragain);
         txttwelvevsixagain=findViewById(R.id.txttwelvevfouragain);
         btnSaveTwelveLeadRecord = findViewById(R.id.btnSaveTwelveLeadrecord);
-        twelvebtnViewpdf = findViewById(R.id.btnviewreport);
         completeTestll=findViewById(R.id.completeTestll);
         txttwelveleadagain=findViewById(R.id.txttwelveleadagain);
 
@@ -111,12 +183,14 @@ public class TwelveLeadEcg extends AppCompatActivity {
 
 
     }
+
+
     public void hideAndSeek(ArrayList<String> idsarray, boolean ishide){
         try{
             if(ishide){
                 for(String selectedString:idsarray){
 
-                    LinearLayout linearLayout = findViewById(getResourceId(selectedString,"id",getPackageName()));
+                    View linearLayout = findViewById(getResourceId(selectedString,"id",getPackageName()));
                     linearLayout.setVisibility(View.GONE);
 
                 }
@@ -130,7 +204,7 @@ public class TwelveLeadEcg extends AppCompatActivity {
 
                 for(String selectedString:idsarray){
 
-                    LinearLayout linearLayout = findViewById(getResourceId(selectedString,"id",getPackageName()));
+                    View linearLayout = findViewById(getResourceId(selectedString,"id",getPackageName()));
                     linearLayout.setVisibility(View.VISIBLE);
 
                 }
@@ -592,14 +666,15 @@ public class TwelveLeadEcg extends AppCompatActivity {
         txttwelveleadagain.setOnClickListener(v ->{
             leadIndex =0;
             again=true;
+            showDynamicimage("gif_lead1");
+            showDynamicDescription("ecginfo");
+            hideAndSeek(buttoncollectionshide,true);
+            ArrayList<String> buttoncollectionsshow0=new ArrayList<String>(Arrays.asList("txttwelveleadone"));
+            hideAndSeek(buttoncollectionsshow0,false);
 
         });
 
-        twelvebtnViewpdf.setOnClickListener(view -> {
-            Intent intent = new Intent(getApplicationContext(), HistoryActivity.class);
-            intent.putExtra("type", EcgTypes.NORMAL_ECG);
-            startActivity(intent);
-        });
+
 
 
         pDialog = new SweetAlertDialog(this, SweetAlertDialog.PROGRESS_TYPE);
@@ -653,7 +728,7 @@ public class TwelveLeadEcg extends AppCompatActivity {
 //                }
 //                ecgReport.setRow_id(last_ecgsign_row_id);
                 makePDF(ecgConfig);
-                Toast.makeText(mContext, success.getSuccessMsg(), Toast.LENGTH_SHORT).show();
+
 
 
 
@@ -677,9 +752,8 @@ public class TwelveLeadEcg extends AppCompatActivity {
             public void onPdfAvailable(EcgConfig ecgConfig) {
                 Log.e("makepdfpath", ecgConfig.getFileUrl());
                 String filePath = ecgConfig.getFileUrl();
-                Intent intent = new Intent(TwelveLeadEcg.this, PdfViewActivity.class);
-                intent.putExtra("fileUrl", filePath);
-                startActivity(intent);
+                pdfurl = filePath;
+                Toast.makeText(mContext, "Successfully generated pdf.", Toast.LENGTH_SHORT).show();
 
             }
 
@@ -703,13 +777,7 @@ public class TwelveLeadEcg extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    @Override
-    public void onBackPressed() {
-        super.onBackPressed();
-        Intent intent = new Intent(TwelveLeadEcg.this, EcgOptionsActivity.class);
-        startActivity(intent);
 
-    }
     public void showDynamicDescription(String ecginfo){
         description.setText(getResourceId(ecginfo,"string",getPackageName()));
     }

@@ -2,6 +2,7 @@ package com.agatsa.testsdknew.ui;
 
 import android.Manifest;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
@@ -33,6 +34,7 @@ import com.agatsa.sanketlife.development.UserDetails;
 import com.agatsa.testsdknew.BuildConfig;
 import com.agatsa.testsdknew.Models.ECGReport;
 import com.agatsa.testsdknew.R;
+import com.agatsa.testsdknew.customviews.DialogUtil;
 import com.agatsa.testsdknew.databinding.ActivitySingleLeadBinding;
 import com.ontbee.legacyforks.cn.pedant.SweetAlert.SweetAlertDialog;
 
@@ -58,7 +60,7 @@ public  class
     Toolbar toolbar;
         ActivitySingleLeadBinding binding;
     static int state=0;
-   public static String pdfuri;
+   public static String pdfuri="";
 
     InitiateEcg initiateEcg;
      private static final String[] REQUIRED_SDK_PERMISSIONS = new String[]{
@@ -85,6 +87,10 @@ public  class
 
 
         initiateEcg = new InitiateEcg();
+        if(state==0)
+        {  binding.btnsavell.setVisibility(View.GONE);
+        binding.txtLeadOne.setVisibility(View.VISIBLE);}
+
         initViews();
         if(state%3==1){
             Log.d("rantest","equals1");
@@ -112,6 +118,7 @@ public  class
        binding.btViewreport.setOnClickListener(new View.OnClickListener() {
            @Override
            public void onClick(View view) {
+
                if(!pdfuri.equals(""))
                {
                    File file = new File(pdfuri);
@@ -153,6 +160,9 @@ public  class
 
 
     }
+
+
+
 
     protected void checkPermissions() {
         final List<String> missingPermissions = new ArrayList<String>();
@@ -228,8 +238,7 @@ public  class
         });
 
         back.setOnClickListener(v -> {
-            Intent i=new Intent(this,EcgOptionsActivity.class);
-            startActivity(i);
+           this.onBackPressed();
         });
 
         txttakeagain.setOnClickListener(v -> {
@@ -245,6 +254,7 @@ public  class
           viewreportll.setVisibility(View.VISIBLE);
 
       });
+
 
 //        btncreatepdf.setOnClickListener(v -> {
 //
@@ -374,11 +384,29 @@ public  class
 
      @Override
      public void onBackPressed() {
-         super.onBackPressed();
-         Intent intent = new Intent(SingleLeadECG.this, EcgOptionsActivity.class);
-         startActivity(intent);
 
-     }
+        DialogUtil.getOKCancelDialog(this, "Warning", "Do you want to complete Single Lead Test?", "Yes", "No", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+
+                SingleLeadECG.super.onBackPressed();
+
+
+
+
+            }
+        }, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+
+
+            }
+        });
+
+
+
+
+    }
 
      @Override
      public void onError(Errors errors) {

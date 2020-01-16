@@ -1,8 +1,10 @@
 package com.agatsa.testsdknew.ui;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
@@ -15,6 +17,8 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.content.ContextCompat;
+import androidx.core.content.FileProvider;
+import androidx.databinding.DataBindingUtil;
 
 import com.agatsa.sanketlife.callbacks.PdfCallback;
 import com.agatsa.sanketlife.callbacks.ResponseCallback;
@@ -24,10 +28,14 @@ import com.agatsa.sanketlife.development.Errors;
 import com.agatsa.sanketlife.development.InitiateEcg;
 import com.agatsa.sanketlife.development.Success;
 import com.agatsa.sanketlife.development.UserDetails;
+import com.agatsa.testsdknew.BuildConfig;
 import com.agatsa.testsdknew.Models.ECGReport;
 import com.agatsa.testsdknew.R;
+import com.agatsa.testsdknew.customviews.DialogUtil;
+import com.agatsa.testsdknew.databinding.ActivityLimbLeadBinding;
 import com.ontbee.legacyforks.cn.pedant.SweetAlert.SweetAlertDialog;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
 
@@ -47,6 +55,8 @@ public class LimbSixLead extends AppCompatActivity {
     SweetAlertDialog pDialog;
     Toolbar toolbar;
     TextView description;
+    ActivityLimbLeadBinding binding;
+    static  String pdfurl = "";
 
     public   static  int leadIndex = 0,x=0;
     public   static  boolean again =false;
@@ -60,7 +70,8 @@ public class LimbSixLead extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_limb_lead);
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_limb_lead);
+
         pref = this.getSharedPreferences("sunyahealth", Context.MODE_PRIVATE);
         ptno = pref.getString("PTNO", "");
 //        labdb = new LabDB(getApplicationContext());
@@ -75,8 +86,41 @@ public class LimbSixLead extends AppCompatActivity {
         hideAndSeek(buttoncollectionsshowstart,false);
 
 
+       binding.btnComplete.setOnClickListener(new View.OnClickListener() {
+           @Override
+           public void onClick(View view) {
+
+               LimbSixLead.this.onBackPressed();
+           }
+       });
+
+        binding.btnViewr.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+  Log.d("rantest","In the view pdf");
+                if(!pdfurl.equals(""))
+                {
+                    File file = new File(pdfurl);
+                    Intent intent = new Intent(Intent.ACTION_VIEW);
+
+                    // set leadIndex to give temporary permission to external app to use your FileProvider
+                    intent.setFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+
+                    // generate URI, I defined authority as the application ID in the Manifest, the last param is file I want to open
+                    Uri photoURI = FileProvider.getUriForFile(LimbSixLead.this,
+                            BuildConfig.APPLICATION_ID + ".provider",
+                            file);
+                    // I am opening a PDF file so I give it a valid MIME type
+                    intent.setDataAndType(photoURI, "application/pdf");
+
+                    // validate that the device can open your File!
+                    startActivity(intent);
 
 
+
+
+                }}
+        });
 
         initViews();
         initOnClickListener();
@@ -180,8 +224,14 @@ again=true;
 
        });
        txtlimbagain.setOnClickListener(v ->{
+           Log.d("rantest","limbagain");
             leadIndex =0;
             again=true;
+           showDynamicimage("gif_lead1");
+           showDynamicDescription("ecginfo");
+           hideAndSeek(buttoncollectionshide,true);
+           ArrayList<String> buttoncollectionsshow0=new ArrayList<String>(Arrays.asList("txtlimbleadone"));
+           hideAndSeek(buttoncollectionsshow0,false);
 
 
         });
@@ -276,7 +326,7 @@ again=true;
                 }
                 ecgReport.setRow_id(last_ecgsign_row_id);
                 makePDF(ecgConfig);
-                Toast.makeText(mContext, success.getSuccessMsg(), Toast.LENGTH_SHORT).show();
+
 
 
 
@@ -300,9 +350,12 @@ again=true;
             public void onPdfAvailable(EcgConfig ecgConfig) {
                 Log.e("makepdfpath", ecgConfig.getFileUrl());
                 String filePath = ecgConfig.getFileUrl();
-                Intent intent = new Intent(LimbSixLead.this, PdfViewActivity.class);
-                intent.putExtra("fileUrl", filePath);
-                startActivity(intent);
+                pdfurl = filePath;
+                Log.d("rantest",pdfurl);
+                Toast.makeText(mContext, "Pdf Saved", Toast.LENGTH_SHORT).show();
+//                Intent intent = new Intent(LimbSixLead.this, PdfViewActivity.class);
+//                intent.putExtra("fileUrl", filePath);
+//                startActivity(intent);
 
             }
 
@@ -400,13 +453,13 @@ again=true;
         return super.onOptionsItemSelected(item);
     }
 
-    @Override
-    public void onBackPressed() {
-        super.onBackPressed();
-        Intent intent = new Intent(LimbSixLead.this, EcgOptionsActivity.class);
-        startActivity(intent);
-
-    }
+//    @Override
+//    public void onBackPressed() {
+//        super.onBackPressed();
+//        Intent intent = new Intent(LimbSixLead.this, EcgOptionsActivity.class);
+//        startActivity(intent);
+//
+//    }
 
 
 //    public String getJsonStringfromFile(String jsonFileName, String resources, String packagename) {
@@ -455,6 +508,32 @@ again=true;
     protected void onDestroy() {
         Log.d("destroy","seek n destroy");
         super.onDestroy();
+
+    }
+
+    @Override
+    public void onBackPressed() {
+
+        DialogUtil.getOKCancelDialog(this, "Warning", "Do you want to complete Chest Six Lead Test?", "Yes", "No", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+
+                LimbSixLead.super.onBackPressed();
+
+
+
+
+            }
+        }, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+
+
+            }
+        });
+
+
+
 
     }
 }

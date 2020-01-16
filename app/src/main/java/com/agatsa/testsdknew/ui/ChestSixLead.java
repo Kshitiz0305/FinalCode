@@ -1,6 +1,7 @@
 package com.agatsa.testsdknew.ui;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
@@ -31,6 +32,7 @@ import com.agatsa.sanketlife.models.EcgTypes;
 import com.agatsa.testsdknew.BuildConfig;
 import com.agatsa.testsdknew.Models.ECGReport;
 import com.agatsa.testsdknew.R;
+import com.agatsa.testsdknew.customviews.DialogUtil;
 import com.agatsa.testsdknew.databinding.ActivityChestLeadBinding;
 import com.ontbee.legacyforks.cn.pedant.SweetAlert.SweetAlertDialog;
 
@@ -229,6 +231,14 @@ public class ChestSixLead extends AppCompatActivity {
 
 
     private void initOnClickListener() {
+        binding.btComplete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                ChestSixLead.this.onBackPressed();
+
+            }
+        });
 
        txtvone.setOnClickListener(v -> {
            leadIndex=1;
@@ -406,6 +416,31 @@ public class ChestSixLead extends AppCompatActivity {
     }
 
 
+    @Override
+    public void onBackPressed() {
+
+        DialogUtil.getOKCancelDialog(this, "Warning", "Do you want to complete Chest Six Lead Test?", "Yes", "No", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+
+                ChestSixLead.super.onBackPressed();
+
+
+
+
+            }
+        }, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+
+
+            }
+        });
+
+
+
+
+    }
 
     public void makePDF(EcgConfig ecgConfig) {
         InitiateEcg initiateEcg = new InitiateEcg();
@@ -440,13 +475,13 @@ public class ChestSixLead extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    @Override
-    public void onBackPressed() {
-        super.onBackPressed();
-        Intent intent = new Intent(ChestSixLead.this, EcgOptionsActivity.class);
-        startActivity(intent);
-
-    }
+//    @Override
+//    public void onBackPressed() {
+//        super.onBackPressed();
+//        Intent intent = new Intent(ChestSixLead.this, EcgOptionsActivity.class);
+//        startActivity(intent);
+//
+//    }
 
     @Override
     protected void onResume() {
