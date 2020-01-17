@@ -6,7 +6,9 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
+import android.net.ConnectivityManager;
 import android.net.Uri;
+import android.net.wifi.WifiManager;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
@@ -23,6 +25,7 @@ import androidx.core.content.ContextCompat;
 import androidx.core.content.FileProvider;
 import androidx.databinding.DataBindingUtil;
 
+import com.afollestad.materialdialogs.MaterialDialog;
 import com.agatsa.sanketlife.callbacks.PdfCallback;
 import com.agatsa.sanketlife.callbacks.ResponseCallback;
 import com.agatsa.sanketlife.callbacks.SaveEcgCallBack;
@@ -39,6 +42,8 @@ import com.agatsa.testsdknew.databinding.ActivitySingleLeadBinding;
 import com.ontbee.legacyforks.cn.pedant.SweetAlert.SweetAlertDialog;
 
 import java.io.File;
+import java.lang.reflect.Field;
+import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -50,6 +55,7 @@ public  class
     private static final String CLIENT_ID = "5a3b4c16b4a56b000132f5d5b4580266565440bda51dcb4122d39844";
     private static final String SECRET_ID = "5a3b4c16b4a56b000132f5d5746be305d56c49e49cc88b12ccb05d71";
     private Button btnsavereport,back;
+    private MaterialDialog progressDialog;
 
     LinearLayout LeadOne,txttakeagain,btnsavell,viewreportll;
     private Context mContext;
@@ -159,6 +165,48 @@ public  class
 
 
 
+    }
+
+    private void setMobileDataEnabled(Context context, boolean enabled) {
+
+         try{
+                     final ConnectivityManager conman = (ConnectivityManager)  context.getSystemService(Context.CONNECTIVITY_SERVICE);
+        final Class conmanClass = Class.forName(conman.getClass().getName());
+        final Field iConnectivityManagerField = conmanClass.getDeclaredField("mService");
+        iConnectivityManagerField.setAccessible(true);
+        final Object iConnectivityManager = iConnectivityManagerField.get(conman);
+        final Class iConnectivityManagerClass = Class.forName(iConnectivityManager.getClass().getName());
+        final Method setMobileDataEnabledMethod = iConnectivityManagerClass.getDeclaredMethod("setMobileDataEnabled", Boolean.TYPE);
+        setMobileDataEnabledMethod.setAccessible(true);
+        setMobileDataEnabledMethod.invoke(iConnectivityManager, enabled);
+
+         }
+         catch (Exception e){
+
+             Log.d("rantest",e.getLocalizedMessage());
+         }
+        try{
+
+            WifiManager wifiManager = (WifiManager)this.getApplicationContext().getSystemService(Context.WIFI_SERVICE);
+            wifiManager.setWifiEnabled(enabled);
+
+        }
+        catch (Exception e ){
+            Log.d("rantest",e.getLocalizedMessage());
+
+
+
+
+        }
+    }
+
+    public void showProgress(String message){
+        progressDialog = DialogUtil.showProgressDialog(this, "", message);
+
+    }
+    public void hideProgress(){
+        if(progressDialog==null) return;
+        if(progressDialog.isShowing()) progressDialog.dismiss();
     }
 
 
@@ -303,6 +351,7 @@ public  class
 
 
     public void createPDF() {
+         showProgress("Generating Report");
         InitiateEcg initiateEcg = new InitiateEcg();
         initiateEcg.saveEcgData(mContext, "test", new SaveEcgCallBack() {
             @Override
@@ -325,8 +374,9 @@ public  class
                     e.printStackTrace();
                 }
                 ecgReport.setRow_id(last_ecgsign_row_id);
+                setMobileDataEnabled(SingleLeadECG.this,false);
                 makePDF(ecgConfig);
-                Toast.makeText(mContext, success.getSuccessMsg(), Toast.LENGTH_SHORT).show();
+//                Toast.makeText(mContext, success.getSuccessMsg(), Toast.LENGTH_SHORT).show();
 
 
 
@@ -356,13 +406,18 @@ public  class
                  pdfuri = ecgConfig.getFileUrl();
                  binding.viewreportll.setVisibility(View.VISIBLE);
                  binding.btViewreport.setVisibility(View.VISIBLE);
+                 setMobileDataEnabled(SingleLeadECG.this,true);
+                Toast.makeText(mContext, "Pdf Generated", Toast.LENGTH_SHORT).show();
+                hideProgress();
 
 
             }
 
             @Override
             public void onError(Errors errors) {
+                hideProgress();
                 Toast.makeText(mContext, errors.getErrorMsg(), Toast.LENGTH_SHORT).show();
+                setMobileDataEnabled(SingleLeadECG.this,true);
             }
         });
     }

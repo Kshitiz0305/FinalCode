@@ -4,7 +4,9 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.net.ConnectivityManager;
 import android.net.Uri;
+import android.net.wifi.WifiManager;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
@@ -20,6 +22,7 @@ import androidx.core.content.ContextCompat;
 import androidx.core.content.FileProvider;
 import androidx.databinding.DataBindingUtil;
 
+import com.afollestad.materialdialogs.MaterialDialog;
 import com.agatsa.sanketlife.callbacks.PdfCallback;
 import com.agatsa.sanketlife.callbacks.ResponseCallback;
 import com.agatsa.sanketlife.callbacks.SaveEcgCallBack;
@@ -36,6 +39,8 @@ import com.agatsa.testsdknew.databinding.ActivityTwelveLeadBinding;
 import com.ontbee.legacyforks.cn.pedant.SweetAlert.SweetAlertDialog;
 
 import java.io.File;
+import java.lang.reflect.Field;
+import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.Arrays;
 
@@ -52,6 +57,7 @@ public class TwelveLeadEcg extends AppCompatActivity {
     private Context mContext;
     int ptno = 0;
     SharedPreferences pref;
+    MaterialDialog progressDialog;
     SweetAlertDialog pDialog;
     Toolbar toolbar;
     public   static  int leadIndex = 0,x=0;
@@ -126,6 +132,49 @@ ActivityTwelveLeadBinding binding;
         initOnClickListener();
     }
 
+    public void showProgress(String message){
+        progressDialog = DialogUtil.showProgressDialog(this, "", message);
+
+    }
+    public void hideProgress(){
+        if(progressDialog==null) return;
+        if(progressDialog.isShowing()) progressDialog.dismiss();
+    }
+
+    private void setMobileDataEnabled(Context context, boolean enabled) {
+
+        try{
+            final ConnectivityManager conman = (ConnectivityManager)  context.getSystemService(Context.CONNECTIVITY_SERVICE);
+            final Class conmanClass = Class.forName(conman.getClass().getName());
+            final Field iConnectivityManagerField = conmanClass.getDeclaredField("mService");
+            iConnectivityManagerField.setAccessible(true);
+            final Object iConnectivityManager = iConnectivityManagerField.get(conman);
+            final Class iConnectivityManagerClass = Class.forName(iConnectivityManager.getClass().getName());
+            final Method setMobileDataEnabledMethod = iConnectivityManagerClass.getDeclaredMethod("setMobileDataEnabled", Boolean.TYPE);
+            setMobileDataEnabledMethod.setAccessible(true);
+            setMobileDataEnabledMethod.invoke(iConnectivityManager, enabled);
+
+        }
+        catch (Exception e){
+
+            Log.d("rantest",e.getLocalizedMessage());
+        }
+        try{
+
+            WifiManager wifiManager = (WifiManager)this.getApplicationContext().getSystemService(Context.WIFI_SERVICE);
+            wifiManager.setWifiEnabled(enabled);
+
+        }
+        catch (Exception e ){
+            Log.d("rantest",e.getLocalizedMessage());
+
+
+
+
+        }
+    }
+
+
     @Override
     public void onBackPressed() {
 
@@ -171,8 +220,8 @@ ActivityTwelveLeadBinding binding;
         txttwelvevtwoagain=findViewById(R.id.txttwelvevtwoagain);
         txttwelvevthreeagain=findViewById(R.id.txttwelvevthreeagain);
         txttwelvevfouragain=findViewById(R.id.txttwelvevfouragain);
-        txttwelvevfiveagain=findViewById(R.id.txttwelvevfouragain);
-        txttwelvevsixagain=findViewById(R.id.txttwelvevfouragain);
+        txttwelvevfiveagain=findViewById(R.id.txttwelvevfiveagain);
+        txttwelvevsixagain=findViewById(R.id.txttwelvevsixagain);
         btnSaveTwelveLeadRecord = findViewById(R.id.btnSaveTwelveLeadrecord);
         completeTestll=findViewById(R.id.completeTestll);
         txttwelveleadagain=findViewById(R.id.txttwelveleadagain);
@@ -237,6 +286,7 @@ ActivityTwelveLeadBinding binding;
     }
     @Override
     protected void onResume() {
+        buttoncollectionshide = new ArrayList<String>(Arrays.asList("txttwelveleadone","txttwelveleadoneagain","txttwelveleadtwo","txttwelveleadtwoagain","txttwelvevone","txttwelvevoneagain","txttwelvevtwo","txttwelvevtwoagain","txttwelvevthree","txttwelvevthreeagain","txttwelvevfour","txttwelvevfouragain","txttwelvevfive","txttwelvevfiveagain","txttwelvevsix","txttwelvevsixagain","txttwelveleadagain","completetaskll","btnSaveTwelveLeadrecord"));
 
 //         This is done  dynamically to  hide buttons in respet to the listener's flag set on theirs.
 //        ArrayList<String> buttoncollectionshide = new ArrayList<String>(Arrays.asList("txttwelveleadone","txttwelveleadoneagain","txttwelveleadtwo","txttwelveleadtwoagain","txttwelvevone","txttwelvevoneagain","txttwelvevtwo","txttwelvevtwoagain","txttwelvevthree","txttwelvevthreeagain","txttwelvevfour","txttwelvevfouragain","txttwelvevfive","txttwelvevfiveagain","txttwelvevsix","txttwelvevsixagain","txttwelveleadagain","completetaskll","btnSaveTwelveLeadrecord"));
@@ -506,7 +556,7 @@ ActivityTwelveLeadBinding binding;
 
         }
 
-        else if(leadIndex ==8)
+        else if(leadIndex ==9)
         {
 
             x++;
@@ -539,6 +589,8 @@ ActivityTwelveLeadBinding binding;
         }
         super.onResume();
     }
+
+
 
     private void initOnClickListener() {
         txttwelveleadone.setOnClickListener(v -> {
@@ -727,6 +779,8 @@ ActivityTwelveLeadBinding binding;
 //                    e.printStackTrace();
 //                }
 //                ecgReport.setRow_id(last_ecgsign_row_id);
+                setMobileDataEnabled(TwelveLeadEcg.this,false);
+                showProgress("Generating pdf");
                 makePDF(ecgConfig);
 
 
@@ -738,6 +792,9 @@ ActivityTwelveLeadBinding binding;
 
             @Override
             public void onError(Errors error) {
+                hideProgress();
+                setMobileDataEnabled(TwelveLeadEcg.this,true);
+
                 Toast.makeText(mContext, error.getErrorMsg(), Toast.LENGTH_SHORT).show();
             }
         });
@@ -746,6 +803,7 @@ ActivityTwelveLeadBinding binding;
 
 
     public void makePDF(EcgConfig ecgConfig) {
+
         InitiateEcg initiateEcg = new InitiateEcg();
         initiateEcg.makeEcgReport(mContext, new UserDetails("Vikas", "24", "Male"), true, SECRET_ID, ecgConfig, new PdfCallback() {
             @Override
@@ -754,11 +812,15 @@ ActivityTwelveLeadBinding binding;
                 String filePath = ecgConfig.getFileUrl();
                 pdfurl = filePath;
                 Toast.makeText(mContext, "Successfully generated pdf.", Toast.LENGTH_SHORT).show();
+                setMobileDataEnabled(TwelveLeadEcg.this,true);
+                hideProgress();
 
             }
 
             @Override
             public void onError(Errors errors) {
+                setMobileDataEnabled(TwelveLeadEcg.this,true);
+                hideProgress();
                 Toast.makeText(mContext, errors.getErrorMsg(), Toast.LENGTH_SHORT).show();
             }
         });

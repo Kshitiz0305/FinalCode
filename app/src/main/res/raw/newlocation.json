@@ -1,0 +1,4072 @@
+{
+    "districts": [
+        {
+            "name": "Achham",
+            "places": [
+                {
+                    "placename": "Achham",
+                    "pincode": 10700
+                },
+                {
+                    "placename": "Chaurpati",
+                    "pincode": 10701
+                },
+                {
+                    "placename": "Srikot",
+                    "pincode": 10702
+                },
+                {
+                    "placename": "Thanti",
+                    "pincode": 10703
+                },
+                {
+                    "placename": "Mellekh",
+                    "pincode": 10704
+                },
+                {
+                    "placename": "Bayalpata",
+                    "pincode": 10705
+                },
+                {
+                    "placename": "Bhatakatiya",
+                    "pincode": 10706
+                },
+                {
+                    "placename": "Jayagadh",
+                    "pincode": 10707
+                },
+                {
+                    "placename": "Kalagaun",
+                    "pincode": 10709
+                },
+                {
+                    "placename": "Kuchikot",
+                    "pincode": 10710
+                },
+                {
+                    "placename": "Kamal bazar",
+                    "pincode": 10711
+                },
+                {
+                    "placename": "Dhakari",
+                    "pincode": 10712
+                },
+                {
+                    "placename": "Turmakhad",
+                    "pincode": 10713
+                }
+            ]
+        },
+        {
+            "name": "Arghakhanchi",
+            "places": [
+                {
+                    "placename": "Arghakhanchi",
+                    "pincode": 32700
+                },
+                {
+                    "placename": "Balkot",
+                    "pincode": 32701
+                },
+                {
+                    "placename": "Arghatosh",
+                    "pincode": 32702
+                },
+                {
+                    "placename": "Khana",
+                    "pincode": 32703
+                },
+                {
+                    "placename": "Wangla",
+                    "pincode": 32704
+                },
+                {
+                    "placename": "Hamshapur",
+                    "pincode": 32705
+                },
+                {
+                    "placename": "Thada",
+                    "pincode": 32706
+                },
+                {
+                    "placename": "Khilji",
+                    "pincode": 32708
+                },
+                {
+                    "placename": "Khidim",
+                    "pincode": 32709
+                },
+                {
+                    "placename": "Pali",
+                    "pincode": 32710
+                },
+                {
+                    "placename": "Dhikura",
+                    "pincode": 32711
+                },
+                {
+                    "placename": "Argha",
+                    "pincode": 32712
+                },
+                {
+                    "placename": "Subarnakhal",
+                    "pincode": 32713
+                }
+            ]
+        },
+        {
+            "name": "Baglung",
+            "places": [
+                {
+                    "placename": "Baglung",
+                    "pincode": 33300
+                },
+                {
+                    "placename": "Pala",
+                    "pincode": 33302
+                },
+                {
+                    "placename": "Bihukot",
+                    "pincode": 33303
+                },
+                {
+                    "placename": "Harichaur",
+                    "pincode": 33304
+                },
+                {
+                    "placename": "Balewa Payupata",
+                    "pincode": 33305
+                },
+                {
+                    "placename": "Jaidi Belbagar",
+                    "pincode": 33306
+                },
+                {
+                    "placename": "Bereng",
+                    "pincode": 33307
+                },
+                {
+                    "placename": "Galkot",
+                    "pincode": 33308
+                },
+                {
+                    "placename": "Pandavkhani",
+                    "pincode": 33309
+                },
+                {
+                    "placename": "Arnakot",
+                    "pincode": 33310
+                },
+                {
+                    "placename": "Khrwang",
+                    "pincode": 33311
+                },
+                {
+                    "placename": "Bongadovan",
+                    "pincode": 33312
+                },
+                {
+                    "placename": "Jhimpa",
+                    "pincode": 33313
+                },
+                {
+                    "placename": "Kusmi Shera",
+                    "pincode": 33314
+                }
+            ]
+        },
+        {
+            "name": "Baitadi",
+            "places": [
+                {
+                    "placename": "Baitadi",
+                    "pincode": 10200
+                },
+                {
+                    "placename": "Kesharpur",
+                    "pincode": 10201
+                },
+                {
+                    "placename": "Patan",
+                    "pincode": 10202
+                },
+                {
+                    "placename": "Khodpe",
+                    "pincode": 10203
+                },
+                {
+                    "placename": "Mulkhatali",
+                    "pincode": 10204
+                },
+                {
+                    "placename": "Gajari Changgad",
+                    "pincode": 10205
+                },
+                {
+                    "placename": "Dehimandau",
+                    "pincode": 10207
+                },
+                {
+                    "placename": "Sharmali",
+                    "pincode": 10209
+                },
+                {
+                    "placename": "Srikot",
+                    "pincode": 10210
+                },
+                {
+                    "placename": "Dilasaini",
+                    "pincode": 10211
+                },
+                {
+                    "placename": "Swopana Taladehi",
+                    "pincode": 10212
+                },
+                {
+                    "placename": "Purchaudihat",
+                    "pincode": 10213
+                },
+                {
+                    "placename": "Sitad",
+                    "pincode": 10214
+                },
+                {
+                    "placename": "Dhungad",
+                    "pincode": 10215
+                }
+            ]
+        },
+        {
+            "name": "Bajhang",
+            "places": [
+                {
+                    "placename": "Bajhang",
+                    "pincode": 10500
+                },
+                {
+                    "placename": "Talkot",
+                    "pincode": 10501
+                },
+                {
+                    "placename": "Jamatola",
+                    "pincode": 10502
+                },
+                {
+                    "placename": "Jaya Prithivi Nagar",
+                    "pincode": 10505
+                },
+                {
+                    "placename": "Chhanna",
+                    "pincode": 10506
+                },
+                {
+                    "placename": "Chaudhari",
+                    "pincode": 10507
+                },
+                {
+                    "placename": "Rayal",
+                    "pincode": 10508
+                },
+                {
+                    "placename": "Thalara",
+                    "pincode": 10509
+                },
+                {
+                    "placename": "Bungal",
+                    "pincode": 10510
+                },
+                {
+                    "placename": "Shayadi",
+                    "pincode": 10511
+                }
+            ]
+        },
+        {
+            "name": "Bajura",
+            "places": [
+                {
+                    "placename": "Bajura",
+                    "pincode": 10600
+                },
+                {
+                    "placename": "Dandakot",
+                    "pincode": 10602
+                },
+                {
+                    "placename": "Jukot",
+                    "pincode": 10603
+                },
+                {
+                    "placename": "Faiti",
+                    "pincode": 10604
+                },
+                {
+                    "placename": "Kolti",
+                    "pincode": 10605
+                },
+                {
+                    "placename": "Manakot",
+                    "pincode": 10606
+                },
+                {
+                    "placename": "Dogadi",
+                    "pincode": 10607
+                },
+                {
+                    "placename": "Tate",
+                    "pincode": 10608
+                },
+                {
+                    "placename": "Chhatara",
+                    "pincode": 10609
+                }
+            ]
+        },
+        {
+            "name": "Banke",
+            "places": [
+                {
+                    "placename": "Banke",
+                    "pincode": 21900
+                },
+                {
+                    "placename": "Suiya",
+                    "pincode": 21901
+                },
+                {
+                    "placename": "Bhojbhagawanpur",
+                    "pincode": 21902
+                },
+                {
+                    "placename": "Khaskusma",
+                    "pincode": 21903
+                },
+                {
+                    "placename": "Kohalapur",
+                    "pincode": 21904
+                },
+                {
+                    "placename": "Ramjha",
+                    "pincode": 21905
+                },
+                {
+                    "placename": "Udayapur",
+                    "pincode": 21907
+                },
+                {
+                    "placename": "Chisapani",
+                    "pincode": 21910
+                },
+                {
+                    "placename": "Godahana",
+                    "pincode": 21911
+                },
+                {
+                    "placename": "Jayaspur",
+                    "pincode": 21912
+                },
+                {
+                    "placename": "Khajura",
+                    "pincode": 21913
+                },
+                {
+                    "placename": "Chandranagar",
+                    "pincode": 21914
+                }
+            ]
+        },
+        {
+            "name": "Bara",
+            "places": [
+                {
+                    "placename": "Bara",
+                    "pincode": 44400
+                },
+                {
+                    "placename": "Nijgadh",
+                    "pincode": 44401
+                },
+                {
+                    "placename": "Mahendra Adarsha",
+                    "pincode": 44402
+                },
+                {
+                    "placename": "Simraungadh",
+                    "pincode": 44403
+                },
+                {
+                    "placename": "Umjan",
+                    "pincode": 44404
+                },
+                {
+                    "placename": "Bariyarpur",
+                    "pincode": 44405
+                },
+                {
+                    "placename": "Kabahigoth",
+                    "pincode": 44406
+                },
+                {
+                    "placename": "Dumarwana",
+                    "pincode": 44408
+                },
+                {
+                    "placename": "Pipradhigoth",
+                    "pincode": 44410
+                },
+                {
+                    "placename": "Basantapur",
+                    "pincode": 44411
+                },
+                {
+                    "placename": "Simara",
+                    "pincode": 44412
+                },
+                {
+                    "placename": "Parsoni",
+                    "pincode": 44413
+                },
+                {
+                    "placename": "Amalekhgunj",
+                    "pincode": 44416
+                },
+                {
+                    "placename": "Jeetpur (Bhavanipur)",
+                    "pincode": 44417
+                }
+            ]
+        },
+        {
+            "name": "Bardiya",
+            "places": [
+                {
+                    "placename": "Bardiya",
+                    "pincode": 21800
+                },
+                {
+                    "placename": "Jamuni",
+                    "pincode": 21801
+                },
+                {
+                    "placename": "Mainapokhar",
+                    "pincode": 21802
+                },
+                {
+                    "placename": "Motipur",
+                    "pincode": 21803
+                },
+                {
+                    "placename": "Magaragadi",
+                    "pincode": 21804
+                },
+                {
+                    "placename": "Baganaha",
+                    "pincode": 21808
+                },
+                {
+                    "placename": "Bhurigaun",
+                    "pincode": 21809
+                },
+                {
+                    "placename": "Rajapur",
+                    "pincode": 21811
+                },
+                {
+                    "placename": "Pashupatinagar",
+                    "pincode": 21813
+                },
+                {
+                    "placename": "Sanoshri",
+                    "pincode": 21814
+                }
+            ]
+        },
+        {
+            "name": "Bhaktapur",
+            "places": [
+                {
+                    "placename": "Bhaktapur",
+                    "pincode": 44800
+                },
+                {
+                    "placename": "Dubakot",
+                    "pincode": 44802
+                },
+                {
+                    "placename": "Kharipati",
+                    "pincode": 44804
+                },
+                {
+                    "placename": "Tathali",
+                    "pincode": 44805
+                },
+                {
+                    "placename": "Jorpati",
+                    "pincode": 44806
+                },
+                {
+                    "placename": "Gamcha",
+                    "pincode": 44809
+                },
+                {
+                    "placename": "Dibyashwori",
+                    "pincode": 44810
+                },
+                {
+                    "placename": "Thimi",
+                    "pincode": 44811
+                },
+                {
+                    "placename": "Nagarkot",
+                    "pincode": 44812
+                }
+            ]
+        },
+        {
+            "name": "Bhojpur",
+            "places": [
+                {
+                    "placename": "Bhojpur",
+                    "pincode": 57000
+                },
+                {
+                    "placename": "Kulung Agrakhe",
+                    "pincode": 57001
+                },
+                {
+                    "placename": "Dingla",
+                    "pincode": 57002
+                },
+                {
+                    "placename": "Deurali",
+                    "pincode": 57003
+                },
+                {
+                    "placename": "Pyauli",
+                    "pincode": 57004
+                },
+                {
+                    "placename": "Yaku",
+                    "pincode": 57005
+                },
+                {
+                    "placename": "Bastim",
+                    "pincode": 57006
+                },
+                {
+                    "placename": "Timma",
+                    "pincode": 57008
+                },
+                {
+                    "placename": "Dilpa Annapurna",
+                    "pincode": 57009
+                },
+                {
+                    "placename": "Bhulke",
+                    "pincode": 57010
+                },
+                {
+                    "placename": "Baikunthe",
+                    "pincode": 57011
+                },
+                {
+                    "placename": "Ranibas",
+                    "pincode": 57012
+                },
+                {
+                    "placename": "Walangkha",
+                    "pincode": 57013
+                },
+                {
+                    "placename": "Tiwari Bhanjyang",
+                    "pincode": 57014
+                },
+                {
+                    "placename": "Dobhane",
+                    "pincode": 57015
+                }
+            ]
+        },
+        {
+            "name": "Chitawan",
+            "places": [
+                {
+                    "placename": "Chitwan",
+                    "pincode": 44200
+                },
+                {
+                    "placename": "Ratnanagar",
+                    "pincode": 44204
+                },
+                {
+                    "placename": "Mugling",
+                    "pincode": 44206
+                },
+                {
+                    "placename": "Narayangadh",
+                    "pincode": 44207
+                },
+                {
+                    "placename": "Rampur",
+                    "pincode": 44209
+                },
+                {
+                    "placename": "Soshi Bazar",
+                    "pincode": 44212
+                },
+                {
+                    "placename": "Harinagar",
+                    "pincode": 44213
+                },
+                {
+                    "placename": "Madi",
+                    "pincode": 44214
+                }
+            ]
+        },
+        {
+            "name": "Chitwan",
+            "places": [
+                {
+                    "placename": "Bhandara",
+                    "pincode": 44202
+                },
+                {
+                    "placename": "Khairahani",
+                    "pincode": 44203
+                },
+                {
+                    "placename": "Jutpani",
+                    "pincode": 44205
+                },
+                {
+                    "placename": "Phulbari",
+                    "pincode": 44208
+                },
+                {
+                    "placename": "Meghauli",
+                    "pincode": 44210
+                },
+                {
+                    "placename": "Patihani",
+                    "pincode": 44211
+                }
+            ]
+        },
+        {
+            "name": "Dadeldhura",
+            "places": [
+                {
+                    "placename": "Dadeldhura",
+                    "pincode": 10300
+                },
+                {
+                    "placename": "Ugratara",
+                    "pincode": 10302
+                },
+                {
+                    "placename": "Dandaban",
+                    "pincode": 10303
+                },
+                {
+                    "placename": "Ganeshpur",
+                    "pincode": 10304
+                },
+                {
+                    "placename": "Gaira Ganesh",
+                    "pincode": 10305
+                },
+                {
+                    "placename": "Jogbudha",
+                    "pincode": 10306
+                },
+                {
+                    "placename": "Lamikande",
+                    "pincode": 10307
+                },
+                {
+                    "placename": "Chipur",
+                    "pincode": 10308
+                },
+                {
+                    "placename": "Ajayameru",
+                    "pincode": 10309
+                }
+            ]
+        },
+        {
+            "name": "Dailekh",
+            "places": [
+                {
+                    "placename": "Dailekh",
+                    "pincode": 21600
+                },
+                {
+                    "placename": "Gaidabaj",
+                    "pincode": 21602
+                },
+                {
+                    "placename": "Naumule",
+                    "pincode": 21603
+                },
+                {
+                    "placename": "Byastada",
+                    "pincode": 21604
+                },
+                {
+                    "placename": "Dhungeshwor",
+                    "pincode": 21605
+                },
+                {
+                    "placename": "Malika",
+                    "pincode": 21607
+                },
+                {
+                    "placename": "Dullu",
+                    "pincode": 21608
+                },
+                {
+                    "placename": "Jambu Kandha",
+                    "pincode": 21609
+                },
+                {
+                    "placename": "Rakam Karnali",
+                    "pincode": 21610
+                }
+            ]
+        },
+        {
+            "name": "Dang",
+            "places": [
+                {
+                    "placename": "Dang",
+                    "pincode": 22400
+                },
+                {
+                    "placename": "Hapur",
+                    "pincode": 22402
+                },
+                {
+                    "placename": "Jumlepani",
+                    "pincode": 22403
+                },
+                {
+                    "placename": "Bhaluwang",
+                    "pincode": 22404
+                },
+                {
+                    "placename": "Koilabas",
+                    "pincode": 22405
+                },
+                {
+                    "placename": "Jangrahawa",
+                    "pincode": 22406
+                },
+                {
+                    "placename": "Rampur",
+                    "pincode": 22407
+                },
+                {
+                    "placename": "Urahari",
+                    "pincode": 22408
+                },
+                {
+                    "placename": "Hekuli",
+                    "pincode": 22409
+                },
+                {
+                    "placename": "Panchakule",
+                    "pincode": 22410
+                },
+                {
+                    "placename": "Shantinagar",
+                    "pincode": 22411
+                },
+                {
+                    "placename": "Tulsipur",
+                    "pincode": 22412
+                },
+                {
+                    "placename": "Manpur",
+                    "pincode": 22413
+                },
+                {
+                    "placename": "Lamahi",
+                    "pincode": 22414
+                },
+                {
+                    "placename": "Ghoraha",
+                    "pincode": 22415
+                }
+            ]
+        },
+        {
+            "name": "Darchula",
+            "places": [
+                {
+                    "placename": "Darchula",
+                    "pincode": 10100
+                },
+                {
+                    "placename": "Rapla",
+                    "pincode": 10101
+                },
+                {
+                    "placename": "Duhuti",
+                    "pincode": 10102
+                },
+                {
+                    "placename": "Malikarjun",
+                    "pincode": 10104
+                },
+                {
+                    "placename": "Joljibi",
+                    "pincode": 10105
+                },
+                {
+                    "placename": "Dandakot",
+                    "pincode": 10106
+                },
+                {
+                    "placename": "Ritha Chaupata",
+                    "pincode": 10107
+                },
+                {
+                    "placename": "Gokule",
+                    "pincode": 10108
+                },
+                {
+                    "placename": "Sitola",
+                    "pincode": 10109
+                },
+                {
+                    "placename": "Marmalatinath",
+                    "pincode": 10110
+                },
+                {
+                    "placename": "Sipti",
+                    "pincode": 10111
+                }
+            ]
+        },
+        {
+            "name": "Dhading",
+            "places": [
+                {
+                    "placename": "Dhading",
+                    "pincode": 45100
+                },
+                {
+                    "placename": "Lapa",
+                    "pincode": 45101
+                },
+                {
+                    "placename": "Sertung",
+                    "pincode": 45102
+                },
+                {
+                    "placename": "Phulkharka",
+                    "pincode": 45103
+                },
+                {
+                    "placename": "Tripureshwor",
+                    "pincode": 45104
+                },
+                {
+                    "placename": "Katunje",
+                    "pincode": 45105
+                },
+                {
+                    "placename": "Sunkhani",
+                    "pincode": 45106
+                },
+                {
+                    "placename": "Sunaulabazar",
+                    "pincode": 45108
+                },
+                {
+                    "placename": "Maidi",
+                    "pincode": 45109
+                },
+                {
+                    "placename": "Khanikhola",
+                    "pincode": 45110
+                },
+                {
+                    "placename": "Bhumisthan",
+                    "pincode": 45111
+                },
+                {
+                    "placename": "Gajuri",
+                    "pincode": 45112
+                },
+                {
+                    "placename": "Malekhu",
+                    "pincode": 45113
+                }
+            ]
+        },
+        {
+            "name": "Dhankuta",
+            "places": [
+                {
+                    "placename": "Dhankuta",
+                    "pincode": 56800
+                },
+                {
+                    "placename": "Mudhebash",
+                    "pincode": 56801
+                },
+                {
+                    "placename": "Rajarani",
+                    "pincode": 56802
+                },
+                {
+                    "placename": "Dandabazar",
+                    "pincode": 56803
+                },
+                {
+                    "placename": "Bhedetar",
+                    "pincode": 56804
+                },
+                {
+                    "placename": "Ankhisalla",
+                    "pincode": 56805
+                },
+                {
+                    "placename": "Hile",
+                    "pincode": 56806
+                },
+                {
+                    "placename": "Muga",
+                    "pincode": 56807
+                },
+                {
+                    "placename": "Teliya",
+                    "pincode": 56808
+                },
+                {
+                    "placename": "Pakhribash",
+                    "pincode": 56809
+                },
+                {
+                    "placename": "Leguwa",
+                    "pincode": 56810
+                },
+                {
+                    "placename": "Mare Katahare",
+                    "pincode": 56811
+                },
+                {
+                    "placename": "Arknaule",
+                    "pincode": 56812
+                },
+                {
+                    "placename": "Chungmang",
+                    "pincode": 56813
+                }
+            ]
+        },
+        {
+            "name": "Dhanusha",
+            "places": [
+                {
+                    "placename": "Dhanusha",
+                    "pincode": 45600
+                },
+                {
+                    "placename": "Khajuri",
+                    "pincode": 45601
+                },
+                {
+                    "placename": "Tinkoriya",
+                    "pincode": 45602
+                },
+                {
+                    "placename": "Yadukuha",
+                    "pincode": 45603
+                },
+                {
+                    "placename": "Duhabi",
+                    "pincode": 45604
+                },
+                {
+                    "placename": "Chakkar",
+                    "pincode": 45605
+                },
+                {
+                    "placename": "Raghunathpur",
+                    "pincode": 45606
+                },
+                {
+                    "placename": "Godar Chisapani",
+                    "pincode": 45607
+                },
+                {
+                    "placename": "Dhanushadham",
+                    "pincode": 45608
+                },
+                {
+                    "placename": "Bagachauda",
+                    "pincode": 45610
+                },
+                {
+                    "placename": "Jatahi",
+                    "pincode": 45611
+                },
+                {
+                    "placename": "Phulgama",
+                    "pincode": 45612
+                },
+                {
+                    "placename": "Sankhuwa Mahendranagar",
+                    "pincode": 45616
+                },
+                {
+                    "placename": "Dhalkebar",
+                    "pincode": 45617
+                }
+            ]
+        },
+        {
+            "name": "Dolakha",
+            "places": [
+                {
+                    "placename": "Dolakha",
+                    "pincode": 45500
+                },
+                {
+                    "placename": "Khahare",
+                    "pincode": 45501
+                },
+                {
+                    "placename": "Namdu",
+                    "pincode": 45502
+                },
+                {
+                    "placename": "Jiri",
+                    "pincode": 45503
+                },
+                {
+                    "placename": "Japhekalapani",
+                    "pincode": 45505
+                },
+                {
+                    "placename": "Melung",
+                    "pincode": 45506
+                },
+                {
+                    "placename": "Bhusapheda",
+                    "pincode": 45507
+                },
+                {
+                    "placename": "Sunkhani",
+                    "pincode": 45509
+                },
+                {
+                    "placename": "Khopachangu",
+                    "pincode": 45510
+                },
+                {
+                    "placename": "Lamabagar",
+                    "pincode": 45511
+                },
+                {
+                    "placename": "Chitre",
+                    "pincode": 45512
+                }
+            ]
+        },
+        {
+            "name": "Dolpa",
+            "places": [
+                {
+                    "placename": "Dolpa",
+                    "pincode": 21400
+                },
+                {
+                    "placename": "Juphal",
+                    "pincode": 21401
+                },
+                {
+                    "placename": "Tripurakot",
+                    "pincode": 21402
+                },
+                {
+                    "placename": "Liku",
+                    "pincode": 21403
+                },
+                {
+                    "placename": "Sarmi",
+                    "pincode": 21404
+                },
+                {
+                    "placename": "Kaigaun",
+                    "pincode": 21405
+                },
+                {
+                    "placename": "Foksundo",
+                    "pincode": 21406
+                },
+                {
+                    "placename": "Namdo",
+                    "pincode": 21407
+                }
+            ]
+        },
+        {
+            "name": "Doti",
+            "places": [
+                {
+                    "placename": "Doti",
+                    "pincode": 10800
+                },
+                {
+                    "placename": "Silgadhi",
+                    "pincode": 10801
+                },
+                {
+                    "placename": "Sanagaun",
+                    "pincode": 10802
+                },
+                {
+                    "placename": "Daund",
+                    "pincode": 10803
+                },
+                {
+                    "placename": "Mauwa Nagardaha",
+                    "pincode": 10804
+                },
+                {
+                    "placename": "Banedungrasen",
+                    "pincode": 10805
+                },
+                {
+                    "placename": "Jorayal",
+                    "pincode": 10806
+                },
+                {
+                    "placename": "Gadhshera",
+                    "pincode": 10807
+                },
+                {
+                    "placename": "Lanakedareswor",
+                    "pincode": 10808
+                },
+                {
+                    "placename": "Boktan",
+                    "pincode": 10809
+                },
+                {
+                    "placename": "Byal",
+                    "pincode": 10810
+                },
+                {
+                    "placename": "Mudbhara",
+                    "pincode": 10811
+                }
+            ]
+        },
+        {
+            "name": "Gorkha",
+            "places": [
+                {
+                    "placename": "Gorkha",
+                    "pincode": 34000
+                },
+                {
+                    "placename": "Bungkot",
+                    "pincode": 34002
+                },
+                {
+                    "placename": "Manakamana",
+                    "pincode": 34003
+                },
+                {
+                    "placename": "Batase",
+                    "pincode": 34004
+                },
+                {
+                    "placename": "Luintel",
+                    "pincode": 34005
+                },
+                {
+                    "placename": "Anapipal",
+                    "pincode": 34006
+                },
+                {
+                    "placename": "Jaubari",
+                    "pincode": 34007
+                },
+                {
+                    "placename": "Bhachchek",
+                    "pincode": 34008
+                },
+                {
+                    "placename": "Saurpani",
+                    "pincode": 34009
+                },
+                {
+                    "placename": "Ghyampesal",
+                    "pincode": 34010
+                },
+                {
+                    "placename": "Aarughat",
+                    "pincode": 34011
+                },
+                {
+                    "placename": "Gumda",
+                    "pincode": 34012
+                },
+                {
+                    "placename": "Sirdibash",
+                    "pincode": 34013
+                }
+            ]
+        },
+        {
+            "name": "Gulmi",
+            "places": [
+                {
+                    "placename": "Gulmi",
+                    "pincode": 32600
+                },
+                {
+                    "placename": "Purtighat",
+                    "pincode": 32601
+                },
+                {
+                    "placename": "Bharse",
+                    "pincode": 32602
+                },
+                {
+                    "placename": "Chandrakot",
+                    "pincode": 32603
+                },
+                {
+                    "placename": "Majuwa",
+                    "pincode": 32604
+                },
+                {
+                    "placename": "Ridi",
+                    "pincode": 32605
+                },
+                {
+                    "placename": "Sringa",
+                    "pincode": 32606
+                },
+                {
+                    "placename": "Birabas",
+                    "pincode": 32607
+                },
+                {
+                    "placename": "Wami",
+                    "pincode": 32609
+                },
+                {
+                    "placename": "Ismadohali",
+                    "pincode": 32610
+                },
+                {
+                    "placename": "Dhurkot",
+                    "pincode": 32611
+                },
+                {
+                    "placename": "Purkotadha",
+                    "pincode": 32612
+                },
+                {
+                    "placename": "Arje",
+                    "pincode": 32613
+                },
+                {
+                    "placename": "Manabhak",
+                    "pincode": 32614
+                },
+                {
+                    "placename": "Pipaldanda",
+                    "pincode": 32615
+                }
+            ]
+        },
+        {
+            "name": "Humla",
+            "places": [
+                {
+                    "placename": "Humla",
+                    "pincode": 21000
+                },
+                {
+                    "placename": "Muchu",
+                    "pincode": 21003
+                },
+                {
+                    "placename": "Lali",
+                    "pincode": 21004
+                },
+                {
+                    "placename": "Sarkegadh",
+                    "pincode": 21005
+                },
+                {
+                    "placename": "Darma",
+                    "pincode": 21007
+                },
+                {
+                    "placename": "Srinagar",
+                    "pincode": 21008
+                }
+            ]
+        },
+        {
+            "name": "Ilam",
+            "places": [
+                {
+                    "placename": "Ilam",
+                    "pincode": 57300
+                },
+                {
+                    "placename": "Nayabazar",
+                    "pincode": 57302
+                },
+                {
+                    "placename": "Pashupatinagar",
+                    "pincode": 57303
+                },
+                {
+                    "placename": "Aaitabare",
+                    "pincode": 57304
+                },
+                {
+                    "placename": "Harkatebazar",
+                    "pincode": 57305
+                },
+                {
+                    "placename": "Gajurmukhi",
+                    "pincode": 57306
+                },
+                {
+                    "placename": "Mangal Bare",
+                    "pincode": 57307
+                },
+                {
+                    "placename": "Nepaltar",
+                    "pincode": 57308
+                },
+                {
+                    "placename": "Jamuna",
+                    "pincode": 57309
+                },
+                {
+                    "placename": "Gitpur",
+                    "pincode": 57310
+                },
+                {
+                    "placename": "Cheesa Pani Panchami",
+                    "pincode": 57311
+                },
+                {
+                    "placename": "Phikal",
+                    "pincode": 57312
+                }
+            ]
+        },
+        {
+            "name": "Jajarkot",
+            "places": [
+                {
+                    "placename": "Jajarkot",
+                    "pincode": 21500
+                },
+                {
+                    "placename": "Dhime",
+                    "pincode": 21503
+                },
+                {
+                    "placename": "Dalli",
+                    "pincode": 21504
+                },
+                {
+                    "placename": "Ragda",
+                    "pincode": 21505
+                },
+                {
+                    "placename": "Rokaya gaun (Limsa)",
+                    "pincode": 21506
+                },
+                {
+                    "placename": "Dashera",
+                    "pincode": 21508
+                },
+                {
+                    "placename": "Thalaraikar",
+                    "pincode": 21509
+                },
+                {
+                    "placename": "Garkhakot",
+                    "pincode": 21510
+                },
+                {
+                    "placename": "Karkigaun",
+                    "pincode": 21511
+                }
+            ]
+        },
+        {
+            "name": "Jhapa",
+            "places": [
+                {
+                    "placename": "Jhapa",
+                    "pincode": 57200
+                },
+                {
+                    "placename": "Baniyani",
+                    "pincode": 57201
+                },
+                {
+                    "placename": "Goldhap",
+                    "pincode": 57202
+                },
+                {
+                    "placename": "Chandragadhi",
+                    "pincode": 57203
+                },
+                {
+                    "placename": "Birtamod",
+                    "pincode": 57204
+                },
+                {
+                    "placename": "Sanishchare",
+                    "pincode": 57205
+                },
+                {
+                    "placename": "Budhabare",
+                    "pincode": 57206
+                },
+                {
+                    "placename": "Dhulabari",
+                    "pincode": 57207
+                },
+                {
+                    "placename": "Kankarbhitta",
+                    "pincode": 57208
+                },
+                {
+                    "placename": "Rajgadh",
+                    "pincode": 57209
+                },
+                {
+                    "placename": "Durgapur",
+                    "pincode": 57210
+                },
+                {
+                    "placename": "Jhapa",
+                    "pincode": 57211
+                },
+                {
+                    "placename": "Dudhe",
+                    "pincode": 57212
+                },
+                {
+                    "placename": "Shivagunj",
+                    "pincode": 57213
+                },
+                {
+                    "placename": "Topagachhi",
+                    "pincode": 57214
+                },
+                {
+                    "placename": "Gaurigunj",
+                    "pincode": 57215
+                },
+                {
+                    "placename": "Gauradaha",
+                    "pincode": 57216
+                },
+                {
+                    "placename": "Damak",
+                    "pincode": 57217
+                }
+            ]
+        },
+        {
+            "name": "Jumla",
+            "places": [
+                {
+                    "placename": "Jumla",
+                    "pincode": 21200
+                },
+                {
+                    "placename": "Dillichaur",
+                    "pincode": 21202
+                },
+                {
+                    "placename": "Tatopani",
+                    "pincode": 21204
+                },
+                {
+                    "placename": "Malikathata",
+                    "pincode": 21205
+                },
+                {
+                    "placename": "Kalikakhetu",
+                    "pincode": 21206
+                },
+                {
+                    "placename": "Narakot",
+                    "pincode": 21207
+                },
+                {
+                    "placename": "Hatsinja",
+                    "pincode": 21208
+                },
+                {
+                    "placename": "Chautha",
+                    "pincode": 21209
+                }
+            ]
+        },
+        {
+            "name": "Kailal",
+            "places": [
+                {
+                    "placename": "Munuwa",
+                    "pincode": 10902
+                }
+            ]
+        },
+        {
+            "name": "Kailali",
+            "places": [
+                {
+                    "placename": "Kailali",
+                    "pincode": 10900
+                },
+                {
+                    "placename": "Tikapur",
+                    "pincode": 10901
+                },
+                {
+                    "placename": "Dododhara",
+                    "pincode": 10903
+                },
+                {
+                    "placename": "Lamki",
+                    "pincode": 10904
+                },
+                {
+                    "placename": "Masuriya",
+                    "pincode": 10905
+                },
+                {
+                    "placename": "Pahalmanpur",
+                    "pincode": 10906
+                },
+                {
+                    "placename": "Hasuliya",
+                    "pincode": 10907
+                },
+                {
+                    "placename": "Bhajani",
+                    "pincode": 10908
+                },
+                {
+                    "placename": "Joshipur",
+                    "pincode": 10909
+                },
+                {
+                    "placename": "Phulbari",
+                    "pincode": 10910
+                },
+                {
+                    "placename": "Atariya",
+                    "pincode": 10911
+                },
+                {
+                    "placename": "Chaumala",
+                    "pincode": 10912
+                },
+                {
+                    "placename": "Phaltude",
+                    "pincode": 10914
+                }
+            ]
+        },
+        {
+            "name": "Kalikot",
+            "places": [
+                {
+                    "placename": "Kalikot",
+                    "pincode": 21300
+                },
+                {
+                    "placename": "Sanniraskot",
+                    "pincode": 21303
+                },
+                {
+                    "placename": "Mehalmudi",
+                    "pincode": 21304
+                },
+                {
+                    "placename": "Kotbada",
+                    "pincode": 21305
+                },
+                {
+                    "placename": "Kalikot",
+                    "pincode": 21306
+                },
+                {
+                    "placename": "Padamghat",
+                    "pincode": 21307
+                },
+                {
+                    "placename": "Jubitha",
+                    "pincode": 21308
+                },
+                {
+                    "placename": "Thirpu",
+                    "pincode": 21309
+                }
+            ]
+        },
+        {
+            "name": "Kanchanpur",
+            "places": [
+                {
+                    "placename": "Kanchanpur",
+                    "pincode": 10400
+                },
+                {
+                    "placename": "Krishnapur",
+                    "pincode": 10401
+                },
+                {
+                    "placename": "Kalika",
+                    "pincode": 10402
+                },
+                {
+                    "placename": "Punarbas",
+                    "pincode": 10403
+                },
+                {
+                    "placename": "Beldadi",
+                    "pincode": 10404
+                },
+                {
+                    "placename": "Pipaladi",
+                    "pincode": 10405
+                },
+                {
+                    "placename": "Kanchanpur",
+                    "pincode": 10406
+                },
+                {
+                    "placename": "Chandani",
+                    "pincode": 10407
+                },
+                {
+                    "placename": "Airport",
+                    "pincode": 10409
+                },
+                {
+                    "placename": "Suda",
+                    "pincode": 10410
+                },
+                {
+                    "placename": "Jhalari",
+                    "pincode": 10411
+                }
+            ]
+        },
+        {
+            "name": "Kapilbastu",
+            "places": [
+                {
+                    "placename": "Kapilbastu",
+                    "pincode": 32800
+                },
+                {
+                    "placename": "Pipara",
+                    "pincode": 32801
+                },
+                {
+                    "placename": "Patariya",
+                    "pincode": 32802
+                },
+                {
+                    "placename": "Pakadi",
+                    "pincode": 32804
+                },
+                {
+                    "placename": "Kopawa",
+                    "pincode": 32805
+                },
+                {
+                    "placename": "Gotihawa",
+                    "pincode": 32808
+                },
+                {
+                    "placename": "Gorusinge",
+                    "pincode": 32809
+                },
+                {
+                    "placename": "Pattharkot",
+                    "pincode": 32810
+                },
+                {
+                    "placename": "Thuniya",
+                    "pincode": 32811
+                },
+                {
+                    "placename": "Maharajgunj",
+                    "pincode": 32812
+                },
+                {
+                    "placename": "Ganeshpur",
+                    "pincode": 32813
+                },
+                {
+                    "placename": "Chanauta",
+                    "pincode": 32814
+                },
+                {
+                    "placename": "Krishnanagar",
+                    "pincode": 32815
+                },
+                {
+                    "placename": "Shiva Raj",
+                    "pincode": 32816
+                }
+            ]
+        },
+        {
+            "name": "Kaski",
+            "places": [
+                {
+                    "placename": "Kaski",
+                    "pincode": 33700
+                },
+                {
+                    "placename": "Rupakot",
+                    "pincode": 33701
+                },
+                {
+                    "placename": "Gagan Gaunda",
+                    "pincode": 33702
+                },
+                {
+                    "placename": "Makaikhola",
+                    "pincode": 33703
+                },
+                {
+                    "placename": "Majhathana",
+                    "pincode": 33704
+                },
+                {
+                    "placename": "Sildujure",
+                    "pincode": 33705
+                },
+                {
+                    "placename": "Nirmalpokhari",
+                    "pincode": 33706
+                },
+                {
+                    "placename": "Pardibandh",
+                    "pincode": 33707
+                },
+                {
+                    "placename": "Bhalam",
+                    "pincode": 33708
+                },
+                {
+                    "placename": "Chapakot",
+                    "pincode": 33709
+                },
+                {
+                    "placename": "Birethanti",
+                    "pincode": 33710
+                },
+                {
+                    "placename": "Naudanda",
+                    "pincode": 33711
+                },
+                {
+                    "placename": "Ghachok",
+                    "pincode": 33712
+                },
+                {
+                    "placename": "Purunchaur",
+                    "pincode": 33713
+                }
+            ]
+        },
+        {
+            "name": "Kathmandu",
+            "places": [
+                {
+                    "placename": "Kathmandu",
+                    "pincode": 44600
+                },
+                {
+                    "placename": "Sankhu",
+                    "pincode": 44601
+                },
+                {
+                    "placename": "Chabahil",
+                    "pincode": 44602
+                },
+                {
+                    "placename": "Sundarijal",
+                    "pincode": 44603
+                },
+                {
+                    "placename": "Gauchar",
+                    "pincode": 44604
+                },
+                {
+                    "placename": "Dillibazar",
+                    "pincode": 44605
+                },
+                {
+                    "placename": "Bansbari",
+                    "pincode": 44606
+                },
+                {
+                    "placename": "Tokha Saraswati",
+                    "pincode": 44608
+                },
+                {
+                    "placename": "Sachibalaya",
+                    "pincode": 44609
+                },
+                {
+                    "placename": "Manmaiju",
+                    "pincode": 44610
+                },
+                {
+                    "placename": "Balaju",
+                    "pincode": 44611
+                },
+                {
+                    "placename": "Tribhuvan University",
+                    "pincode": 44613
+                },
+                {
+                    "placename": "Kalimati",
+                    "pincode": 44614
+                },
+                {
+                    "placename": "Pharping",
+                    "pincode": 44615
+                },
+                {
+                    "placename": "Baluwatar",
+                    "pincode": 44616
+                },
+                {
+                    "placename": "Sarbochcha Adalat",
+                    "pincode": 44617
+                },
+                {
+                    "placename": "Kirtipur",
+                    "pincode": 44618
+                },
+                {
+                    "placename": "Thankot",
+                    "pincode": 44619
+                },
+                {
+                    "placename": "Swayambhu",
+                    "pincode": 44620
+                },
+                {
+                    "placename": "Pashupati",
+                    "pincode": 44621
+                },
+                {
+                    "placename": "Budhanilkantha",
+                    "pincode": 44622
+                }
+            ]
+        },
+        {
+            "name": "Kaverpalanchok",
+            "places": [
+                {
+                    "placename": "Pokharinarayanshthan",
+                    "pincode": 45203
+                },
+                {
+                    "placename": "Gumati Bhanjyang",
+                    "pincode": 45204
+                },
+                {
+                    "placename": "Mahadevasthan",
+                    "pincode": 45213
+                },
+                {
+                    "placename": "Khopasi",
+                    "pincode": 45216
+                }
+            ]
+        },
+        {
+            "name": "Kavrepalanchok",
+            "places": [
+                {
+                    "placename": "Kavrepalanchok",
+                    "pincode": 45200
+                },
+                {
+                    "placename": "Ghartichhap",
+                    "pincode": 45201
+                },
+                {
+                    "placename": "Mangaltar",
+                    "pincode": 45202
+                },
+                {
+                    "placename": "Dapcha",
+                    "pincode": 45205
+                },
+                {
+                    "placename": "Panauti",
+                    "pincode": 45209
+                },
+                {
+                    "placename": "Banepa",
+                    "pincode": 45210
+                },
+                {
+                    "placename": "Panchkhal",
+                    "pincode": 45212
+                },
+                {
+                    "placename": "Phalante",
+                    "pincode": 45214
+                },
+                {
+                    "placename": "Dolal Ghat",
+                    "pincode": 45215
+                }
+            ]
+        },
+        {
+            "name": "Khotang",
+            "places": [
+                {
+                    "placename": "Khotang",
+                    "pincode": 56200
+                },
+                {
+                    "placename": "Wakshila",
+                    "pincode": 56201
+                },
+                {
+                    "placename": "Aiselukharka",
+                    "pincode": 56202
+                },
+                {
+                    "placename": "Jalpa",
+                    "pincode": 56204
+                },
+                {
+                    "placename": "Lamidanda",
+                    "pincode": 56205
+                },
+                {
+                    "placename": "Halesi mahadevasthan",
+                    "pincode": 56206
+                },
+                {
+                    "placename": "Buipa",
+                    "pincode": 56208
+                },
+                {
+                    "placename": "Manebhanjyang",
+                    "pincode": 56209
+                },
+                {
+                    "placename": "Sapteshworichhitapokhari",
+                    "pincode": 56210
+                },
+                {
+                    "placename": "Khotang",
+                    "pincode": 56211
+                },
+                {
+                    "placename": "Chisapani",
+                    "pincode": 56212
+                },
+                {
+                    "placename": "Simpani",
+                    "pincode": 56214
+                }
+            ]
+        },
+        {
+            "name": "Lalitpur",
+            "places": [
+                {
+                    "placename": "Lalitpur",
+                    "pincode": 44700
+                },
+                {
+                    "placename": "Dhapakhel",
+                    "pincode": 44703
+                },
+                {
+                    "placename": "Imadol",
+                    "pincode": 44705
+                },
+                {
+                    "placename": "Darabartole",
+                    "pincode": 44707
+                },
+                {
+                    "placename": "Lubhu",
+                    "pincode": 44708
+                },
+                {
+                    "placename": "Godawari",
+                    "pincode": 44709
+                },
+                {
+                    "placename": "Chapagaun",
+                    "pincode": 44710
+                },
+                {
+                    "placename": "Gotikhel",
+                    "pincode": 44711
+                },
+                {
+                    "placename": "Bhattedanda",
+                    "pincode": 44712
+                },
+                {
+                    "placename": "Pyutar",
+                    "pincode": 44713
+                }
+            ]
+        },
+        {
+            "name": "Lamjung",
+            "places": [
+                {
+                    "placename": "Lamjung",
+                    "pincode": 33600
+                },
+                {
+                    "placename": "Maling",
+                    "pincode": 33602
+                },
+                {
+                    "placename": "Sundar Bazar",
+                    "pincode": 33603
+                },
+                {
+                    "placename": "Sotipasal",
+                    "pincode": 33604
+                },
+                {
+                    "placename": "Kunchha",
+                    "pincode": 33605
+                },
+                {
+                    "placename": "Gilung",
+                    "pincode": 33606
+                },
+                {
+                    "placename": "Khudi",
+                    "pincode": 33607
+                },
+                {
+                    "placename": "Phaliyasanghu",
+                    "pincode": 33608
+                },
+                {
+                    "placename": "Bharate",
+                    "pincode": 33609
+                },
+                {
+                    "placename": "Gaunda",
+                    "pincode": 33610
+                },
+                {
+                    "placename": "Tarkughat",
+                    "pincode": 33611
+                }
+            ]
+        },
+        {
+            "name": "Mahottari",
+            "places": [
+                {
+                    "placename": "Mahottari",
+                    "pincode": 45700
+                },
+                {
+                    "placename": "Bardibash",
+                    "pincode": 45701
+                },
+                {
+                    "placename": "Bhangaha",
+                    "pincode": 45702
+                },
+                {
+                    "placename": "Loharpatti",
+                    "pincode": 45703
+                },
+                {
+                    "placename": "Pipara",
+                    "pincode": 45704
+                },
+                {
+                    "placename": "Matihani",
+                    "pincode": 45705
+                },
+                {
+                    "placename": "Ramgopalpur",
+                    "pincode": 45707
+                },
+                {
+                    "placename": "Balawa",
+                    "pincode": 45708
+                },
+                {
+                    "placename": "Laxminiya",
+                    "pincode": 45710
+                },
+                {
+                    "placename": "Gaushala",
+                    "pincode": 45711
+                },
+                {
+                    "placename": "Shreepur",
+                    "pincode": 45712
+                },
+                {
+                    "placename": "Samsi",
+                    "pincode": 45713
+                },
+                {
+                    "placename": "Manara",
+                    "pincode": 45714
+                }
+            ]
+        },
+        {
+            "name": "Makabanpur",
+            "places": [
+                {
+                    "placename": "Hatiya",
+                    "pincode": 44103
+                },
+                {
+                    "placename": "Aambhanjyang",
+                    "pincode": 44104
+                },
+                {
+                    "placename": "Manahari",
+                    "pincode": 44106
+                },
+                {
+                    "placename": "Basamadi",
+                    "pincode": 44108
+                },
+                {
+                    "placename": "Markhu",
+                    "pincode": 44113
+                }
+            ]
+        },
+        {
+            "name": "Makawanpur",
+            "places": [
+                {
+                    "placename": "Makawanpur",
+                    "pincode": 44100
+                },
+                {
+                    "placename": "Phaparbari",
+                    "pincode": 44101
+                },
+                {
+                    "placename": "Ritha Chhatibwn",
+                    "pincode": 44102
+                },
+                {
+                    "placename": "Hetauda I.A.",
+                    "pincode": 44107
+                },
+                {
+                    "placename": "Palung",
+                    "pincode": 44110
+                },
+                {
+                    "placename": "Bhainse",
+                    "pincode": 44111
+                },
+                {
+                    "placename": "Bhimphedi",
+                    "pincode": 44112
+                }
+            ]
+        },
+        {
+            "name": "Manang",
+            "places": [
+                {
+                    "placename": "Manang",
+                    "pincode": 33500
+                },
+                {
+                    "placename": "Pisang",
+                    "pincode": 33502
+                },
+                {
+                    "placename": "Bhakra",
+                    "pincode": 33503
+                },
+                {
+                    "placename": "Mathillo Manang",
+                    "pincode": 33504
+                },
+                {
+                    "placename": "Nar",
+                    "pincode": 33507
+                },
+                {
+                    "placename": "Dharapani",
+                    "pincode": 33509
+                }
+            ]
+        },
+        {
+            "name": "Morang",
+            "places": [
+                {
+                    "placename": "Morang",
+                    "pincode": 56600
+                },
+                {
+                    "placename": "Chunimari",
+                    "pincode": 56601
+                },
+                {
+                    "placename": "Rangeli",
+                    "pincode": 56602
+                },
+                {
+                    "placename": "Sanischare",
+                    "pincode": 56603
+                },
+                {
+                    "placename": "Urlabari",
+                    "pincode": 56604
+                },
+                {
+                    "placename": "Madhumalla",
+                    "pincode": 56605
+                },
+                {
+                    "placename": "Bayarban",
+                    "pincode": 56606
+                },
+                {
+                    "placename": "Sorabhag",
+                    "pincode": 56607
+                },
+                {
+                    "placename": "Dadarberiya",
+                    "pincode": 56608
+                },
+                {
+                    "placename": "Letang",
+                    "pincode": 56609
+                },
+                {
+                    "placename": "Kerabari",
+                    "pincode": 56610
+                },
+                {
+                    "placename": "Haraincha",
+                    "pincode": 56611
+                },
+                {
+                    "placename": "Bhaudaha",
+                    "pincode": 56612
+                },
+                {
+                    "placename": "Biratnagar Bazar",
+                    "pincode": 56613
+                },
+                {
+                    "placename": "Rani Sikiyahi",
+                    "pincode": 56614
+                },
+                {
+                    "placename": "Jhorahat",
+                    "pincode": 56615
+                },
+                {
+                    "placename": "Banigama",
+                    "pincode": 56616
+                },
+                {
+                    "placename": "Bansbari",
+                    "pincode": 56617
+                }
+            ]
+        },
+        {
+            "name": "Mugu",
+            "places": [
+                {
+                    "placename": "Mugu",
+                    "pincode": 21100
+                },
+                {
+                    "placename": "Rowa",
+                    "pincode": 21102
+                },
+                {
+                    "placename": "Pulu",
+                    "pincode": 21103
+                },
+                {
+                    "placename": "Sorubarma",
+                    "pincode": 21105
+                },
+                {
+                    "placename": "Rara",
+                    "pincode": 21106
+                },
+                {
+                    "placename": "Sukhadhik",
+                    "pincode": 21107
+                },
+                {
+                    "placename": "Gumtha",
+                    "pincode": 21109
+                },
+                {
+                    "placename": "Dhainkot",
+                    "pincode": 21110
+                }
+            ]
+        },
+        {
+            "name": "Mustang",
+            "places": [
+                {
+                    "placename": "Mustang",
+                    "pincode": 33100
+                },
+                {
+                    "placename": "Marpha",
+                    "pincode": 33102
+                },
+                {
+                    "placename": "Kagbeni",
+                    "pincode": 33103
+                },
+                {
+                    "placename": "Charang",
+                    "pincode": 33104
+                },
+                {
+                    "placename": "Mustang",
+                    "pincode": 33105
+                },
+                {
+                    "placename": "Chhoser",
+                    "pincode": 33106
+                },
+                {
+                    "placename": "Muktinath",
+                    "pincode": 33107
+                },
+                {
+                    "placename": "Lete",
+                    "pincode": 33108
+                },
+                {
+                    "placename": "Thak Tukuche",
+                    "pincode": 33109
+                }
+            ]
+        },
+        {
+            "name": "Myagdi",
+            "places": [
+                {
+                    "placename": "Myagdi",
+                    "pincode": 33200
+                },
+                {
+                    "placename": "Xyamarukot",
+                    "pincode": 33202
+                },
+                {
+                    "placename": "Galeswor",
+                    "pincode": 33203
+                },
+                {
+                    "placename": "Rakhu Bhagawati",
+                    "pincode": 33204
+                },
+                {
+                    "placename": "Sikha",
+                    "pincode": 33205
+                },
+                {
+                    "placename": "Dana",
+                    "pincode": 33206
+                },
+                {
+                    "placename": "Babiyachaur",
+                    "pincode": 33207
+                },
+                {
+                    "placename": "Darbang",
+                    "pincode": 33208
+                },
+                {
+                    "placename": "Pakhapani",
+                    "pincode": 33209
+                },
+                {
+                    "placename": "Takam",
+                    "pincode": 33210
+                },
+                {
+                    "placename": "Lulang",
+                    "pincode": 33211
+                }
+            ]
+        },
+        {
+            "name": "Nawalparasi",
+            "places": [
+                {
+                    "placename": "Nawalparasi",
+                    "pincode": 33000
+                },
+                {
+                    "placename": "Rakuwa",
+                    "pincode": 33001
+                },
+                {
+                    "placename": "Bulingtar",
+                    "pincode": 33002
+                },
+                {
+                    "placename": "Gaindakot",
+                    "pincode": 33003
+                },
+                {
+                    "placename": "Dumkauli",
+                    "pincode": 33004
+                },
+                {
+                    "placename": "Shergunj",
+                    "pincode": 33005
+                },
+                {
+                    "placename": "Naya Belhani",
+                    "pincode": 33006
+                },
+                {
+                    "placename": "Tribeni",
+                    "pincode": 33007
+                },
+                {
+                    "placename": "Semari",
+                    "pincode": 33008
+                },
+                {
+                    "placename": "Guthi persauni",
+                    "pincode": 33009
+                },
+                {
+                    "placename": "Bhujahawa",
+                    "pincode": 33010
+                },
+                {
+                    "placename": "Makar",
+                    "pincode": 33011
+                },
+                {
+                    "placename": "Tilakpur",
+                    "pincode": 33012
+                },
+                {
+                    "placename": "Maheshpur",
+                    "pincode": 33013
+                },
+                {
+                    "placename": "Sunawal",
+                    "pincode": 33015
+                },
+                {
+                    "placename": "Pithauli",
+                    "pincode": 33016
+                }
+            ]
+        },
+        {
+            "name": "Nuwakot",
+            "places": [
+                {
+                    "placename": "Nuwakot",
+                    "pincode": 44900
+                },
+                {
+                    "placename": "Thansingh",
+                    "pincode": 44902
+                },
+                {
+                    "placename": "Ranipauwa",
+                    "pincode": 44903
+                },
+                {
+                    "placename": "Taruka",
+                    "pincode": 44905
+                },
+                {
+                    "placename": "Deurali",
+                    "pincode": 44906
+                },
+                {
+                    "placename": "Kahule",
+                    "pincode": 44907
+                },
+                {
+                    "placename": "Nuwakot",
+                    "pincode": 44908
+                },
+                {
+                    "placename": "Chokade",
+                    "pincode": 44909
+                },
+                {
+                    "placename": "Kharanitar",
+                    "pincode": 44910
+                },
+                {
+                    "placename": "Bhadratar",
+                    "pincode": 44911
+                },
+                {
+                    "placename": "Ramabati",
+                    "pincode": 44912
+                },
+                {
+                    "placename": "Rautbesi",
+                    "pincode": 44913
+                },
+                {
+                    "placename": "Pokharichapadanda",
+                    "pincode": 44914
+                },
+                {
+                    "placename": "Devighat",
+                    "pincode": 44915
+                }
+            ]
+        },
+        {
+            "name": "Okhaldhunga",
+            "places": [
+                {
+                    "placename": "Okhaldhunga",
+                    "pincode": 56100
+                },
+                {
+                    "placename": "Khani Bhanjyang",
+                    "pincode": 56101
+                },
+                {
+                    "placename": "Rumjatar",
+                    "pincode": 56102
+                },
+                {
+                    "placename": "Rampur",
+                    "pincode": 56104
+                },
+                {
+                    "placename": "Bigutar",
+                    "pincode": 56105
+                },
+                {
+                    "placename": "Khiji Phalate",
+                    "pincode": 56106
+                },
+                {
+                    "placename": "Gamanangtar",
+                    "pincode": 56107
+                },
+                {
+                    "placename": "Ghorakhori",
+                    "pincode": 56108
+                },
+                {
+                    "placename": "Chyanam",
+                    "pincode": 56109
+                },
+                {
+                    "placename": "Mane Bhanjyang",
+                    "pincode": 56110
+                },
+                {
+                    "placename": "Moli",
+                    "pincode": 56111
+                },
+                {
+                    "placename": "Ragani",
+                    "pincode": 56112
+                }
+            ]
+        },
+        {
+            "name": "Palpa",
+            "places": [
+                {
+                    "placename": "Palpa",
+                    "pincode": 32500
+                },
+                {
+                    "placename": "Sahalkot",
+                    "pincode": 32501
+                },
+                {
+                    "placename": "Rampur",
+                    "pincode": 32502
+                },
+                {
+                    "placename": "Hungi",
+                    "pincode": 32503
+                },
+                {
+                    "placename": "Jalpa",
+                    "pincode": 32504
+                },
+                {
+                    "placename": "Tahu",
+                    "pincode": 32505
+                },
+                {
+                    "placename": "Jhadewa",
+                    "pincode": 32506
+                },
+                {
+                    "placename": "Aryabhanjyang",
+                    "pincode": 32507
+                },
+                {
+                    "placename": "Madanpokhara",
+                    "pincode": 32508
+                },
+                {
+                    "placename": "Khasyauli",
+                    "pincode": 32509
+                },
+                {
+                    "placename": "Argali",
+                    "pincode": 32510
+                },
+                {
+                    "placename": "Chhahara",
+                    "pincode": 32511
+                },
+                {
+                    "placename": "Palungmainadi",
+                    "pincode": 32512
+                },
+                {
+                    "placename": "Baldengadi",
+                    "pincode": 32513
+                }
+            ]
+        },
+        {
+            "name": "Panchthar",
+            "places": [
+                {
+                    "placename": "Panchthar",
+                    "pincode": 57400
+                },
+                {
+                    "placename": "Chyangthapu",
+                    "pincode": 57401
+                },
+                {
+                    "placename": "Ambarpur",
+                    "pincode": 57402
+                },
+                {
+                    "placename": "Namluwa",
+                    "pincode": 57403
+                },
+                {
+                    "placename": "Yangnam",
+                    "pincode": 57404
+                },
+                {
+                    "placename": "Nawamidanda",
+                    "pincode": 57406
+                },
+                {
+                    "placename": "Mehelbote",
+                    "pincode": 57407
+                },
+                {
+                    "placename": "Yasok",
+                    "pincode": 57408
+                },
+                {
+                    "placename": "Mauwa",
+                    "pincode": 57409
+                },
+                {
+                    "placename": "Rabi",
+                    "pincode": 57410
+                },
+                {
+                    "placename": "Limba",
+                    "pincode": 57411
+                },
+                {
+                    "placename": "Medibung",
+                    "pincode": 57412
+                }
+            ]
+        },
+        {
+            "name": "Parbat",
+            "places": [
+                {
+                    "placename": "Parbat",
+                    "pincode": 33400
+                },
+                {
+                    "placename": "Salija",
+                    "pincode": 33401
+                },
+                {
+                    "placename": "Khurkot",
+                    "pincode": 33402
+                },
+                {
+                    "placename": "Deurali",
+                    "pincode": 33403
+                },
+                {
+                    "placename": "Thulipokhari",
+                    "pincode": 33405
+                },
+                {
+                    "placename": "Karkineta",
+                    "pincode": 33406
+                },
+                {
+                    "placename": "Devisthan",
+                    "pincode": 33407
+                },
+                {
+                    "placename": "Bachchha",
+                    "pincode": 33408
+                },
+                {
+                    "placename": "Lankhudeurali",
+                    "pincode": 33409
+                },
+                {
+                    "placename": "Hubas",
+                    "pincode": 33410
+                },
+                {
+                    "placename": "Khor Pokhara",
+                    "pincode": 33411
+                },
+                {
+                    "placename": "Setibeni",
+                    "pincode": 33412
+                }
+            ]
+        },
+        {
+            "name": "Parsa",
+            "places": [
+                {
+                    "placename": "Parsa",
+                    "pincode": 44300
+                },
+                {
+                    "placename": "Aadarshanagar",
+                    "pincode": 44301
+                },
+                {
+                    "placename": "Parbanipur",
+                    "pincode": 44303
+                },
+                {
+                    "placename": "Bindabasini",
+                    "pincode": 44304
+                },
+                {
+                    "placename": "Bahuari Pidari",
+                    "pincode": 44305
+                },
+                {
+                    "placename": "Shirsiya Khalwatola",
+                    "pincode": 44306
+                },
+                {
+                    "placename": "Biruwaguthi",
+                    "pincode": 44307
+                },
+                {
+                    "placename": "Pakahamainpur",
+                    "pincode": 44308
+                },
+                {
+                    "placename": "Phokhariya",
+                    "pincode": 44309
+                },
+                {
+                    "placename": "Ranigunj",
+                    "pincode": 44310
+                },
+                {
+                    "placename": "Paterwa Sugauli",
+                    "pincode": 44311
+                },
+                {
+                    "placename": "Viswa",
+                    "pincode": 44312
+                },
+                {
+                    "placename": "Janakitol",
+                    "pincode": 44313
+                },
+                {
+                    "placename": "Jeetpur",
+                    "pincode": 44314
+                },
+                {
+                    "placename": "Thori",
+                    "pincode": 44315
+                }
+            ]
+        },
+        {
+            "name": "Pyuthan",
+            "places": [
+                {
+                    "placename": "Pyuthan",
+                    "pincode": 22300
+                },
+                {
+                    "placename": "Dakhaquadi",
+                    "pincode": 22301
+                },
+                {
+                    "placename": "Bhingri",
+                    "pincode": 22303
+                },
+                {
+                    "placename": "Wangesal",
+                    "pincode": 22304
+                },
+                {
+                    "placename": "Baraula",
+                    "pincode": 22305
+                },
+                {
+                    "placename": "Majuwa",
+                    "pincode": 22307
+                },
+                {
+                    "placename": "Machchhi",
+                    "pincode": 22308
+                },
+                {
+                    "placename": "Thulabesi",
+                    "pincode": 22309
+                },
+                {
+                    "placename": "Lungbahane",
+                    "pincode": 22310
+                },
+                {
+                    "placename": "Bijuwar",
+                    "pincode": 22311
+                },
+                {
+                    "placename": "Naya Gaun",
+                    "pincode": 22312
+                }
+            ]
+        },
+        {
+            "name": "Ramechhap",
+            "places": [
+                {
+                    "placename": "Ramechhap",
+                    "pincode": 45400
+                },
+                {
+                    "placename": "Those",
+                    "pincode": 45401
+                },
+                {
+                    "placename": "Duragaun",
+                    "pincode": 45402
+                },
+                {
+                    "placename": "Betali",
+                    "pincode": 45403
+                },
+                {
+                    "placename": "Khimti",
+                    "pincode": 45404
+                },
+                {
+                    "placename": "Saghutar",
+                    "pincode": 45405
+                },
+                {
+                    "placename": "Kathjor",
+                    "pincode": 45406
+                },
+                {
+                    "placename": "Puranagaun",
+                    "pincode": 45408
+                },
+                {
+                    "placename": "Doramba",
+                    "pincode": 45409
+                },
+                {
+                    "placename": "Hiledevi",
+                    "pincode": 45410
+                },
+                {
+                    "placename": "Bhirpani",
+                    "pincode": 45411
+                }
+            ]
+        },
+        {
+            "name": "Rasuwa",
+            "places": [
+                {
+                    "placename": "Rasuwa",
+                    "pincode": 45000
+                },
+                {
+                    "placename": "Dhaibung",
+                    "pincode": 45003
+                },
+                {
+                    "placename": "Ramkali",
+                    "pincode": 45004
+                },
+                {
+                    "placename": "Rasuwa",
+                    "pincode": 45007
+                },
+                {
+                    "placename": "Syaphru Besi",
+                    "pincode": 45009
+                }
+            ]
+        },
+        {
+            "name": "Rautahat",
+            "places": [
+                {
+                    "placename": "Rautahat",
+                    "pincode": 44500
+                },
+                {
+                    "placename": "Saruatha",
+                    "pincode": 44502
+                },
+                {
+                    "placename": "Pipra bazar",
+                    "pincode": 44503
+                },
+                {
+                    "placename": "Madhopur",
+                    "pincode": 44504
+                },
+                {
+                    "placename": "Rajpurpharahadawa",
+                    "pincode": 44506
+                },
+                {
+                    "placename": "Patharabudhram",
+                    "pincode": 44508
+                },
+                {
+                    "placename": "Sitalpur",
+                    "pincode": 44509
+                },
+                {
+                    "placename": "Shivanagar",
+                    "pincode": 44510
+                },
+                {
+                    "placename": "Laxminiya",
+                    "pincode": 44511
+                },
+                {
+                    "placename": "Katahariya",
+                    "pincode": 44512
+                },
+                {
+                    "placename": "Samanpur",
+                    "pincode": 44513
+                },
+                {
+                    "placename": "Chandra Nigahapur",
+                    "pincode": 44515
+                }
+            ]
+        },
+        {
+            "name": "Rolpa",
+            "places": [
+                {
+                    "placename": "Rolpa",
+                    "pincode": 22100
+                },
+                {
+                    "placename": "Khungri",
+                    "pincode": 22102
+                },
+                {
+                    "placename": "Sirpa",
+                    "pincode": 22103
+                },
+                {
+                    "placename": "Thawang",
+                    "pincode": 22106
+                },
+                {
+                    "placename": "Himtakura",
+                    "pincode": 22107
+                },
+                {
+                    "placename": "Ghartigaun",
+                    "pincode": 22108
+                },
+                {
+                    "placename": "Nerpa",
+                    "pincode": 22110
+                },
+                {
+                    "placename": "Dahaban",
+                    "pincode": 22111
+                },
+                {
+                    "placename": "Shulichaur",
+                    "pincode": 22112
+                },
+                {
+                    "placename": "Jhenam (Holeri)",
+                    "pincode": 22113
+                }
+            ]
+        },
+        {
+            "name": "Rukum",
+            "places": [
+                {
+                    "placename": "Rukum",
+                    "pincode": 22000
+                },
+                {
+                    "placename": "Rukumkot",
+                    "pincode": 22002
+                },
+                {
+                    "placename": "Riwangchaur",
+                    "pincode": 22004
+                },
+                {
+                    "placename": "Kol",
+                    "pincode": 22005
+                },
+                {
+                    "placename": "Peugha",
+                    "pincode": 22007
+                },
+                {
+                    "placename": "Chaurjahari",
+                    "pincode": 22008
+                },
+                {
+                    "placename": "Simli",
+                    "pincode": 22009
+                },
+                {
+                    "placename": "Radijyula",
+                    "pincode": 22010
+                },
+                {
+                    "placename": "Baphikot",
+                    "pincode": 22011
+                }
+            ]
+        },
+        {
+            "name": "Rupandehi",
+            "places": [
+                {
+                    "placename": "Rupandehi",
+                    "pincode": 32900
+                },
+                {
+                    "placename": "Siktahan",
+                    "pincode": 32901
+                },
+                {
+                    "placename": "Dhakadhai",
+                    "pincode": 32902
+                },
+                {
+                    "placename": "Manigram",
+                    "pincode": 32903
+                },
+                {
+                    "placename": "Kotihawa",
+                    "pincode": 32904
+                },
+                {
+                    "placename": "Thutipipal",
+                    "pincode": 32905
+                },
+                {
+                    "placename": "Butwal",
+                    "pincode": 32907
+                },
+                {
+                    "placename": "Parroha",
+                    "pincode": 32908
+                },
+                {
+                    "placename": "Sauraha Pharsa",
+                    "pincode": 32909
+                },
+                {
+                    "placename": "Amuwa",
+                    "pincode": 32910
+                },
+                {
+                    "placename": "Saljhandi",
+                    "pincode": 32911
+                },
+                {
+                    "placename": "Suryapura",
+                    "pincode": 32912
+                },
+                {
+                    "placename": "Tenuhawa",
+                    "pincode": 32913
+                },
+                {
+                    "placename": "Lumbini",
+                    "pincode": 32914
+                },
+                {
+                    "placename": "Betkuiya",
+                    "pincode": 32915
+                },
+                {
+                    "placename": "Mahadehiya",
+                    "pincode": 32916
+                }
+            ]
+        },
+        {
+            "name": "Salyan",
+            "places": [
+                {
+                    "placename": "Salyan",
+                    "pincode": 22200
+                },
+                {
+                    "placename": "Kalimati Kalche",
+                    "pincode": 22201
+                },
+                {
+                    "placename": "Luham",
+                    "pincode": 22202
+                },
+                {
+                    "placename": "Dhanbang",
+                    "pincode": 22203
+                },
+                {
+                    "placename": "Mahaneta",
+                    "pincode": 22204
+                },
+                {
+                    "placename": "Malneta",
+                    "pincode": 22207
+                },
+                {
+                    "placename": "Maidu",
+                    "pincode": 22208
+                },
+                {
+                    "placename": "Ragechour",
+                    "pincode": 22209
+                },
+                {
+                    "placename": "Bhalchaur",
+                    "pincode": 22210
+                },
+                {
+                    "placename": "Tharmare",
+                    "pincode": 22211
+                }
+            ]
+        },
+        {
+            "name": "Sankhuwasabha",
+            "places": [
+                {
+                    "placename": "Sankhuwasabha",
+                    "pincode": 56900
+                },
+                {
+                    "placename": "Hatiya",
+                    "pincode": 56901
+                },
+                {
+                    "placename": "Hedangana",
+                    "pincode": 56902
+                },
+                {
+                    "placename": "Tamku",
+                    "pincode": 56903
+                },
+                {
+                    "placename": "Chandanpur",
+                    "pincode": 56904
+                },
+                {
+                    "placename": "Bahrabishe",
+                    "pincode": 56905
+                },
+                {
+                    "placename": "Tumlingtar",
+                    "pincode": 56906
+                },
+                {
+                    "placename": "Wana",
+                    "pincode": 56907
+                },
+                {
+                    "placename": "Shidhakali",
+                    "pincode": 56908
+                },
+                {
+                    "placename": "Madi",
+                    "pincode": 56909
+                },
+                {
+                    "placename": "Ankhibhui",
+                    "pincode": 56910
+                },
+                {
+                    "placename": "Mamling",
+                    "pincode": 56911
+                },
+                {
+                    "placename": "Manebhanjyang",
+                    "pincode": 56912
+                },
+                {
+                    "placename": "Chainpur",
+                    "pincode": 56913
+                }
+            ]
+        },
+        {
+            "name": "Saptari",
+            "places": [
+                {
+                    "placename": "Saptari",
+                    "pincode": 56400
+                },
+                {
+                    "placename": "Hanuman Nagar",
+                    "pincode": 56401
+                },
+                {
+                    "placename": "Bairaba",
+                    "pincode": 56402
+                },
+                {
+                    "placename": "Phattepur",
+                    "pincode": 56403
+                },
+                {
+                    "placename": "Kanchanpur",
+                    "pincode": 56404
+                },
+                {
+                    "placename": "Praswani",
+                    "pincode": 56405
+                },
+                {
+                    "placename": "Bhagawatpur",
+                    "pincode": 56406
+                },
+                {
+                    "placename": "Koiladi",
+                    "pincode": 56407
+                },
+                {
+                    "placename": "Chhinnamasta",
+                    "pincode": 56408
+                },
+                {
+                    "placename": "Bishnupur",
+                    "pincode": 56409
+                },
+                {
+                    "placename": "Rupani",
+                    "pincode": 56411
+                },
+                {
+                    "placename": "Pato",
+                    "pincode": 56412
+                },
+                {
+                    "placename": "Arnaha",
+                    "pincode": 56413
+                },
+                {
+                    "placename": "Kalyanpur",
+                    "pincode": 56414
+                },
+                {
+                    "placename": "Bodebarsain",
+                    "pincode": 56415
+                },
+                {
+                    "placename": "Sisawa",
+                    "pincode": 56416
+                },
+                {
+                    "placename": "Kadarwona",
+                    "pincode": 56417
+                },
+                {
+                    "placename": "Bhardaha",
+                    "pincode": 56418
+                }
+            ]
+        },
+        {
+            "name": "Sarlahi",
+            "places": [
+                {
+                    "placename": "Sarlahi",
+                    "pincode": 45800
+                },
+                {
+                    "placename": "Lalbandi",
+                    "pincode": 45801
+                },
+                {
+                    "placename": "Bayalbas",
+                    "pincode": 45802
+                },
+                {
+                    "placename": "Haripurwa",
+                    "pincode": 45803
+                },
+                {
+                    "placename": "Hariaun",
+                    "pincode": 45804
+                },
+                {
+                    "placename": "Haripur",
+                    "pincode": 45805
+                },
+                {
+                    "placename": "Brahmapuri",
+                    "pincode": 45806
+                },
+                {
+                    "placename": "Kaudena",
+                    "pincode": 45809
+                },
+                {
+                    "placename": "Barahathawa",
+                    "pincode": 45810
+                },
+                {
+                    "placename": "Sundarpur",
+                    "pincode": 45811
+                },
+                {
+                    "placename": "Dumariya",
+                    "pincode": 45813
+                },
+                {
+                    "placename": "Karmaiya",
+                    "pincode": 45814
+                },
+                {
+                    "placename": "Harkathawa",
+                    "pincode": 45815
+                },
+                {
+                    "placename": "Ramnagar(Bahuarwa)",
+                    "pincode": 45816
+                },
+                {
+                    "placename": "Chhatauna",
+                    "pincode": 45817
+                }
+            ]
+        },
+        {
+            "name": "Sindhuli",
+            "places": [
+                {
+                    "placename": "Sindhuli",
+                    "pincode": 45900
+                },
+                {
+                    "placename": "Solpa",
+                    "pincode": 45901
+                },
+                {
+                    "placename": "Bahun Tilpung",
+                    "pincode": 45902
+                },
+                {
+                    "placename": "Dudhauli",
+                    "pincode": 45903
+                },
+                {
+                    "placename": "Dakaha",
+                    "pincode": 45904
+                },
+                {
+                    "placename": "Gwaltar",
+                    "pincode": 45905
+                },
+                {
+                    "placename": "Khurkot",
+                    "pincode": 45906
+                },
+                {
+                    "placename": "Belghari",
+                    "pincode": 45907
+                },
+                {
+                    "placename": "Bhiman",
+                    "pincode": 45909
+                },
+                {
+                    "placename": "Jhanga Jholi",
+                    "pincode": 45910
+                },
+                {
+                    "placename": "Netrakali",
+                    "pincode": 45911
+                },
+                {
+                    "placename": "Kapilakot",
+                    "pincode": 45912
+                },
+                {
+                    "placename": "Pipalmadhiratanpur",
+                    "pincode": 45913
+                }
+            ]
+        },
+        {
+            "name": "Sindhupalchok",
+            "places": [
+                {
+                    "placename": "Sindhupalchok",
+                    "pincode": 45300
+                },
+                {
+                    "placename": "Kodari",
+                    "pincode": 45301
+                },
+                {
+                    "placename": "Barabise",
+                    "pincode": 45302
+                },
+                {
+                    "placename": "Atarpur",
+                    "pincode": 45304
+                },
+                {
+                    "placename": "Lamosanghu",
+                    "pincode": 45305
+                },
+                {
+                    "placename": "Nawalpur",
+                    "pincode": 45306
+                },
+                {
+                    "placename": "Pangtang",
+                    "pincode": 45307
+                },
+                {
+                    "placename": "Jalbire",
+                    "pincode": 45308
+                },
+                {
+                    "placename": "Bhotsipa",
+                    "pincode": 45309
+                },
+                {
+                    "placename": "Melamchi Bahunepati",
+                    "pincode": 45310
+                },
+                {
+                    "placename": "Gyalthum",
+                    "pincode": 45311
+                },
+                {
+                    "placename": "Thangapaldhap",
+                    "pincode": 45312
+                },
+                {
+                    "placename": "Dubachaur",
+                    "pincode": 45313
+                },
+                {
+                    "placename": "Balephi",
+                    "pincode": 45314
+                }
+            ]
+        },
+        {
+            "name": "Siraha",
+            "places": [
+                {
+                    "placename": "Siraha",
+                    "pincode": 56500
+                },
+                {
+                    "placename": "Bastipur",
+                    "pincode": 56501
+                },
+                {
+                    "placename": "Lahan",
+                    "pincode": 56502
+                },
+                {
+                    "placename": "Bhagawanpur",
+                    "pincode": 56503
+                },
+                {
+                    "placename": "Dhanagadhi",
+                    "pincode": 56504
+                },
+                {
+                    "placename": "Maheshpur patari",
+                    "pincode": 56505
+                },
+                {
+                    "placename": "Bariyarpatti",
+                    "pincode": 56506
+                },
+                {
+                    "placename": "Golbazar (Asanpur)",
+                    "pincode": 56508
+                },
+                {
+                    "placename": "Sukhipur",
+                    "pincode": 56509
+                },
+                {
+                    "placename": "Bishnupur",
+                    "pincode": 56511
+                },
+                {
+                    "placename": "Belha",
+                    "pincode": 56512
+                },
+                {
+                    "placename": "Madar",
+                    "pincode": 56513
+                },
+                {
+                    "placename": "Mirchaiya",
+                    "pincode": 56515
+                },
+                {
+                    "placename": "Bandipur",
+                    "pincode": 56516
+                },
+                {
+                    "placename": "Kalyanpur",
+                    "pincode": 56517
+                }
+            ]
+        },
+        {
+            "name": "Solukhumbu",
+            "places": [
+                {
+                    "placename": "Solukhumbu",
+                    "pincode": 56000
+                },
+                {
+                    "placename": "Namche Bazar",
+                    "pincode": 56002
+                },
+                {
+                    "placename": "Sotang",
+                    "pincode": 56004
+                },
+                {
+                    "placename": "Jubu",
+                    "pincode": 56005
+                },
+                {
+                    "placename": "Nele",
+                    "pincode": 56006
+                },
+                {
+                    "placename": "Necha",
+                    "pincode": 56007
+                },
+                {
+                    "placename": "Shishakhola",
+                    "pincode": 56008
+                },
+                {
+                    "placename": "Himaganga",
+                    "pincode": 56009
+                },
+                {
+                    "placename": "Lukla",
+                    "pincode": 56010
+                }
+            ]
+        },
+        {
+            "name": "Sunsari",
+            "places": [
+                {
+                    "placename": "Sunsari",
+                    "pincode": 56700
+                },
+                {
+                    "placename": "Mangalbare",
+                    "pincode": 56702
+                },
+                {
+                    "placename": "Chatara",
+                    "pincode": 56703
+                },
+                {
+                    "placename": "Bakalauri",
+                    "pincode": 56704
+                },
+                {
+                    "placename": "Itahari",
+                    "pincode": 56705
+                },
+                {
+                    "placename": "Simariya",
+                    "pincode": 56706
+                },
+                {
+                    "placename": "Duhabi",
+                    "pincode": 56707
+                },
+                {
+                    "placename": "Chimadi",
+                    "pincode": 56708
+                },
+                {
+                    "placename": "Jhumka",
+                    "pincode": 56709
+                },
+                {
+                    "placename": "Inarauwa",
+                    "pincode": 56710
+                },
+                {
+                    "placename": "Aurabari",
+                    "pincode": 56711
+                },
+                {
+                    "placename": "Dewangunj",
+                    "pincode": 56712
+                },
+                {
+                    "placename": "Madhuvan",
+                    "pincode": 56713
+                },
+                {
+                    "placename": "Laukahee",
+                    "pincode": 56714
+                },
+                {
+                    "placename": "Bhutaha",
+                    "pincode": 56715
+                },
+                {
+                    "placename": "Mahendra Nagar",
+                    "pincode": 56716
+                },
+                {
+                    "placename": "Chhitaha",
+                    "pincode": 56717
+                }
+            ]
+        },
+        {
+            "name": "Surkhet",
+            "places": [
+                {
+                    "placename": "Surkhet",
+                    "pincode": 21700
+                },
+                {
+                    "placename": "Chhinchu",
+                    "pincode": 21701
+                },
+                {
+                    "placename": "Ramghat",
+                    "pincode": 21702
+                },
+                {
+                    "placename": "Sahare",
+                    "pincode": 21703
+                },
+                {
+                    "placename": "Gumi",
+                    "pincode": 21704
+                },
+                {
+                    "placename": "Bheriganga",
+                    "pincode": 21705
+                },
+                {
+                    "placename": "Matela",
+                    "pincode": 21706
+                },
+                {
+                    "placename": "Garpan",
+                    "pincode": 21707
+                },
+                {
+                    "placename": "Kunathari",
+                    "pincode": 21709
+                },
+                {
+                    "placename": "Babiyachaur",
+                    "pincode": 21710
+                },
+                {
+                    "placename": "Gutu",
+                    "pincode": 21711
+                }
+            ]
+        },
+        {
+            "name": "Syanja",
+            "places": [
+                {
+                    "placename": "Syangja",
+                    "pincode": 33800
+                },
+                {
+                    "placename": "Kolma",
+                    "pincode": 33802
+                },
+                {
+                    "placename": "Kichnas",
+                    "pincode": 33803
+                },
+                {
+                    "placename": "Jharkham",
+                    "pincode": 33804
+                },
+                {
+                    "placename": "Arjunchaupari",
+                    "pincode": 33805
+                },
+                {
+                    "placename": "Panchamul",
+                    "pincode": 33806
+                },
+                {
+                    "placename": "Rangethanti",
+                    "pincode": 33807
+                },
+                {
+                    "placename": "Fedikhola",
+                    "pincode": 33808
+                },
+                {
+                    "placename": "Bhumare",
+                    "pincode": 33811
+                },
+                {
+                    "placename": "Kyakmi",
+                    "pincode": 33812
+                },
+                {
+                    "placename": "Waidha Bhanjhyang",
+                    "pincode": 33813
+                },
+                {
+                    "placename": "Chapakot",
+                    "pincode": 33814
+                },
+                {
+                    "placename": "Galyang",
+                    "pincode": 33815
+                }
+            ]
+        },
+        {
+            "name": "Tanahun",
+            "places": [
+                {
+                    "placename": "Tanahun",
+                    "pincode": 33900
+                },
+                {
+                    "placename": "Tuhure Pasal",
+                    "pincode": 33902
+                },
+                {
+                    "placename": "Manechauka",
+                    "pincode": 33903
+                },
+                {
+                    "placename": "Bandipur",
+                    "pincode": 33904
+                },
+                {
+                    "placename": "Aanbu Khaireni",
+                    "pincode": 33905
+                },
+                {
+                    "placename": "Baidi",
+                    "pincode": 33906
+                },
+                {
+                    "placename": "Kahunshivapur",
+                    "pincode": 33907
+                },
+                {
+                    "placename": "Rising Ranipokhari",
+                    "pincode": 33908
+                },
+                {
+                    "placename": "Ghiring Sundhara",
+                    "pincode": 33909
+                },
+                {
+                    "placename": "Bhimad",
+                    "pincode": 33910
+                },
+                {
+                    "placename": "Lamagaun",
+                    "pincode": 33911
+                },
+                {
+                    "placename": "Khairenitar",
+                    "pincode": 33912
+                },
+                {
+                    "placename": "Shisha Ghat",
+                    "pincode": 33913
+                },
+                {
+                    "placename": "Dumre",
+                    "pincode": 33914
+                },
+                {
+                    "placename": "Devaghat",
+                    "pincode": 33915
+                }
+            ]
+        },
+        {
+            "name": "Taplajung",
+            "places": [
+                {
+                    "placename": "Khewang",
+                    "pincode": 57501
+                },
+                {
+                    "placename": "Sadeba",
+                    "pincode": 57502
+                },
+                {
+                    "placename": "Thokimba",
+                    "pincode": 57509
+                },
+                {
+                    "placename": "Dobhan",
+                    "pincode": 57510
+                }
+            ]
+        },
+        {
+            "name": "Taplejung",
+            "places": [
+                {
+                    "placename": "Taplejung",
+                    "pincode": 57500
+                },
+                {
+                    "placename": "Sinam",
+                    "pincode": 57503
+                },
+                {
+                    "placename": "Pedang",
+                    "pincode": 57504
+                },
+                {
+                    "placename": "Thechambu",
+                    "pincode": 57505
+                },
+                {
+                    "placename": "Siwang",
+                    "pincode": 57506
+                },
+                {
+                    "placename": "Khokling",
+                    "pincode": 57507
+                },
+                {
+                    "placename": "Olangchunggola",
+                    "pincode": 57508
+                },
+                {
+                    "placename": "Change",
+                    "pincode": 57511
+                },
+                {
+                    "placename": "Hangpang",
+                    "pincode": 57512
+                }
+            ]
+        },
+        {
+            "name": "Terhathum",
+            "places": [
+                {
+                    "placename": "Terhathum",
+                    "pincode": 57100
+                },
+                {
+                    "placename": "Jirikhimti",
+                    "pincode": 57102
+                },
+                {
+                    "placename": "Tinjure",
+                    "pincode": 57103
+                },
+                {
+                    "placename": "Basantapur",
+                    "pincode": 57104
+                },
+                {
+                    "placename": "Sudap",
+                    "pincode": 57105
+                },
+                {
+                    "placename": "Hamarjung",
+                    "pincode": 57106
+                },
+                {
+                    "placename": "Morahang",
+                    "pincode": 57107
+                },
+                {
+                    "placename": "Pokalawang",
+                    "pincode": 57108
+                },
+                {
+                    "placename": "Mulpani",
+                    "pincode": 57110
+                },
+                {
+                    "placename": "Iwa",
+                    "pincode": 57111
+                }
+            ]
+        },
+        {
+            "name": "Udayapu",
+            "places": [
+                {
+                    "placename": "Udayapur",
+                    "pincode": 56300
+                },
+                {
+                    "placename": "Ratapani (Thoksila)",
+                    "pincode": 56301
+                },
+                {
+                    "placename": "Beltar",
+                    "pincode": 56302
+                },
+                {
+                    "placename": "Hadiya",
+                    "pincode": 56303
+                },
+                {
+                    "placename": "Pokhari",
+                    "pincode": 56305
+                },
+                {
+                    "placename": "Baraha",
+                    "pincode": 56306
+                },
+                {
+                    "placename": "Bhutar",
+                    "pincode": 56307
+                },
+                {
+                    "placename": "Rampur Jhilke",
+                    "pincode": 56308
+                },
+                {
+                    "placename": "Udayapur Gadhi",
+                    "pincode": 56309
+                },
+                {
+                    "placename": "Katari",
+                    "pincode": 56310
+                },
+                {
+                    "placename": "Sorung Chhabise",
+                    "pincode": 56311
+                },
+                {
+                    "placename": "Rauta Murkuchi",
+                    "pincode": 56312
+                }
+            ]
+        }
+    ]
+}

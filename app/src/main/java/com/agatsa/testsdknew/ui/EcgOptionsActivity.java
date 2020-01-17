@@ -33,7 +33,7 @@ import java.util.List;
 
 public class EcgOptionsActivity extends AppCompatActivity {
 
-   LinearLayout singleleadecg,chestleadecg,limbsixlead,Twelvelead,FitnessECG;
+   LinearLayout singleleadecg,chestleadecg,limbsixlead,Twelvelead, fitnessECG;
     Toolbar toolbar;
     Button pairbtn;
     ProgressDialog mpd;
@@ -42,9 +42,10 @@ public class EcgOptionsActivity extends AppCompatActivity {
     private static final String CLIENT_ID = "5a3b4c16b4a56b000132f5d5b4580266565440bda51dcb4122d39844";
     private static final String[] REQUIRED_SDK_PERMISSIONS = new String[]{
             Manifest.permission.ACCESS_FINE_LOCATION,
-            Manifest.permission.ACCESS_COARSE_LOCATION};
+            Manifest.permission.ACCESS_COARSE_LOCATION, Manifest.permission.WRITE_EXTERNAL_STORAGE,Manifest.permission.READ_EXTERNAL_STORAGE,Manifest.permission.CHANGE_WIFI_STATE};
 
     String pt_id;
+
 
 
     @Override
@@ -64,7 +65,7 @@ public class EcgOptionsActivity extends AppCompatActivity {
         chestleadecg=findViewById(R.id.chestleadecg);
         limbsixlead=findViewById(R.id.limbsixlead);
         Twelvelead=findViewById(R.id.Twelvelead);
-        FitnessECG=findViewById(R.id.FitnessECG);
+        fitnessECG =findViewById(R.id.FitnessECG);
         pairbtn=findViewById(R.id.register);
         syncimg=findViewById(R.id.syncimg);
         longsyncimg=findViewById(R.id.longsyncimg);
@@ -87,16 +88,14 @@ public class EcgOptionsActivity extends AppCompatActivity {
             LimbSixLead.again=false;
             LimbSixLead.leadIndex =0;
             LimbSixLead.x=0;
-
             Intent i=new Intent(EcgOptionsActivity.this, LimbSixLead.class);
             i.putExtra("pt_id",pt_id);
             startActivity(i);
 
         });
 
-        FitnessECG.setOnClickListener(v -> {
-
-
+        fitnessECG.setOnClickListener(v -> {
+            FitnessECG.state=0;
             Intent i=new Intent(EcgOptionsActivity.this,FitnessECG.class);
             startActivity(i);
 
@@ -148,6 +147,10 @@ public class EcgOptionsActivity extends AppCompatActivity {
 
     }
 
+
+
+
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
@@ -167,6 +170,8 @@ public class EcgOptionsActivity extends AppCompatActivity {
         startActivity(intent);
 
     }
+
+
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {

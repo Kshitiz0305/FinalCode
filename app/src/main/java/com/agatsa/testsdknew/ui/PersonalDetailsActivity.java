@@ -188,7 +188,7 @@ ArrayList<String>  placesnames = new ArrayList<>();
         String generatedjsonString="";
 
         try {
-            generatedjsonString = getJsonStringfromFile("locationdetails", "raw", getPackageName());
+            generatedjsonString = getJsonStringfromFile("newlocation", "raw", getPackageName());
         }
         catch (Exception e){
 

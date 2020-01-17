@@ -10,6 +10,7 @@ import android.view.LayoutInflater;
 
 import androidx.appcompat.app.AlertDialog;
 
+import com.afollestad.materialdialogs.MaterialDialog;
 import com.agatsa.testsdknew.R;
 
 public class DialogUtil {
@@ -322,6 +323,13 @@ public class DialogUtil {
         dialog.getButton(AlertDialog.BUTTON_NEGATIVE).setAllCaps(false);
 
         return  dialog;
+    }
+
+    public static MaterialDialog showProgressDialog(Context context, String title, String msg) {
+        return new MaterialDialog.Builder(context)
+                .content(msg)
+                .progress(true, 0)
+                .show();
     }
 
 
