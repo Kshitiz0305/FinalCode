@@ -81,10 +81,7 @@ ActivityTwelveLeadBinding binding;
 //        labdb = new LabDB(getApplicationContext());
 //        ecgReport=labdb.getLastEcgSign(ptno);
         mContext = getApplicationContext();
-//        toolbar = findViewById(R.id.toolbar);
-//        setSupportActionBar(toolbar);
-//        getSupportActionBar().setTitle("Twelve Lead");
-//        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+//
         hideAndSeek(buttoncollectionshide,true);
 
         hideAndSeek(new ArrayList<>(Arrays.asList("txttwelveleadone")),false);

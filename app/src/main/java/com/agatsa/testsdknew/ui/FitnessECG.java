@@ -58,7 +58,6 @@ public class FitnessECG extends AppCompatActivity implements ResponseCallback {
     SharedPreferences pref;
     ECGReport ecgReport=new ECGReport();
 
-    Toolbar toolbar;
    public static int state=0;
     InitiateEcg initiateEcg;
     static  String pdfurl="";
@@ -80,11 +79,8 @@ public class FitnessECG extends AppCompatActivity implements ResponseCallback {
 //        labdb = new LabDB(getApplicationContext());
 //        ecgReport=labdb.getLastEcgSign(ptno);
         mContext = getApplicationContext();
-        toolbar = findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-        getSupportActionBar().setTitle("Fitness Test");
+
         initiateEcg = new InitiateEcg();
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         initViews();
         if(state==0)
         {   fitnesstxtLeadOne.setVisibility(View.VISIBLE);

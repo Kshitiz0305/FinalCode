@@ -7,14 +7,46 @@
     android:background="@color/colorOffWhite"
     android:orientation="vertical"
     >
-    <include layout="@layout/toolbar"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5sp"
+        android:layout_marginLeft="20dp"
+
+        android:orientation="horizontal">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:fontFamily="@font/sfpro_display_semibold"
+            android:text="ECG"
+            android:textColor="@color/colorPrimaryDark"
+            android:textSize="15.7sp" />
+        <TextView
+
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:id="@+id/pairtxt"
+            android:gravity="end"
+            android:layout_marginRight="@dimen/_10sdp"
+            android:fontFamily="@font/sfpro_display_semibold"
+            android:text="@string/pair_device"
+            android:textColor="@color/colorPrimaryDark"
+            android:textSize="15.7sp" />
+
+
+    </LinearLayout>
+
+
 
 
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="@dimen/_10sdp"
-        android:layout_marginTop="5dp"
+        android:layout_marginTop="10dp"
         android:layout_marginRight="@dimen/_10sdp">
 
 

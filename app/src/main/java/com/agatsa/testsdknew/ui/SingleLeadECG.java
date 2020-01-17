@@ -116,38 +116,32 @@ SingleLeadECG extends AppCompatActivity implements ResponseCallback {
 //        labdb = new LabDB(getApplicationContext());
 //        ecgReport=labdb.getLastEcgSign(ptno);
         mContext = getApplicationContext();
-        toolbar = findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-        getSupportActionBar().setTitle("Single Lead");
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        binding.btViewreport.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
 
-                if(!pdfuri.equals(""))
-                {
-                    File file = new File(pdfuri);
-                    Intent intent = new Intent(Intent.ACTION_VIEW);
+        binding.btViewreport.setOnClickListener(view -> {
 
-                    // set leadIndex to give temporary permission to external app to use your FileProvider
-                    intent.setFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+            if(!pdfuri.equals(""))
+            {
+                File file = new File(pdfuri);
+                Intent intent = new Intent(Intent.ACTION_VIEW);
 
-                    // generate URI, I defined authority as the application ID in the Manifest, the last param is file I want to open
-                    Uri photoURI = FileProvider.getUriForFile(SingleLeadECG.this,
-                            BuildConfig.APPLICATION_ID + ".provider",
-                            file);
-                    // I am opening a PDF file so I give it a valid MIME type
-                    intent.setDataAndType(photoURI, "application/pdf");
+                // set leadIndex to give temporary permission to external app to use your FileProvider
+                intent.setFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
 
-                    // validate that the device can open your File!
-                    startActivity(intent);
+                // generate URI, I defined authority as the application ID in the Manifest, the last param is file I want to open
+                Uri photoURI = FileProvider.getUriForFile(SingleLeadECG.this,
+                        BuildConfig.APPLICATION_ID + ".provider",
+                        file);
+                // I am opening a PDF file so I give it a valid MIME type
+                intent.setDataAndType(photoURI, "application/pdf");
+
+                // validate that the device can open your File!
+                startActivity(intent);
 
 
 
 
-                }}
-        });
+            }});
         initOnClickListener();
     }
 
@@ -450,12 +444,9 @@ SingleLeadECG extends AppCompatActivity implements ResponseCallback {
 
 
             }
-        }, new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialogInterface, int i) {
+        }, (dialogInterface, i) -> {
 
 
-            }
         });
 
 

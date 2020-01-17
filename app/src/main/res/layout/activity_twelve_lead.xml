@@ -16,7 +16,22 @@
             android:background="@color/colorOffWhite"
             android:orientation="vertical"
             >
-            <include layout="@layout/toolbar"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Twelve  Lead"
+                android:gravity="center"
+                android:fontFamily="@font/sfpro_display_bold"
+                android:padding="8sp"
+                android:textColor="@color/colorPrimaryDark"
+                android:textSize="17sp" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/graylight" />
+
 
 
             <androidx.cardview.widget.CardView
@@ -50,7 +65,7 @@
                         android:id="@+id/tv_description"
                         android:fontFamily="@font/sfpro_display_semibold"
                         android:text="@string/ecginfo"
-                        android:textColor="@color/colorPrimary"
+                        android:textColor="@color/colorPrimaryDark"
                         android:textSize="15.7sp" />
 
                     <LinearLayout
@@ -67,7 +82,7 @@
                             android:layout_weight="1"
                             android:fontFamily="@font/sfpro_display_semibold"
                             android:text="Take Lead 1"
-                            android:textColor="@color/colorPrimary"
+                            android:textColor="@color/colorPrimaryDark"
                             android:textSize="15.7sp" />
 
 
@@ -80,11 +95,6 @@
 
                     </LinearLayout>
 
-                    <View
-                        android:layout_width="match_parent"
-                        android:layout_height="1dp"
-                        android:layout_marginTop="10dp"
-                        android:background="@color/graylight" />
 
                     <LinearLayout
                         android:id="@+id/txttwelveleadoneagain"
@@ -100,7 +110,7 @@
                             android:layout_weight="1"
                             android:fontFamily="@font/sfpro_display_semibold"
                             android:text="Take Lead 1 again"
-                            android:textColor="@color/colorPrimary"
+                            android:textColor="@color/colorPrimaryDark"
                             android:textSize="15.7sp" />
 
 
@@ -113,11 +123,7 @@
 
                     </LinearLayout>
 
-                    <View
-                        android:layout_width="match_parent"
-                        android:layout_height="1dp"
-                        android:layout_marginTop="10dp"
-                        android:background="@color/graylight" />
+
 
                     <LinearLayout
                         android:id="@+id/txttwelveleadtwo"
@@ -133,7 +139,7 @@
                             android:layout_weight="1"
                             android:fontFamily="@font/sfpro_display_semibold"
                             android:text="Lead 2"
-                            android:textColor="@color/colorPrimary"
+                            android:textColor="@color/colorPrimaryDark"
                             android:textSize="15.7sp" />
 
 
@@ -146,11 +152,6 @@
 
                     </LinearLayout>
 
-                    <View
-                        android:layout_width="match_parent"
-                        android:layout_height="1dp"
-                        android:layout_marginTop="10dp"
-                        android:background="@color/graylight" />
 
                     <LinearLayout
                         android:id="@+id/txttwelveleadtwoagain"
@@ -166,7 +167,7 @@
                             android:layout_weight="1"
                             android:fontFamily="@font/sfpro_display_semibold"
                             android:text="Lead 2 Again"
-                            android:textColor="@color/colorPrimary"
+                            android:textColor="@color/colorPrimaryDark"
                             android:textSize="15.7sp" />
 
 
@@ -179,11 +180,6 @@
 
                     </LinearLayout>
 
-                    <View
-                        android:layout_width="match_parent"
-                        android:layout_height="1dp"
-                        android:layout_marginTop="10dp"
-                        android:background="@color/graylight" />
 
 
                     <LinearLayout
@@ -200,7 +196,7 @@
                             android:layout_weight="1"
                             android:fontFamily="@font/sfpro_display_semibold"
                             android:text="V 1"
-                            android:textColor="@color/colorPrimary"
+                            android:textColor="@color/colorPrimaryDark"
                             android:textSize="15.7sp" />
 
 
@@ -213,11 +209,7 @@
 
                     </LinearLayout>
 
-                    <View
-                        android:layout_width="match_parent"
-                        android:layout_height="1dp"
-                        android:layout_marginTop="10dp"
-                        android:background="@color/graylight" />
+
                     <LinearLayout
                         android:id="@+id/txttwelvevoneagain"
                         android:layout_width="match_parent"
@@ -232,7 +224,7 @@
                             android:layout_weight="1"
                             android:fontFamily="@font/sfpro_display_semibold"
                             android:text="V 1 Again"
-                            android:textColor="@color/colorPrimary"
+                            android:textColor="@color/colorPrimaryDark"
                             android:textSize="15.7sp" />
 
 
@@ -245,11 +237,7 @@
 
                     </LinearLayout>
 
-                    <View
-                        android:layout_width="match_parent"
-                        android:layout_height="1dp"
-                        android:layout_marginTop="10dp"
-                        android:background="@color/graylight" />
+
 
 
                     <LinearLayout
@@ -266,7 +254,7 @@
                             android:layout_weight="1"
                             android:fontFamily="@font/sfpro_display_semibold"
                             android:text="V 2"
-                            android:textColor="@color/colorPrimary"
+                            android:textColor="@color/colorPrimaryDark"
                             android:textSize="15.7sp" />
 
 
@@ -279,11 +267,7 @@
 
                     </LinearLayout>
 
-                    <View
-                        android:layout_width="match_parent"
-                        android:layout_height="1dp"
-                        android:layout_marginTop="10dp"
-                        android:background="@color/graylight" />
+
                     <LinearLayout
                         android:id="@+id/txttwelvevtwoagain"
                         android:layout_width="match_parent"
@@ -298,7 +282,7 @@
                             android:layout_weight="1"
                             android:fontFamily="@font/sfpro_display_semibold"
                             android:text="V 2 Again"
-                            android:textColor="@color/colorPrimary"
+                            android:textColor="@color/colorPrimaryDark"
                             android:textSize="15.7sp" />
 
 
@@ -311,11 +295,7 @@
 
                     </LinearLayout>
 
-                    <View
-                        android:layout_width="match_parent"
-                        android:layout_height="1dp"
-                        android:layout_marginTop="10dp"
-                        android:background="@color/graylight" />
+
 
 
                     <LinearLayout
@@ -332,7 +312,7 @@
                             android:layout_weight="1"
                             android:fontFamily="@font/sfpro_display_semibold"
                             android:text="V 3"
-                            android:textColor="@color/colorPrimary"
+                            android:textColor="@color/colorPrimaryDark"
                             android:textSize="15.7sp" />
 
                         <ImageView
@@ -345,11 +325,7 @@
                     </LinearLayout>
 
 
-                    <View
-                        android:layout_width="match_parent"
-                        android:layout_height="1dp"
-                        android:layout_marginTop="10dp"
-                        android:background="@color/graylight" />
+
 
                     <LinearLayout
                         android:id="@+id/txttwelvevthreeagain"
@@ -365,7 +341,7 @@
                             android:layout_weight="1"
                             android:fontFamily="@font/sfpro_display_semibold"
                             android:text="V 3 Again"
-                            android:textColor="@color/colorPrimary"
+                            android:textColor="@color/colorPrimaryDark"
                             android:textSize="15.7sp" />
 
                         <ImageView
@@ -378,11 +354,7 @@
                     </LinearLayout>
 
 
-                    <View
-                        android:layout_width="match_parent"
-                        android:layout_height="1dp"
-                        android:layout_marginTop="10dp"
-                        android:background="@color/graylight" />
+
 
                     <LinearLayout
                         android:id="@+id/txttwelvevfour"
@@ -398,7 +370,7 @@
                             android:layout_weight="1"
                             android:fontFamily="@font/sfpro_display_semibold"
                             android:text="V 4"
-                            android:textColor="@color/colorPrimary"
+                            android:textColor="@color/colorPrimaryDark"
                             android:textSize="15.7sp" />
 
 
@@ -410,11 +382,7 @@
                     </LinearLayout>
 
 
-                    <View
-                        android:layout_width="match_parent"
-                        android:layout_height="1dp"
-                        android:layout_marginTop="10dp"
-                        android:background="@color/graylight" />
+
 
                     <LinearLayout
                         android:id="@+id/txttwelvevfouragain"
@@ -430,7 +398,7 @@
                             android:layout_weight="1"
                             android:fontFamily="@font/sfpro_display_semibold"
                             android:text="V 4 Again"
-                            android:textColor="@color/colorPrimary"
+                            android:textColor="@color/colorPrimaryDark"
                             android:textSize="15.7sp" />
 
 
@@ -442,11 +410,6 @@
                     </LinearLayout>
 
 
-                    <View
-                        android:layout_width="match_parent"
-                        android:layout_height="1dp"
-                        android:layout_marginTop="10dp"
-                        android:background="@color/graylight" />
 
                     <LinearLayout
                         android:id="@+id/txttwelvevfive"
@@ -462,7 +425,7 @@
                             android:layout_weight="1"
                             android:fontFamily="@font/sfpro_display_semibold"
                             android:text="V 5"
-                            android:textColor="@color/colorPrimary"
+                            android:textColor="@color/colorPrimaryDark"
                             android:textSize="15.7sp" />
 
 
@@ -474,11 +437,6 @@
                     </LinearLayout>
 
 
-                    <View
-                        android:layout_width="match_parent"
-                        android:layout_height="1dp"
-                        android:layout_marginTop="10dp"
-                        android:background="@color/graylight" />
 
                     <LinearLayout
                         android:id="@+id/txttwelvevfiveagain"
@@ -494,7 +452,7 @@
                             android:layout_weight="1"
                             android:fontFamily="@font/sfpro_display_semibold"
                             android:text="V 5 Again"
-                            android:textColor="@color/colorPrimary"
+                            android:textColor="@color/colorPrimaryDark"
                             android:textSize="15.7sp" />
 
 
@@ -506,11 +464,6 @@
                     </LinearLayout>
 
 
-                    <View
-                        android:layout_width="match_parent"
-                        android:layout_height="1dp"
-                        android:layout_marginTop="10dp"
-                        android:background="@color/graylight" />
 
                     <LinearLayout
                         android:id="@+id/txttwelvevsix"
@@ -526,7 +479,7 @@
                             android:layout_weight="1"
                             android:fontFamily="@font/sfpro_display_semibold"
                             android:text="V 6"
-                            android:textColor="@color/colorPrimary"
+                            android:textColor="@color/colorPrimaryDark"
                             android:textSize="15.7sp" />
 
 
@@ -538,11 +491,7 @@
                     </LinearLayout>
 
 
-                    <View
-                        android:layout_width="match_parent"
-                        android:layout_height="1dp"
-                        android:layout_marginTop="10dp"
-                        android:background="@color/graylight" />
+
 
                     <LinearLayout
                         android:id="@+id/txttwelvevsixagain"
@@ -558,7 +507,7 @@
                             android:layout_weight="1"
                             android:fontFamily="@font/sfpro_display_semibold"
                             android:text="V 6 Again"
-                            android:textColor="@color/colorPrimary"
+                            android:textColor="@color/colorPrimaryDark"
                             android:textSize="15.7sp" />
 
 
@@ -570,11 +519,7 @@
                     </LinearLayout>
 
 
-                    <View
-                        android:layout_width="match_parent"
-                        android:layout_height="1dp"
-                        android:layout_marginTop="10dp"
-                        android:background="@color/graylight" />
+
 
                     <LinearLayout
                         android:id="@+id/txttwelveleadagain"
@@ -590,7 +535,7 @@
                             android:layout_weight="1"
                             android:fontFamily="@font/sfpro_display_semibold"
                             android:text="Take Twelve Lead Again"
-                            android:textColor="@color/colorPrimary"
+                            android:textColor="@color/colorPrimaryDark"
                             android:textSize="15.7sp" />
 
 
@@ -601,12 +546,6 @@
                             app:srcCompat="@drawable/grayarrow" />
                     </LinearLayout>
 
-
-                    <View
-                        android:layout_width="match_parent"
-                        android:layout_height="1dp"
-                        android:layout_marginTop="10dp"
-                        android:background="@color/graylight" />
 
 
                     <LinearLayout

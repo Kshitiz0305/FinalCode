@@ -8,9 +8,11 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -34,8 +36,7 @@ import java.util.List;
 public class EcgOptionsActivity extends AppCompatActivity {
 
    LinearLayout singleleadecg,chestleadecg,limbsixlead,Twelvelead, fitnessECG;
-    Toolbar toolbar;
-    Button pairbtn;
+    TextView pairbtn;
     ProgressDialog mpd;
     ImageView syncimg,longsyncimg;
     private final static int REQUEST_CODE_ASK_PERMISSIONS = 1;
@@ -53,20 +54,14 @@ public class EcgOptionsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_new_ecg_options);
         checkPermissions();
-        toolbar = findViewById(R.id.toolbar);
-        mpd=new ProgressDialog(this);
-        setSupportActionBar(toolbar);
-        getSupportActionBar().setTitle("ECG");
-
-        PatientModel patientModel = getIntent().getParcelableExtra("patient");
         pt_id = getIntent().getStringExtra("ptid");
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         singleleadecg=findViewById(R.id.singleleadecg);
         chestleadecg=findViewById(R.id.chestleadecg);
+        mpd=new ProgressDialog(this);
         limbsixlead=findViewById(R.id.limbsixlead);
         Twelvelead=findViewById(R.id.Twelvelead);
         fitnessECG =findViewById(R.id.FitnessECG);
-        pairbtn=findViewById(R.id.register);
+        pairbtn=findViewById(R.id.pairtxt);
         syncimg=findViewById(R.id.syncimg);
         longsyncimg=findViewById(R.id.longsyncimg);
 
@@ -134,6 +129,29 @@ public class EcgOptionsActivity extends AppCompatActivity {
             startActivity(i);
 
         });
+        pairbtn.setOnClickListener(view -> {
+            mpd.show();
+            mpd.setMessage("Registering...Please Wait");
+            InitiateEcg initiateEcg = new InitiateEcg();
+            initiateEcg.registerDevice(EcgOptionsActivity.this, CLIENT_ID, new RegisterDeviceResponse() {
+                @Override
+                public void onSuccess(String s) {
+                    mpd.dismiss();
+                    Toast.makeText(EcgOptionsActivity.this, s, Toast.LENGTH_SHORT).show();
+
+                }
+
+                @Override
+                public void onError(Errors errors) {
+                    mpd.hide();
+                    Toast.makeText(EcgOptionsActivity.this, errors.getErrorMsg(), Toast.LENGTH_SHORT).show();
+
+
+                }
+            });
+
+
+        });
 
 
 
@@ -173,41 +191,7 @@ public class EcgOptionsActivity extends AppCompatActivity {
 
 
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle item selection
-        switch (item.getItemId()) {
-            case R.id.action_pair:
-                mpd.show();
-                mpd.setMessage("Registering...Please Wait");
-                InitiateEcg initiateEcg = new InitiateEcg();
-                initiateEcg.registerDevice(this, CLIENT_ID, new RegisterDeviceResponse() {
-                    @Override
-                    public void onSuccess(String s) {
-                        mpd.dismiss();
-                        Toast.makeText(EcgOptionsActivity.this, s, Toast.LENGTH_SHORT).show();
 
-                    }
-
-                    @Override
-                    public void onError(Errors errors) {
-                        mpd.hide();
-                        Toast.makeText(EcgOptionsActivity.this, errors.getErrorMsg(), Toast.LENGTH_SHORT).show();
-
-
-                    }
-                });
-
-                return true;
-            case android.R.id.home:
-                Intent intent = new Intent(EcgOptionsActivity.this, TestActivity.class);
-                startActivity(intent);
-                finish();
-                return true;
-            default:
-                return super.onOptionsItemSelected(item);
-        }
-    }
 
     protected void checkPermissions() {
         final List<String> missingPermissions = new ArrayList<String>();

@@ -60,7 +60,6 @@ public class ChestSixLead extends AppCompatActivity {
     SharedPreferences pref;
     ECGReport ecgReport=new ECGReport();
     SweetAlertDialog pDialog;
-    Toolbar toolbar;
     public   static  int leadIndex = 0,x=0;
     public   static  boolean again =false;
     GifImageView gifImageView;
@@ -98,10 +97,6 @@ public class ChestSixLead extends AppCompatActivity {
 //        labdb = new LabDB(getApplicationContext());
 //        ecgReport=labdb.getLastEcgSign(ptno);
         mContext = getApplicationContext();
-        toolbar = findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-        getSupportActionBar().setTitle("Chest Six Lead");
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         hideAndSeek(buttoncollectionshide,true);
         ArrayList<String> buttoncollectionsshowstart=new ArrayList<String>(Arrays.asList("txtvone"));
