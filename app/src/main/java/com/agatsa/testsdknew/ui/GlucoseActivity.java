@@ -27,7 +27,7 @@
 //    @Override
 //    protected void onCreate(Bundle savedInstanceState) {
 //        super.onCreate(savedInstanceState);
-//        setContentView(R.layout.activity_new_glucose);
+//        setContentView(R.layout.activity_diabetes);
 //        pref = this.getSharedPreferences("sunyahealth", Context.MODE_PRIVATE);
 //        ptno = pref.getInt("pt_id", 0);
 //

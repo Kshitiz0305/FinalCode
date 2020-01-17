@@ -48,7 +48,7 @@
                     android:layout_weight="1"
                     android:fontFamily="@font/sfpro_display_semibold"
                     android:text="@string/single_lead"
-                    android:textColor="@color/colorPrimary"
+                    android:textColor="@color/colorPrimaryDark"
                     android:textSize="15.7sp" />
 
 
@@ -79,7 +79,7 @@
                     android:layout_weight="1"
                     android:fontFamily="@font/sfpro_display_semibold"
                     android:text="Chest Six Lead"
-                    android:textColor="@color/colorPrimary"
+                    android:textColor="@color/colorPrimaryDark"
                     android:textSize="15.7sp" />
 
 
@@ -110,7 +110,7 @@
                     android:layout_weight="1"
                     android:fontFamily="@font/sfpro_display_semibold"
                     android:text="Limb Six Lead"
-                    android:textColor="@color/colorPrimary"
+                    android:textColor="@color/colorPrimaryDark"
                     android:textSize="15.7sp" />
 
 
@@ -141,7 +141,7 @@
                     android:layout_weight="1"
                     android:fontFamily="@font/sfpro_display_semibold"
                     android:text="Twelve Lead"
-                    android:textColor="@color/colorPrimary"
+                    android:textColor="@color/colorPrimaryDark"
                     android:textSize="15.7sp" />
 
 
@@ -172,7 +172,7 @@
                     android:layout_weight="1"
                     android:fontFamily="@font/sfpro_display_semibold"
                     android:text="@string/fitness_test"
-                    android:textColor="@color/colorPrimary"
+                    android:textColor="@color/colorPrimaryDark"
                     android:textSize="15.7sp" />
 
 

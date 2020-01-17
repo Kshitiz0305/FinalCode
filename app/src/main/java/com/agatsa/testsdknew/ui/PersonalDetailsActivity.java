@@ -566,25 +566,8 @@ ArrayList<String>  placesnames = new ArrayList<>();
 
     }
 
-    private void navigatenext() {
-        Intent i = new Intent(PersonalDetailsActivity.this, PatientActivity.class);
-        startActivity(i);
 
-    }
 
-    private void navigatetoTest() {
-        Intent i = new Intent(this, PatientActivity.class);
-        startActivity(i);
-
-    }
-
-    private void updateLabel(EditText editText) {
-        String myFormat = "yyyy-MM-dd"; //In which you need put here
-        @SuppressLint("SimpleDateFormat")
-        SimpleDateFormat sdf = new SimpleDateFormat(myFormat);
-
-        editText.setText(sdf.format(myCalendar.getTime()));
-    }
 
     @Override
     public void onDateSet(DatePickerDialog view, int year, int monthOfYear, int dayOfMonth) {
@@ -874,59 +857,8 @@ catch (Exception e){
 //        }
 //    }
 
-    public boolean isCameraPermissionGranted() {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            if (checkSelfPermission(Manifest.permission.CAMERA)
-                    == PackageManager.PERMISSION_GRANTED) {
-                Log.v(TAG, "Permission is granted");
-                return true;
-            } else {
 
-                Log.v(TAG, "Permission is revoked");
-                ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.CAMERA, Manifest.permission.CAMERA}, 1);
-                return false;
-            }
-        } else { //permission is automatically granted on sdk<23 upon installation
-            Log.v(TAG, "Permission is granted");
-            return true;
-        }
-    }
 
-    public boolean isStoragePermissionGranted() {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            if (checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE)
-                    == PackageManager.PERMISSION_GRANTED) {
-                Log.v(TAG, "Permission is granted");
-                return true;
-            } else {
-
-                Log.v(TAG, "Permission is revoked");
-                ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, 1);
-                return false;
-            }
-        } else { //permission is automatically granted on sdk<23 upon installation
-            Log.v(TAG, "Permission is granted");
-            return true;
-        }
-    }
-
-    public boolean isReadStoragePermissionGranted() {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            if (checkSelfPermission(Manifest.permission.READ_EXTERNAL_STORAGE)
-                    == PackageManager.PERMISSION_GRANTED) {
-                Log.v(TAG, "Permission is granted");
-                return true;
-            } else {
-
-                Log.v(TAG, "Permission is revoked");
-                ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, 1);
-                return false;
-            }
-        } else { //permission is automatically granted on sdk<23 upon installation
-            Log.v(TAG, "Permission is granted");
-            return true;
-        }
-    }
 
     @Override
     public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
@@ -959,91 +891,33 @@ catch (Exception e){
     /**
      * Create a File for saving an image or video
      */
-    private File getOutputMediaFile() {
 
-        File mediaStorageDir = new File(String.valueOf(getApplicationContext().getExternalFilesDir("pt_photos")));
-        // Create the storage directory if it does not exist
-        if (!mediaStorageDir.exists()) {
-            if (!mediaStorageDir.mkdirs()) {
-                Log.d("sunyaHealth", "failed to create directory");
-                return null;
-            }
-        }
 
-        // Create a media file name
-        String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
-        File mediaFile;
-        mediaFile = new File(mediaStorageDir.getPath() + File.separator +
-                "IMG_" + txtPtno.getText().toString() + ".jpg");
-        return mediaFile;
-    }
-
-    private File createImageFile() throws IOException {
-        // Create an image file name
-        String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
-        String imageFileName = "URINE_" + txtPtno.getText().toString() + "_";
-        File storageDir = getExternalFilesDir(Environment.DIRECTORY_PICTURES);
-        File image = File.createTempFile(
-                imageFileName,  /* prefix */
-                ".jpg",         /* suffix */
-                storageDir      /* directory */
-        );
-
-        // Save a file: path for use with ACTION_VIEW intents
-        mCurrentPhotoPath = image.getAbsolutePath();
-        return image;
-    }
-
-    private boolean datavalidation() {
-        boolean result = true;
-        String email = txtEmail.getText().toString();
-        if (txtPtName.getText().toString().equals("")
-                || txtPtAddress.getText().toString().equals("")
-                || txtAge.getText().toString().equals("")
-                || (!optMale.isChecked() && !optFemale.isChecked() && !optOther.isChecked())) {
-            Toast.makeText(getApplicationContext(), "Please Fill up data", Toast.LENGTH_LONG).show();
-            result = false;
-            return result;
-        }
-
-        if (Integer.parseInt(txtAge.getText().toString()) > 150) {
-            Toast.makeText(thisContext, "Invalid Age", Toast.LENGTH_LONG).show();
-            return false;
-        }
-
-        return result;
-    }
 
     @Override
     public void onBackPressed() {
 
-        DialogUtil.getOKCancelDialog(this, "Warning", " Do you want to save data?", "Yes", "No", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialogInterface, int i) {
-                if (validator.validate()) {
-                    Toast.makeText(getApplicationContext(), "Saving Data", Toast.LENGTH_LONG).show();
-                    new savedata().execute();
+        DialogUtil.getOKCancelDialog(this, "Warning", " Do you want to save data?", "Yes", "No", (dialogInterface, i) -> {
+            if (validator.validate()) {
+                Toast.makeText(getApplicationContext(), "Saving Data", Toast.LENGTH_LONG).show();
+                new savedata().execute();
 //                    navigatenext();
-                }
-                else {
+            }
+            else {
 
-                    Toast.makeText(getApplicationContext(), "Validation Error", Toast.LENGTH_LONG).show();
-
-                }
-
+                Toast.makeText(getApplicationContext(), "Validation Error", Toast.LENGTH_LONG).show();
 
             }
-        }, new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialogInterface, int i) {
 
-                Intent intent = new Intent(PersonalDetailsActivity.this, PatientActivity.class);
-                intent.putExtra("PTNO", pt_id);
-                intent.putExtra("duid", duid);
-                setResult(-1, intent);
-                finish();
 
-            }
+        }, (dialogInterface, i) -> {
+
+            Intent intent = new Intent(PersonalDetailsActivity.this, PatientActivity.class);
+            intent.putExtra("PTNO", pt_id);
+            intent.putExtra("duid", duid);
+            setResult(-1, intent);
+            finish();
+
         });
 //        super.onBackPressed();
 

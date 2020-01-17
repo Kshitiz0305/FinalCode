@@ -2,54 +2,54 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     xmlns:app="http://schemas.android.com/apk/res-auto" >
-<ScrollView
-    android:layout_height="match_parent"
-    android:layout_width="match_parent">
+    <ScrollView
+        android:layout_height="match_parent"
+        android:layout_width="match_parent">
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
-
-
-        <androidx.cardview.widget.CardView
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_marginLeft="10dp"
-            android:layout_marginTop="8dp"
-            android:layout_marginRight="10dp"
-            android:layout_height="match_parent">
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
 
 
-            <LinearLayout
+            <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="5dp"
-                android:orientation="vertical">
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginRight="10dp"
+                android:layout_height="match_parent">
+
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_margin="5dp"
                     android:orientation="vertical">
 
-                    <TextView
+                    <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="Patient Details"
-                        android:gravity="center"
-                        android:fontFamily="@font/sfpro_display_bold"
+                        android:orientation="vertical">
 
-                        android:padding="8sp"
-                        android:textColor="@color/colorPrimaryDark"
-                        android:textSize="17sp" />
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="Patient Details"
+                            android:gravity="center"
+                            android:fontFamily="@font/sfpro_display_bold"
+
+                            android:padding="8sp"
+                            android:textColor="@color/colorPrimaryDark"
+                            android:textSize="17sp" />
 
 
 
 
-                </LinearLayout>
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:background="@color/graylight" />
+                    </LinearLayout>
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:background="@color/graylight" />
 
 
                     <LinearLayout
@@ -93,793 +93,528 @@
 
 
 
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="2"
-                    android:orientation="vertical">
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="Name"
-                        android:fontFamily="@font/sfpro_display_semibold"
-                        android:padding="8sp"
-                        android:textColor="@color/colorPrimaryDark"
-                        android:textSize="15sp" />
-
-
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:orientation="horizontal"
-                        android:gravity="center"
-                        >
+                        android:layout_weight="2"
+                        android:orientation="vertical">
 
-                        <EditText
-                            android:id="@+id/txtPatientName"
-                            android:layout_width="100dp"
-                            android:layout_height="40sp"
-
-                            android:layout_marginRight="2sp"
-                            android:layout_weight="1"
-                            android:background="@drawable/bg_gray_border"
-                            android:fontFamily="@font/sf_pro_display_medium"
-                            android:inputType="text"
-                            android:drawableRight="@drawable/ic_user"
-                            android:padding="8sp"
-                            app:validateEmpty="@{true}"
-                            android:textSize="13sp" />
                         <TextView
-                            android:layout_width="wrap_content"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:text="*"
-                            android:textColor="@color/dark_red"
-                            android:layout_marginLeft="@dimen/_2sdp"
-                            android:textSize="20sp"/>
+                            android:text="Name"
+                            android:fontFamily="@font/sfpro_display_semibold"
+                            android:padding="8sp"
+                            android:textColor="@color/colorPrimaryDark"
+                            android:textSize="15sp" />
+
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:gravity="center"
+                            >
+
+                            <EditText
+                                android:id="@+id/txtPatientName"
+                                android:layout_width="100dp"
+                                android:layout_height="40sp"
+                                android:layout_marginRight="2sp"
+                                android:layout_weight="1"
+                                android:background="@drawable/bg_gray_border"
+                                android:fontFamily="@font/sf_pro_display_medium"
+                                android:inputType="text"
+                                android:drawableRight="@drawable/ic_user"
+                                android:padding="8sp"
+                                app:validateEmpty="@{true}"
+                                android:textSize="13sp" />
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="*"
+                                android:textColor="@color/dark_red"
+                                android:layout_marginLeft="@dimen/_2sdp"
+                                android:textSize="20sp"/>
+
+
+                        </LinearLayout>
 
 
                     </LinearLayout>
 
 
-                </LinearLayout>
-
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="2"
-                    android:orientation="vertical">
-
-                    <TextView
+                    <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:fontFamily="@font/sfpro_display_semibold"
-                        android:padding="8sp"
-                        android:text="Address"
-                        android:textColor="@color/colorPrimaryDark"
-                        android:textSize="15sp" />
+                        android:layout_weight="2"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/sfpro_display_semibold"
+                            android:padding="8sp"
+                            android:text="Address"
+                            android:textColor="@color/colorPrimaryDark"
+                            android:textSize="15sp" />
+
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:weightSum="10"
+                            android:gravity="center">
+
+                            <com.chivorn.smartmaterialspinner.SmartMaterialSpinner
+                                android:id="@+id/sp_district"
+                                android:layout_width="0dp"
+                                android:layout_height="match_parent"
+                                android:layout_weight="4"
+                                android:fontFamily="@font/sf_pro_display_medium"
+                                android:padding="@dimen/_2sdp"
+                                app:smsp_alwaysShowFloatingLabel="false"
+                                app:smsp_enableErrorLabel="false"
+                                app:smsp_enableFloatingLabel="false"
+                                app:smsp_hint="District"
+                                app:smsp_isSearchable="true"
+                                app:smsp_itemListColor="#7C4DFF"
+                                app:smsp_itemListHintBackgroundColor="#808080"
+                                app:smsp_itemListHintColor="#FFFFFF"
+                                app:smsp_multilineError="false"
+                                app:smsp_searchHint="Select District"
+                                app:smsp_selectedItemListColor="#FF5252"
+
+                                />
+
+                            <com.chivorn.smartmaterialspinner.SmartMaterialSpinner
+                                android:id="@+id/sp_place"
+                                android:layout_width="0dp"
+                                android:layout_height="match_parent"
+                                android:layout_weight="4"
+                                app:smsp_alwaysShowFloatingLabel="false"
+                                app:smsp_enableErrorLabel="false"
+                                app:smsp_enableFloatingLabel="false"
+                                app:smsp_hint="Select Municipality/VDC"
+                                app:smsp_searchHint="Municipality/VDC"
+                                android:padding="@dimen/_2sdp"
+                                app:smsp_isSearchable="true"
+                                app:smsp_itemListColor="#7C4DFF"
+                                android:layout_marginLeft="@dimen/_2sdp"
+                                app:smsp_itemListHintBackgroundColor="#808080"
+                                android:fontFamily="@font/sf_pro_display_medium"
+                                app:smsp_itemListHintColor="#FFFFFF"
+                                app:smsp_multilineError="false"
+                                app:smsp_selectedItemListColor="#FF5252"
+                                />
+
+
+                            <EditText
+                                android:id="@+id/wardNo"
+                                android:layout_width="0dp"
+                                android:layout_height="40sp"
+                                android:layout_weight="2"
+                                android:maxLength="2"
+                                android:textSize="13sp"
+                                android:hint="Ward"
+                                android:textAlignment="viewStart"
+                                android:fontFamily="@font/sf_pro_display_medium"
+                                android:inputType="number"
+                                app:validateEmpty="@{true}"
+                                android:padding="8sp"
+                                />
+
+
+
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="*"
+                                android:textColor="@color/dark_red"
+                                android:layout_marginLeft="@dimen/_2sdp"
+                                android:textSize="20sp"/>
+
+                        </LinearLayout>
+
+
+                    </LinearLayout>
 
 
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:orientation="horizontal"
-                        android:weightSum="10"
-                        android:gravity="center">
+                        android:paddingRight="8sp"
+                        android:orientation="vertical">
 
-                        <com.chivorn.smartmaterialspinner.SmartMaterialSpinner
-                            android:id="@+id/sp_district"
-                            android:layout_width="0dp"
-                            android:layout_height="match_parent"
-                            android:layout_weight="4"
-                            android:fontFamily="@font/sf_pro_display_medium"
-                            android:padding="@dimen/_2sdp"
-                            app:smsp_alwaysShowFloatingLabel="false"
-                            app:smsp_enableErrorLabel="false"
-                            app:smsp_enableFloatingLabel="false"
-                            app:smsp_hint="Select District"
-                            app:smsp_isSearchable="true"
-                            app:smsp_itemListColor="#7C4DFF"
-                            app:smsp_itemListHintBackgroundColor="#808080"
-                            app:smsp_itemListHintColor="#FFFFFF"
-                            app:smsp_multilineError="false"
-                            app:smsp_searchHint="Select District"
-                            app:smsp_selectedItemListColor="#FF5252"
-
-                            />
-
-                        <com.chivorn.smartmaterialspinner.SmartMaterialSpinner
-                            android:id="@+id/sp_place"
-                            android:layout_width="0dp"
-                            android:layout_height="match_parent"
-                            android:layout_weight="4"
-                            app:smsp_alwaysShowFloatingLabel="false"
-                            app:smsp_enableErrorLabel="false"
-                            app:smsp_enableFloatingLabel="false"
-                            app:smsp_hint="Select Municipality/VDC"
-                            app:smsp_searchHint="Select Municipality/VDC"
-                            android:padding="@dimen/_2sdp"
-                            app:smsp_isSearchable="true"
-                            app:smsp_itemListColor="#7C4DFF"
-                            android:layout_marginLeft="@dimen/_2sdp"
-                            app:smsp_itemListHintBackgroundColor="#808080"
-                            android:fontFamily="@font/sf_pro_display_medium"
-                            app:smsp_itemListHintColor="#FFFFFF"
-                            app:smsp_multilineError="false"
-                            app:smsp_selectedItemListColor="#FF5252"
-                            />
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="Contact No"
+                            android:fontFamily="@font/sfpro_display_semibold"
+                            android:padding="8sp"
+                            android:textColor="@color/colorPrimaryDark"
+                            android:textSize="15sp" />
 
 
                         <EditText
-                            android:id="@+id/wardNo"
-                            android:layout_width="0dp"
-                            android:layout_height="40sp"
-                            android:layout_weight="2"
-                           android:maxLength="2"
+                            android:id="@+id/txtContactNo"
+                            android:layout_width="match_parent"
+                            android:layout_height="40dp"
+                            android:background="@drawable/bg_gray_border"
+                            android:cursorVisible="true"
+                            android:fontFamily="@font/sf_pro_display_medium"
+                            android:imeOptions="actionNext"
+                            android:importantForAutofill="no"
+                            android:inputType="number"
+                            android:drawableRight="@drawable/ic_call"
+                            android:maxLength="10"
+                            android:padding="8sp"
+                            android:layout_marginRight="@dimen/_5sdp"
+                            android:textCursorDrawable="@null"
                             android:textSize="13sp"
-                            android:fontFamily="@font/sf_pro_display_medium"
-                            android:inputType="text"
-                            android:drawableRight="@drawable/ic_address"
-                            android:layout_marginRight="2sp"
-                            android:layout_marginLeft="@dimen/_3sdp"
-                            app:validateEmpty="@{true}"
-                            android:background="@drawable/bg_gray_border"
+                            tools:ignore="SpUsage" />
+
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginVertical="@dimen/_5sdp"
+                        android:background="@drawable/bg_gray_border"
+
+                        android:orientation="vertical">
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
                             android:padding="8sp"
-                            />
+                            android:orientation="vertical">
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:textSize="15sp"
+                                android:fontFamily="@font/sfpro_display_semibold"
+                                android:textColor="@color/colorPrimaryDark"
+                                android:text="Select Type"/>
 
 
 
+                            <RadioGroup
+                                xmlns:android="http://schemas.android.com/apk/res/android"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:id="@+id/rg_DobType"
+                                android:weightSum="2"
+                                android:orientation="horizontal">
+                                <RadioButton android:id="@+id/dob"
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    android:text="Date Of Birth"
+                                    android:checked="true"
+                                    />
+                                <RadioButton android:id="@+id/Age"
+                                    android:layout_width="0dp"
+                                    android:layout_weight="1"
+                                    android:layout_height="wrap_content"
+                                    android:text="Age (Years)"
+                                    />
+
+                            </RadioGroup>
+                        </LinearLayout>
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:padding="8sp"
+                            android:weightSum="2">
+                            <LinearLayout
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+
+                                android:layout_weight="1">
+
+                                <!--                  <TextView-->
+                                <!--                      android:layout_width="match_parent"-->
+                                <!--                      android:layout_height="wrap_content"-->
+                                <!--                      android:text="Date of Birth"-->
+                                <!--                      android:fontFamily="@font/sfpro_display_semibold"-->
+                                <!--                      android:padding="8sp"-->
+                                <!--                      android:textColor="@color/colorPrimaryDark"-->
+                                <!--                      android:textSize="15sp" />-->
+
+
+                                <TextView
+                                    android:id="@+id/et_dob"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="40dp"
+                                    android:cursorVisible="true"
+                                    android:background="@drawable/bg_gray_border"
+                                    android:fontFamily="@font/sf_pro_display_medium"
+                                    android:textCursorDrawable="@null"
+                                    android:imeOptions="actionNext"
+                                    android:padding="8sp"
+                                    android:hint="YYYY/MM/DD"
+                                    android:textSize="13sp"
+                                    android:importantForAutofill="no"
+                                    tools:ignore="SpUsage" />
+
+
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:layout_marginLeft="@dimen/_5sdp"
+                                android:orientation="vertical">
+
+                                <!--                  <TextView-->
+                                <!--                      android:layout_width="match_parent"-->
+                                <!--                      android:layout_height="wrap_content"-->
+                                <!--                      android:text="Age (Years)"-->
+                                <!--                      android:fontFamily="@font/sfpro_display_semibold"-->
+                                <!--                      android:padding="8sp"-->
+                                <!--                      android:textColor="@color/colorPrimaryDark"-->
+                                <!--                      android:textSize="15sp" />-->
+
+                                <EditText
+                                    android:id="@+id/txtAge"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="40dp"
+                                    android:cursorVisible="true"
+                                    android:maxLength="3"
+                                    android:background="@drawable/bg_gray_border"
+                                    android:fontFamily="@font/sf_pro_display_medium"
+                                    android:textCursorDrawable="@null"
+                                    android:imeOptions="actionNext"
+                                    app:validateEmpty="@{true}"
+                                    android:inputType="number"
+                                    android:enabled="false"
+                                    android:padding="8sp"
+                                    android:textSize="13sp"
+                                    android:importantForAutofill="no"
+                                    tools:ignore="SpUsage" />
+
+
+                            </LinearLayout>
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="*"
+                                android:layout_gravity="center"
+                                android:textColor="@color/dark_red"
+                                android:layout_marginLeft="@dimen/_2sdp"
+                                android:textSize="20sp"/>
+
+
+                        </LinearLayout>
+
+
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:padding="8sp"
+                        android:orientation="vertical">
 
                         <TextView
-                            android:layout_width="wrap_content"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:text="*"
-                            android:textColor="@color/dark_red"
-                            android:layout_marginLeft="@dimen/_2sdp"
-                            android:textSize="20sp"/>
+                            android:text="Email"
+                            android:fontFamily="@font/sfpro_display_semibold"
+                            android:padding="8sp"
+                            android:textColor="@color/colorPrimaryDark"
+                            android:textSize="15sp" />
+
+
+                        <EditText
+                            android:id="@+id/txtemail"
+                            android:layout_width="match_parent"
+                            android:layout_height="40dp"
+                            android:cursorVisible="true"
+                            android:background="@drawable/bg_gray_border"
+                            android:fontFamily="@font/sf_pro_display_medium"
+                            android:textCursorDrawable="@null"
+                            android:imeOptions="actionNext"
+                            android:drawableRight="@drawable/ic_mail"
+                            android:inputType="textEmailAddress"
+                            android:padding="8sp"
+                            android:layout_marginRight="@dimen/_5sdp"
+                            android:textSize="13sp"
+                            android:importantForAutofill="no"
+                            tools:ignore="SpUsage" />
+
 
                     </LinearLayout>
 
 
-                </LinearLayout>
 
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:paddingRight="8sp"
-                    android:orientation="vertical">
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:orientation="vertical"
+                        android:weightSum="2"
+                        android:layout_height="wrap_content"/>
 
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="Contact No"
+                        android:text="Sex"
                         android:fontFamily="@font/sfpro_display_semibold"
                         android:padding="8sp"
                         android:textColor="@color/colorPrimaryDark"
                         android:textSize="15sp" />
-
-
-                    <EditText
-                        android:id="@+id/txtContactNo"
-                        android:layout_width="match_parent"
-                        android:layout_height="40dp"
-                        android:background="@drawable/bg_gray_border"
-                        android:cursorVisible="true"
-                        android:fontFamily="@font/sf_pro_display_medium"
-                        android:imeOptions="actionNext"
-                        android:importantForAutofill="no"
-                        android:inputType="number"
-                        android:drawableRight="@drawable/ic_call"
-                        android:maxLength="10"
-                        android:padding="8sp"
-                        android:layout_marginRight="@dimen/_5sdp"
-                        android:textCursorDrawable="@null"
-                        android:textSize="13sp"
-                        tools:ignore="SpUsage" />
-
-
-                </LinearLayout>
-
-          <LinearLayout
-              android:layout_width="match_parent"
-              android:layout_height="wrap_content"
-              android:layout_marginVertical="@dimen/_5sdp"
-              android:background="@drawable/bg_gray_border"
-
-              android:orientation="vertical">
-              <LinearLayout
-                  android:layout_width="match_parent"
-                  android:layout_height="match_parent"
-                  android:padding="8sp"
-                  android:orientation="vertical">
-                  <TextView
-                      android:layout_width="wrap_content"
-                      android:layout_height="wrap_content"
-                      android:textSize="15sp"
-                      android:fontFamily="@font/sfpro_display_semibold"
-                      android:textColor="@color/colorPrimaryDark"
-                      android:text="Select Type"/>
-
-
-
-                  <RadioGroup
-                      xmlns:android="http://schemas.android.com/apk/res/android"
-                      android:layout_width="match_parent"
-                      android:layout_height="wrap_content"
-                      android:id="@+id/rg_DobType"
-                      android:weightSum="2"
-                      android:orientation="horizontal">
-                      <RadioButton android:id="@+id/dob"
-                          android:layout_width="0dp"
-                          android:layout_height="wrap_content"
-                          android:layout_weight="1"
-                          android:text="Date Of Birth"
-                          android:checked="true"
-                          />
-                      <RadioButton android:id="@+id/Age"
-                          android:layout_width="0dp"
-                          android:layout_weight="1"
-                          android:layout_height="wrap_content"
-                          android:text="Age (Years)"
-                          />
-
-                  </RadioGroup>
-              </LinearLayout>
-<LinearLayout
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:orientation="horizontal"
-    android:padding="8sp"
-    android:weightSum="2">
-    <LinearLayout
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-
-        android:layout_weight="1">
-
-        <!--                  <TextView-->
-        <!--                      android:layout_width="match_parent"-->
-        <!--                      android:layout_height="wrap_content"-->
-        <!--                      android:text="Date of Birth"-->
-        <!--                      android:fontFamily="@font/sfpro_display_semibold"-->
-        <!--                      android:padding="8sp"-->
-        <!--                      android:textColor="@color/colorPrimaryDark"-->
-        <!--                      android:textSize="15sp" />-->
-
-
-        <TextView
-            android:id="@+id/et_dob"
-            android:layout_width="match_parent"
-            android:layout_height="40dp"
-            android:cursorVisible="true"
-            android:background="@drawable/bg_gray_border"
-            android:fontFamily="@font/sf_pro_display_medium"
-            android:textCursorDrawable="@null"
-            android:imeOptions="actionNext"
-            android:padding="8sp"
-            android:hint="YYYY/MM/DD"
-            android:textSize="13sp"
-            android:importantForAutofill="no"
-            tools:ignore="SpUsage" />
-
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:layout_marginLeft="@dimen/_5sdp"
-        android:orientation="vertical">
-
-        <!--                  <TextView-->
-        <!--                      android:layout_width="match_parent"-->
-        <!--                      android:layout_height="wrap_content"-->
-        <!--                      android:text="Age (Years)"-->
-        <!--                      android:fontFamily="@font/sfpro_display_semibold"-->
-        <!--                      android:padding="8sp"-->
-        <!--                      android:textColor="@color/colorPrimaryDark"-->
-        <!--                      android:textSize="15sp" />-->
-
-        <EditText
-            android:id="@+id/txtAge"
-            android:layout_width="match_parent"
-            android:layout_height="40dp"
-            android:cursorVisible="true"
-            android:maxLength="3"
-            android:background="@drawable/bg_gray_border"
-            android:fontFamily="@font/sf_pro_display_medium"
-            android:textCursorDrawable="@null"
-            android:imeOptions="actionNext"
-            app:validateEmpty="@{true}"
-            android:inputType="number"
-            android:enabled="false"
-            android:padding="8sp"
-            android:textSize="13sp"
-            android:importantForAutofill="no"
-            tools:ignore="SpUsage" />
-
-
-    </LinearLayout>
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="*"
-        android:layout_gravity="center"
-        android:textColor="@color/dark_red"
-        android:layout_marginLeft="@dimen/_2sdp"
-        android:textSize="20sp"/>
-
-
-</LinearLayout>
-
-
-
-          </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:padding="8sp"
-                    android:orientation="vertical">
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="Email"
-                        android:fontFamily="@font/sfpro_display_semibold"
-                        android:padding="8sp"
-                        android:textColor="@color/colorPrimaryDark"
-                        android:textSize="15sp" />
-
-
-                    <EditText
-                        android:id="@+id/txtemail"
-                        android:layout_width="match_parent"
-                        android:layout_height="40dp"
-                        android:cursorVisible="true"
-                        android:background="@drawable/bg_gray_border"
-                        android:fontFamily="@font/sf_pro_display_medium"
-                        android:textCursorDrawable="@null"
-                        android:imeOptions="actionNext"
-                        android:drawableRight="@drawable/ic_mail"
-                        android:inputType="textEmailAddress"
-                        android:padding="8sp"
-                        android:layout_marginRight="@dimen/_5sdp"
-                        android:textSize="13sp"
-                        android:importantForAutofill="no"
-                        tools:ignore="SpUsage" />
-
-
-                </LinearLayout>
-
-
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:orientation="vertical"
-                    android:weightSum="2"
-                    android:layout_height="wrap_content"/>
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="Sex"
-                    android:fontFamily="@font/sfpro_display_semibold"
-                    android:padding="8sp"
-                    android:textColor="@color/colorPrimaryDark"
-                    android:textSize="15sp" />
-
-                <RadioGroup
-                    xmlns:android="http://schemas.android.com/apk/res/android"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal">
-                    <RadioButton android:id="@+id/optMale"
-                        android:layout_width="100dp"
-                        android:layout_height="wrap_content"
-                        android:text="Male"
-                        android:checked="true"
-                        />
-                    <RadioButton android:id="@+id/optFemale"
-                        android:layout_width="100dp"
-                        android:layout_height="wrap_content"
-                        android:text="Female"
-                        />
-                    <RadioButton android:id="@+id/optOther"
-                        android:layout_width="100dp"
-                        android:layout_height="wrap_content"
-                        android:text="Other"
-                        />
-                </RadioGroup>
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="Marital Status"
-                    android:fontFamily="@font/sfpro_display_semibold"
-                    android:padding="8sp"
-                    android:textColor="@color/colorPrimaryDark"
-                    android:textSize="15sp" />
-
-                <LinearLayout
-                    android:layout_width="fill_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical">
 
                     <RadioGroup
-                        android:id="@+id/maritalstatusrg"
+                        xmlns:android="http://schemas.android.com/apk/res/android"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
-
-                        <RadioButton
-                            android:id="@+id/married"
-                            android:layout_width="140dp"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+                        <RadioButton android:id="@+id/optMale"
+                            android:layout_width="100dp"
                             android:layout_height="wrap_content"
-                            android:text="@string/married"
-                            />
-
-                        <RadioButton
-                            android:id="@+id/unmarried"
+                            android:text="Male"
                             android:checked="true"
-                            android:layout_width="140dp"
-                            android:layout_height="wrap_content"
-                            android:text="@string/unmarried" />
-
-
-
-                        <RadioButton
-                            android:id="@+id/divorced"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="@string/divorced"
                             />
-
-                        <RadioButton
-                            android:id="@+id/widowed"
-                            android:layout_width="wrap_content"
+                        <RadioButton android:id="@+id/optFemale"
+                            android:layout_width="100dp"
                             android:layout_height="wrap_content"
-                            android:text="@string/widowed"
+                            android:text="Female"
                             />
-
+                        <RadioButton android:id="@+id/optOther"
+                            android:layout_width="100dp"
+                            android:layout_height="wrap_content"
+                            android:text="Other"
+                            />
                     </RadioGroup>
-                    <LinearLayout
-                        android:id="@+id/noofhildrenll"
-                        android:layout_width="match_parent"
-                        android:visibility="gone"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal"
-                        android:layout_marginTop="4sp"
-                        android:gravity="center"
-                        android:weightSum="2">
-
-                        <EditText
-                            android:id="@+id/noofboys"
-                            android:layout_width="100dp"
-                            android:layout_height="40sp"
-                            android:layout_weight="1"
-                            android:textSize="13sp"
-                            android:drawableRight="@drawable/ic_man"
-                            android:padding="8sp"
-                            android:fontFamily="@font/sf_pro_display_medium"
-                            android:inputType="number"
-                            android:layout_marginRight="2sp"
-                            android:background="@drawable/bg_gray_border"
-                            android:hint="Boys" />
-
-
-                        <EditText
-                            android:id="@+id/noofgirls"
-                            android:layout_width="100dp"
-                            android:layout_height="40sp"
-                            android:hint="Girls"
-                            android:padding="8sp"
-                            android:inputType="number"
-                            android:drawableRight="@drawable/ic_woman"
-                            android:textSize="13sp"
-                            android:fontFamily="@font/sf_pro_display_medium"
-                            android:layout_marginRight="2sp"
-                            android:background="@drawable/bg_gray_border"
-                            android:layout_weight="1" />
-
-
-
-                    </LinearLayout>
-
-                </LinearLayout>
-
-
-
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:layout_marginTop="5sp"
-                    android:background="@color/graylight" />
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical">
 
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="Patient Medical History"
-                        android:gravity="center"
-                        android:fontFamily="@font/sfpro_display_bold"
+                        android:text="Marital Status"
+                        android:fontFamily="@font/sfpro_display_semibold"
                         android:padding="8sp"
                         android:textColor="@color/colorPrimaryDark"
-                        android:textSize="17sp" />
+                        android:textSize="15sp" />
 
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical">
                     <LinearLayout
-                        android:layout_width="match_parent"
+                        android:layout_width="fill_parent"
                         android:layout_height="wrap_content"
-                        android:weightSum="10"
-                        android:orientation="horizontal">
-
-                        <TextView
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="5"
-                            android:text="@string/drug_allergies"
-                            android:fontFamily="@font/sfpro_display_semibold"
-                            android:padding="8sp"
-                            android:textColor="@color/colorPrimaryDark"
-                            android:textSize="15sp" />
+                        android:orientation="vertical">
 
                         <RadioGroup
-                            android:id="@+id/rg_drug"
-                            android:layout_width="0dp"
-                            android:layout_weight="5"
-                            android:layout_marginTop="2sp"
-                            android:layout_height="wrap_content"
-                            android:orientation="horizontal">
-
-                            <RadioButton
-                                android:id="@+id/yesdrug"
-                                android:layout_width="@dimen/_60sdp"
-                                android:layout_height="wrap_content"
-                                android:text="@string/yes"
-                                />
-
-                            <RadioButton
-                                android:id="@+id/nodrug"
-                                android:layout_width="@dimen/_60sdp"
-                                android:checked="true"
-                                android:layout_height="wrap_content"
-                                android:text="@string/no" />
-
-
-
-
-                        </RadioGroup>
-
-
-
-
-
-                    </LinearLayout>
-
-
-
-
-                    <EditText
-                        android:id="@+id/drug_allergies"
-                        android:layout_width="match_parent"
-                        android:layout_height="40dp"
-                        android:cursorVisible="true"
-                        android:hint="Any Kind Of Allergy?"
-                        android:background="@drawable/bg_gray_border"
-                        android:fontFamily="@font/sf_pro_display_medium"
-                        android:textCursorDrawable="@null"
-                        android:imeOptions="actionNext"
-                        android:visibility="gone"
-                        android:inputType="text"
-                        android:padding="8sp"
-                        android:textSize="13sp"
-                        android:importantForAutofill="no"
-                        tools:ignore="SpUsage" />
-
-
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical">
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:weightSum="10"
-                        android:orientation="horizontal">
-                        <TextView
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:text="@string/do_you_have_any_diseases"
-                            android:fontFamily="@font/sfpro_display_semibold"
-                            android:padding="8sp"
-                            android:layout_weight="5"
-                            android:textColor="@color/colorPrimaryDark"
-                            android:textSize="15sp" />
-                        <RadioGroup
-                            android:id="@+id/rg_disease"
-                            android:layout_width="0dp"
-                            android:layout_marginTop="2sp"
-                            android:layout_weight="5"
-                            android:layout_height="wrap_content"
-                            android:orientation="horizontal">
-
-                            <RadioButton
-                                android:id="@+id/yes_disease"
-                                android:layout_width="@dimen/_60sdp"
-                                android:layout_height="wrap_content"
-                                android:text="@string/yes"
-                                />
-
-                            <RadioButton
-                                android:id="@+id/nodisease"
-                                android:layout_width="@dimen/_60sdp"
-                                android:layout_height="wrap_content"
-                                android:checked="true"
-                                android:text="@string/no" />
-
-
-
-
-                        </RadioGroup>
-
-                    </LinearLayout>
-
-
-
-                    <EditText
-                        android:id="@+id/diseases"
-                        android:layout_width="match_parent"
-                        android:layout_height="40dp"
-                        android:cursorVisible="true"
-                        android:background="@drawable/bg_gray_border"
-                        android:fontFamily="@font/sf_pro_display_medium"
-                        android:textCursorDrawable="@null"
-                        android:hint="@string/disease_name_s"
-                        android:imeOptions="actionNext"
-                        android:visibility="gone"
-                        android:inputType="text"
-                        android:padding="8sp"
-                        android:textSize="13sp"
-                        android:importantForAutofill="no"
-                        tools:ignore="SpUsage" />
-
-
-                </LinearLayout>
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical">
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:weightSum="10"
-                android:orientation="horizontal">
-
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="5"
-                    android:text="Current Medication"
-                    android:fontFamily="@font/sfpro_display_semibold"
-                    android:padding="8sp"
-                    android:textColor="@color/colorPrimaryDark"
-                    android:textSize="15sp" />
-                <RadioGroup
-                    android:id="@+id/currentmedicationrg"
-                    android:layout_width="0dp"
-                    android:layout_weight="5"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal">
-
-                    <RadioButton
-                        android:id="@+id/yes"
-                        android:layout_width="@dimen/_60sdp"
-                        android:layout_height="wrap_content"
-
-                        android:text="@string/yes"
-                        />
-
-                    <RadioButton
-                        android:id="@+id/no"
-                        android:layout_width="@dimen/_60sdp"
-                        android:checked="true"
-                        android:layout_height="wrap_content"
-                        android:text="@string/no" />
-
-
-
-
-                </RadioGroup>
-
-
-
-
-
-
-
-
-                    </LinearLayout>
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:id="@+id/medicationll"
-                        android:visibility="gone"
-                        android:padding="8sp">
-                        <EditText
-                            android:id="@+id/medicationmedicinename"
+                            android:id="@+id/maritalstatusrg"
                             android:layout_width="match_parent"
-                            android:layout_height="40sp"
-                            android:layout_weight="1"
-                            android:textSize="13sp"
-                            android:padding="8sp"
-                            android:fontFamily="@font/sf_pro_display_medium"
-                            android:inputType="text"
-                            android:layout_marginRight="@dimen/_5sdp"
-                            android:background="@drawable/bg_gray_border"
+                            android:layout_height="wrap_content">
 
-                            android:hint="@string/medication_s_medicine_name" />
+                            <RadioButton
+                                android:id="@+id/married"
+                                android:layout_width="140dp"
+                                android:layout_height="wrap_content"
+                                android:text="@string/married"
+                                />
+
+                            <RadioButton
+                                android:id="@+id/unmarried"
+                                android:checked="true"
+                                android:layout_width="140dp"
+                                android:layout_height="wrap_content"
+                                android:text="@string/unmarried" />
+
+
+
+                            <RadioButton
+                                android:id="@+id/divorced"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/divorced"
+                                />
+
+                            <RadioButton
+                                android:id="@+id/widowed"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/widowed"
+                                />
+
+                        </RadioGroup>
+                        <LinearLayout
+                            android:id="@+id/noofhildrenll"
+                            android:layout_width="match_parent"
+                            android:visibility="gone"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:layout_marginTop="4sp"
+                            android:gravity="center"
+                            android:weightSum="2">
+
+                            <EditText
+                                android:id="@+id/noofboys"
+                                android:layout_width="100dp"
+                                android:layout_height="40sp"
+                                android:layout_weight="1"
+                                android:textSize="13sp"
+                                android:drawableRight="@drawable/ic_man"
+                                android:padding="8sp"
+                                android:fontFamily="@font/sf_pro_display_medium"
+                                android:inputType="number"
+                                android:layout_marginRight="2sp"
+                                android:background="@drawable/bg_gray_border"
+                                android:hint="Boys" />
+
+
+                            <EditText
+                                android:id="@+id/noofgirls"
+                                android:layout_width="100dp"
+                                android:layout_height="40sp"
+                                android:hint="Girls"
+                                android:padding="8sp"
+                                android:inputType="number"
+                                android:drawableRight="@drawable/ic_woman"
+                                android:textSize="13sp"
+                                android:fontFamily="@font/sf_pro_display_medium"
+                                android:layout_marginRight="2sp"
+                                android:background="@drawable/bg_gray_border"
+                                android:layout_weight="1" />
+
+
+
+                        </LinearLayout>
+
                     </LinearLayout>
 
 
 
-            </LinearLayout>
-
-
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:layout_marginTop="5dp"
-                    android:background="@color/graylight" />
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical">
-
-                    <TextView
+                    <View
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="@string/unhealthy_habits"
-                        android:gravity="center"
-                        android:fontFamily="@font/sfpro_display_bold"
-                        android:padding="8dp"
-                        android:textColor="@color/colorPrimaryDark"
-                        android:textSize="17sp" />
-
-                </LinearLayout>
-                <LinearLayout
-                    android:layout_width="fill_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical">
-
+                        android:layout_height="1dp"
+                        android:layout_marginTop="5sp"
+                        android:background="@color/graylight" />
                     <LinearLayout
-                        android:id="@+id/unhealthyhabitsrg"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="vertical">
 
-<!--                        <RadioButton-->
-<!--                            android:id="@+id/optsmoking"-->
-<!--                            android:layout_width="140dp"-->
-<!--                            android:layout_height="wrap_content"-->
-<!--                            android:text="@string/smoke"-->
-<!--                            />-->
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="Patient Medical History"
+                            android:gravity="center"
+                            android:fontFamily="@font/sfpro_display_bold"
+                            android:padding="8sp"
+                            android:textColor="@color/colorPrimaryDark"
+                            android:textSize="17sp" />
 
+                    </LinearLayout>
 
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
@@ -890,15 +625,14 @@
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="5"
-                                android:text="Smoking"
+                                android:text="@string/drug_allergies"
                                 android:fontFamily="@font/sfpro_display_semibold"
                                 android:padding="8sp"
                                 android:textColor="@color/colorPrimaryDark"
                                 android:textSize="15sp" />
 
-
                             <RadioGroup
-                                android:id="@+id/rg_smoking"
+                                android:id="@+id/rg_drug"
                                 android:layout_width="0dp"
                                 android:layout_weight="5"
                                 android:layout_marginTop="2sp"
@@ -906,17 +640,92 @@
                                 android:orientation="horizontal">
 
                                 <RadioButton
-                                    android:id="@+id/rb_yes_smoking"
+                                    android:id="@+id/yesdrug"
                                     android:layout_width="@dimen/_60sdp"
                                     android:layout_height="wrap_content"
                                     android:text="@string/yes"
                                     />
 
                                 <RadioButton
-                                    android:id="@+id/rb_no_smoking"
+                                    android:id="@+id/nodrug"
                                     android:layout_width="@dimen/_60sdp"
                                     android:checked="true"
                                     android:layout_height="wrap_content"
+                                    android:text="@string/no" />
+
+
+
+
+                            </RadioGroup>
+
+
+
+
+
+                        </LinearLayout>
+
+
+
+
+                        <EditText
+                            android:id="@+id/drug_allergies"
+                            android:layout_width="match_parent"
+                            android:layout_height="40dp"
+                            android:cursorVisible="true"
+                            android:hint="Any Kind Of Allergy?"
+                            android:background="@drawable/bg_gray_border"
+                            android:fontFamily="@font/sf_pro_display_medium"
+                            android:textCursorDrawable="@null"
+                            android:imeOptions="actionNext"
+                            android:visibility="gone"
+                            android:inputType="text"
+                            android:padding="8sp"
+                            android:textSize="13sp"
+                            android:importantForAutofill="no"
+                            tools:ignore="SpUsage" />
+
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:weightSum="10"
+                            android:orientation="horizontal">
+                            <TextView
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:text="@string/do_you_have_any_diseases"
+                                android:fontFamily="@font/sfpro_display_semibold"
+                                android:padding="8sp"
+                                android:layout_weight="5"
+                                android:textColor="@color/colorPrimaryDark"
+                                android:textSize="15sp" />
+                            <RadioGroup
+                                android:id="@+id/rg_disease"
+                                android:layout_width="0dp"
+                                android:layout_marginTop="2sp"
+                                android:layout_weight="5"
+                                android:layout_height="wrap_content"
+                                android:orientation="horizontal">
+
+                                <RadioButton
+                                    android:id="@+id/yes_disease"
+                                    android:layout_width="@dimen/_60sdp"
+                                    android:layout_height="wrap_content"
+                                    android:text="@string/yes"
+                                    />
+
+                                <RadioButton
+                                    android:id="@+id/nodisease"
+                                    android:layout_width="@dimen/_60sdp"
+                                    android:layout_height="wrap_content"
+                                    android:checked="true"
                                     android:text="@string/no" />
 
 
@@ -929,80 +738,17 @@
 
 
                         <EditText
-                            android:id="@+id/et_smoking"
+                            android:id="@+id/diseases"
                             android:layout_width="match_parent"
                             android:layout_height="40dp"
                             android:cursorVisible="true"
                             android:background="@drawable/bg_gray_border"
                             android:fontFamily="@font/sf_pro_display_medium"
                             android:textCursorDrawable="@null"
-                            android:hint="@string/cigerrates_alcohol_hint"
+                            android:hint="@string/disease_name_s"
                             android:imeOptions="actionNext"
-                            android:inputType="text"
-                            android:padding="8sp"
                             android:visibility="gone"
-                            android:textSize="13sp"
-                            android:importantForAutofill="no"
-                            tools:ignore="SpUsage" />
-<LinearLayout
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:weightSum="10"
-    android:orientation="horizontal">
-    <TextView
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_weight="5"
-        android:text="Alcohol"
-        android:fontFamily="@font/sfpro_display_semibold"
-        android:padding="8sp"
-        android:textColor="@color/colorPrimaryDark"
-        android:textSize="15sp" />
-
-    <RadioGroup
-        android:id="@+id/rg_alcohol"
-        android:layout_width="0dp"
-        android:layout_marginTop="2sp"
-        android:layout_weight="5"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
-
-        <RadioButton
-            android:id="@+id/rb_yes_alcohol"
-            android:layout_width="@dimen/_60sdp"
-            android:layout_height="wrap_content"
-            android:text="@string/yes"
-            />
-
-        <RadioButton
-            android:id="@+id/rb_no_alcohol"
-            android:layout_width="@dimen/_60sdp"
-            android:checked="true"
-            android:layout_height="wrap_content"
-            android:text="@string/no" />
-
-
-
-
-    </RadioGroup>
-
-
-</LinearLayout>
-
-
-
-                        <EditText
-                            android:id="@+id/et_alcohol"
-                            android:layout_width="match_parent"
-                            android:layout_height="40dp"
-                            android:cursorVisible="true"
-                            android:background="@drawable/bg_gray_border"
-                            android:fontFamily="@font/sf_pro_display_medium"
-                            android:textCursorDrawable="@null"
-                            android:hint="@string/cigerrates_alcohol_hint"
-                            android:imeOptions="actionNext"
                             android:inputType="text"
-                            android:visibility="gone"
                             android:padding="8sp"
                             android:textSize="13sp"
                             android:importantForAutofill="no"
@@ -1011,97 +757,306 @@
 
                     </LinearLayout>
                     <LinearLayout
-                        android:id="@+id/smokell"
                         android:layout_width="match_parent"
-                        android:visibility="gone"
                         android:layout_height="wrap_content"
-                        android:orientation="horizontal"
-                        android:layout_marginTop="4sp"
-                        android:gravity="center">
+                        android:orientation="vertical">
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:weightSum="10"
+                            android:orientation="horizontal">
 
-                        <EditText
-                            android:id="@+id/smokepcs"
-                            android:layout_width="100dp"
-                            android:layout_height="40sp"
-                            android:layout_weight="1"
-                            android:textSize="13sp"
-                            android:padding="8sp"
-                            android:fontFamily="@font/sf_pro_display_medium"
-                            android:inputType="number"
-                            android:layout_marginRight="2sp"
-                            android:background="@drawable/bg_gray_border"
-                            android:hint="@string/pieces" />
+                            <TextView
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="5"
+                                android:text="Current Medication"
+                                android:fontFamily="@font/sfpro_display_semibold"
+                                android:padding="8sp"
+                                android:textColor="@color/colorPrimaryDark"
+                                android:textSize="15sp" />
+                            <RadioGroup
+                                android:id="@+id/currentmedicationrg"
+                                android:layout_width="0dp"
+                                android:layout_weight="5"
+                                android:layout_height="wrap_content"
+                                android:orientation="horizontal">
 
+                                <RadioButton
+                                    android:id="@+id/yes"
+                                    android:layout_width="@dimen/_60sdp"
+                                    android:layout_height="wrap_content"
+
+                                    android:text="@string/yes"
+                                    />
+
+                                <RadioButton
+                                    android:id="@+id/no"
+                                    android:layout_width="@dimen/_60sdp"
+                                    android:checked="true"
+                                    android:layout_height="wrap_content"
+                                    android:text="@string/no" />
+
+
+
+
+                            </RadioGroup>
+
+
+
+
+
+
+
+
+                        </LinearLayout>
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/medicationll"
+                            android:visibility="gone"
+                            android:padding="8sp">
+                            <EditText
+                                android:id="@+id/medicationmedicinename"
+                                android:layout_width="match_parent"
+                                android:layout_height="40sp"
+                                android:layout_weight="1"
+                                android:textSize="13sp"
+                                android:padding="8sp"
+                                android:fontFamily="@font/sf_pro_display_medium"
+                                android:inputType="text"
+                                android:layout_marginRight="@dimen/_5sdp"
+                                android:background="@drawable/bg_gray_border"
+
+                                android:hint="@string/medication_s_medicine_name" />
+                        </LinearLayout>
 
 
 
                     </LinearLayout>
 
-                    <LinearLayout
-                        android:id="@+id/alcoholll"
+
+                    <View
                         android:layout_width="match_parent"
-                        android:visibility="gone"
+                        android:layout_height="1dp"
+                        android:layout_marginTop="5dp"
+                        android:background="@color/graylight" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:orientation="horizontal"
-                        android:layout_marginTop="4sp"
-                        android:gravity="center">
+                        android:orientation="vertical">
 
-                        <EditText
-                            android:id="@+id/alcoholpegs"
-                            android:layout_width="100dp"
-                            android:layout_height="40sp"
-                            android:layout_weight="1"
-                            android:textSize="13sp"
-                            android:padding="8sp"
-                            android:fontFamily="@font/sf_pro_display_medium"
-                            android:inputType="number"
-                            android:layout_marginRight="2sp"
-                            android:background="@drawable/bg_gray_border"
-                            android:hint="@string/pegs" />
-
-
-
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="@string/unhealthy_habits"
+                            android:gravity="center"
+                            android:fontFamily="@font/sfpro_display_bold"
+                            android:padding="8dp"
+                            android:textColor="@color/colorPrimaryDark"
+                            android:textSize="17sp" />
 
                     </LinearLayout>
-
-                </LinearLayout>
-
-
-
-
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_marginTop="10dp"
-                    android:orientation="horizontal"
-                    android:visibility="visible">
-
-
                     <LinearLayout
-                        android:layout_width="0dp"
+                        android:layout_width="fill_parent"
                         android:layout_height="wrap_content"
-                        android:layout_weight="1"
                         android:orientation="vertical">
 
                         <LinearLayout
+                            android:id="@+id/unhealthyhabitsrg"
                             android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:layout_marginRight="10dp"
-                            android:orientation="horizontal"
-                            android:visibility="visible">
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical">
 
-                            <Button
-                                android:id="@+id/btnSave"
+                            <!--                        <RadioButton-->
+                            <!--                            android:id="@+id/optsmoking"-->
+                            <!--                            android:layout_width="140dp"-->
+                            <!--                            android:layout_height="wrap_content"-->
+                            <!--                            android:text="@string/smoke"-->
+                            <!--                            />-->
+
+
+                            <LinearLayout
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:layout_gravity="center"
-                                android:background="@drawable/rect_orange"
-                                android:fontFamily="@font/sfpro_display_semibold"
-                                android:text="SAVE"
-                                android:textColor="@color/white"
-                                android:visibility="visible" />
+                                android:weightSum="10"
+                                android:orientation="horizontal">
+
+                                <TextView
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="5"
+                                    android:text="Smoking"
+                                    android:fontFamily="@font/sfpro_display_semibold"
+                                    android:padding="8sp"
+                                    android:textColor="@color/colorPrimaryDark"
+                                    android:textSize="15sp" />
+
+
+                                <RadioGroup
+                                    android:id="@+id/rg_smoking"
+                                    android:layout_width="0dp"
+                                    android:layout_weight="5"
+                                    android:layout_marginTop="2sp"
+                                    android:layout_height="wrap_content"
+                                    android:orientation="horizontal">
+
+                                    <RadioButton
+                                        android:id="@+id/rb_yes_smoking"
+                                        android:layout_width="@dimen/_60sdp"
+                                        android:layout_height="wrap_content"
+                                        android:text="@string/yes"
+                                        />
+
+                                    <RadioButton
+                                        android:id="@+id/rb_no_smoking"
+                                        android:layout_width="@dimen/_60sdp"
+                                        android:checked="true"
+                                        android:layout_height="wrap_content"
+                                        android:text="@string/no" />
+
+
+
+
+                                </RadioGroup>
+
+                            </LinearLayout>
+
+
+
+                            <EditText
+                                android:id="@+id/et_smoking"
+                                android:layout_width="match_parent"
+                                android:layout_height="40dp"
+                                android:cursorVisible="true"
+                                android:background="@drawable/bg_gray_border"
+                                android:fontFamily="@font/sf_pro_display_medium"
+                                android:textCursorDrawable="@null"
+                                android:hint="@string/cigerrates_alcohol_hint"
+                                android:imeOptions="actionNext"
+                                android:inputType="text"
+                                android:padding="8sp"
+                                android:visibility="gone"
+                                android:textSize="13sp"
+                                android:importantForAutofill="no"
+                                tools:ignore="SpUsage" />
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:weightSum="10"
+                                android:orientation="horizontal">
+                                <TextView
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="5"
+                                    android:text="Alcohol"
+                                    android:fontFamily="@font/sfpro_display_semibold"
+                                    android:padding="8sp"
+                                    android:textColor="@color/colorPrimaryDark"
+                                    android:textSize="15sp" />
+
+                                <RadioGroup
+                                    android:id="@+id/rg_alcohol"
+                                    android:layout_width="0dp"
+                                    android:layout_marginTop="2sp"
+                                    android:layout_weight="5"
+                                    android:layout_height="wrap_content"
+                                    android:orientation="horizontal">
+
+                                    <RadioButton
+                                        android:id="@+id/rb_yes_alcohol"
+                                        android:layout_width="@dimen/_60sdp"
+                                        android:layout_height="wrap_content"
+                                        android:text="@string/yes"
+                                        />
+
+                                    <RadioButton
+                                        android:id="@+id/rb_no_alcohol"
+                                        android:layout_width="@dimen/_60sdp"
+                                        android:checked="true"
+                                        android:layout_height="wrap_content"
+                                        android:text="@string/no" />
+
+
+
+
+                                </RadioGroup>
+
+
+                            </LinearLayout>
+
+
+
+                            <EditText
+                                android:id="@+id/et_alcohol"
+                                android:layout_width="match_parent"
+                                android:layout_height="40dp"
+                                android:cursorVisible="true"
+                                android:background="@drawable/bg_gray_border"
+                                android:fontFamily="@font/sf_pro_display_medium"
+                                android:textCursorDrawable="@null"
+                                android:hint="@string/cigerrates_alcohol_hint"
+                                android:imeOptions="actionNext"
+                                android:inputType="text"
+                                android:visibility="gone"
+                                android:padding="8sp"
+                                android:textSize="13sp"
+                                android:importantForAutofill="no"
+                                tools:ignore="SpUsage" />
+
+
+                        </LinearLayout>
+                        <LinearLayout
+                            android:id="@+id/smokell"
+                            android:layout_width="match_parent"
+                            android:visibility="gone"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:layout_marginTop="4sp"
+                            android:gravity="center">
+
+                            <EditText
+                                android:id="@+id/smokepcs"
+                                android:layout_width="100dp"
+                                android:layout_height="40sp"
+                                android:layout_weight="1"
+                                android:textSize="13sp"
+                                android:padding="8sp"
+                                android:fontFamily="@font/sf_pro_display_medium"
+                                android:inputType="number"
+                                android:layout_marginRight="2sp"
+                                android:background="@drawable/bg_gray_border"
+                                android:hint="@string/pieces" />
+
+
+
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:id="@+id/alcoholll"
+                            android:layout_width="match_parent"
+                            android:visibility="gone"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:layout_marginTop="4sp"
+                            android:gravity="center">
+
+                            <EditText
+                                android:id="@+id/alcoholpegs"
+                                android:layout_width="100dp"
+                                android:layout_height="40sp"
+                                android:layout_weight="1"
+                                android:textSize="13sp"
+                                android:padding="8sp"
+                                android:fontFamily="@font/sf_pro_display_medium"
+                                android:inputType="number"
+                                android:layout_marginRight="2sp"
+                                android:background="@drawable/bg_gray_border"
+                                android:hint="@string/pegs" />
+
+
 
 
                         </LinearLayout>
@@ -1111,20 +1066,62 @@
 
 
 
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginTop="10dp"
+                        android:orientation="horizontal"
+                        android:visibility="visible">
+
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:orientation="vertical">
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:layout_marginRight="10dp"
+                                android:orientation="horizontal"
+                                android:visibility="visible">
+
+                                <Button
+                                    android:id="@+id/btnSave"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center"
+                                    android:background="@drawable/rect_orange"
+                                    android:fontFamily="@font/sfpro_display_semibold"
+                                    android:text="SAVE"
+                                    android:textColor="@color/white"
+                                    android:visibility="visible" />
+
+
+                            </LinearLayout>
+
+                        </LinearLayout>
+
+
+
+
+                    </LinearLayout>
+
+
+
+
+
+
+
+
                 </LinearLayout>
 
 
+            </androidx.cardview.widget.CardView>
 
-
-
-
-
-
-            </LinearLayout>
-
-
-        </androidx.cardview.widget.CardView>
-
-    </LinearLayout>
-</ScrollView>
+        </LinearLayout>
+    </ScrollView>
 </layout>

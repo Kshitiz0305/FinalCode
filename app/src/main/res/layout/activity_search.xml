@@ -1,15 +1,31 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools">
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
 
     <LinearLayout
         android:layout_width="match_parent"
         android:orientation="vertical"
-        android:background="@color/white"
+        android:background="@color/colorOffWhite"
         android:layout_height="match_parent">
 
-        <include layout="@layout/toolbar"/>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Existing Patient"
+            android:gravity="center"
+            android:fontFamily="@font/sfpro_display_bold"
+            android:padding="8sp"
+            android:textColor="@color/colorPrimaryDark"
+            android:textSize="17sp" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/graylight" />
+
+
 
         <ScrollView
             android:layout_width="match_parent"
@@ -19,6 +35,7 @@
                 android:orientation="vertical"
                 android:layout_height="wrap_content">
                 <RelativeLayout
+
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     >
@@ -38,6 +55,7 @@
 
                 <RelativeLayout
                     android:layout_width="match_parent"
+                    android:visibility="gone"
                     android:layout_height="wrap_content">
                     <ImageView
                         android:layout_width="@dimen/_200sdp"
@@ -49,17 +67,29 @@
 
                 </RelativeLayout>
 
+                <androidx.cardview.widget.CardView
+                    android:layout_width="match_parent"
+                    android:layout_margin="@dimen/_8kdp"
+                    app:cardCornerRadius="@dimen/_10kdp"
+                    app:cardElevation="@dimen/_2kdp"
+                    app:cardMaxElevation="@dimen/_4kdp"
+                    android:layout_marginTop="@dimen/_20sdp"
+                    android:layout_height="match_parent">
+
+
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:orientation="vertical"
                     android:weightSum="10"
+                    android:layout_marginTop="@dimen/_10sdp"
                     android:layout_height="wrap_content">
                     <LinearLayout
                         android:layout_width="@dimen/_230sdp"
                         android:layout_height="@dimen/_40sdp"
                         android:orientation="horizontal"
                         android:id="@+id/btnVItal"
+
                         android:background="@drawable/bg_gray_border"
                         android:gravity="center"
                         android:layout_gravity="center">
@@ -79,8 +109,8 @@
                         android:orientation="horizontal"
                         >
                         <LinearLayout
-                            android:layout_width="@dimen/_170sdp"
-                            android:layout_height="@dimen/_40sdp"
+                            android:layout_width="@dimen/_225sdp"
+                            android:layout_height="@dimen/_45sdp"
                             android:orientation="horizontal"
                             android:id="@+id/ll_id"
                             android:background="@drawable/bg_gray_border"
@@ -100,22 +130,38 @@
                         </LinearLayout>
 
                         <LinearLayout
-                            android:layout_width="@dimen/_170sdp"
-                            android:layout_height="@dimen/_40sdp"
-                            android:orientation="horizontal"
                             android:id="@+id/ll_name"
+                            android:gravity="center"
+                            android:layout_marginLeft="@dimen/_30sdp"
+                            android:layout_width="@dimen/_225sdp"
+                            android:layout_height="@dimen/_45sdp"
+                            android:layout_marginRight="@dimen/_30sdp"
+                            android:layout_gravity="center"
                             android:background="@drawable/bg_gray_border"
-                            android:layout_gravity="center">
-                            <EditText
-                                android:layout_width="@dimen/_180sdp"
-                                android:layout_height="@dimen/_40sdp"
-                                android:padding="@dimen/_5sdp"
-                                android:textSize="18sp"
-                                android:hint="@string/name"
-                                android:id="@+id/et_name"
-                                android:fontFamily="@font/sfpro_display_semibold"
-                                />
+                            android:orientation="horizontal">
 
+                            <EditText
+                                android:id="@+id/et_name"
+                                android:layout_width="@dimen/_175sdp"
+                                android:layout_height="match_parent"
+                                android:background="@android:color/transparent"
+                                android:hint="Search Name"
+                                android:textSize="18sp" />
+                            <View
+                                android:layout_width="1dp"
+                                android:layout_height="match_parent"
+                                android:layout_marginLeft="5dp"
+                                android:layout_marginRight="5dp"
+                                android:background="@drawable/gradient_vertical" />
+
+                            <ImageView
+                                android:id="@+id/btnsearch"
+                                android:layout_width="@dimen/_30sdp"
+                                android:layout_height="match_parent"
+                                android:layout_gravity="end"
+                                android:paddingRight="@dimen/_3sdp"
+
+                                android:src="@drawable/ic_search" />
 
 
                         </LinearLayout>
@@ -128,20 +174,21 @@
                         <!--                        android:layout_gravity="center"-->
                         <!--                        />-->
 
-                        <ImageView
-                            android:layout_width="@dimen/_40sdp"
-                            android:layout_height="@dimen/_35sdp"
-                            android:layout_gravity="center"
-                            android:id="@+id/btnsearch"
-                            android:background="@drawable/rect_green"
-                            android:layout_marginLeft="@dimen/_10sdp"
-                            android:src="@drawable/ic_search_white_24dp" />
+
 
                     </LinearLayout>
+                    <View
+                        android:id="@+id/view2"
+                        android:layout_width="match_parent"
+                        android:layout_height="2dp"
+                        android:background="@color/white"
+                        android:visibility="gone" />
+
 
                     <androidx.recyclerview.widget.RecyclerView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/_10sdp"
                         android:id="@+id/rv_option"
                         tools:listitem="@layout/table_item"
 
@@ -157,14 +204,17 @@
                         android:layout_marginTop="@dimen/_25sdp"
                         android:text="Proceed"
                         android:textColor="@color/white"
-                        android:background="@drawable/toast_backgraound"
+                        android:background="@drawable/rect_orange"
                         android:layout_marginBottom="@dimen/_5sdp"
                         android:layout_gravity="center"/>
 
                 </LinearLayout>
+                </androidx.cardview.widget.CardView>
 
 
             </LinearLayout>
+
+
 
         </ScrollView>
 

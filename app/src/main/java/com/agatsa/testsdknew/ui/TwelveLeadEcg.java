@@ -59,7 +59,7 @@ public class TwelveLeadEcg extends AppCompatActivity {
     SharedPreferences pref;
     MaterialDialog progressDialog;
     SweetAlertDialog pDialog;
-    Toolbar toolbar;
+
     public   static  int leadIndex = 0,x=0;
     static String pdfurl = "";
     public   static  boolean again =false;
@@ -81,10 +81,10 @@ ActivityTwelveLeadBinding binding;
 //        labdb = new LabDB(getApplicationContext());
 //        ecgReport=labdb.getLastEcgSign(ptno);
         mContext = getApplicationContext();
-        toolbar = findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-        getSupportActionBar().setTitle("Twelve Lead");
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+//        toolbar = findViewById(R.id.toolbar);
+//        setSupportActionBar(toolbar);
+//        getSupportActionBar().setTitle("Twelve Lead");
+//        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         hideAndSeek(buttoncollectionshide,true);
 
         hideAndSeek(new ArrayList<>(Arrays.asList("txttwelveleadone")),false);

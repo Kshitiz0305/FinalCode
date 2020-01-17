@@ -9,7 +9,21 @@
         android:background="@color/colorOffWhite"
         android:layout_height="match_parent">
 
-        <include layout="@layout/toolbar"/>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Start Test"
+            android:gravity="center"
+            android:fontFamily="@font/sfpro_display_bold"
+
+            android:padding="8sp"
+            android:textColor="@color/colorPrimaryDark"
+            android:textSize="17sp" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/graylight" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -48,6 +62,7 @@
                 android:layout_width="match_parent"
                 android:layout_margin="@dimen/_8kdp"
                 app:cardCornerRadius="@dimen/_10kdp"
+                android:visibility="gone"
                 app:cardElevation="@dimen/_2kdp"
                 app:cardMaxElevation="@dimen/_4kdp"
                 android:layout_height="match_parent">
@@ -71,13 +86,14 @@
                 app:cardCornerRadius="@dimen/_10kdp"
                 app:cardElevation="@dimen/_2kdp"
                 app:cardMaxElevation="@dimen/_4kdp"
+                android:layout_marginTop="@dimen/_20sdp"
                 android:layout_height="match_parent">
 
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="195dp"
-                    android:layout_marginTop="@dimen/_10sdp"
+                    android:layout_marginTop="@dimen/_20sdp"
                     android:orientation="vertical"
 
                     android:weightSum="10">
@@ -97,7 +113,7 @@
                             android:gravity="center"
                             android:padding="@dimen/_5sdp"
                             android:text="Perform Test"
-                            android:textColor="@color/colorPrimary"
+                            android:textColor="@color/colorPrimaryDark"
                             android:textSize="18sp" />
 
                         <ImageView
@@ -160,7 +176,7 @@
 
                             android:padding="@dimen/_5sdp"
                             android:text="Next Patient"
-                            android:textColor="@color/colorPrimary"
+                            android:textColor="@color/colorPrimaryDark"
                             android:textSize="18sp" />
                         <!--                    <ImageView-->
                         <!--                        android:layout_width="@dimen/_40sdp"-->
@@ -180,6 +196,8 @@
         </LinearLayout>
 
         <RelativeLayout
+            android:layout_marginTop="@dimen/_20sdp"
+
             android:layout_width="wrap_content"
             android:layout_marginBottom="5sp"
             android:layout_height="wrap_content">
@@ -188,14 +206,14 @@
                 android:layout_width="wrap_content"
                 android:text="Log Out"
                 android:fontFamily="@font/sfpro_display_semibold"
-                android:padding="8sp"
+                android:padding="5sp"
                 android:layout_alignParentBottom="true"
-                android:textColor="@color/colorPrimary"
-                android:textSize="18sp"
+                android:textSize="14sp"
+                android:textColor="@color/colorPrimaryDark"
                 android:id="@+id/logout"
                 android:layout_marginLeft="@dimen/_5sdp"
                 android:background="@drawable/bg_gray_border"
-                android:layout_height="@dimen/_30sdp"
+                android:layout_height="wrap_content"
                 />
 
         </RelativeLayout>

@@ -54,6 +54,7 @@
         <activity android:name=".ui.VitalSignActivity" />
         <activity android:name=".ui.TestListActivity" />
         <activity android:name=".ui.TestActivity" />
+        <activity android:name=".ui.DiabetesActivity" />
 
 
 
@@ -70,7 +71,8 @@
         <activity android:name=".ui.PdfViewActivity" />
         <activity android:name=".ui.ECGactivity" />
         <activity android:name=".ui.ViewPDFActivity" />
-        <activity android:name=".ui.SearchActivity" />
+        <activity android:name=".ui.SearchActivity"
+            android:windowSoftInputMode="stateAlwaysHidden"/>
     </application>
 
 </manifest>

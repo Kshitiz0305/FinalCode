@@ -51,7 +51,7 @@ import java.util.List;
 
 public  class
 
- SingleLeadECG extends AppCompatActivity implements ResponseCallback {
+SingleLeadECG extends AppCompatActivity implements ResponseCallback {
     private static final String CLIENT_ID = "5a3b4c16b4a56b000132f5d5b4580266565440bda51dcb4122d39844";
     private static final String SECRET_ID = "5a3b4c16b4a56b000132f5d5746be305d56c49e49cc88b12ccb05d71";
     private Button btnsavereport,back;
@@ -64,24 +64,24 @@ public  class
     ECGReport ecgReport=new ECGReport();
     SweetAlertDialog pDialog;
     Toolbar toolbar;
-        ActivitySingleLeadBinding binding;
+    ActivitySingleLeadBinding binding;
     static int state=0;
-   public static String pdfuri="";
+    public static String pdfuri="";
 
     InitiateEcg initiateEcg;
-     private static final String[] REQUIRED_SDK_PERMISSIONS = new String[]{
-             Manifest.permission.WRITE_EXTERNAL_STORAGE,
-             Manifest.permission.READ_EXTERNAL_STORAGE,
-            };
+    private static final String[] REQUIRED_SDK_PERMISSIONS = new String[]{
+            Manifest.permission.WRITE_EXTERNAL_STORAGE,
+            Manifest.permission.READ_EXTERNAL_STORAGE,
+    };
 
-     private final static int REQUEST_CODE_ASK_PERMISSIONS = 1;
-
-
+    private final static int REQUEST_CODE_ASK_PERMISSIONS = 1;
 
 
 
 
-     @Override
+
+
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = DataBindingUtil.setContentView(this,R.layout.activity_single_lead);
@@ -95,7 +95,7 @@ public  class
         initiateEcg = new InitiateEcg();
         if(state==0)
         {  binding.btnsavell.setVisibility(View.GONE);
-        binding.txtLeadOne.setVisibility(View.VISIBLE);}
+            binding.txtLeadOne.setVisibility(View.VISIBLE);}
 
         initViews();
         if(state%3==1){
@@ -121,33 +121,33 @@ public  class
         getSupportActionBar().setTitle("Single Lead");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-       binding.btViewreport.setOnClickListener(new View.OnClickListener() {
-           @Override
-           public void onClick(View view) {
+        binding.btViewreport.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
 
-               if(!pdfuri.equals(""))
-               {
-                   File file = new File(pdfuri);
-               Intent intent = new Intent(Intent.ACTION_VIEW);
+                if(!pdfuri.equals(""))
+                {
+                    File file = new File(pdfuri);
+                    Intent intent = new Intent(Intent.ACTION_VIEW);
 
-               // set leadIndex to give temporary permission to external app to use your FileProvider
-               intent.setFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+                    // set leadIndex to give temporary permission to external app to use your FileProvider
+                    intent.setFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
 
-               // generate URI, I defined authority as the application ID in the Manifest, the last param is file I want to open
-               Uri photoURI = FileProvider.getUriForFile(SingleLeadECG.this,
-                       BuildConfig.APPLICATION_ID + ".provider",
-                       file);
-               // I am opening a PDF file so I give it a valid MIME type
-               intent.setDataAndType(photoURI, "application/pdf");
+                    // generate URI, I defined authority as the application ID in the Manifest, the last param is file I want to open
+                    Uri photoURI = FileProvider.getUriForFile(SingleLeadECG.this,
+                            BuildConfig.APPLICATION_ID + ".provider",
+                            file);
+                    // I am opening a PDF file so I give it a valid MIME type
+                    intent.setDataAndType(photoURI, "application/pdf");
 
-               // validate that the device can open your File!
-               startActivity(intent);
-
-
+                    // validate that the device can open your File!
+                    startActivity(intent);
 
 
-           }}
-       });
+
+
+                }}
+        });
         initOnClickListener();
     }
 
@@ -169,22 +169,22 @@ public  class
 
     private void setMobileDataEnabled(Context context, boolean enabled) {
 
-         try{
-                     final ConnectivityManager conman = (ConnectivityManager)  context.getSystemService(Context.CONNECTIVITY_SERVICE);
-        final Class conmanClass = Class.forName(conman.getClass().getName());
-        final Field iConnectivityManagerField = conmanClass.getDeclaredField("mService");
-        iConnectivityManagerField.setAccessible(true);
-        final Object iConnectivityManager = iConnectivityManagerField.get(conman);
-        final Class iConnectivityManagerClass = Class.forName(iConnectivityManager.getClass().getName());
-        final Method setMobileDataEnabledMethod = iConnectivityManagerClass.getDeclaredMethod("setMobileDataEnabled", Boolean.TYPE);
-        setMobileDataEnabledMethod.setAccessible(true);
-        setMobileDataEnabledMethod.invoke(iConnectivityManager, enabled);
+        try{
+            final ConnectivityManager conman = (ConnectivityManager)  context.getSystemService(Context.CONNECTIVITY_SERVICE);
+            final Class conmanClass = Class.forName(conman.getClass().getName());
+            final Field iConnectivityManagerField = conmanClass.getDeclaredField("mService");
+            iConnectivityManagerField.setAccessible(true);
+            final Object iConnectivityManager = iConnectivityManagerField.get(conman);
+            final Class iConnectivityManagerClass = Class.forName(iConnectivityManager.getClass().getName());
+            final Method setMobileDataEnabledMethod = iConnectivityManagerClass.getDeclaredMethod("setMobileDataEnabled", Boolean.TYPE);
+            setMobileDataEnabledMethod.setAccessible(true);
+            setMobileDataEnabledMethod.invoke(iConnectivityManager, enabled);
 
-         }
-         catch (Exception e){
+        }
+        catch (Exception e){
 
-             Log.d("rantest",e.getLocalizedMessage());
-         }
+            Log.d("rantest",e.getLocalizedMessage());
+        }
         try{
 
             WifiManager wifiManager = (WifiManager)this.getApplicationContext().getSystemService(Context.WIFI_SERVICE);
@@ -274,7 +274,7 @@ public  class
 
         LeadOne.setOnClickListener(v -> {
             state=state+1;
-          initiateEcg.takeEcg(mContext, SECRET_ID, 1,this);
+            initiateEcg.takeEcg(mContext, SECRET_ID, 1,this);
 
 
 //            btnsavell.setVisibility(View.VISIBLE);
@@ -286,22 +286,22 @@ public  class
         });
 
         back.setOnClickListener(v -> {
-           this.onBackPressed();
+            this.onBackPressed();
         });
 
         txttakeagain.setOnClickListener(v -> {
-         initiateEcg.takeEcg(mContext, SECRET_ID, 1,this);
+            initiateEcg.takeEcg(mContext, SECRET_ID, 1,this);
 
 
         });
 
 
-      btnsavereport.setOnClickListener(v -> {
-          createPDF();
-          btnsavereport.setVisibility(View.GONE);
-          viewreportll.setVisibility(View.VISIBLE);
+        btnsavereport.setOnClickListener(v -> {
+            createPDF();
+            btnsavereport.setVisibility(View.GONE);
+            viewreportll.setVisibility(View.VISIBLE);
 
-      });
+        });
 
 
 //        btncreatepdf.setOnClickListener(v -> {
@@ -351,7 +351,7 @@ public  class
 
 
     public void createPDF() {
-         showProgress("Generating Report");
+        showProgress("Generating Report");
         InitiateEcg initiateEcg = new InitiateEcg();
         initiateEcg.saveEcgData(mContext, "test", new SaveEcgCallBack() {
             @Override
@@ -403,10 +403,10 @@ public  class
 
                 Log.e("makepdfpath", ecgConfig.getFileUrl());
                 String filePath = ecgConfig.getFileUrl();
-                 pdfuri = ecgConfig.getFileUrl();
-                 binding.viewreportll.setVisibility(View.VISIBLE);
-                 binding.btViewreport.setVisibility(View.VISIBLE);
-                 setMobileDataEnabled(SingleLeadECG.this,true);
+                pdfuri = ecgConfig.getFileUrl();
+                binding.viewreportll.setVisibility(View.VISIBLE);
+                binding.btViewreport.setVisibility(View.VISIBLE);
+                setMobileDataEnabled(SingleLeadECG.this,true);
                 Toast.makeText(mContext, "Pdf Generated", Toast.LENGTH_SHORT).show();
                 hideProgress();
 
@@ -424,21 +424,21 @@ public  class
 
 
 
-     @Override
-     public boolean onOptionsItemSelected(MenuItem item) {
-         switch (item.getItemId()) {
-             case android.R.id.home:
-                 Intent intent = new Intent(SingleLeadECG.this, EcgOptionsActivity.class);
-                 startActivity(intent);
-                 finish();
-                 break;
-         }
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                Intent intent = new Intent(SingleLeadECG.this, EcgOptionsActivity.class);
+                startActivity(intent);
+                finish();
+                break;
+        }
 
-         return super.onOptionsItemSelected(item);
-     }
+        return super.onOptionsItemSelected(item);
+    }
 
-     @Override
-     public void onBackPressed() {
+    @Override
+    public void onBackPressed() {
 
         DialogUtil.getOKCancelDialog(this, "Warning", "Do you want to complete Single Lead Test?", "Yes", "No", new DialogInterface.OnClickListener() {
             @Override
@@ -463,37 +463,37 @@ public  class
 
     }
 
-     @Override
-     public void onError(Errors errors) {
-         Toast.makeText(mContext, errors.getErrorMsg(), Toast.LENGTH_SHORT).show();
-         Log.d("ktest","came in failure");
+    @Override
+    public void onError(Errors errors) {
+        Toast.makeText(mContext, errors.getErrorMsg(), Toast.LENGTH_SHORT).show();
+        Log.d("ktest","came in failure");
 //         btnsavell.setVisibility(View.VISIBLE);
 //         txttakeagain.setVisibility(View.VISIBLE);
 //         LeadOne.setVisibility(View.GONE);
 
-     }
+    }
 
-     @Override
-     public void onSuccess(Success success) {
-       this.recreate();
-         Toast.makeText(mContext, success.getSuccessMsg(), Toast.LENGTH_SHORT).show();
+    @Override
+    public void onSuccess(Success success) {
+        this.recreate();
+        Toast.makeText(mContext, success.getSuccessMsg(), Toast.LENGTH_SHORT).show();
 //         Log.d("ktest","came in success");
 //         btnsavell.setVisibility(View.VISIBLE);
 //         txttakeagain.setVisibility(View.VISIBLE);
 //         LeadOne.setVisibility(View.GONE);
 
-     }
+    }
 
-     @Override
-     public void onDestroy(){
+    @Override
+    public void onDestroy(){
         super.onDestroy();
 
-         Log.d("ktest","Seek and Destroy");
+        Log.d("ktest","Seek and Destroy");
 
-     }
-
-
+    }
 
 
 
- }
+
+
+}

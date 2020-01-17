@@ -59,7 +59,6 @@ public class LimbSixLead extends AppCompatActivity {
     SharedPreferences pref;
     ECGReport ecgReport=new ECGReport();
     SweetAlertDialog pDialog;
-    Toolbar toolbar;
     TextView description;
     ActivityLimbLeadBinding binding;
     static  String pdfurl = "";
@@ -83,10 +82,6 @@ public class LimbSixLead extends AppCompatActivity {
 //        labdb = new LabDB(getApplicationContext());
 //        ecgReport=labdb.getLastEcgSign(ptno);
         mContext = getApplicationContext();
-        toolbar = findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-        getSupportActionBar().setTitle("Limb Six Lead");
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         hideAndSeek(buttoncollectionshide,true);
         ArrayList<String> buttoncollectionsshowstart=new ArrayList<String>(Arrays.asList("txtlimbleadone"));
         hideAndSeek(buttoncollectionsshowstart,false);
