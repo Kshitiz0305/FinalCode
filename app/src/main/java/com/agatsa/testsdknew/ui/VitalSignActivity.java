@@ -134,8 +134,8 @@ public class VitalSignActivity extends AppCompatActivity  {
     public void onBackPressed() {
 
             DialogUtil.getOKCancelDialog(this, "", "Do you want to discard the  vital test of " + newPatient.getPtName(), "Yes","No", (dialogInterface, i) -> {
-                Intent intent = new Intent(VitalSignActivity.this,TestListActivity.class);
-                startActivity(intent);
+
+                VitalSignActivity.super.onBackPressed();
 
             });
 
