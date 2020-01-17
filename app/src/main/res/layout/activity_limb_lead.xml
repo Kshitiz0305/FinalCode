@@ -13,7 +13,7 @@
     android:background="@color/colorOffWhite"
     android:orientation="vertical"
     >
-    <include layout="@layout/toolbar"/>
+
 
 
     <androidx.cardview.widget.CardView
@@ -54,7 +54,7 @@
                 android:id="@+id/tv_description"
                 android:fontFamily="@font/sfpro_display_semibold"
                 android:text="@string/ecginfo"
-                android:textColor="@color/colorPrimary"
+                android:textColor="@color/colorPrimaryDark"
                 android:textSize="15.7sp" />
 
 
@@ -72,7 +72,7 @@
                     android:layout_weight="1"
                     android:fontFamily="@font/sfpro_display_semibold"
                     android:text=" Take Lead 1"
-                    android:textColor="@color/colorPrimary"
+                    android:textColor="@color/colorPrimaryDark"
                     android:textSize="15.7sp" />
 
 
@@ -104,7 +104,7 @@
                     android:layout_weight="1"
                     android:fontFamily="@font/sfpro_display_semibold"
                     android:text="Take Lead 1 again"
-                    android:textColor="@color/colorPrimary"
+                    android:textColor="@color/colorPrimaryDark"
                     android:textSize="15.7sp" />
 
 

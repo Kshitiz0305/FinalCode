@@ -3,6 +3,7 @@ package com.agatsa.testsdknew.ui;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 
@@ -21,7 +22,7 @@ public class TestActivity extends AppCompatActivity {
     TestActionBinding binding;
     PatientModel patientModel;
     String ptid;
-    Toolbar toolbar;
+    String patientname;
 
 
 
@@ -29,49 +30,42 @@ public class TestActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = DataBindingUtil.setContentView(this, R.layout.test_action);
-        toolbar = findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-        getSupportActionBar().setTitle("Perform test");
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
          patientModel = getIntent().getParcelableExtra("patient");
          ptid = getIntent().getStringExtra("ptid");
+
+
 
 if(patientModel!=null){
 
     binding.patientName.setText(patientModel.getPtName());
 
+
+}else{
+    binding.patientName.setText(patientname);
+
 }
 
-binding.btnNewPatient.setOnClickListener(new View.OnClickListener() {
-    @Override
-    public void onClick(View view) {
+binding.btnNewPatient.setOnClickListener(view -> {
 
-        Intent i = new Intent(TestActivity.this,LandingActivity.class);
-        startActivity(i);
+    Intent i = new Intent(TestActivity.this,LandingActivity.class);
+    startActivity(i);
 
 
-    }
 });
 
 
-        binding.btnTest.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(TestActivity.this,TestListActivity.class);
-                intent.putExtra("ptid",ptid);
-                intent.putExtra("patient",patientModel);
-                startActivity(intent);
+        binding.btnTest.setOnClickListener(view -> {
+            Intent intent = new Intent(TestActivity.this,TestListActivity.class);
+            intent.putExtra("ptid",ptid);
+            intent.putExtra("patient",patientModel);
+            startActivity(intent);
 
 
-            }
         });
-        binding.logout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
+        binding.logout.setOnClickListener(view -> {
 //                android.os.Process.killProcess(android.os.Process.myPid());
-                System.exit(0);
+            System.exit(0);
 
-            }
         });
 
 
@@ -83,6 +77,7 @@ binding.btnNewPatient.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
                 Intent intent = new Intent(TestActivity.this,LandingActivity.class);
+
                 startActivity(intent);
 
             }

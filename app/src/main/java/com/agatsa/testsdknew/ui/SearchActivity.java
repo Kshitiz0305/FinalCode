@@ -33,7 +33,6 @@ public class SearchActivity extends AppCompatActivity {
     LabDB labDB;
     private final CompositeDisposable mDisposable = new CompositeDisposable();
     PatientDetailAdapter adapter;
-    Toolbar toolbar;
 
 
 
@@ -57,10 +56,6 @@ public class SearchActivity extends AppCompatActivity {
         binding.rvOption.setLayoutManager(linearLayoutManager);
         labDB = new LabDB(getApplicationContext());
         binding.spSearchType.setSelection(0);
-        toolbar = findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-        getSupportActionBar().setTitle("Existing Patient");
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         binding.spSearchType.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -106,6 +101,7 @@ public class SearchActivity extends AppCompatActivity {
                          Intent intent = new Intent(SearchActivity.this,TestActivity.class);
                          intent.putExtra("patient",adapter.getSelectedLocationitem());
                          intent.putExtra("ptid",adapter.getSelectedLocationitem().getId());
+                         intent.putExtra("ptname",adapter.getSelectedLocationitem().getPtName());
                          startActivity(intent);
                      }
                  });
@@ -192,17 +188,6 @@ public class SearchActivity extends AppCompatActivity {
     }
 
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case android.R.id.home:
-                onBackPressed();
-
-                break;
-        }
-
-        return super.onOptionsItemSelected(item);
-    }
 
     public  void  updateSearchTable(PatientModel patientModel){
 

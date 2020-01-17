@@ -53,7 +53,7 @@ public  class
     SharedPreferences pref;
     ECGReport ecgReport=new ECGReport();
     SweetAlertDialog pDialog;
-    Toolbar toolbar;
+
     static int state=0;
 
     InitiateEcg initiateEcg;
@@ -98,10 +98,6 @@ public  class
 //        labdb = new LabDB(getApplicationContext());
 //        ecgReport=labdb.getLastEcgSign(ptno);
         mContext = getApplicationContext();
-        toolbar = findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-        getSupportActionBar().setTitle("Single Lead");
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         initOnClickListener();
     }

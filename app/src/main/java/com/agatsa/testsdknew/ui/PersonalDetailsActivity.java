@@ -897,22 +897,19 @@ catch (Exception e){
     @Override
     public void onBackPressed() {
 
-        DialogUtil.getOKCancelDialog(this, "Warning", " Do you want to save data?", "Yes", "No", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialogInterface, int i) {
-                if (validator.validate()) {
-                    Toast.makeText(getApplicationContext(), "Saving Data", Toast.LENGTH_LONG).show();
-                    new savedata().execute();
+        DialogUtil.getOKCancelDialog(this, "Warning", " Do you want to save data?", "Yes", "No", (dialogInterface, i) -> {
+            if (validator.validate()) {
+                Toast.makeText(getApplicationContext(), "Saving Data", Toast.LENGTH_LONG).show();
+                new savedata().execute();
 //                    navigatenext();
-                }
-                else {
+            }
+            else {
 
-                    Toast.makeText(getApplicationContext(), "Validation Error", Toast.LENGTH_LONG).show();
-
-                }
-
+                Toast.makeText(getApplicationContext(), "Validation Error", Toast.LENGTH_LONG).show();
 
             }
+
+
         }, (dialogInterface, i) -> {
 
             Intent intent = new Intent(PersonalDetailsActivity.this, PatientActivity.class);

@@ -38,7 +38,7 @@ public class TwelveLeadEcg extends AppCompatActivity {
     int ptno = 0;
     SharedPreferences pref;
     SweetAlertDialog pDialog;
-    Toolbar toolbar;
+
 
 
 
@@ -53,10 +53,7 @@ public class TwelveLeadEcg extends AppCompatActivity {
 //        labdb = new LabDB(getApplicationContext());
 //        ecgReport=labdb.getLastEcgSign(ptno);
         mContext = getApplicationContext();
-        toolbar = findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-        getSupportActionBar().setTitle("Twelve Lead");
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
 
 
         initViews();

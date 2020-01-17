@@ -7,7 +7,25 @@
     android:background="@color/colorOffWhite"
     android:orientation="vertical"
     >
-    <include layout="@layout/toolbar"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Single Lead"
+        android:gravity="center"
+        android:fontFamily="@font/sfpro_display_bold"
+        android:padding="8sp"
+        android:textColor="@color/colorPrimaryDark"
+        android:textSize="17sp" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/graylight" />
+
+
+
+
 
 
     <androidx.cardview.widget.CardView
@@ -39,7 +57,7 @@
                 android:layout_marginTop="@dimen/_5sdp"
                 android:fontFamily="@font/sfpro_display_semibold"
                 android:text="@string/ecginfo"
-                android:textColor="@color/colorPrimary"
+                android:textColor="@color/colorPrimaryDark"
                 android:textSize="15.7sp" />
 
             <View
@@ -63,7 +81,7 @@
                     android:layout_weight="1"
                     android:fontFamily="@font/sfpro_display_semibold"
                     android:text="Take Single Lead"
-                    android:textColor="@color/colorPrimary"
+                    android:textColor="@color/colorPrimaryDark"
                     android:textSize="15.7sp" />
 
 
@@ -90,7 +108,7 @@
                     android:layout_weight="1"
                     android:fontFamily="@font/sfpro_display_semibold"
                     android:text="@string/take_again"
-                    android:textColor="@color/colorPrimary"
+                    android:textColor="@color/colorPrimaryDark"
                     android:textSize="15.7sp" />
 
 

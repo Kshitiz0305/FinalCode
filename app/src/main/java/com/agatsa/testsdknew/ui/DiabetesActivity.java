@@ -3,7 +3,6 @@ package com.agatsa.testsdknew.ui;
 import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
@@ -29,6 +28,7 @@ public class DiabetesActivity extends AppCompatActivity {
     String ptno = "";
     PatientModel newPatient = new PatientModel();
     LabDB labDB;
+    String ptname;
     ActivityDiabetesBinding binding;
     Validator validator;
     GlucoseModel glucoseModel=new GlucoseModel();
@@ -43,7 +43,6 @@ public class DiabetesActivity extends AppCompatActivity {
         pref = this.getSharedPreferences("sunyahealth", Context.MODE_PRIVATE);
         ptno = pref.getString("PTNO", "");
         newPatient = getIntent().getParcelableExtra("patient");
-        Log.d("diabetespt",ptno);
 
         labDB = new LabDB(getApplicationContext());
 //        vitalSign = labDB.getLastVitalSign(ptno);
@@ -72,19 +71,14 @@ public class DiabetesActivity extends AppCompatActivity {
 
     public void navigatetonextactivity(){
         Intent intent = new Intent(DiabetesActivity.this,TestListActivity.class);
+        intent.putExtra("patientname",ptname);
         startActivity(intent);
     }
 
     @Override
     public void onBackPressed() {
-        DialogUtil.getOKCancelDialog(this, "", "Do you want to discard the  diabetes test of " + newPatient.getPtName(), "Yes","No", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialogInterface, int i) {
-                Intent intent = new Intent(DiabetesActivity.this,TestListActivity.class);
-                startActivity(intent);
-
-            }
-        });
+        DialogUtil.getOKCancelDialog(this, "", "Do you want to discard the  diabetes test of " + ptname + "?", "Yes","No", (dialogInterface, i) ->
+                navigatetonextactivity());
     }
 
 
@@ -114,7 +108,6 @@ public class DiabetesActivity extends AppCompatActivity {
             }
             // Save Vital Sign
             glucoseModel.setPt_no(ptno);
-            Log.wtf("setptno",ptno);
             glucoseModel.setPtGlucose((getEdittextValue(binding.txtglucose)));
             String last_vitalsign_row_id = db.SaveGlucoseSign(glucoseModel);
             try {
@@ -143,7 +136,7 @@ public class DiabetesActivity extends AppCompatActivity {
             } else {
                 if (dialog.isShowing())
                     dialog.dismiss();
-                Toast.makeText(getApplicationContext(), "Patient Saved " + newPatient.getPtNo() + " V " + glucoseModel.getRow_id(), Toast.LENGTH_LONG).show();
+//                Toast.makeText(getApplicationContext(), "Patient Saved " + newPatient.getPtNo() + " V " + glucoseModel.getRow_id(), Toast.LENGTH_LONG).show();
             }
         }
     }

@@ -10,7 +10,22 @@
         android:background="@color/colorOffWhite"
         android:layout_height="match_parent">
 
-        <include layout="@layout/toolbar"/>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Existing Patient"
+            android:gravity="center"
+            android:fontFamily="@font/sfpro_display_bold"
+            android:padding="8sp"
+            android:textColor="@color/colorPrimaryDark"
+            android:textSize="17sp" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/graylight" />
+
+
 
         <ScrollView
             android:layout_width="match_parent"
@@ -189,7 +204,7 @@
                         android:layout_marginTop="@dimen/_25sdp"
                         android:text="Proceed"
                         android:textColor="@color/white"
-                        android:background="@drawable/toast_backgraound"
+                        android:background="@drawable/rect_orange"
                         android:layout_marginBottom="@dimen/_5sdp"
                         android:layout_gravity="center"/>
 

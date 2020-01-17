@@ -12,7 +12,23 @@
     android:background="@color/colorOffWhite"
     android:orientation="vertical"
     >
-    <include layout="@layout/toolbar"/>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Chest Six Lead"
+        android:gravity="center"
+        android:fontFamily="@font/sfpro_display_bold"
+        android:padding="8sp"
+        android:textColor="@color/colorPrimaryDark"
+        android:textSize="17sp" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/graylight" />
+
+
+
 
 
     <androidx.cardview.widget.CardView
@@ -62,7 +78,7 @@
                     android:layout_weight="1"
                     android:fontFamily="@font/sfpro_display_semibold"
                     android:text="Take V1"
-                    android:textColor="@color/colorPrimary"
+                    android:textColor="@color/colorPrimaryDark"
                     android:textSize="15.7sp" />
 
 
@@ -94,7 +110,7 @@
                     android:layout_weight="1"
                     android:fontFamily="@font/sfpro_display_semibold"
                     android:text=" Take V1 again"
-                    android:textColor="@color/colorPrimary"
+                    android:textColor="@color/colorPrimaryDark"
                     android:textSize="15.7sp" />
 
 
@@ -128,7 +144,7 @@
                     android:layout_weight="1"
                     android:fontFamily="@font/sfpro_display_semibold"
                     android:text=" Take V2"
-                    android:textColor="@color/colorPrimary"
+                    android:textColor="@color/colorPrimaryDark"
                     android:textSize="15.7sp" />
 
 
@@ -162,7 +178,7 @@
                     android:layout_weight="1"
                     android:fontFamily="@font/sfpro_display_semibold"
                     android:text=" Take V2 again"
-                    android:textColor="@color/colorPrimary"
+                    android:textColor="@color/colorPrimaryDark"
                     android:textSize="15.7sp" />
 
 
@@ -196,7 +212,7 @@
                     android:layout_weight="1"
                     android:fontFamily="@font/sfpro_display_semibold"
                     android:text="Take V3"
-                    android:textColor="@color/colorPrimary"
+                    android:textColor="@color/colorPrimaryDark"
                     android:textSize="15.7sp" />
 
                 <ImageView
@@ -229,7 +245,7 @@
                     android:layout_weight="1"
                     android:fontFamily="@font/sfpro_display_semibold"
                     android:text="Take V3 again"
-                    android:textColor="@color/colorPrimary"
+                    android:textColor="@color/colorPrimaryDark"
                     android:textSize="15.7sp" />
 
                 <ImageView
@@ -263,7 +279,7 @@
                     android:layout_weight="1"
                     android:fontFamily="@font/sfpro_display_semibold"
                     android:text="Take V4"
-                    android:textColor="@color/colorPrimary"
+                    android:textColor="@color/colorPrimaryDark"
                     android:textSize="15.7sp" />
 
 
@@ -294,7 +310,7 @@
                     android:layout_weight="1"
                     android:fontFamily="@font/sfpro_display_semibold"
                     android:text=" Take V4 again"
-                    android:textColor="@color/colorPrimary"
+                    android:textColor="@color/colorPrimaryDark"
                     android:textSize="15.7sp" />
 
 
@@ -327,7 +343,7 @@
                     android:layout_weight="1"
                     android:fontFamily="@font/sfpro_display_semibold"
                     android:text="Take V5"
-                    android:textColor="@color/colorPrimary"
+                    android:textColor="@color/colorPrimaryDark"
                     android:textSize="15.7sp" />
 
 
@@ -358,7 +374,7 @@
                     android:layout_weight="1"
                     android:fontFamily="@font/sfpro_display_semibold"
                     android:text="Take V5 again"
-                    android:textColor="@color/colorPrimary"
+                    android:textColor="@color/colorPrimaryDark"
                     android:textSize="15.7sp" />
 
 
@@ -390,7 +406,7 @@
                     android:layout_weight="1"
                     android:fontFamily="@font/sfpro_display_semibold"
                     android:text=" Take V6"
-                    android:textColor="@color/colorPrimary"
+                    android:textColor="@color/colorPrimaryDark"
                     android:textSize="15.7sp" />
 
 
@@ -422,7 +438,7 @@
                     android:layout_weight="1"
                     android:fontFamily="@font/sfpro_display_semibold"
                     android:text=" Take V6 again"
-                    android:textColor="@color/colorPrimary"
+                    android:textColor="@color/colorPrimaryDark"
                     android:textSize="15.7sp" />
 
 

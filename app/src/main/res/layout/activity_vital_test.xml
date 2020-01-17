@@ -6,6 +6,14 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginRight="10dp"
+            android:layout_height="match_parent">
+
+
 
         <LinearLayout
 
@@ -308,8 +316,7 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="2"
+                android:layout_height="@dimen/_135sdp"
                 android:orientation="vertical">
 
                 <TextView
@@ -348,21 +355,25 @@
 
                 </LinearLayout>
 
+
                 <Button
                     android:id="@+id/btnsave"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/_10kdp"
-                    android:layout_marginTop="@dimen/_10kdp"
-                    android:layout_marginRight="@dimen/_10kdp"
+                    android:layout_gravity="center"
                     android:background="@drawable/rect_orange"
                     android:text="SAVE"
-                    android:textColor="@color/white" />
+                    android:layout_marginRight="@dimen/_10sdp"
+                    android:layout_marginLeft="@dimen/_10sdp"
+                    android:layout_marginTop="@dimen/_8sdp"
+                    android:textColor="@color/white"
+                    android:visibility="visible" />
 
 
             </LinearLayout>
 
 
         </LinearLayout>
+        </androidx.cardview.widget.CardView>
     </ScrollView>
 </layout>

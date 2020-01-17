@@ -9,6 +9,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.widget.Button;
 import android.widget.EditText;
@@ -39,6 +40,7 @@ public class VitalSignActivity extends AppCompatActivity  {
     Validator validator;
     ActivityVitalTestBinding binding;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -54,6 +56,8 @@ public class VitalSignActivity extends AppCompatActivity  {
         ptno = pref.getString("PTNO", "");
         newPatient = getIntent().getParcelableExtra("patient");
         Log.d("rantestvitalpt",ptno);
+
+
 
         labDB = new LabDB(getApplicationContext());
         vitalSign = labDB.getLastVitalSign(ptno);
@@ -128,15 +132,22 @@ public class VitalSignActivity extends AppCompatActivity  {
 
     @Override
     public void onBackPressed() {
-        DialogUtil.getOKCancelDialog(this, "", "Do you want to discard the  vital test of " + newPatient.getPtName(), "Yes","No", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialogInterface, int i) {
+
+            DialogUtil.getOKCancelDialog(this, "", "Do you want to discard the  vital test of " + newPatient.getPtName(), "Yes","No", (dialogInterface, i) -> {
                 Intent intent = new Intent(VitalSignActivity.this,TestListActivity.class);
                 startActivity(intent);
 
-            }
-        });
+            });
+
+
+
+
+
     }
+
+
+
+
 
     public void navigatetonextactivity(){
         Intent intent = new Intent(VitalSignActivity.this,TestListActivity.class);

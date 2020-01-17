@@ -53,7 +53,6 @@ public class LimbSixLead extends AppCompatActivity {
     SharedPreferences pref;
     ECGReport ecgReport=new ECGReport();
     SweetAlertDialog pDialog;
-    Toolbar toolbar;
     TextView description;
     public  static  final String imagesrc = "gif_lead1";
     public  static  final String descriptionsrc = "ecginfo";
@@ -79,10 +78,6 @@ public class LimbSixLead extends AppCompatActivity {
 //        labdb = new LabDB(getApplicationContext());
 //        ecgReport=labdb.getLastEcgSign(ptno);
         mContext = getApplicationContext();
-        toolbar = findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-        getSupportActionBar().setTitle("Limb Six Lead");
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         hideAndSeek(buttoncollectionshide,true);
         hideAndSeek(buttoncollectionsshow,false);
 
