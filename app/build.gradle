@@ -98,9 +98,7 @@ dependencies {
 
     // material dialogs
     api 'com.afollestad.material-dialogs:core:0.9.6.0'
-
-
-
+    implementation project(path: ':openCVLibrary320')
 
 
 }

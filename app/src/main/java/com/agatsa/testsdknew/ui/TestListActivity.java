@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -65,6 +66,16 @@ public class TestListActivity extends AppCompatActivity {
 
 
     });
+
+   binding.tblUrineTest.setOnClickListener(new View.OnClickListener() {
+       @Override
+       public void onClick(View view) {
+           Intent i = new Intent(TestListActivity.this, CapturedImageActivity.class);
+           i.putExtra("PTNO", pt_id);
+           startActivity(i);
+
+       }
+   });
 
 
 
