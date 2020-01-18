@@ -379,6 +379,7 @@ public class LabDB extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = db.rawQuery("select * from " + TABLE_PT_DETAILS+" where ptName  like?", new String[]{name});
         while (cursor.moveToNext()) {
+//            this model is to be rechecked
             PatientModel patientModel = new PatientModel();
             patientModel.setId(cursor.getString(0));
             patientModel.setPtNo(cursor.getString(1));
@@ -387,6 +388,7 @@ public class LabDB extends SQLiteOpenHelper {
             patientModel.setPtContactNo(cursor.getString(4));
             patientModel.setPtEmail(cursor.getString(5));
             patientModel.setPtAge(cursor.getString(6));
+            patientModel.setPtSex(cursor.getString(8));
             patientModelList.add(patientModel);
 
 
@@ -637,6 +639,7 @@ public class LabDB extends SQLiteOpenHelper {
         values.put(COLUMN_RMSSD, ecgReport.getRmssd());
         values.put(COLUMN_MRR, ecgReport.getMrr());
         values.put(COLUMN_FINDING, ecgReport.getFinding());
+        values.put(COLUMN_FILEPATH, ecgReport.getFilepath());
         values.put(COLUMN_UPDATEDDATE, Calendar.getInstance().getTimeInMillis() / 1000);
         values.put(COLUMN_ECGTYPE, ecgReport.getEcgType());
         if (!ecgReport.getRow_id().equals("")) {
@@ -645,7 +648,7 @@ public class LabDB extends SQLiteOpenHelper {
         } else {
             values.put(COLUMN_ADDEDDATE, Calendar.getInstance().getTimeInMillis() / 1000);
             db.insert(TABLE_ECG_SIGN, null, values);
-            idFlowable =Flowable.just( ecgReport.getRow_id());
+            idFlowable =Flowable.just( getLastID(TABLE_ECG_SIGN,db));
         }
         db.close();
         return idFlowable;
@@ -815,6 +818,28 @@ public class LabDB extends SQLiteOpenHelper {
         cursor.close();
         db.close();
         return vitalSign;
+    }
+
+
+    public String getLastEcg( ) {
+        SQLiteDatabase db = this.getReadableDatabase();
+        String ecglastid ="";
+        Cursor cursor = db.rawQuery("SELECT * FROM " + TABLE_PT_DETAILS
+                + " WHERE " + COLUMN_ID + "= (SELECT MAX("+COLUMN_ID+")  FROM"+ TABLE_PT_DETAILS+")", new String[] {});
+//        SELECT *
+//                FROM    TABLE
+        if (cursor.moveToFirst()) {
+
+          ecglastid=  cursor.getString(0);
+
+//            vitalSign.setGlucose((cursor.getString(8)));
+        }
+
+        cursor.close();
+        db.close();
+        Log.d("rantest",ecglastid);
+        return ecglastid;
+
     }
 
 

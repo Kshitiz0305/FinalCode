@@ -36,6 +36,7 @@ import com.agatsa.sanketlife.development.Success;
 import com.agatsa.sanketlife.development.UserDetails;
 import com.agatsa.testsdknew.BuildConfig;
 import com.agatsa.testsdknew.Models.ECGReport;
+import com.agatsa.testsdknew.Models.PatientModel;
 import com.agatsa.testsdknew.R;
 import com.agatsa.testsdknew.customviews.DialogUtil;
 import com.agatsa.testsdknew.databinding.ActivitySingleLeadBinding;
@@ -48,6 +49,10 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.CompositeDisposable;
+import io.reactivex.schedulers.Schedulers;
+
 
 public  class
 
@@ -56,6 +61,7 @@ SingleLeadECG extends AppCompatActivity implements ResponseCallback {
     private static final String SECRET_ID = "5a3b4c16b4a56b000132f5d5746be305d56c49e49cc88b12ccb05d71";
     private Button btnsavereport,back;
     private MaterialDialog progressDialog;
+    private final CompositeDisposable mDisposable = new CompositeDisposable();
 
     LinearLayout LeadOne,txttakeagain,btnsavell,viewreportll;
     private Context mContext;
@@ -78,7 +84,7 @@ SingleLeadECG extends AppCompatActivity implements ResponseCallback {
 
 
 
-
+ PatientModel patientModel;
 
 
     @Override
@@ -88,6 +94,7 @@ SingleLeadECG extends AppCompatActivity implements ResponseCallback {
         checkPermissions();
         pref = this.getSharedPreferences("sunyahealth", Context.MODE_PRIVATE);
         ptno = pref.getString("PTNO","");
+        patientModel = getIntent().getParcelableExtra("patient");
 
 
 
@@ -350,25 +357,6 @@ SingleLeadECG extends AppCompatActivity implements ResponseCallback {
         initiateEcg.saveEcgData(mContext, "test", new SaveEcgCallBack() {
             @Override
             public void onSuccess(Success success, EcgConfig ecgConfig) {
-                LabDB db = new LabDB(getApplicationContext());
-                ecgReport.setPt_no(ptno);
-                ecgReport.setHeartrate(ecgConfig.getHeartRate());
-                ecgReport.setPr((ecgConfig.getpR()));
-                ecgReport.setQt(ecgConfig.getqT());
-                ecgReport.setQtc(ecgConfig.getqTc());
-                ecgReport.setQrs(ecgConfig.getqRs());
-                ecgReport.setSdnn(ecgConfig.getSdnn());
-                ecgReport.setRmssd(ecgConfig.getRmssd());
-                ecgReport.setMrr(ecgConfig.getmRR());
-                ecgReport.setFinding(ecgConfig.getFinding());
-                ecgReport.setEcgType("SL");
-                String last_ecgsign_row_id = db.SaveSingleleadECGSign(ecgReport);
-                try {
-                    Thread.sleep(1000);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-                ecgReport.setRow_id(last_ecgsign_row_id);
                 setMobileDataEnabled(SingleLeadECG.this,false);
                 makePDF(ecgConfig);
 //                Toast.makeText(mContext, success.getSuccessMsg(), Toast.LENGTH_SHORT).show();
@@ -383,6 +371,7 @@ SingleLeadECG extends AppCompatActivity implements ResponseCallback {
 
             @Override
             public void onError(Errors error) {
+                setMobileDataEnabled(SingleLeadECG.this,true);
                 Toast.makeText(mContext, error.getErrorMsg(), Toast.LENGTH_SHORT).show();
             }
         });
@@ -392,29 +381,73 @@ SingleLeadECG extends AppCompatActivity implements ResponseCallback {
 
     public void makePDF(EcgConfig ecgConfig) {
         InitiateEcg initiateEcg = new InitiateEcg();
-        initiateEcg.makeEcgReport(mContext, new UserDetails("Vikas", "24", "Male"), true, SECRET_ID, ecgConfig, new PdfCallback() {
-            @Override
-            public void onPdfAvailable(EcgConfig ecgConfig) {
+        if(patientModel==null)
+            DialogUtil.getOKDialog(this,"Error","Error while loading","OK");
+    else {
+            initiateEcg.makeEcgReport(mContext, new UserDetails(patientModel.getPtName(), patientModel.getPtAge(), patientModel.getPtSex()), true, SECRET_ID, ecgConfig, new PdfCallback() {
+                @Override
+                public void onPdfAvailable(EcgConfig ecgConfig) {
+                    LabDB db = new LabDB(getApplicationContext());
+                    ecgReport.setPt_no(ptno);
+                    ecgReport.setHeartrate(ecgConfig.getHeartRate());
+                    ecgReport.setPr((ecgConfig.getpR()));
+                    ecgReport.setQt(ecgConfig.getqT());
+                    ecgReport.setQtc(ecgConfig.getqTc());
+                    ecgReport.setQrs(ecgConfig.getqRs());
+                    ecgReport.setSdnn(ecgConfig.getSdnn());
+                    ecgReport.setRmssd(ecgConfig.getRmssd());
+                    ecgReport.setMrr(ecgConfig.getmRR());
+                    ecgReport.setFinding(ecgConfig.getFinding());
+                    ecgReport.setEcgType("SL");
+                    ecgReport.setFilepath(ecgConfig.getFileUrl());
+                    Log.d("url",ecgConfig.getFileUrl());
+                    mDisposable.add(db.updateEcgObserVable(ecgReport)
+                            .subscribeOn(Schedulers.io())
+                            .observeOn(AndroidSchedulers.mainThread())
+                            .subscribe(ecgid -> {
 
-                Log.e("makepdfpath", ecgConfig.getFileUrl());
-                String filePath = ecgConfig.getFileUrl();
-                pdfuri = ecgConfig.getFileUrl();
-                binding.viewreportll.setVisibility(View.VISIBLE);
-                binding.btViewreport.setVisibility(View.VISIBLE);
-                setMobileDataEnabled(SingleLeadECG.this,true);
-                Toast.makeText(mContext, "Pdf Generated", Toast.LENGTH_SHORT).show();
-                hideProgress();
+                                        if (ecgid != null) {
+
+                                            if (!ecgid.equals("")) {
+
+                                                DialogUtil.getOKDialog(SingleLeadECG.this, "", "Report Saved Successfully", "ok");
+
+                                            } else {
+                                                DialogUtil.getOKDialog(SingleLeadECG.this, "", "Error While saving", "ok");
+                                            }
 
 
-            }
+                                        } else {
 
-            @Override
-            public void onError(Errors errors) {
-                hideProgress();
-                Toast.makeText(mContext, errors.getErrorMsg(), Toast.LENGTH_SHORT).show();
-                setMobileDataEnabled(SingleLeadECG.this,true);
-            }
-        });
+                                            DialogUtil.getOKDialog(SingleLeadECG.this, "", "Error While saving", "ok");
+                                        }
+                                    },
+                                    throwable -> Log.e("rantest", "Unable to get username", throwable)));
+
+
+
+                    Log.e("makepdfpath", ecgConfig.getFileUrl());
+                    String filePath = ecgConfig.getFileUrl();
+                    pdfuri = ecgConfig.getFileUrl();
+                    binding.viewreportll.setVisibility(View.VISIBLE);
+                    binding.btViewreport.setVisibility(View.VISIBLE);
+                    setMobileDataEnabled(SingleLeadECG.this,true);
+                    Toast.makeText(mContext, "Pdf Generated", Toast.LENGTH_SHORT).show();
+                    hideProgress();
+
+
+                }
+
+                @Override
+                public void onError(Errors errors) {
+                    hideProgress();
+                    Toast.makeText(mContext, errors.getErrorMsg(), Toast.LENGTH_SHORT).show();
+                    setMobileDataEnabled(SingleLeadECG.this,true);
+                }
+            });
+
+
+        }
     }
 
 

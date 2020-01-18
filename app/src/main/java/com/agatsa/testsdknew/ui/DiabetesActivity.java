@@ -60,7 +60,6 @@ public class DiabetesActivity extends AppCompatActivity {
         binding.btnsaveglucose.setOnClickListener(v -> {
             if(validator.validate()){
                new SaveData().execute();
-               navigatetonextactivity();
 
 
             }
@@ -69,16 +68,12 @@ public class DiabetesActivity extends AppCompatActivity {
 
     }
 
-    public void navigatetonextactivity(){
-        Intent intent = new Intent(DiabetesActivity.this,TestListActivity.class);
-        intent.putExtra("patientname",ptname);
-        startActivity(intent);
-    }
+
 
     @Override
     public void onBackPressed() {
         DialogUtil.getOKCancelDialog(this, "", "Do you want to discard the  diabetes test of " + ptname + "?", "Yes","No", (dialogInterface, i) ->
-                navigatetonextactivity());
+        DiabetesActivity.super.onBackPressed());
     }
 
 
@@ -136,7 +131,8 @@ public class DiabetesActivity extends AppCompatActivity {
             } else {
                 if (dialog.isShowing())
                     dialog.dismiss();
-//                Toast.makeText(getApplicationContext(), "Patient Saved " + newPatient.getPtNo() + " V " + glucoseModel.getRow_id(), Toast.LENGTH_LONG).show();
+                DiabetesActivity.super.onBackPressed();
+               Toast.makeText(getApplicationContext(), "Patient Saved " + newPatient.getPtNo() + " V " + glucoseModel.getRow_id(), Toast.LENGTH_LONG).show();
             }
         }
     }

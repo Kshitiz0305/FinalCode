@@ -33,7 +33,7 @@ public class VitalSignActivity extends AppCompatActivity  {
     SharedPreferences pref;
     Button btnSave;
     private ProgressDialog dialog;
-    PatientModel newPatient = new PatientModel();
+    PatientModel newPatient;
     VitalSign vitalSign = new VitalSign();
     EditText txtWeight, txtHeight, txtTemp, txtPulse, txtBPS, txtBPD, txtSTO2;
     LabDB labDB;
@@ -74,17 +74,17 @@ public class VitalSignActivity extends AppCompatActivity  {
         txtBPD = findViewById(R.id.txtBPDias);
 //        txtglucose=findViewById(R.id.txtglucose);
 
-        if(vitalSign != null) {
-            txtWeight.setText(String.valueOf(vitalSign.getWeight()));
-            txtHeight.setText(String.valueOf(vitalSign.getHeight()));
-            txtTemp.setText(String.valueOf(vitalSign.getTempt()));
-            txtPulse.setText(String.valueOf(vitalSign.getPulse()));
-            txtSTO2.setText(String.valueOf(vitalSign.getSto2()));
-            txtBPS.setText(String.valueOf(vitalSign.getBps()));
-            txtBPD.setText(String.valueOf(vitalSign.getBpd()));
-//            txtBPD.setText(String.valueOf(vitalSign.getGlucose()));
-
-        }
+//        if(vitalSign != null) {
+//            txtWeight.setText(String.valueOf(vitalSign.getWeight()));
+//            txtHeight.setText(String.valueOf(vitalSign.getHeight()));
+//            txtTemp.setText(String.valueOf(vitalSign.getTempt()));
+//            txtPulse.setText(String.valueOf(vitalSign.getPulse()));
+//            txtSTO2.setText(String.valueOf(vitalSign.getSto2()));
+//            txtBPS.setText(String.valueOf(vitalSign.getBps()));
+//            txtBPD.setText(String.valueOf(vitalSign.getBpd()));
+////            txtBPD.setText(String.valueOf(vitalSign.getGlucose()));
+//
+//        }
 
         btnSave = findViewById(R.id.btnsave);
         btnSave.setOnClickListener(v -> {
@@ -117,7 +117,7 @@ public class VitalSignActivity extends AppCompatActivity  {
 
                 }else{
                     new SaveData().execute();
-                    navigatetonextactivity();
+//                    navigatetonextactivity();
 
 
                 }
@@ -216,8 +216,10 @@ public class VitalSignActivity extends AppCompatActivity  {
             } else {
                 if (dialog.isShowing())
                     dialog.dismiss();
+                VitalSignActivity.super.onBackPressed();
                 Toast.makeText(getApplicationContext(), "Patient Saved " + newPatient.getPtNo() + " V " + vitalSign.getRow_id(), Toast.LENGTH_LONG).show();
             }
+
         }
     }
 

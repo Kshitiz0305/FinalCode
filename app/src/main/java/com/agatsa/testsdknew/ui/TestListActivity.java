@@ -54,6 +54,7 @@ public class TestListActivity extends AppCompatActivity {
 
     Intent i = new Intent(TestListActivity.this, EcgOptionsActivity.class);
     i.putExtra("PTNO", pt_id);
+       i.putExtra("patient",patientModel);
     startActivity(i);
 
    });
@@ -84,13 +85,7 @@ public class TestListActivity extends AppCompatActivity {
 
     }
 
-    @Override
-    public void onBackPressed() {
-        super.onBackPressed();
-        Intent intent = new Intent(TestListActivity.this, TestActivity.class);
-        startActivity(intent);
 
-    }
 
 
 

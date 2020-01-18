@@ -34,6 +34,7 @@ import com.agatsa.sanketlife.development.UserDetails;
 import com.agatsa.sanketlife.models.EcgTypes;
 import com.agatsa.testsdknew.BuildConfig;
 import com.agatsa.testsdknew.Models.ECGReport;
+import com.agatsa.testsdknew.Models.PatientModel;
 import com.agatsa.testsdknew.R;
 import com.agatsa.testsdknew.customviews.DialogUtil;
 import com.agatsa.testsdknew.databinding.ActivityChestLeadBinding;
@@ -68,7 +69,7 @@ public class ChestSixLead extends AppCompatActivity {
     public   static  int leadIndex = 0,x=0;
     public   static  boolean again =false;
     GifImageView gifImageView;
-
+PatientModel patientModel;
     static String pdfUrl="";
     ArrayList<String>  buttoncollectionshide =  new ArrayList<String>(Arrays.asList("txtvone",
             "txtvoneagain",
@@ -103,7 +104,7 @@ public class ChestSixLead extends AppCompatActivity {
 //        labdb = new LabDB(getApplicationContext());
 //        ecgReport=labdb.getLastEcgSign(ptno);
         mContext = getApplicationContext();
-
+        patientModel = getIntent().getParcelableExtra("patient");
         hideAndSeek(buttoncollectionshide,true);
         ArrayList<String> buttoncollectionsshowstart=new ArrayList<String>(Arrays.asList("txtvone"));
         hideAndSeek(buttoncollectionsshowstart,false);
@@ -399,46 +400,15 @@ public class ChestSixLead extends AppCompatActivity {
         initiateEcg.saveEcgData(mContext, "test", new SaveEcgCallBack() {
             @Override
             public void onSuccess(Success success, EcgConfig ecgConfig) {
-                LabDB db = new LabDB(getApplicationContext());
-                ecgReport.setPt_no(ptno);
-                ecgReport.setHeartrate(ecgConfig.getHeartRate());
-                ecgReport.setPr((ecgConfig.getpR()));
-                ecgReport.setQt(ecgConfig.getqT());
-                ecgReport.setQtc(ecgConfig.getqTc());
-                ecgReport.setQrs(ecgConfig.getqRs());
-                ecgReport.setSdnn(ecgConfig.getSdnn());
-                ecgReport.setRmssd(ecgConfig.getRmssd());
-                ecgReport.setMrr(ecgConfig.getmRR());
-                ecgReport.setFinding(ecgConfig.getFinding());
-                ecgReport.setEcgType("CSL");
-                mDisposable.add(db.updateEcgObserVable(ecgReport)
-                        .subscribeOn(Schedulers.io())
-                        .observeOn(AndroidSchedulers.mainThread())
-                        .subscribe(ecgid -> {
-
-                                    if (ecgid != null) {
-
-                                        if (!ecgid.equals("")) {
-
-                                            DialogUtil.getOKDialog(ChestSixLead.this, "", "Report Saved Successfully", "ok");
-
-                                        } else {
-                                            DialogUtil.getOKDialog(ChestSixLead.this, "", "Error While saving", "ok");
-                                        }
-
-
-                                    } else {
-
-                                        DialogUtil.getOKDialog(ChestSixLead.this, "", "Error While saving", "ok");
-                                    }
-                                },
-                                throwable -> Log.e("rantest", "Unable to get username", throwable)));
-
+                Toast.makeText(mContext,success.getSuccessMsg(), Toast.LENGTH_SHORT).show();
+                setMobileDataEnabled(ChestSixLead.this,false);
+                makePDF(ecgConfig);
 
 
         }
             @Override
             public void onError(Errors error) {
+                setMobileDataEnabled(ChestSixLead.this,false);
                 Toast.makeText(mContext, error.getErrorMsg(), Toast.LENGTH_SHORT).show();
             }
         });
@@ -475,10 +445,49 @@ public class ChestSixLead extends AppCompatActivity {
 
     public void makePDF(EcgConfig ecgConfig) {
         InitiateEcg initiateEcg = new InitiateEcg();
-        initiateEcg.makeEcgReport(mContext, new UserDetails("Vikas", "24", "Male"), true, SECRET_ID, ecgConfig, new PdfCallback() {
+        if(patientModel==null)
+            DialogUtil.getOKDialog(this,"Error","Error while loading","OK");
+        else {
+        initiateEcg.makeEcgReport(mContext, new UserDetails(patientModel.getPtName(), patientModel.getPtAge(), patientModel.getPtSex()), true, SECRET_ID, ecgConfig, new PdfCallback() {
             @Override
             public void onPdfAvailable(EcgConfig ecgConfig) {
                 Log.d("rantest", ecgConfig.getFileUrl());
+                LabDB db = new LabDB(getApplicationContext());
+                ecgReport.setPt_no(ptno);
+                ecgReport.setHeartrate(ecgConfig.getHeartRate());
+                ecgReport.setPr((ecgConfig.getpR()));
+                ecgReport.setQt(ecgConfig.getqT());
+                ecgReport.setQtc(ecgConfig.getqTc());
+                ecgReport.setQrs(ecgConfig.getqRs());
+                ecgReport.setSdnn(ecgConfig.getSdnn());
+                ecgReport.setRmssd(ecgConfig.getRmssd());
+                ecgReport.setMrr(ecgConfig.getmRR());
+                ecgReport.setFinding(ecgConfig.getFinding());
+                ecgReport.setEcgType("CSL");
+                ecgReport.setFilepath(ecgConfig.getFileUrl());
+                mDisposable.add(db.updateEcgObserVable(ecgReport)
+                        .subscribeOn(Schedulers.io())
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe(ecgid -> {
+
+                                    if (ecgid != null) {
+
+                                        if (!ecgid.equals("")) {
+
+                                            DialogUtil.getOKDialog(ChestSixLead.this, "", "Report Saved Successfully", "ok");
+
+                                        } else {
+                                            DialogUtil.getOKDialog(ChestSixLead.this, "", "Error While saving", "ok");
+                                        }
+
+
+                                    } else {
+
+                                        DialogUtil.getOKDialog(ChestSixLead.this, "", "Error While saving", "ok");
+                                    }
+                                },
+                                throwable -> Log.e("rantest", "Unable to get username", throwable)));
+
 
                 pdfUrl = ecgConfig.getFileUrl();
                 Toast.makeText(mContext, "Pdf Generated Successfully", Toast.LENGTH_SHORT).show();
@@ -495,7 +504,7 @@ public class ChestSixLead extends AppCompatActivity {
                 setMobileDataEnabled(ChestSixLead.this,true);
                 Toast.makeText(mContext, errors.getErrorMsg(), Toast.LENGTH_SHORT).show();
             }
-        });
+        });}
     }
     private void setMobileDataEnabled(Context context, boolean enabled) {
 

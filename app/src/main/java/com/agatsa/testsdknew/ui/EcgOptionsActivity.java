@@ -28,6 +28,7 @@ import com.agatsa.sanketlife.development.InitiateEcg;
 import com.agatsa.sanketlife.models.EcgTypes;
 import com.agatsa.testsdknew.Models.PatientModel;
 import com.agatsa.testsdknew.R;
+import com.agatsa.testsdknew.customviews.DialogUtil;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -46,6 +47,7 @@ public class EcgOptionsActivity extends AppCompatActivity {
             Manifest.permission.ACCESS_COARSE_LOCATION, Manifest.permission.WRITE_EXTERNAL_STORAGE,Manifest.permission.READ_EXTERNAL_STORAGE,Manifest.permission.CHANGE_WIFI_STATE};
 
     String pt_id;
+    PatientModel patientModel;
 
 
 
@@ -55,6 +57,11 @@ public class EcgOptionsActivity extends AppCompatActivity {
         setContentView(R.layout.activity_new_ecg_options);
         checkPermissions();
         pt_id = getIntent().getStringExtra("ptid");
+        patientModel = getIntent().getParcelableExtra("patient");
+        if(patientModel==null){
+
+            DialogUtil.getOKDialog(this,"","barbag","");
+        }
         singleleadecg=findViewById(R.id.singleleadecg);
         chestleadecg=findViewById(R.id.chestleadecg);
         mpd=new ProgressDialog(this);
@@ -72,7 +79,9 @@ public class EcgOptionsActivity extends AppCompatActivity {
         singleleadecg.setOnClickListener(v -> {
 //            intiaializing the first state in navigation
             SingleLeadECG.state=0;
+
             Intent i=new Intent(EcgOptionsActivity.this,SingleLeadECG.class);
+            i.putExtra("patient",patientModel);
             i.putExtra("pt_id",pt_id);
             startActivity(i);
 
@@ -84,6 +93,7 @@ public class EcgOptionsActivity extends AppCompatActivity {
             LimbSixLead.leadIndex =0;
             LimbSixLead.x=0;
             Intent i=new Intent(EcgOptionsActivity.this, LimbSixLead.class);
+            i.putExtra("patient",patientModel);
             i.putExtra("pt_id",pt_id);
             startActivity(i);
 
@@ -92,6 +102,7 @@ public class EcgOptionsActivity extends AppCompatActivity {
         fitnessECG.setOnClickListener(v -> {
             FitnessECG.state=0;
             Intent i=new Intent(EcgOptionsActivity.this,FitnessECG.class);
+            i.putExtra("patient",patientModel);
             startActivity(i);
 
         });
@@ -101,6 +112,7 @@ public class EcgOptionsActivity extends AppCompatActivity {
             ChestSixLead.leadIndex=0;
             ChestSixLead.again=false;
             Intent i=new Intent(EcgOptionsActivity.this,ChestSixLead.class);
+            i.putExtra("patient",patientModel);
             i.putExtra("pt_id",pt_id);
             startActivity(i);
 
@@ -111,6 +123,7 @@ public class EcgOptionsActivity extends AppCompatActivity {
             TwelveLeadEcg.leadIndex=0;
             TwelveLeadEcg.again=false;
             Intent i=new Intent(EcgOptionsActivity.this,TwelveLeadEcg.class);
+            i.putExtra("patient",patientModel);
             i.putExtra("pt_id",pt_id);
             startActivity(i);
 
@@ -118,6 +131,7 @@ public class EcgOptionsActivity extends AppCompatActivity {
 
         syncimg.setOnClickListener(v -> {
             Intent i=new Intent(EcgOptionsActivity.this, HistoryActivity.class);
+            i.putExtra("patient",patientModel);
             i.putExtra("type", EcgTypes.NORMAL_ECG);
             startActivity(i);
 
@@ -125,6 +139,7 @@ public class EcgOptionsActivity extends AppCompatActivity {
 
         longsyncimg.setOnClickListener(v -> {
             Intent i=new Intent(EcgOptionsActivity.this, HistoryActivity.class);
+            i.putExtra("patient",patientModel);
             i.putExtra("type", EcgTypes.LONG_ECG);
             startActivity(i);
 
@@ -181,13 +196,6 @@ public class EcgOptionsActivity extends AppCompatActivity {
 
 
 
-    @Override
-    public void onBackPressed() {
-        super.onBackPressed();
-        Intent intent = new Intent(EcgOptionsActivity.this, TestActivity.class);
-        startActivity(intent);
-
-    }
 
 
 
