@@ -12,6 +12,8 @@ public class ECGReport {
     double rmssd;
     double mrr;
     String finding;
+    String ecgType;
+    String filepath;
 
 
     public ECGReport() {
@@ -26,6 +28,24 @@ public class ECGReport {
         rmssd = 0;
         mrr = 0;
         finding = "";
+        String ecgType="";
+    }
+
+
+    public void setFilepath(String filepath) {
+        this.filepath = filepath;
+    }
+
+
+    public String getFilepath() {
+        return filepath;
+    }
+    public String getEcgType() {
+        return ecgType;
+    }
+
+    public void setEcgType(String ecgType) {
+        this.ecgType = ecgType;
     }
 
     public String getPt_no() {

@@ -77,6 +77,7 @@ public class LabDB extends SQLiteOpenHelper {
 
     // Patient Vital Sign
     private static final String TABLE_VITAL_SIGN = "vital_sign";
+
     // Columns of Vital Signs
 
     private static final String COLUMN_WEIGHT = "weight";
@@ -91,7 +92,7 @@ public class LabDB extends SQLiteOpenHelper {
 
 
     // Patient Vital Sign
-    private static final String TABLE_ECG_SIGN = "ecg_sign";
+    private static final String TABLE_ECG_SIGN = "ptEcg";
     // Columns of  SINGLE LEAD ECG Signs
 
     private static final String COLUMN_HEARTRATE = "heartrate";
@@ -103,6 +104,7 @@ public class LabDB extends SQLiteOpenHelper {
     private static final String COLUMN_RMSSD = "rmssd";
     private static final String COLUMN_MRR = "mrr";
     private static final String COLUMN_FINDING = "finding";
+    private static final String COLUMN_FILEPATH = "ptPath";
 
 //    private static final String TABLE_GLUCOSE_SIGN = "glucose_sign";
 //    // Columns of  SINGLE LEAD ECG Signs
@@ -156,6 +158,10 @@ public class LabDB extends SQLiteOpenHelper {
     private static final String CULUMN_Latitude = "ptLatitude";
     private static final String CULUMN_Longitude = "ptLongitude";
     private static final String COLUMN_MUID = "MUID";
+
+    private static final String  COLUMN_ECGTYPE   = "ptEcgType";
+//     "SL", "CSL", "LSL", "TL", "FT"
+
 
     // DATA TABLE
     private static final String TABLE_DATA = "urine_data";
@@ -230,6 +236,8 @@ public class LabDB extends SQLiteOpenHelper {
                 + COLUMN_MRR + " REAL DEFAULT 0,"
                 + COLUMN_FINDING + " REAL DEFAULT 0,"
                 + COLUMN_ADDEDDATE + " TEXT,"
+                + COLUMN_ECGTYPE + " TEXT,"
+                + COLUMN_FILEPATH + " TEXT DEFAULT 'notFound' ,"
                 + COLUMN_UPDATEDDATE + " TEXT)";
         db.execSQL(CREATE_ECGSIGN_TABLE);
         String CREATE_LONG_ECG_SIGN_TABLE = "CREATE TABLE " + TABLE_LONG_ECG_SIGN + "("
@@ -611,13 +619,16 @@ public class LabDB extends SQLiteOpenHelper {
     }
 
 
-    public String SaveSingleleadECGSign(ECGReport ecgReport) {
-        String result = "";
-        SQLiteDatabase db = this.getWritableDatabase();
+    public Flowable<String> updateEcgObserVable(ECGReport ecgReport) {
+
+        Flowable<String> idFlowable;
+
+
+         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
         values.put(COLUMN_PT_NO, ecgReport.getPt_no());
         values.put(COLUMN_HEARTRATE, ecgReport.getHeartrate());
-        Log.d("singleleadecg", String.valueOf(ecgReport.getHeartrate()));
+
         values.put(COLUMN_PR, ecgReport.getPr());
         values.put(COLUMN_QT, ecgReport.getQt());
         values.put(COLUMN_QTC, ecgReport.getQtc());
@@ -627,6 +638,65 @@ public class LabDB extends SQLiteOpenHelper {
         values.put(COLUMN_MRR, ecgReport.getMrr());
         values.put(COLUMN_FINDING, ecgReport.getFinding());
         values.put(COLUMN_UPDATEDDATE, Calendar.getInstance().getTimeInMillis() / 1000);
+        values.put(COLUMN_ECGTYPE, ecgReport.getEcgType());
+        if (!ecgReport.getRow_id().equals("")) {
+            db.update(TABLE_ECG_SIGN, values, COLUMN_ID + "=?", new String[]{String.valueOf(ecgReport.getRow_id())});
+            idFlowable =Flowable.just( ecgReport.getRow_id());
+        } else {
+            values.put(COLUMN_ADDEDDATE, Calendar.getInstance().getTimeInMillis() / 1000);
+            db.insert(TABLE_ECG_SIGN, null, values);
+            idFlowable =Flowable.just( ecgReport.getRow_id());
+        }
+        db.close();
+        return idFlowable;
+    }
+//    public Flowable<List<PatientModel>> getPatientObservableByName(String name) {
+//        name+="%";
+//
+//
+//        List<PatientModel> patientModelList= new ArrayList<>();
+//        Flowable<List<PatientModel>> patientModelFlowable= Flowable.just(patientModelList);
+//        SQLiteDatabase db = this.getReadableDatabase();
+//        Cursor cursor = db.rawQuery("select * from " + TABLE_PT_DETAILS+" where ptName  like?", new String[]{name});
+//        while (cursor.moveToNext()) {
+//            PatientModel patientModel = new PatientModel();
+//            patientModel.setId(cursor.getString(0));
+//            patientModel.setPtNo(cursor.getString(1));
+//            patientModel.setPtName(cursor.getString(2));
+//            patientModel.setPtAddress(cursor.getString(3));
+//            patientModel.setPtContactNo(cursor.getString(4));
+//            patientModel.setPtEmail(cursor.getString(5));
+//            patientModel.setPtAge(cursor.getString(6));
+//            patientModelList.add(patientModel);
+//
+//
+//        }
+//
+//        cursor.close();
+//        db.close();
+//        patientModelFlowable= Flowable.just(patientModelList);
+//        return patientModelFlowable;
+//    }
+
+
+
+    public String SaveSingleleadECGSign(ECGReport ecgReport) {
+        String result = "";
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put(COLUMN_PT_NO, ecgReport.getPt_no());
+        values.put(COLUMN_HEARTRATE, ecgReport.getHeartrate());
+
+        values.put(COLUMN_PR, ecgReport.getPr());
+        values.put(COLUMN_QT, ecgReport.getQt());
+        values.put(COLUMN_QTC, ecgReport.getQtc());
+        values.put(COLUMN_QRS, ecgReport.getQrs());
+        values.put(COLUMN_SDNN, ecgReport.getSdnn());
+        values.put(COLUMN_RMSSD, ecgReport.getRmssd());
+        values.put(COLUMN_MRR, ecgReport.getMrr());
+        values.put(COLUMN_FINDING, ecgReport.getFinding());
+        values.put(COLUMN_UPDATEDDATE, Calendar.getInstance().getTimeInMillis() / 1000);
+        values.put(COLUMN_ECGTYPE, ecgReport.getEcgType());
         if (!ecgReport.getRow_id().equals("")) {
             db.update(TABLE_ECG_SIGN, values, COLUMN_ID + "=?", new String[]{String.valueOf(ecgReport.getRow_id())});
             result = ecgReport.getRow_id();

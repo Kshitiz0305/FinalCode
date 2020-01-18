@@ -37,6 +37,7 @@ import com.agatsa.testsdknew.Models.ECGReport;
 import com.agatsa.testsdknew.R;
 import com.agatsa.testsdknew.customviews.DialogUtil;
 import com.agatsa.testsdknew.databinding.ActivityChestLeadBinding;
+import com.agatsa.testsdknew.ui.adapters.PatientDetailAdapter;
 import com.ontbee.legacyforks.cn.pedant.SweetAlert.SweetAlertDialog;
 
 import java.io.File;
@@ -45,24 +46,29 @@ import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.Arrays;
 
+import io.reactivex.android.schedulers.AndroidSchedulers;
+
+import io.reactivex.disposables.CompositeDisposable;
+import io.reactivex.schedulers.Schedulers;
 import pl.droidsonroids.gif.GifImageView;
 
 public class ChestSixLead extends AppCompatActivity {
     private static final String CLIENT_ID = "5a3b4c16b4a56b000132f5d5b4580266565440bda51dcb4122d39844";
     private static final String SECRET_ID = "5a3b4c16b4a56b000132f5d5746be305d56c49e49cc88b12ccb05d71";
     MaterialDialog progressDialog;
-
+    private final CompositeDisposable mDisposable = new CompositeDisposable();
     TextView description;
     LinearLayout txtvone, txtvtwo,txtvthree,txtvfour,txtvfive,txtvsix;
     LinearLayout txtvoneagain, txtvtwoagain,txtvthreeagain,txtvfouragain,txtvfiveagain,txtvsixagain,sixleadagain;
     private Context mContext;
-    int ptno = 0;
+    String ptno = "";
     SharedPreferences pref;
     ECGReport ecgReport=new ECGReport();
     SweetAlertDialog pDialog;
     public   static  int leadIndex = 0,x=0;
     public   static  boolean again =false;
     GifImageView gifImageView;
+
     static String pdfUrl="";
     ArrayList<String>  buttoncollectionshide =  new ArrayList<String>(Arrays.asList("txtvone",
             "txtvoneagain",
@@ -93,7 +99,7 @@ public class ChestSixLead extends AppCompatActivity {
         binding = DataBindingUtil.setContentView(this,R.layout.activity_chest_lead);
 
         pref = this.getSharedPreferences("sunyahealth", Context.MODE_PRIVATE);
-        ptno = pref.getInt("pt_id", 0);
+        ptno = pref.getString("PTNO","");
 //        labdb = new LabDB(getApplicationContext());
 //        ecgReport=labdb.getLastEcgSign(ptno);
         mContext = getApplicationContext();
@@ -393,35 +399,44 @@ public class ChestSixLead extends AppCompatActivity {
         initiateEcg.saveEcgData(mContext, "test", new SaveEcgCallBack() {
             @Override
             public void onSuccess(Success success, EcgConfig ecgConfig) {
-//                LabDB db = new LabDB(getApplicationContext());
-//                ecgReport.setPt_no(ptno);
-//                ecgReport.setHeartrate(ecgConfig.getHeartRate());
-//                ecgReport.setPr((ecgConfig.getpR()));
-//                ecgReport.setQt(ecgConfig.getqT());
-//                ecgReport.setQtc(ecgConfig.getqTc());
-//                ecgReport.setQrs(ecgConfig.getqRs());
-//                ecgReport.setSdnn(ecgConfig.getSdnn());
-//                ecgReport.setRmssd(ecgConfig.getRmssd());
-//                ecgReport.setMrr(ecgConfig.getmRR());
-//                ecgReport.setFinding(ecgConfig.getFinding());
-//                int last_ecgsign_row_id = db.SaveSingleleadECGSign(ecgReport);
-//                try {
-//                    Thread.sleep(1000);
-//                } catch (InterruptedException e) {
-//                    e.printStackTrace();
-//                }
-//                ecgReport.setRow_id(last_ecgsign_row_id);
+                LabDB db = new LabDB(getApplicationContext());
+                ecgReport.setPt_no(ptno);
+                ecgReport.setHeartrate(ecgConfig.getHeartRate());
+                ecgReport.setPr((ecgConfig.getpR()));
+                ecgReport.setQt(ecgConfig.getqT());
+                ecgReport.setQtc(ecgConfig.getqTc());
+                ecgReport.setQrs(ecgConfig.getqRs());
+                ecgReport.setSdnn(ecgConfig.getSdnn());
+                ecgReport.setRmssd(ecgConfig.getRmssd());
+                ecgReport.setMrr(ecgConfig.getmRR());
+                ecgReport.setFinding(ecgConfig.getFinding());
+                ecgReport.setEcgType("CSL");
+                mDisposable.add(db.updateEcgObserVable(ecgReport)
+                        .subscribeOn(Schedulers.io())
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe(ecgid -> {
 
-                setMobileDataEnabled(ChestSixLead.this,false);
-                makePDF(ecgConfig);
+                                    if (ecgid != null) {
+
+                                        if (!ecgid.equals("")) {
+
+                                            DialogUtil.getOKDialog(ChestSixLead.this, "", "Report Saved Successfully", "ok");
+
+                                        } else {
+                                            DialogUtil.getOKDialog(ChestSixLead.this, "", "Error While saving", "ok");
+                                        }
+
+
+                                    } else {
+
+                                        DialogUtil.getOKDialog(ChestSixLead.this, "", "Error While saving", "ok");
+                                    }
+                                },
+                                throwable -> Log.e("rantest", "Unable to get username", throwable)));
 
 
 
-
-
-
-            }
-
+        }
             @Override
             public void onError(Errors error) {
                 Toast.makeText(mContext, error.getErrorMsg(), Toast.LENGTH_SHORT).show();
@@ -430,7 +445,9 @@ public class ChestSixLead extends AppCompatActivity {
     }
 
 
-       @Override
+
+
+    @Override
     public void onBackPressed() {
 
         DialogUtil.getOKCancelDialog(this, "Warning", "Do you want to complete Chest Six Lead Test?", "Yes", "No", new DialogInterface.OnClickListener() {

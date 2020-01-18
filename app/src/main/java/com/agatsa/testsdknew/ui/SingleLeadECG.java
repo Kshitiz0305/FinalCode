@@ -361,6 +361,7 @@ SingleLeadECG extends AppCompatActivity implements ResponseCallback {
                 ecgReport.setRmssd(ecgConfig.getRmssd());
                 ecgReport.setMrr(ecgConfig.getmRR());
                 ecgReport.setFinding(ecgConfig.getFinding());
+                ecgReport.setEcgType("SL");
                 String last_ecgsign_row_id = db.SaveSingleleadECGSign(ecgReport);
                 try {
                     Thread.sleep(1000);
@@ -468,10 +469,7 @@ SingleLeadECG extends AppCompatActivity implements ResponseCallback {
     public void onSuccess(Success success) {
         this.recreate();
         Toast.makeText(mContext, success.getSuccessMsg(), Toast.LENGTH_SHORT).show();
-//         Log.d("ktest","came in success");
-//         btnsavell.setVisibility(View.VISIBLE);
-//         txttakeagain.setVisibility(View.VISIBLE);
-//         LeadOne.setVisibility(View.GONE);
+
 
     }
 

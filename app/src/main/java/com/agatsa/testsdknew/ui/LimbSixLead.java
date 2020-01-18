@@ -319,6 +319,7 @@ again=true;
                 ecgReport.setRmssd(ecgConfig.getRmssd());
                 ecgReport.setMrr(ecgConfig.getmRR());
                 ecgReport.setFinding(ecgConfig.getFinding());
+                ecgReport.setEcgType("LSL");
                 String last_ecgsign_row_id = db.SaveSingleleadECGSign(ecgReport);
                 try {
                     Thread.sleep(1000);
