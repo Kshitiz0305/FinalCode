@@ -119,11 +119,15 @@ public class DiabetesActivity extends AppCompatActivity {
         protected void onPostExecute(Integer s) {
             super.onPostExecute(s);
             if (s == 2) {
+
+
                 if (dialog.isShowing())
                     dialog.dismiss();
                 Toast.makeText(getApplicationContext(), "Already saved " + newPatient.getPtNo() + " V " + glucoseModel.getRow_id(), Toast.LENGTH_LONG).show();
 
             } else if (s == 3) {
+
+
                 if (dialog.isShowing())
                     dialog.dismiss();
                 Toast.makeText(getApplicationContext(), "Exception catched " + newPatient.getPtNo() + " V " + glucoseModel.getRow_id(), Toast.LENGTH_LONG).show();
@@ -131,6 +135,8 @@ public class DiabetesActivity extends AppCompatActivity {
             } else {
                 if (dialog.isShowing())
                     dialog.dismiss();
+
+                  pref.edit().putInt("DF",1);
                 DiabetesActivity.super.onBackPressed();
                Toast.makeText(getApplicationContext(), "Patient Saved " + newPatient.getPtNo() + " V " + glucoseModel.getRow_id(), Toast.LENGTH_LONG).show();
             }

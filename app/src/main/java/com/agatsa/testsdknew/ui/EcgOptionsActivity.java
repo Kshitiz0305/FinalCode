@@ -2,9 +2,12 @@ package com.agatsa.testsdknew.ui;
 
 import android.Manifest;
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -21,6 +24,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
+import androidx.databinding.DataBindingUtil;
 
 import com.agatsa.sanketlife.callbacks.RegisterDeviceResponse;
 import com.agatsa.sanketlife.development.Errors;
@@ -29,6 +33,7 @@ import com.agatsa.sanketlife.models.EcgTypes;
 import com.agatsa.testsdknew.Models.PatientModel;
 import com.agatsa.testsdknew.R;
 import com.agatsa.testsdknew.customviews.DialogUtil;
+import com.agatsa.testsdknew.databinding.ActivityNewEcgOptionsBinding;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -48,20 +53,28 @@ public class EcgOptionsActivity extends AppCompatActivity {
 
     String pt_id;
     PatientModel patientModel;
+    ActivityNewEcgOptionsBinding binding;
+    SharedPreferences sharedPreferences;
+
+    ArrayList <String> keys = new  ArrayList<>(Arrays.asList("SLF","CSLF","LISLF","TLF","LSLF"));
 
 
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_new_ecg_options);
+        binding = DataBindingUtil.setContentView(this,R.layout.activity_new_ecg_options);
+//        setContentView(R.layout.activity_new_ecg_options);
         checkPermissions();
         pt_id = getIntent().getStringExtra("ptid");
         patientModel = getIntent().getParcelableExtra("patient");
-        if(patientModel==null){
+//        if(patientModel==null){
+//
+//            DialogUtil.getOKDialog(this,"","barbag","");
+//        }
+//        pref = this.getSharedPreferences("sunyahealth", Context.MODE_PRIVATE);
+        sharedPreferences = getSharedPreferences("sunyahealth", Context.MODE_PRIVATE);
 
-            DialogUtil.getOKDialog(this,"","barbag","");
-        }
         singleleadecg=findViewById(R.id.singleleadecg);
         chestleadecg=findViewById(R.id.chestleadecg);
         mpd=new ProgressDialog(this);
@@ -71,6 +84,56 @@ public class EcgOptionsActivity extends AppCompatActivity {
         pairbtn=findViewById(R.id.pairtxt);
         syncimg=findViewById(R.id.syncimg);
         longsyncimg=findViewById(R.id.longsyncimg);
+
+        binding.btComplete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                 int oneatleastSet =0;
+                for(String s : keys){
+
+                    Log.d("rantestlastvalue","value of "+s+" "+String.valueOf(sharedPreferences.getInt(s,0)));
+                    if(sharedPreferences.getInt(s,0)==1){
+
+
+                        Log.d("rantestlastvalue",String.valueOf(sharedPreferences.getInt(s,0)));
+                        oneatleastSet =sharedPreferences.getInt(s,0);
+
+                    }
+
+
+                }
+                Log.d("rantestlastvalue",String.valueOf(oneatleastSet));
+
+                if(oneatleastSet==1){
+
+
+                    Toast.makeText(EcgOptionsActivity.this, "Tick hune khalko back", Toast.LENGTH_SHORT).show();
+
+                    sharedPreferences.edit().putInt("ECGF",1);
+                    EcgOptionsActivity.this.onBackPressed();
+
+
+
+
+                }
+                else {
+                    Toast.makeText(EcgOptionsActivity.this, "Tick nahune khalko back", Toast.LENGTH_SHORT).show();
+
+                    EcgOptionsActivity.this.onBackPressed();
+
+
+
+
+                }
+
+
+
+
+
+            }
+        });
+
 
 
 
@@ -243,7 +306,10 @@ public class EcgOptionsActivity extends AppCompatActivity {
         }
     }
 
-
-
-
+//    @Override
+//    public void onBackPressed() {
+//
+//
+//        super.onBackPressed();
+//    }
 }

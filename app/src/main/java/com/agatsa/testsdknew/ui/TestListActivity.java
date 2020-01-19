@@ -68,16 +68,21 @@ public class TestListActivity extends AppCompatActivity {
 
     });
 
-   binding.tblUrineTest.setOnClickListener(new View.OnClickListener() {
-       @Override
-       public void onClick(View view) {
-           Intent i = new Intent(TestListActivity.this, CapturedImageActivity.class);
-           i.putExtra("PTNO", pt_id);
-           startActivity(i);
+   binding.tblUrineTest.setOnClickListener(view -> {
+       Intent i = new Intent(TestListActivity.this, CapturedImageActivity.class);
+       i.putExtra("PTNO", pt_id);
+       i.putExtra("patient",patientModel);
+       startActivity(i);
 
-       }
    });
 
+        binding.btnPrint.setOnClickListener(view -> {
+            Intent i = new Intent(TestListActivity.this, PrintReport.class);
+            i.putExtra("PTNO", pt_id);
+            i.putExtra("patient",patientModel);
+            startActivity(i);
+
+        });
 
 
 

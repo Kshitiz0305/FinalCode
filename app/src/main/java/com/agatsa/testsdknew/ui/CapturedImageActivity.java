@@ -1,11 +1,15 @@
 package com.agatsa.testsdknew.ui;
 
 import android.Manifest;
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
+import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.content.res.AssetManager;
 import android.graphics.Bitmap;
@@ -14,6 +18,7 @@ import android.graphics.Matrix;
 import android.media.ExifInterface;
 import android.net.MailTo;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
@@ -35,7 +40,10 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.core.content.FileProvider;
 
+import com.agatsa.testsdknew.Models.PatientModel;
+import com.agatsa.testsdknew.Models.UrineReport;
 import com.agatsa.testsdknew.R;
+import com.agatsa.testsdknew.customviews.DialogUtil;
 
 import org.opencv.android.OpenCVLoader;
 import org.opencv.android.Utils;
@@ -75,7 +83,13 @@ import static org.opencv.imgproc.Imgproc.RETR_EXTERNAL;
 
 
 public  class CapturedImageActivity extends AppCompatActivity {
+    String ptno = " ";
+    SharedPreferences pref;
+    PatientModel patientModel=new PatientModel();
     private AssetManager assetManager;
+    LabDB labDB;
+    UrineReport urineReport=new UrineReport();
+    private ProgressDialog dialog;
     HashMap<Integer, String> test_names = new HashMap<Integer, String>(){
         {
             put(0, "Leukocytes");
@@ -204,7 +218,7 @@ public  class CapturedImageActivity extends AppCompatActivity {
     private final static int REQUEST_CODE_ASK_PERMISSIONS = 1;
     private ImageView mImageView;
     String[] report;
-    Button report_list, process;
+    Button report_list, process,saveurinetest;
     TextView description;
     private Activity mActivity;
     private boolean detected;
@@ -216,6 +230,18 @@ public  class CapturedImageActivity extends AppCompatActivity {
             Manifest.permission.READ_EXTERNAL_STORAGE,
             Manifest.permission.WRITE_EXTERNAL_STORAGE
     };
+    private String[] reportVal;
+    private String leukocytes;
+    private String nitrite;
+    private String urobilinogen;
+    private String protein;
+    private String ph;
+    private String blood;
+    private String specific_gravity;
+    private String ketones;
+    private String bilirubin;
+    private String glucose;
+    private String ascorbic_acid;
 
     static {
         System.loadLibrary("opencv_java3");
@@ -240,8 +266,11 @@ public  class CapturedImageActivity extends AppCompatActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R
-                .layout.activity_captured_image);
+        setContentView(R.layout.activity_captured_image);
+        pref = this.getSharedPreferences("sunyahealth", Context.MODE_PRIVATE);
+        dialog= new ProgressDialog(this);
+        ptno = pref.getString("PTNO", "");
+        patientModel = getIntent().getParcelableExtra("patient");
         checkPermissions();
         detected = false;
         mActivity = CapturedImageActivity.this;
@@ -249,41 +278,35 @@ public  class CapturedImageActivity extends AppCompatActivity {
         description = findViewById(R.id.description);
         process = findViewById(R.id.done);
         report_list = findViewById(R.id.btnReport);
+        labDB=new LabDB(getApplicationContext());
+        saveurinetest = findViewById(R.id.saveurinetest);
         assetManager = getAssets();
 
 
         if (!OpenCVLoader.initDebug()) {
             Toast.makeText(this, "OpenCV not Loaded", Toast.LENGTH_LONG).show();
             description.setText("OpenCV was not loaded, Please try again.");
-            new AlertDialog.Builder(CapturedImageActivity.this)
-                    .setTitle("Error: OpenCV Initialization")
-                    .setMessage("OpenCV was not loaded, Please try again.")
-                    .setCancelable(false)
-                    .setPositiveButton("Okay", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            restartActivity(mActivity);
-                        }
-                    }).show();
+//            new AlertDialog.Builder(CapturedImageActivity.this)
+//                    .setTitle("Error: OpenCV Initialization")
+//                    .setMessage("OpenCV was not loaded, Please try again.")
+//                    .setCancelable(false)
+//                    .setPositiveButton("Okay", (dialog, which) -> restartActivity(mActivity)).show();
         } else {
             description.setText("OpenCV Loaded.");
             Toast.makeText(this, "OpenCV Loaded", Toast.LENGTH_LONG).show();
             startCamera();
         }
 
-        process.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startCamera();
-            }
+        process.setOnClickListener(v -> {mImageView.setImageResource(0); startCamera();});
+
+        report_list.setOnClickListener(v -> showDialog(CapturedImageActivity.this, report));
+
+        saveurinetest.setOnClickListener(view -> {
+            new SaveData().execute();
+            CapturedImageActivity.super.onBackPressed();
+
         });
 
-        report_list.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                showDialog(CapturedImageActivity.this, report);
-            }
-        });
     }
 
     public boolean save_report(String[] data){
@@ -310,83 +333,51 @@ public  class CapturedImageActivity extends AppCompatActivity {
             int height = (int) (quad.height()-(2*(quad.height()*0.20)));
             quad = quad.submat(new Rect(x, y, width, height));
             Core.rotate(quad, quad, Core.ROTATE_90_CLOCKWISE);
-            try {
-                Bitmap temp_quad = Bitmap.createBitmap(quad.cols(), quad.rows(), Bitmap.Config.ARGB_8888);
-                Utils.matToBitmap(quad, temp_quad);
-                report = processBoard(quad);
-            } catch (Exception e){
-                Log.d("rantest",e.getLocalizedMessage());
-
-//                new AlertDialog.Builder(CapturedImageActivity.this)
-//                        .setTitle("Error: Processing Board")
-//                        .setMessage("Please capture a clear picture of the board.")
-//                        .setCancelable(false)
-//                        .setPositiveButton("Capture Again", new DialogInterface.OnClickListener() {
-//                            @Override
-//                            public void onClick(DialogInterface dialog, int which) {
-//                                startCamera();
-//                            }
-//                        }).show();
-            }
+            Bitmap temp_quad = Bitmap.createBitmap(quad.cols(), quad.rows(), Bitmap.Config.ARGB_8888);
+            Utils.matToBitmap(quad, temp_quad);
+            report = processBoard(quad);
             if (report != null) {
                 report = clearify(report);
+
                 detected = true;
                 description.setText("Please check the detected strip, if found wrong detection, please restart the process by clicking the \"Open Camera\" button again.");
                 Toast.makeText(this, "Processing was completed.", Toast.LENGTH_SHORT);
-            }
-
-
-            else {
-
-//          A
+            }else {
                 detected = false;
-//                new AlertDialog.Builder(CapturedImageActivity.this)
-//                        .setTitle("Error: preparing report")
-//                        .setMessage("Do you want to process again ?")
-//                        .setCancelable(true)
-//                        .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
-//                            @Override
-//                            public void onClick(DialogInterface dialog, int which) {
-//                                process();
-//                            }
-//                        }).show();
             }
         } catch (Exception e) {
             new AlertDialog.Builder(CapturedImageActivity.this)
-                    .setTitle("Error: Detecting Board")
-                    .setMessage("Please capture photo again, and do not place any objects around the edges of the board.")
+                    .setTitle("Error")
+                    .setMessage("Please take picture again!")
                     .setCancelable(false)
-                    .setPositiveButton("Okay", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            startCamera();
-                        }
-                    }).show();
+                    .setPositiveButton("Open Camera", (dialog, which) -> {
+                        mImageView.setImageResource(0);
+                        dialog.dismiss();
+                        startCamera();}).show();
         }
 
     }
 
     public void startCamera(){
         Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        takePictureIntent.putExtra("android.intent.extras.FLASH_MODE_ON", 1);
         if (takePictureIntent.resolveActivity(getPackageManager()) != null) {
             File photoFile = null;
             try {
                 photoFile = createImageFile();
             } catch (IOException ex) {
-                new AlertDialog.Builder(CapturedImageActivity.this)
-                        .setTitle("Error: Image File")
-                        .setMessage("Something went wrong while creating the image file. Please restart.")
-                        .setCancelable(false)
-                        .setPositiveButton("Okay", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                restartActivity(mActivity);
-                            }
-                        }).show();
+//                new AlertDialog.Builder(CapturedImageActivity.this)
+//                        .setTitle("Error: Image File")
+//                        .setMessage("Something went wrong while creating the image file. Please restart.")
+//                        .setCancelable(false)
+//                        .setPositiveButton("Okay", (dialog, which) -> {
+//                            dialog.dismiss();
+//                            restartActivity(mActivity);
+//                        }).show();
             }
             if (photoFile != null) {
                 Uri photoURI = FileProvider.getUriForFile(CapturedImageActivity.this,
-                        getPackageName() + ".provider",
+                        "com.agatsa.testsdknew" + ".provider",
                         photoFile);
                 takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI);
                 startActivityForResult(takePictureIntent, REQUEST_TAKE_PHOTO);
@@ -653,21 +644,42 @@ public  class CapturedImageActivity extends AppCompatActivity {
         return image;
     }
 
+
+
+
     public String[] clearify(String[] report){
+        leukocytes = test_values.get(0).get(report[0]);
+        Log.d("leuko",leukocytes);
+        nitrite = test_values.get(1).get(report[1]);
+        urobilinogen = test_values.get(2).get(report[2]);
+        protein = test_values.get(3).get(report[3]);
+        ph = test_values.get(4).get(report[4]);
+        blood = test_values.get(5).get(report[5]);
+        specific_gravity = test_values.get(6).get(report[6]);
+        ketones = test_values.get(7).get(report[7]);
+        bilirubin = test_values.get(8).get(report[8]);
+        glucose = test_values.get(9).get(report[9]);
+        ascorbic_acid = test_values.get(10).get(report[10]);
+
+
+
+        reportVal = new String[11];
         for (int i = 0; i < 11; i++){
+            reportVal[i] = test_values.get(i).get(report[i]);
             report[i] = test_names.get(i) + ":  " + test_values.get(i).get(report[i]);
         }
+        System.out.println("Completed making report.");
         return report;
     }
 
     public void showDialog(CapturedImageActivity activity, final String[] report){
 
-        final Dialog dialog = new Dialog(activity);
+        final Dialog dialog = new Dialog(activity, android.R.style.Theme_Black_NoTitleBar_Fullscreen);
         dialog.setCancelable(false);
         dialog.setContentView(R.layout.report_listview);
 
         Button btndialogclose = (Button) dialog.findViewById(R.id.btndialogclose);
-        Button saveReport = (Button) dialog.findViewById(R.id.save_report);
+//        Button saveReport = (Button) dialog.findViewById(R.id.save_report);
         btndialogclose.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -675,12 +687,12 @@ public  class CapturedImageActivity extends AppCompatActivity {
             }
         });
 
-        saveReport.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                save_report(report);
-            }
-        });
+//        saveReport.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                save_report(report);
+//            }
+//        });
 
         ListView listView = (ListView) dialog.findViewById(R.id.listview);
         ArrayAdapter arrayAdapter = new ArrayAdapter(this,R.layout.list_item, R.id.tv, report);
@@ -735,16 +747,17 @@ public  class CapturedImageActivity extends AppCompatActivity {
                 setPic();
                 process();
             } catch (Exception e){
-                new AlertDialog.Builder(CapturedImageActivity.this)
-                        .setTitle("Error: Image")
-                        .setMessage("Something went wrong while loading the captured image. Please capture photo again.")
-                        .setCancelable(false)
-                        .setPositiveButton("Open Camera", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                startCamera();
-                            }
-                        }).show();
+//                new AlertDialog.Builder(CapturedImageActivity.this)
+//                        .setTitle("Error: Image")
+//                        .setMessage("Something went wrong while loading the captured image. Please capture photo again.")
+//                        .setCancelable(false)
+//                        .setPositiveButton("Open Camera", new DialogInterface.OnClickListener() {
+//                            @Override
+//                            public void onClick(DialogInterface dialog, int which) {
+//                                dialog.dismiss();
+//                                startCamera();
+//                            }
+//                        }).show();
             }
         }
     }
@@ -1025,6 +1038,92 @@ public  class CapturedImageActivity extends AppCompatActivity {
         currentpict = rotatedBitmap;
 //        mImageView.setImageBitmap(rotatedBitmap);
     }
+
+    @SuppressLint("StaticFieldLeak")
+    private class SaveData extends AsyncTask<String, Void, Integer> {
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            dialog.setMessage("Saving Data");
+            dialog.show();
+        }
+
+        @Override
+        protected Integer doInBackground(String... strings) {
+//
+            LabDB db = new LabDB(getApplicationContext());
+            try {
+                Thread.sleep(1000);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+                return 3;
+            }
+            // Save Vital Sign
+            urineReport.setPt_no(ptno);
+            Log.d("pt_no",ptno);
+            urineReport.setLeuko(leukocytes);
+            urineReport.setNit(nitrite);
+            urineReport.setUrb(urobilinogen);
+            urineReport.setProtein(protein);
+            urineReport.setPh(ph);
+            urineReport.setBlood(blood);
+            urineReport.setSg(specific_gravity);
+            urineReport.setKet(ketones);
+            urineReport.setBili(bilirubin);
+            urineReport.setGlucose(glucose);
+            urineReport.setAsc(ascorbic_acid);
+
+
+            String last_vitalsign_row_id = db.SaveUrineReport(urineReport);
+            try {
+                Thread.sleep(1000);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+                return 3;
+            }
+            urineReport.setRow_id(last_vitalsign_row_id);
+            return 1;
+        }
+
+        @Override
+        protected void onPostExecute(Integer s) {
+            super.onPostExecute(s);
+            if (s == 2) {
+                if (dialog.isShowing())
+                    dialog.dismiss();
+                Toast.makeText(getApplicationContext(), "Already saved " + patientModel.getPtNo() + " V " + urineReport.getRow_id(), Toast.LENGTH_LONG).show();
+
+            } else if (s == 3) {
+                if (dialog.isShowing())
+                    dialog.dismiss();
+                Toast.makeText(getApplicationContext(), "Exception catched " + patientModel.getPtNo() + " V " + urineReport.getRow_id(), Toast.LENGTH_LONG).show();
+
+            } else {
+                if (dialog.isShowing())
+                    dialog.dismiss();
+//                Toast.makeText(getApplicationContext(), "Patient Saved " + newPatient.getPtNo() + " V " + glucoseModel.getRow_id(), Toast.LENGTH_LONG).show();
+            }
+        }
+    }
+
+    @Override
+    public void onBackPressed() {
+
+//       here back is handled in async postexecute to avoid memory leak  this activity is already killed in back
+
+
+        DialogUtil.getOKCancelDialog(this, "", "Do you want to exit by  saving the  urine test of " + patientModel.getPtName(), "Yes","No", (dialogInterface, i) -> {
+            new SaveData().execute();
+            CapturedImageActivity.super.onBackPressed();
+
+        });
+
+
+
+
+
+    }
+
 
 
 

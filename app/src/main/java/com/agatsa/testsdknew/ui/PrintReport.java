@@ -28,6 +28,8 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.lang.reflect.Method;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Set;
 import java.util.UUID;
@@ -47,9 +49,13 @@ public class PrintReport extends AppCompatActivity {
     TextView txtBlood,txtSG,txtKet,txtBili,txtUrineGlucose,txtASC;
     TextView txtBMI;
     TextView txtBGNormalRange,txtTCNormalRange,txtUANormalRange;
+    LabDB db;
+
 
     TextView heartrate,pr,qt,qtc,qrs,sdnn,rmssd,mrr,finding,txtglucose;
     TextView longheartrate,longpr,longqt,longqtc,longqrs,longsdnn,longrmssd,longmrr,longfinding;
+
+    ArrayList<String> keys = new  ArrayList<>(Arrays.asList("SLF","CSLF","LISLF","TLF","LSLF"));
 
     TextView txtReport;
     Button printreport;
@@ -151,8 +157,12 @@ public class PrintReport extends AppCompatActivity {
 
         txtReport = findViewById(R.id.txtReport);
         printreport = findViewById(R.id.btnSendDataToPrint);
+
+        initViews();
         // Retrive From Database
-        LabDB db = new LabDB(getApplicationContext());
+         db = new LabDB(getApplicationContext());
+
+
         // ***************
         patientModel = db.getPatient(  pt_no);
         //System.out.println("Patient Sex " + patientModel.getPtSex());
@@ -496,6 +506,51 @@ public class PrintReport extends AppCompatActivity {
             e.printStackTrace();
         }
     }
+
+    public void initViews(){
+
+
+        for (String s : keys){
+
+           if(pref.getInt(s,0)==1){
+
+               switch (s){
+
+
+//
+//                   "SLF","CSLF","LISLF","TLF","LSLF"
+                   case "SLF":
+//                        this is to be done in asynctask and view loading is to be done in post execution
+                       ecgReport=    db.getSingleLeadEcgSign(pt_no);
+                       if(ecgReport!=null) {
+
+
+                           heartrate.setText(String.valueOf(ecgReport.getHeartrate()));
+
+
+
+                       }
+                       }
+                       break;
+
+
+
+// slf ko view milaune
+
+
+
+
+               }
+
+
+           }
+
+        }
+
+
+
+
+
 
     void PrintThisReport(){
         try{

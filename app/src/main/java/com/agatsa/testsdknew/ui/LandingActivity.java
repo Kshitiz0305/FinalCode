@@ -13,6 +13,8 @@ public class LandingActivity extends AppCompatActivity {
 
     ActivityActionBinding binding;
 
+    boolean processClick=true;
+
 
 
     @Override
@@ -23,6 +25,7 @@ public class LandingActivity extends AppCompatActivity {
 
 
         binding.btnNewPatient.setOnClickListener(view -> {
+
 
             Intent i = new Intent(LandingActivity.this,PersonalDetailsActivity.class);
             startActivity(i);

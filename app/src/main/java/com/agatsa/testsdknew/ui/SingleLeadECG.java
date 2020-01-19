@@ -409,10 +409,12 @@ SingleLeadECG extends AppCompatActivity implements ResponseCallback {
                                         if (ecgid != null) {
 
                                             if (!ecgid.equals("")) {
-
+                                                pref.edit().putInt("SLF",1).apply();
+                                                Log.d("rantestsl",String.valueOf(pref.getInt("SLF",0)));
                                                 DialogUtil.getOKDialog(SingleLeadECG.this, "", "Report Saved Successfully", "ok");
 
-                                            } else {
+                                            }
+                                            else {
                                                 DialogUtil.getOKDialog(SingleLeadECG.this, "", "Error While saving", "ok");
                                             }
 

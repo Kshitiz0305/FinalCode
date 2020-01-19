@@ -464,6 +464,7 @@ PatientModel patientModel;
                 ecgReport.setMrr(ecgConfig.getmRR());
                 ecgReport.setFinding(ecgConfig.getFinding());
                 ecgReport.setEcgType("CSL");
+
                 ecgReport.setFilepath(ecgConfig.getFileUrl());
                 mDisposable.add(db.updateEcgObserVable(ecgReport)
                         .subscribeOn(Schedulers.io())
@@ -474,14 +475,20 @@ PatientModel patientModel;
 
                                         if (!ecgid.equals("")) {
 
+                                            pref.edit().putInt("CSLF", 1 ).apply();
+
                                             DialogUtil.getOKDialog(ChestSixLead.this, "", "Report Saved Successfully", "ok");
 
                                         } else {
+
+
                                             DialogUtil.getOKDialog(ChestSixLead.this, "", "Error While saving", "ok");
                                         }
 
 
                                     } else {
+
+
 
                                         DialogUtil.getOKDialog(ChestSixLead.this, "", "Error While saving", "ok");
                                     }

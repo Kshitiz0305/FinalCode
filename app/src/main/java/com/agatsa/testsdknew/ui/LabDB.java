@@ -40,6 +40,7 @@ import io.reactivex.Flowable;
 
 public class LabDB extends SQLiteOpenHelper {
 
+
     // Database Version
     private static final int DATABASE_VERSION = 3;
 
@@ -267,25 +268,25 @@ public class LabDB extends SQLiteOpenHelper {
         String CREATE_URINE_REPORT_TABLE = "CREATE TABLE " + TABLE_URINE_TEST + "("
                 + COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT,"
                 + COLUMN_PT_NO + " INTEGER,"
-                + COLUMN_AA + " REAL DEFAULT 0,"
-                + COLUMN_URINE_GLUCOSE + " REAL DEFAULT 0,"
-                + COLUMN_BIL + " REAL DEFAULT 0,"
-                + COLUMN_KET + " REAL DEFAULT 0,"
-                + COLUMN_SG + " REAL DEFAULT 0,"
-                + COLUMN_BLOOD + " REAL DEFAULT 0,"
-                + COLUMN_PH + " REAL DEFAULT 0,"
-                + COLUMN_PROTEIN + " REAL DEFAULT 0,"
-                + COLUMN_URB + " REAL DEFAULT 0,"
-                + COLUMN_NITRATE + " REAL DEFAULT 0,"
                 + COLUMN_LEUK + " REAL DEFAULT 0,"
+                + COLUMN_NITRATE + " REAL DEFAULT 0,"
+                + COLUMN_URB + " REAL DEFAULT 0,"
+                + COLUMN_PROTEIN + " REAL DEFAULT 0,"
+                + COLUMN_PH + " REAL DEFAULT 0,"
+                + COLUMN_BLOOD + " REAL DEFAULT 0,"
+                + COLUMN_SG + " REAL DEFAULT 0,"
+                + COLUMN_KET + " REAL DEFAULT 0,"
+                + COLUMN_BIL + " REAL DEFAULT 0,"
+                + COLUMN_URINE_GLUCOSE + " REAL DEFAULT 0,"
+                + COLUMN_AA + " REAL DEFAULT 0,"
                 + COLUMN_ADDEDDATE + " TEXT,"
                 + COLUMN_UPDATEDDATE + " TEXT)";
         db.execSQL(CREATE_URINE_REPORT_TABLE);
-        String CREATE_URINE_DATA_TABLE = "CREATE TABLE " + TABLE_DATA + "("
-                + COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT,"
-                + COLUMN_PT_NO + " INTEGER,"
-                + COLUMN_DATA + " TEXT)";
-        db.execSQL(CREATE_URINE_DATA_TABLE);
+//        String CREATE_URINE_DATA_TABLE = "CREATE TABLE " + TABLE_DATA + "("
+//                + COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT,"
+//                + COLUMN_PT_NO + " INTEGER,"
+//                + COLUMN_DATA + " TEXT)";
+//        db.execSQL(CREATE_URINE_DATA_TABLE);
     }
 
     @Override
@@ -942,6 +943,7 @@ public class LabDB extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
         values.put(COLUMN_PT_NO, urineReport.getPt_no());
+        Log.d("leukocytesdb",urineReport.getLeuko());
         values.put(COLUMN_LEUK, urineReport.getLeuko());
         values.put(COLUMN_NITRATE, urineReport.getNit());
         values.put(COLUMN_URB, urineReport.getUrb());
@@ -954,14 +956,16 @@ public class LabDB extends SQLiteOpenHelper {
         values.put(COLUMN_URINE_GLUCOSE, urineReport.getGlucose());
         values.put(COLUMN_AA, urineReport.getAsc());
         values.put(COLUMN_UPDATEDDATE, Calendar.getInstance().getTimeInMillis() / 1000);
-        if (urineReport.getRow_id().equals("")) {
-            db.update(TABLE_URINE_TEST, values, COLUMN_ID + "=?", new String[]{String.valueOf(urineReport.getRow_id())});
-            result = urineReport.getRow_id();
-        } else {
-            values.put(COLUMN_ADDEDDATE, Calendar.getInstance().getTimeInMillis() / 1000);
-            db.insert(TABLE_URINE_TEST, null, values);
-            result = getLastID(TABLE_URINE_TEST, db);
-        }
+        db.insert(TABLE_URINE_TEST, null, values);
+        result = getLastID(TABLE_URINE_TEST, db);
+//        if (urineReport.getRow_id().equals("")) {
+//            db.update(TABLE_URINE_TEST, values, COLUMN_ID + "=?", new String[]{String.valueOf(urineReport.getRow_id())});
+//            result = urineReport.getRow_id();
+//        } else {
+//            values.put(COLUMN_ADDEDDATE, Calendar.getInstance().getTimeInMillis() / 1000);
+//            db.insert(TABLE_URINE_TEST, null, values);
+//            result = getLastID(TABLE_URINE_TEST, db);
+//        }
         db.close();
         return result;
     }
@@ -987,69 +991,69 @@ public class LabDB extends SQLiteOpenHelper {
                 new String[]{String.valueOf(pt_no)}, null, null, COLUMN_ID + " DESC", String.valueOf(1));
         if (cursor.moveToFirst()) {
             urineReport.setRow_id((cursor.getString(0)));
-            urineReport.setLeuko((float) Double.parseDouble(cursor.getString(1)));
-            urineReport.setNit((float) Double.parseDouble(cursor.getString(2)));
-            urineReport.setUrb((float) Double.parseDouble(cursor.getString(3)));
-            urineReport.setProtein((float) Double.parseDouble(cursor.getString(4)));
-            urineReport.setPh((float) Double.parseDouble(cursor.getString(5)));
-            urineReport.setBlood((float) Double.parseDouble(cursor.getString(6)));
-            urineReport.setSg((float) Double.parseDouble(cursor.getString(7)));
-            urineReport.setKet((float) Double.parseDouble(cursor.getString(8)));
-            urineReport.setBili((float) Double.parseDouble(cursor.getString(9)));
-            urineReport.setGlucose((float) Double.parseDouble(cursor.getString(10)));
-            urineReport.setAsc((float) Double.parseDouble(cursor.getString(11)));
+            urineReport.setLeuko((cursor.getString(1)));
+            urineReport.setNit((cursor.getString(2)));
+            urineReport.setUrb((cursor.getString(3)));
+            urineReport.setProtein((cursor.getString(4)));
+            urineReport.setPh((cursor.getString(5)));
+            urineReport.setBlood((cursor.getString(6)));
+            urineReport.setSg((cursor.getString(7)));
+            urineReport.setKet((cursor.getString(8)));
+            urineReport.setBili((cursor.getString(9)));
+            urineReport.setGlucose((cursor.getString(10)));
+            urineReport.setAsc((cursor.getString(11)));
         }
-        urineReport.setPt_no(pt_no);
+        urineReport.setPt_no(String.valueOf(pt_no));
         cursor.close();
         db.close();
         return urineReport;
     }
 
-    public ArrayList<UrineReport> getAllUrineReport() {
-        ArrayList<UrineReport> ur = new ArrayList<>();
-
-        SQLiteDatabase db = this.getReadableDatabase();
-
-        Cursor cursor = db.query(TABLE_URINE_TEST, new String[]{
-                        COLUMN_ID,
-
-                        COLUMN_LEUK,
-                        COLUMN_NITRATE,
-                        COLUMN_URB,
-                        COLUMN_PROTEIN,
-                        COLUMN_PH,
-                        COLUMN_BLOOD,
-                        COLUMN_SG,
-                        COLUMN_KET,
-                        COLUMN_BIL,
-                        COLUMN_URINE_GLUCOSE,
-                        COLUMN_AA
-                },
-                null, null, null, null, COLUMN_ID + " ASC", null);
-        if (cursor.moveToFirst()) {
-            do {
-                UrineReport urineReport = new UrineReport();
-                urineReport.setRow_id((cursor.getString(0)));
-//            urineReport.setPt_no(Integer.parseInt(cursor.getString(1)));
-                urineReport.setLeuko((float) Double.parseDouble(cursor.getString(1)));
-                urineReport.setNit((float) Double.parseDouble(cursor.getString(2)));
-                urineReport.setUrb((float) Double.parseDouble(cursor.getString(3)));
-                urineReport.setProtein((float) Double.parseDouble(cursor.getString(4)));
-                urineReport.setPh((float) Double.parseDouble(cursor.getString(5)));
-                urineReport.setBlood((float) Double.parseDouble(cursor.getString(6)));
-                urineReport.setSg((float) Double.parseDouble(cursor.getString(7)));
-                urineReport.setKet((float) Double.parseDouble(cursor.getString(8)));
-                urineReport.setBili((float) Double.parseDouble(cursor.getString(9)));
-                urineReport.setGlucose((float) Double.parseDouble(cursor.getString(10)));
-                urineReport.setAsc((float) Double.parseDouble(cursor.getString(11)));
-                ur.add(urineReport);
-            } while (cursor.moveToNext());
-        }
-
-        cursor.close();
-        db.close();
-        return ur;
-    }
+//    public ArrayList<UrineReport> getAllUrineReport() {
+//        ArrayList<UrineReport> ur = new ArrayList<>();
+//
+//        SQLiteDatabase db = this.getReadableDatabase();
+//
+//        Cursor cursor = db.query(TABLE_URINE_TEST, new String[]{
+//                        COLUMN_ID,
+//
+//                        COLUMN_LEUK,
+//                        COLUMN_NITRATE,
+//                        COLUMN_URB,
+//                        COLUMN_PROTEIN,
+//                        COLUMN_PH,
+//                        COLUMN_BLOOD,
+//                        COLUMN_SG,
+//                        COLUMN_KET,
+//                        COLUMN_BIL,
+//                        COLUMN_URINE_GLUCOSE,
+//                        COLUMN_AA
+//                },
+//                null, null, null, null, COLUMN_ID + " ASC", null);
+//        if (cursor.moveToFirst()) {
+//            do {
+//                UrineReport urineReport = new UrineReport();
+//                urineReport.setRow_id((cursor.getString(0)));
+////            urineReport.setPt_no(Integer.parseInt(cursor.getString(1)));
+//                urineReport.setLeuko((cursor.getString(1)));
+//                urineReport.setNit((cursor.getString(2)));
+//                urineReport.setUrb((cursor.getString(3)));
+//                urineReport.setProtein((cursor.getString(4)));
+//                urineReport.setPh((cursor.getString(5)));
+//                urineReport.setBlood((float) Double.parseDouble(cursor.getString(6)));
+//                urineReport.setSg((float) Double.parseDouble(cursor.getString(7)));
+//                urineReport.setKet((float) Double.parseDouble(cursor.getString(8)));
+//                urineReport.setBili((float) Double.parseDouble(cursor.getString(9)));
+//                urineReport.setGlucose((float) Double.parseDouble(cursor.getString(10)));
+//                urineReport.setAsc((float) Double.parseDouble(cursor.getString(11)));
+//                ur.add(urineReport);
+//            } while (cursor.moveToNext());
+//        }
+//
+//        cursor.close();
+//        db.close();
+//        return ur;
+//    }
 
     private boolean isPatientExist(int ptno, SQLiteDatabase db) {
         Cursor cursor = db.rawQuery("SELECT 1 FROM " + TABLE_PT_DETAILS

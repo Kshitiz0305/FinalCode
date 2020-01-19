@@ -262,7 +262,7 @@
                 android:layout_alignParentBottom="true"
                 android:textColor="@color/colorPrimaryDark"
                 android:textSize="18sp"
-                android:id="@+id/logout"
+                android:id="@+id/btn_print"
                 android:layout_marginLeft="@dimen/_5sdp"
                 android:background="@drawable/bg_gray_border"
                 android:layout_height="@dimen/_40sdp"

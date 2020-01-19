@@ -5,31 +5,41 @@ package com.agatsa.testsdknew.Models;
  */
 
 public class UrineReport {
-    int pt_no;
+    String pt_no;
     String row_id;
-    float leuko;
-    float nit;
-    float urb;
-    float protein;
-    float ph;
-    float blood;
-    float sg;
-    float ket;
-    float bili;
-    float glucose;
-    float asc;
+    String leuko;
+    String nit;
+    String urb;
+    String protein;
+    String ph;
+    String blood;
+    String sg;
+    String ket;
+    String bili;
+    String glucose;
+    String asc;
 
-    public UrineReport(){
-        pt_no = 0;
-        row_id ="";
-        glucose=0;
+    public UrineReport() {
+        this.pt_no ="";
+        this.row_id = "";
+        this.leuko = "";
+        this.nit = "";
+        this.urb = "";
+        this.protein = "";
+        this.ph = "";
+        this.blood = "";
+        this.sg = "";
+        this.ket = "";
+        this.bili = "";
+        this.glucose = "";
+        this.asc ="";
     }
 
-    public int getPt_no() {
+    public String getPt_no() {
         return pt_no;
     }
 
-    public void setPt_no(int pt_no) {
+    public void setPt_no(String pt_no) {
         this.pt_no = pt_no;
     }
 
@@ -41,91 +51,91 @@ public class UrineReport {
         this.row_id = row_id;
     }
 
-    public float getLeuko() {
+    public String getLeuko() {
         return leuko;
     }
 
-    public void setLeuko(float leuko) {
+    public void setLeuko(String leuko) {
         this.leuko = leuko;
     }
 
-    public float getNit() {
+    public String getNit() {
         return nit;
     }
 
-    public void setNit(float nit) {
+    public void setNit(String nit) {
         this.nit = nit;
     }
 
-    public float getUrb() {
+    public String getUrb() {
         return urb;
     }
 
-    public void setUrb(float urb) {
+    public void setUrb(String urb) {
         this.urb = urb;
     }
 
-    public float getProtein() {
+    public String getProtein() {
         return protein;
     }
 
-    public void setProtein(float protein) {
+    public void setProtein(String protein) {
         this.protein = protein;
     }
 
-    public float getPh() {
+    public String getPh() {
         return ph;
     }
 
-    public void setPh(float ph) {
+    public void setPh(String ph) {
         this.ph = ph;
     }
 
-    public float getBlood() {
+    public String getBlood() {
         return blood;
     }
 
-    public void setBlood(float blood) {
+    public void setBlood(String blood) {
         this.blood = blood;
     }
 
-    public float getSg() {
+    public String getSg() {
         return sg;
     }
 
-    public void setSg(float sg) {
+    public void setSg(String sg) {
         this.sg = sg;
     }
 
-    public float getKet() {
+    public String getKet() {
         return ket;
     }
 
-    public void setKet(float ket) {
+    public void setKet(String ket) {
         this.ket = ket;
     }
 
-    public float getBili() {
+    public String getBili() {
         return bili;
     }
 
-    public void setBili(float bili) {
+    public void setBili(String bili) {
         this.bili = bili;
     }
 
-    public float getGlucose() {
+    public String getGlucose() {
         return glucose;
     }
 
-    public void setGlucose(float glucose) {
+    public void setGlucose(String glucose) {
         this.glucose = glucose;
     }
 
-    public float getAsc() {
+    public String getAsc() {
         return asc;
     }
 
-    public void setAsc(float asc) {
+    public void setAsc(String asc) {
         this.asc = asc;
     }
 }

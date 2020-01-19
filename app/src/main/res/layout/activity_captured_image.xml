@@ -6,12 +6,24 @@
     android:layout_height="match_parent"
     >
 
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/_10sdp"
+        android:layout_marginTop="5dp"
+        android:layout_marginRight="@dimen/_10sdp"
+        tools:ignore="MissingConstraints" >
+
+
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
         tools:layout_editor_absoluteX="0dp"
         tools:layout_editor_absoluteY="-16dp">
+
+
 
         <ImageView
             android:id="@+id/camera_photo"
@@ -30,6 +42,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textSize="7pt"
+                android:visibility="gone"
                 android:textColor="@color/colorTransparentBlack"
                 android:layout_gravity="left"
                 android:text="Description: "/>
@@ -37,7 +50,10 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="7pt"
+                android:fontFamily="@font/sfpro_display_semibold"
+                android:textColor="@color/colorPrimaryDark"
+                 android:layout_marginLeft="@dimen/_5sdp"
+                android:textSize="15.7sp"
                 android:id="@+id/description"
                 android:layout_gravity="left"
                 android:text=""/>
@@ -57,7 +73,7 @@
                 android:layout_marginLeft="10dp"
                 android:layout_marginRight="10dp"
                 android:layout_weight="1"
-                android:background="@color/colorPrimary"
+                android:background="@drawable/rect_orange"
                 android:text="Open Camera"
                 android:textColor="@color/white" />
 
@@ -68,12 +84,40 @@
                 android:layout_gravity="center"
                 android:layout_marginLeft="10dp"
                 android:layout_marginRight="10dp"
+                android:background="@drawable/rect_orange"
+
                 android:layout_weight="1"
-                android:background="@color/colorPrimary"
                 android:text="View Report"
                 android:textColor="@color/white" />
 
 
         </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/saveurinetest"
+                android:layout_width="105dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_weight="1"
+                android:background="@drawable/rect_orange"
+                android:text="Save"
+                android:textColor="@color/white" />
+
+
+
+
+        </LinearLayout>
+
+
+
     </LinearLayout>
+    </androidx.cardview.widget.CardView>
 </androidx.constraintlayout.widget.ConstraintLayout>

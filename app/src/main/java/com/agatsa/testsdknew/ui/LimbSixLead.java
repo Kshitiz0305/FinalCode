@@ -44,6 +44,9 @@ import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.Arrays;
 
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.CompositeDisposable;
+import io.reactivex.schedulers.Schedulers;
 import pl.droidsonroids.gif.GifImageView;
 
 public class LimbSixLead extends AppCompatActivity {
@@ -65,6 +68,7 @@ public class LimbSixLead extends AppCompatActivity {
 
     public   static  int leadIndex = 0,x=0;
     public   static  boolean again =false;
+    final CompositeDisposable compositeDisposable = new CompositeDisposable();
 
     GifImageView gifImageView;
     ArrayList<String> buttoncollectionshide = new ArrayList<String>(Arrays.asList("txtlimbleadone","txtlimboneagain","txtlimbleadtwo","txtlimbtwoagain","txtlimbagain","ll_savereport","ll_report","ll_complete"));
@@ -308,25 +312,25 @@ again=true;
         initiateEcg.saveEcgData(mContext, "test", new SaveEcgCallBack() {
             @Override
             public void onSuccess(Success success, EcgConfig ecgConfig) {
-                LabDB db = new LabDB(getApplicationContext());
-                ecgReport.setPt_no(ptno);
-                ecgReport.setHeartrate(ecgConfig.getHeartRate());
-                ecgReport.setPr((ecgConfig.getpR()));
-                ecgReport.setQt(ecgConfig.getqT());
-                ecgReport.setQtc(ecgConfig.getqTc());
-                ecgReport.setQrs(ecgConfig.getqRs());
-                ecgReport.setSdnn(ecgConfig.getSdnn());
-                ecgReport.setRmssd(ecgConfig.getRmssd());
-                ecgReport.setMrr(ecgConfig.getmRR());
-                ecgReport.setFinding(ecgConfig.getFinding());
-                ecgReport.setEcgType("LSL");
-                String last_ecgsign_row_id = db.SaveSingleleadECGSign(ecgReport);
-                try {
-                    Thread.sleep(1000);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-                ecgReport.setRow_id(last_ecgsign_row_id);
+//                LabDB db = new LabDB(getApplicationContext());
+//                ecgReport.setPt_no(ptno);
+//                ecgReport.setHeartrate(ecgConfig.getHeartRate());
+//                ecgReport.setPr((ecgConfig.getpR()));
+//                ecgReport.setQt(ecgConfig.getqT());
+//                ecgReport.setQtc(ecgConfig.getqTc());
+//                ecgReport.setQrs(ecgConfig.getqRs());
+//                ecgReport.setSdnn(ecgConfig.getSdnn());
+//                ecgReport.setRmssd(ecgConfig.getRmssd());
+//                ecgReport.setMrr(ecgConfig.getmRR());
+//                ecgReport.setFinding(ecgConfig.getFinding());
+//                ecgReport.setEcgType("LSL");
+//                String last_ecgsign_row_id = db.SaveSingleleadECGSign(ecgReport);
+//                try {
+//                    Thread.sleep(1000);
+//                } catch (InterruptedException e) {
+//                    e.printStackTrace();
+//                }
+//                ecgReport.setRow_id(last_ecgsign_row_id);
                 setMobileDataEnabled(LimbSixLead.this,false);
                 showProgress("Generating Report");
                 makePDF(ecgConfig);
@@ -353,6 +357,54 @@ again=true;
         initiateEcg.makeEcgReport(mContext, new UserDetails("Vikas", "24", "Male"), true, SECRET_ID, ecgConfig, new PdfCallback() {
             @Override
             public void onPdfAvailable(EcgConfig ecgConfig) {
+
+                LabDB db = new LabDB(getApplicationContext());
+                ecgReport.setPt_no(ptno);
+                ecgReport.setHeartrate(ecgConfig.getHeartRate());
+                ecgReport.setPr((ecgConfig.getpR()));
+                ecgReport.setQt(ecgConfig.getqT());
+                ecgReport.setQtc(ecgConfig.getqTc());
+                ecgReport.setQrs(ecgConfig.getqRs());
+                ecgReport.setSdnn(ecgConfig.getSdnn());
+                ecgReport.setRmssd(ecgConfig.getRmssd());
+                ecgReport.setMrr(ecgConfig.getmRR());
+                ecgReport.setFinding(ecgConfig.getFinding());
+                ecgReport.setEcgType("LISL");
+
+                ecgReport.setFilepath(ecgConfig.getFileUrl());
+                compositeDisposable.add(db.updateEcgObserVable(ecgReport)
+                        .subscribeOn(Schedulers.io())
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe(ecgid -> {
+
+                                    if (ecgid != null) {
+
+                                        if (!ecgid.equals("")) {
+
+                                            pref.edit().putInt("LISLF", 1 ).apply();
+
+                                            DialogUtil.getOKDialog(LimbSixLead.this, "", "Report Saved Successfully", "ok");
+
+                                        } else {
+
+
+                                            DialogUtil.getOKDialog(LimbSixLead.this, "", "Error While saving", "ok");
+                                        }
+
+
+                                    } else {
+
+
+
+                                        DialogUtil.getOKDialog(LimbSixLead.this, "", "Error While saving", "ok");
+                                    }
+                                },
+                                throwable -> {
+
+                                    Log.e("rantest", "Unable to get username", throwable);
+
+
+                                }));
                 Log.e("makepdfpath", ecgConfig.getFileUrl());
                 String filePath = ecgConfig.getFileUrl();
                 pdfurl = filePath;

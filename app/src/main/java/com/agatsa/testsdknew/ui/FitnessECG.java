@@ -47,6 +47,10 @@ import java.io.File;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.CompositeDisposable;
+import io.reactivex.schedulers.Schedulers;
+
 public class FitnessECG extends AppCompatActivity implements ResponseCallback {
     private static final String CLIENT_ID = "5a3b4c16b4a56b000132f5d5b4580266565440bda51dcb4122d39844";
     private static final String SECRET_ID = "5a3b4c16b4a56b000132f5d5746be305d56c49e49cc88b12ccb05d71";
@@ -64,6 +68,7 @@ public class FitnessECG extends AppCompatActivity implements ResponseCallback {
     MaterialDialog progressDialog;
 
  ActivityFitnessEcgBinding binding;
+ final CompositeDisposable compositeDisposable =  new CompositeDisposable();
 
 
 
@@ -398,14 +403,14 @@ public class FitnessECG extends AppCompatActivity implements ResponseCallback {
         InitiateEcg initiateEcg = new InitiateEcg();
         initiateEcg.saveLongEcgData(mContext, "test", new SaveLongEcgCallBack() {
             @Override
-            public void onSuccess(Success success, LongEcgConfig longEcgConfig) {
+            public void onSuccess(Success success, LongEcgConfig ecgConfig) {
 
 
 
 
                  setMobileDataEnabled(FitnessECG.this,false);
                  showProgress("Generating Report");
-                createLongPDF(longEcgConfig);
+                createLongPDF(ecgConfig);
             }
 
             @Override
@@ -421,11 +426,59 @@ public class FitnessECG extends AppCompatActivity implements ResponseCallback {
         InitiateEcg initiateEcg = new InitiateEcg();
         initiateEcg.makeLongEcgReport(mContext, new UserDetails("Vikas", "24", "Male"), true, SECRET_ID, longEcgConfig, new LongPdfCallBack() {
             @Override
-            public void onPdfAvailable(LongEcgConfig longEcgConfig) {
+            public void onPdfAvailable(LongEcgConfig ecgConfig) {
                 Log.e("path", longEcgConfig.getFileUrl());
                 String filePath = longEcgConfig.getFileUrl();
                 pdfurl =filePath;
                 Toast.makeText(mContext, "Pdf Generated", Toast.LENGTH_SHORT).show();
+
+                LabDB db = new LabDB(getApplicationContext());
+                ecgReport.setPt_no(ptno);
+                ecgReport.setHeartrate(ecgConfig.getHeartRate());
+                ecgReport.setPr((ecgConfig.getpR()));
+                ecgReport.setQt(ecgConfig.getqT());
+                ecgReport.setQtc(ecgConfig.getqTc());
+                ecgReport.setQrs(ecgConfig.getqRs());
+                ecgReport.setSdnn(ecgConfig.getSdnn());
+                ecgReport.setRmssd(ecgConfig.getRmssd());
+                ecgReport.setMrr(ecgConfig.getmRR());
+                ecgReport.setFinding(ecgConfig.getFinding());
+                ecgReport.setEcgType("LSL");
+
+                ecgReport.setFilepath(ecgConfig.getFileUrl());
+                compositeDisposable.add(db.updateEcgObserVable(ecgReport)
+                        .subscribeOn(Schedulers.io())
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe(ecgid -> {
+
+                                    if (ecgid != null) {
+
+                                        if (!ecgid.equals("")) {
+
+                                            pref.edit().putInt("LSLF", 1 ).apply();
+
+                                            DialogUtil.getOKDialog(FitnessECG.this, "", "Report Saved Successfully", "ok");
+
+                                        } else {
+
+
+                                            DialogUtil.getOKDialog(FitnessECG.this, "", "Error While saving", "ok");
+                                        }
+
+
+                                    } else {
+
+
+
+                                        DialogUtil.getOKDialog(FitnessECG.this, "", "Error While saving", "ok");
+                                    }
+                                },
+                                throwable -> {
+
+                                    Log.e("rantest", "Unable to get username", throwable);
+
+
+                                }));
                 hideProgress();
                 binding.btSave.setVisibility(View.GONE);
                 binding.btnBack.setVisibility(View.VISIBLE);

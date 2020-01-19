@@ -33,6 +33,7 @@ import com.agatsa.sanketlife.development.Success;
 import com.agatsa.sanketlife.development.UserDetails;
 import com.agatsa.sanketlife.models.EcgTypes;
 import com.agatsa.testsdknew.BuildConfig;
+import com.agatsa.testsdknew.Models.ECGReport;
 import com.agatsa.testsdknew.R;
 import com.agatsa.testsdknew.customviews.DialogUtil;
 import com.agatsa.testsdknew.databinding.ActivityTwelveLeadBinding;
@@ -44,6 +45,9 @@ import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.Arrays;
 
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.CompositeDisposable;
+import io.reactivex.schedulers.Schedulers;
 import pl.droidsonroids.gif.GifImageView;
 
 public class TwelveLeadEcg extends AppCompatActivity {
@@ -55,14 +59,17 @@ public class TwelveLeadEcg extends AppCompatActivity {
     LinearLayout txttwelveleadone, txttwelveleadtwo,txttwelvevone,txttwelvevtwo,txttwelvevthree,txttwelvevfour,txttwelvevfive,txttwelvevsix,completeTestll;
     LinearLayout txttwelveleadoneagain, txttwelveleadtwoagain,txttwelvevoneagain,txttwelvevtwoagain,txttwelvevthreeagain,txttwelvevfouragain,txttwelvevfiveagain,txttwelvevsixagain,txttwelveleadagain;
     private Context mContext;
-    int ptno = 0;
+    String ptno = "";
     SharedPreferences pref;
     MaterialDialog progressDialog;
     SweetAlertDialog pDialog;
+    ECGReport ecgReport = new ECGReport();
 
     public   static  int leadIndex = 0,x=0;
     static String pdfurl = "";
     public   static  boolean again =false;
+
+    final CompositeDisposable compositeDisposable = new CompositeDisposable();
     TextView description;
     ArrayList<String> buttoncollectionshide = new ArrayList<String>(Arrays.asList("txttwelveleadone","txttwelveleadoneagain","txttwelveleadtwo","txttwelveleadtwoagain","txttwelvevone","txttwelvevoneagain","txttwelvevtwo","txttwelvevtwoagain","txttwelvevthree","txttwelvevthreeagain","txttwelvevfour","txttwelvevfouragain","txttwelvevfive","txttwelvevfiveagain","txttwelvevsix","txttwelvevsixagain","txttwelveleadagain","completetaskll","btnSaveTwelveLeadrecord"));
 
@@ -77,7 +84,7 @@ ActivityTwelveLeadBinding binding;
         super.onCreate(savedInstanceState);
        binding = DataBindingUtil.setContentView(this,R.layout.activity_twelve_lead);
         pref = this.getSharedPreferences("sunyahealth", Context.MODE_PRIVATE);
-        ptno = pref.getInt("pt_id", 0);
+        ptno = pref.getString("PTNO", "");
 //        labdb = new LabDB(getApplicationContext());
 //        ecgReport=labdb.getLastEcgSign(ptno);
         mContext = getApplicationContext();
@@ -807,7 +814,58 @@ ActivityTwelveLeadBinding binding;
             public void onPdfAvailable(EcgConfig ecgConfig) {
                 Log.e("makepdfpath", ecgConfig.getFileUrl());
                 String filePath = ecgConfig.getFileUrl();
+
+
+
                 pdfurl = filePath;
+                LabDB db = new LabDB(getApplicationContext());
+                ecgReport.setPt_no(ptno);
+                ecgReport.setHeartrate(ecgConfig.getHeartRate());
+                ecgReport.setPr((ecgConfig.getpR()));
+                ecgReport.setQt(ecgConfig.getqT());
+                ecgReport.setQtc(ecgConfig.getqTc());
+                ecgReport.setQrs(ecgConfig.getqRs());
+                ecgReport.setSdnn(ecgConfig.getSdnn());
+                ecgReport.setRmssd(ecgConfig.getRmssd());
+                ecgReport.setMrr(ecgConfig.getmRR());
+                ecgReport.setFinding(ecgConfig.getFinding());
+                ecgReport.setEcgType("TL");
+
+                ecgReport.setFilepath(ecgConfig.getFileUrl());
+                compositeDisposable.add(db.updateEcgObserVable(ecgReport)
+                        .subscribeOn(Schedulers.io())
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe(ecgid -> {
+
+                                    if (ecgid != null) {
+
+                                        if (!ecgid.equals("")) {
+
+                                            pref.edit().putInt("TLF", 1 ).apply();
+
+                                            DialogUtil.getOKDialog(TwelveLeadEcg.this, "", "Report Saved Successfully", "ok");
+
+                                        } else {
+
+
+                                            DialogUtil.getOKDialog(TwelveLeadEcg.this, "", "Error While saving", "ok");
+                                        }
+
+
+                                    } else {
+
+
+
+                                        DialogUtil.getOKDialog(TwelveLeadEcg.this, "", "Error While saving", "ok");
+                                    }
+                                },
+                                throwable -> {
+
+                                    Log.e("rantest", "Unable to get username", throwable);
+
+
+                                }));
+
                 Toast.makeText(mContext, "Successfully generated pdf.", Toast.LENGTH_SHORT).show();
                 setMobileDataEnabled(TwelveLeadEcg.this,true);
                 hideProgress();
