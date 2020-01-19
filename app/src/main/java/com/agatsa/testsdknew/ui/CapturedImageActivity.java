@@ -303,7 +303,7 @@ public  class CapturedImageActivity extends AppCompatActivity {
 
         saveurinetest.setOnClickListener(view -> {
             new SaveData().execute();
-            CapturedImageActivity.super.onBackPressed();
+
 
         });
 
@@ -1091,17 +1091,19 @@ public  class CapturedImageActivity extends AppCompatActivity {
             if (s == 2) {
                 if (dialog.isShowing())
                     dialog.dismiss();
-                Toast.makeText(getApplicationContext(), "Already saved " + patientModel.getPtNo() + " V " + urineReport.getRow_id(), Toast.LENGTH_LONG).show();
+                Toast.makeText(getApplicationContext(), "Already saved " , Toast.LENGTH_LONG).show();
 
             } else if (s == 3) {
                 if (dialog.isShowing())
                     dialog.dismiss();
-                Toast.makeText(getApplicationContext(), "Exception catched " + patientModel.getPtNo() + " V " + urineReport.getRow_id(), Toast.LENGTH_LONG).show();
+                Toast.makeText(getApplicationContext(), "Exception catched ", Toast.LENGTH_LONG).show();
 
             } else {
                 if (dialog.isShowing())
                     dialog.dismiss();
-//                Toast.makeText(getApplicationContext(), "Patient Saved " + newPatient.getPtNo() + " V " + glucoseModel.getRow_id(), Toast.LENGTH_LONG).show();
+                CapturedImageActivity.super.onBackPressed();
+                Toast.makeText(getApplicationContext(), "Patient Saved " , Toast.LENGTH_LONG).show();
+
             }
         }
     }
@@ -1114,7 +1116,7 @@ public  class CapturedImageActivity extends AppCompatActivity {
 
         DialogUtil.getOKCancelDialog(this, "", "Do you want to exit by  saving the  urine test of " + patientModel.getPtName(), "Yes","No", (dialogInterface, i) -> {
             new SaveData().execute();
-            CapturedImageActivity.super.onBackPressed();
+//            CapturedImageActivity.super.onBackPressed();
 
         });
 

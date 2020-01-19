@@ -1,0 +1,204 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Chest Six "
+        android:textAlignment="center"
+        android:textColor="@color/colorPrimaryDark"
+        android:fontFamily="@font/sfpro_display_semibold"
+        android:textStyle="bold"
+        android:textSize="25dp"
+        />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="5dp"
+        android:layout_marginTop="@dimen/_10kdp"
+        android:background="@color/graylight" />
+
+    <TableLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:stretchColumns="*">
+        <TableRow>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:fontFamily="@font/sfpro_display_semibold"
+                android:padding="8sp"
+                android:textColor="@color/colorPrimaryDark"
+                android:textSize="15sp"
+                android:text="HeartRate:"
+                />
+            <TextView
+                android:id="@+id/heartrate"
+                android:background="@drawable/bg_gray_border"
+                android:fontFamily="@font/sf_pro_display_medium"
+                android:inputType="text"
+                android:padding="8sp"
+                android:textSize="13sp"
+                android:width="200dp" />
+        </TableRow>
+        <TableRow>
+            <TextView
+                android:fontFamily="@font/sfpro_display_semibold"
+                android:padding="8sp"
+                android:textColor="@color/colorPrimaryDark"
+                android:textSize="15sp"
+                android:text="PR:"
+                android:width ="120dp"/>
+            <TextView
+                android:id="@+id/pr"
+                android:width="200dp"
+                android:background="@drawable/bg_gray_border"
+                android:fontFamily="@font/sf_pro_display_medium"
+                android:inputType="text"
+                android:padding="8sp"
+                android:textSize="13sp"
+                android:singleLine="true"
+                />
+        </TableRow>
+        <TableRow>
+            <TextView
+                android:fontFamily="@font/sfpro_display_semibold"
+                android:padding="8sp"
+                android:textColor="@color/colorPrimaryDark"
+                android:textSize="15sp"
+                android:text="QT:"
+                android:width ="120dp"/>
+            <TextView
+                android:background="@drawable/bg_gray_border"
+                android:fontFamily="@font/sf_pro_display_medium"
+                android:padding="8sp"
+                android:textSize="13sp"
+                android:id="@+id/qt"
+                android:width="200dp"
+                android:imeOptions="actionNext"
+                android:singleLine="true"
+                android:inputType="textCapWords"/>
+        </TableRow>
+        <TableRow>
+            <TextView
+                android:fontFamily="@font/sfpro_display_semibold"
+                android:padding="8sp"
+                android:textColor="@color/colorPrimaryDark"
+                android:textSize="15sp"
+                android:text="QTC:"
+                android:width ="120dp"/>
+            <TextView
+                android:id="@+id/qtc"
+                android:width="200dp"
+                android:background="@drawable/bg_gray_border"
+                android:fontFamily="@font/sf_pro_display_medium"
+                android:padding="8sp"
+                android:textSize="13sp"
+                android:singleLine="true"
+                android:imeOptions="actionNext"
+                android:inputType="number"/>
+        </TableRow>
+        <TableRow>
+            <TextView
+                android:fontFamily="@font/sfpro_display_semibold"
+                android:padding="8sp"
+                android:textColor="@color/colorPrimaryDark"
+                android:textSize="15sp"
+                android:text="QRS:"
+                android:width ="120dp"/>
+            <TextView
+                android:id="@+id/qrs"
+                android:width="200dp"
+                android:background="@drawable/bg_gray_border"
+                android:fontFamily="@font/sf_pro_display_medium"
+                android:padding="8sp"
+                android:textSize="13sp"
+                android:singleLine="true"
+                android:imeOptions="actionNext"
+                android:inputType="textEmailAddress"/>
+        </TableRow>
+        <TableRow>
+            <TextView
+                android:text="SDNN:"
+                android:fontFamily="@font/sfpro_display_semibold"
+                android:padding="8sp"
+                android:textColor="@color/colorPrimaryDark"
+                android:textSize="15sp"
+                android:width ="120dp"/>
+            <TextView
+                android:id="@+id/sdnn"
+                android:width="100dp"
+                android:background="@drawable/bg_gray_border"
+                android:fontFamily="@font/sf_pro_display_medium"
+                android:padding="8sp"
+                android:textSize="13sp"
+                android:singleLine="true"
+                />
+
+        </TableRow>
+        <TableRow>
+            <TextView
+                android:text="RMSSD:"
+                android:fontFamily="@font/sfpro_display_semibold"
+                android:padding="8sp"
+                android:textColor="@color/colorPrimaryDark"
+                android:textSize="15sp"
+                android:width ="120dp"/>
+            <TextView
+                android:id="@+id/rmssd"
+                android:width="100dp"
+                android:background="@drawable/bg_gray_border"
+                android:fontFamily="@font/sf_pro_display_medium"
+                android:padding="8sp"
+                android:textSize="13sp"
+                android:singleLine="true"
+                />
+
+        </TableRow>
+        <TableRow>
+            <TextView
+                android:text="MRR:"
+                android:fontFamily="@font/sfpro_display_semibold"
+                android:padding="8sp"
+                android:textColor="@color/colorPrimaryDark"
+                android:textSize="15sp"
+                android:width ="120dp"/>
+            <TextView
+                android:id="@+id/mrr"
+                android:width="100dp"
+                android:background="@drawable/bg_gray_border"
+                android:fontFamily="@font/sf_pro_display_medium"
+                android:padding="8sp"
+                android:textSize="13sp"
+                android:singleLine="true"
+                />
+
+        </TableRow>
+        <TableRow>
+            <TextView
+                android:text="FINDING:"
+                android:fontFamily="@font/sfpro_display_semibold"
+                android:padding="8sp"
+                android:textColor="@color/colorPrimaryDark"
+                android:textSize="15sp"
+                android:width ="120dp"/>
+            <TextView
+                android:id="@+id/finding"
+                android:width="100dp"
+                android:background="@drawable/bg_gray_border"
+                android:fontFamily="@font/sf_pro_display_medium"
+                android:padding="8sp"
+                android:textSize="13sp"
+                android:singleLine="true"
+                />
+
+        </TableRow>
+
+
+
+    </TableLayout>
+
+
+</LinearLayout>

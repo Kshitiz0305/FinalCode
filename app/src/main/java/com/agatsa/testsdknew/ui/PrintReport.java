@@ -18,6 +18,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.agatsa.testsdknew.Models.BloodReport;
 import com.agatsa.testsdknew.Models.ECGReport;
+import com.agatsa.testsdknew.Models.GlucoseModel;
 import com.agatsa.testsdknew.Models.LongECGReport;
 import com.agatsa.testsdknew.Models.PatientModel;
 import com.agatsa.testsdknew.Models.UrineReport;
@@ -36,13 +37,13 @@ import java.util.UUID;
 
 public class PrintReport extends AppCompatActivity {
     String pt_no = "";
-    PatientModel patientModel;
+    PatientModel patientModel=new PatientModel();
     VitalSign vitalSign;
     BloodReport bloodReport;
     UrineReport urineReport;
     LongECGReport longECGReport;
     ECGReport ecgReport;
-    TextView txtPtNo,txtPtName,txtPtAddress,txtPtContactNo,txtEmail,txtmaritalstatus;
+    TextView txtPtNo,txtPtName,txtPtAddress,txtPtContactNo,txtEmail,txtSex;
     TextView txtAge,txtWeight,txtHeight,txtTemp,txtPulse,txtBP,txtSTO2;
     TextView txtChlorestrol,txtBloodGlucose,txtUricAcid;
     TextView txtLeuko,txtNitrate,txtURB,txtProtein,txtPH;
@@ -51,9 +52,12 @@ public class PrintReport extends AppCompatActivity {
     TextView txtBGNormalRange,txtTCNormalRange,txtUANormalRange;
     LabDB db;
 
+    GlucoseModel glucoseModel;
+
 
     TextView heartrate,pr,qt,qtc,qrs,sdnn,rmssd,mrr,finding,txtglucose;
     TextView longheartrate,longpr,longqt,longqtc,longqrs,longsdnn,longrmssd,longmrr,longfinding;
+    TextView txtdiabetes;
 
     ArrayList<String> keys = new  ArrayList<>(Arrays.asList("SLF","CSLF","LISLF","TLF","LSLF"));
 
@@ -78,23 +82,19 @@ public class PrintReport extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_print_report);
-
         pref = this.getSharedPreferences("sunyahealth", Context.MODE_PRIVATE);
-        device_id = pref.getString("device_id", "");
-        duid = getIntent().getStringExtra("duid");
-        pt_no = getIntent().getStringExtra("PTNO");
+        pt_no =pref.getString("PTNO","");
+        patientModel = getIntent().getParcelableExtra("patient");
 //        if (pt_no == null) pt_no = "";
         if (pt_no.equals("")) {
             Toast.makeText(getApplicationContext(), "No Patient Selected", Toast.LENGTH_SHORT).show();
             return;
         }
         // Patient Details
-        txtPtNo = findViewById(R.id.txtPatientNo);
+//        txtPtNo = findViewById(R.id.txtPatientNo);
         txtPtName = findViewById(R.id.txtPatientName);
-        txtPtAddress = findViewById(R.id.txtAddress);
-        txtPtContactNo = findViewById(R.id.txtContactNo);
-        txtEmail = findViewById(R.id.txtemail);
         txtAge = findViewById(R.id.txtAge);
+        txtPtAddress=findViewById(R.id.txtAddress);
 //        txtmaritalstatus=findViewById(R.id.txtmaritalstatus);
 //        txtSex = findViewById(R.id.txtSex);
         // Vital Signs
@@ -120,6 +120,11 @@ public class PrintReport extends AppCompatActivity {
         finding=findViewById(R.id.finding);
 
 
+
+       //Diabetes
+
+        txtdiabetes=findViewById(R.id.txtglucose);
+
         // LONG ECG Report
 
         longheartrate=findViewById(R.id.longheartrate);
@@ -143,60 +148,64 @@ public class PrintReport extends AppCompatActivity {
         txtBGNormalRange = findViewById(R.id.txtBGNormalRange);
         txtUANormalRange = findViewById(R.id.txtUANormalRange);
         // Urine Test
-        txtLeuko = findViewById(R.id.txtLeukocytes);
-        txtNitrate = findViewById(R.id.txtNitrate);
-        txtURB = findViewById(R.id.txtUrobilinogen);
-        txtProtein = findViewById(R.id.txtProtein);
-        txtPH = findViewById(R.id.txtpH);
-        txtBlood = findViewById(R.id.txtBlood);
-        txtSG = findViewById(R.id.txtSG);
-        txtKet = findViewById(R.id.txtKetone);
-        txtBili = findViewById(R.id.txtBilirubin);
-        txtUrineGlucose = findViewById(R.id.txtUrineGlucose);
-        txtASC = findViewById(R.id.txtAA);
+        txtLeuko = findViewById(R.id.txtleukocytes);
+        txtNitrate = findViewById(R.id.txtNitrite);
+        txtURB = findViewById(R.id.txturobilinogen);
+        txtProtein = findViewById(R.id.txtprotein);
+        txtPH = findViewById(R.id.txtPH);
+        txtBlood = findViewById(R.id.txtblood);
+        txtSG = findViewById(R.id.txtspecificgravity);
+        txtKet = findViewById(R.id.txtKetones);
+        txtBili = findViewById(R.id.txtbilirubin);
+        txtUrineGlucose = findViewById(R.id.txturineGlucose);
+        txtASC = findViewById(R.id.txtascorbicacid);
 
         txtReport = findViewById(R.id.txtReport);
         printreport = findViewById(R.id.btnSendDataToPrint);
 
-        initViews();
+
         // Retrive From Database
          db = new LabDB(getApplicationContext());
-
+        initViews();
 
         // ***************
-        patientModel = db.getPatient(  pt_no);
+//        patientModel = db.getPatient(pt_no);
         //System.out.println("Patient Sex " + patientModel.getPtSex());
-        vitalSign = db.getLastVitalSign(pt_no);
+//         vitalSign = db.getLastVitalSign(pt_no);
 
-        ecgReport=db.getSingleLeadEcgSign(pt_no);
+//        ecgReport=db.getSingleLeadEcgSign(pt_no);
 //        bloodReport = db.getLastBloodReport(pt_no);
-        longECGReport=db.getlongLeadEcgSign(pt_no);
+//        longECGReport=db.getlongLeadEcgSign(pt_no);
 //        //*****************
 //       urineReport = db.getLastUrineReport(pt_no);
 
+       glucoseModel=db.getDiabetesSign(pt_no);
+
         // Set Text
         // Patient Details
-        txtPtNo.setText(device_id + duid);
-        txtPtName.setText(patientModel.getPtName());
-        txtPtAddress.setText(patientModel.getPtAddress());
-        txtPtContactNo.setText(patientModel.getPtContactNo());
-        txtEmail.setText(patientModel.getPtEmail());
-        String AgeSex = patientModel.getPtAge();
-        AgeSex += " years/" + patientModel.getPtSex();
-        txtAge.setText(AgeSex);
-//        txtmaritalstatus.setText(patientModel.getPtmaritalstatus());
-//        txtSex.setText(patientModel.getPtSex());
-        // Fillup Vital Sign
-        txtTemp.setText(String.valueOf(vitalSign.getTempt()));
-        txtWeight.setText(vitalSign.getWeight() + " Kg");
-        txtHeight.setText(vitalSign.getHeight() + " feet");
-        txtPulse.setText( String.valueOf(vitalSign.getPulse()));
-        txtSTO2.setText(String.valueOf(vitalSign.getSto2()));
-//        txtglucose.setText(String.valueOf(vitalSign.getGlucose()));
-        // For BMI
-//        String heightinmeter = String.valueOf(vitalSign.getHeight() * 0.0254);
+//        txtPtName.setText(patientModel.getPtName());
+//        Log.d("address",patientModel.getPtAddress());
+//        Log.d("name",patientModel.getPtName());
+//
+//        String address=patientModel.getPtAddress();
+//
+//        txtPtAddress.setText(address);
+//        String AgeSex = patientModel.getPtAge();
+//        AgeSex += " years/" + patientModel.getPtSex();
+//        txtAge.setText(AgeSex);
+////        txtmaritalstatus.setText(patientModel.getPtmaritalstatus());
+////        txtSex.setText(patientModel.getPtSex());
+//        // Fillup Vital Sign
+//        txtTemp.setText(String.valueOf(vitalSign.getTempt()));
+//        txtWeight.setText(vitalSign.getWeight() + " Kg");
+//        txtHeight.setText(vitalSign.getHeight() + " feet");
+//        txtPulse.setText( String.valueOf(vitalSign.getPulse()));
+//        txtSTO2.setText(String.valueOf(vitalSign.getSto2()));
+//
+//        // For BMI
+//        double heightinmeter = (Double.parseDouble(vitalSign.getHeight())* 0.0254);
 //        double m2 = heightinmeter * heightinmeter;
-//        double weight = vitalSign.getWeight();
+//        double weight =Double.parseDouble(vitalSign.getWeight()) ;
 //        double bmi = weight / m2;
 //        String BMI = String.format("%.2f", bmi);
 //        if (bmi < 18.5) {
@@ -209,33 +218,33 @@ public class PrintReport extends AppCompatActivity {
 //            BMI += "(Obese Range)";
 //        }
 //        txtBMI.setText(BMI);
-        String bp = String.valueOf(vitalSign.getBps());
-        bp = bp + "/";
-        bp = bp + String.valueOf(vitalSign.getBpd());
-        txtBP.setText(bp);
-        txtSTO2.setText(String.valueOf(vitalSign.getSto2()));
-
-        // Fillup ECG Report
-        pr.setText(String.valueOf(ecgReport.getPr()));
-        heartrate.setText(String.valueOf(ecgReport.getHeartrate()));
-        qt.setText(String.valueOf(ecgReport.getQt()));
-        qtc.setText(String.valueOf(ecgReport.getQtc()));
-        qrs.setText(String.valueOf(ecgReport.getQrs()));
-        sdnn.setText(String.valueOf(ecgReport.getSdnn()));
-        rmssd.setText(String.valueOf(ecgReport.getRmssd()));
-        mrr.setText(String.valueOf(ecgReport.getMrr()));
-        finding.setText(ecgReport.getFinding());
+//        String bp = String.valueOf(vitalSign.getBps());
+//        bp = bp + "/";
+//        bp = bp + String.valueOf(vitalSign.getBpd());
+//        txtBP.setText(bp);
+//        txtSTO2.setText(String.valueOf(vitalSign.getSto2()));
+//
+//
+//        pr.setText(String.valueOf(ecgReport.getPr()));
+//        heartrate.setText(String.valueOf(ecgReport.getHeartrate()));
+//        qt.setText(String.valueOf(ecgReport.getQt()));
+//        qtc.setText(String.valueOf(ecgReport.getQtc()));
+//        qrs.setText(String.valueOf(ecgReport.getQrs()));
+//        sdnn.setText(String.valueOf(ecgReport.getSdnn()));
+//        rmssd.setText(String.valueOf(ecgReport.getRmssd()));
+//        mrr.setText(String.valueOf(ecgReport.getMrr()));
+//        finding.setText(ecgReport.getFinding());
 
         // Fillup Long ECG Report
-        longpr.setText(String.valueOf(longECGReport.getPr()));
-        longheartrate.setText(String.valueOf(longECGReport.getHeartrate()));
-        longqt.setText(String.valueOf(longECGReport.getQt()));
-        longqtc.setText(String.valueOf(longECGReport.getQtc()));
-        longqrs.setText(String.valueOf(longECGReport.getQrs()));
-        longsdnn.setText(String.valueOf(longECGReport.getSdnn()));
-        longrmssd.setText(String.valueOf(longECGReport.getRmssd()));
-        longmrr.setText(String.valueOf(longECGReport.getMrr()));
-        longfinding.setText(longECGReport.getFinding());
+//        longpr.setText(String.valueOf(longECGReport.getPr()));
+//        longheartrate.setText(String.valueOf(longECGReport.getHeartrate()));
+//        longqt.setText(String.valueOf(longECGReport.getQt()));
+//        longqtc.setText(String.valueOf(longECGReport.getQtc()));
+//        longqrs.setText(String.valueOf(longECGReport.getQrs()));
+//        longsdnn.setText(String.valueOf(longECGReport.getSdnn()));
+//        longrmssd.setText(String.valueOf(longECGReport.getRmssd()));
+//        longmrr.setText(String.valueOf(longECGReport.getMrr()));
+//        longfinding.setText(longECGReport.getFinding());
 
 
 
@@ -258,8 +267,24 @@ public class PrintReport extends AppCompatActivity {
 //        txtUricAcid.setText(String.valueOf(bloodReport.getUric_acid()));
 //        txtChlorestrol.setText(String.valueOf(bloodReport.getChlorestrol()));
 //
-//        // Fillup Urine Report
-//        txtLeuko.setText(String.valueOf(urineReport.getLeuko()));
+        // Fillup Urine Report
+//        txtLeuko.setText((urineReport.getLeuko()));
+//        txtNitrate.setText((urineReport.getNit()));
+//        txtURB.setText((urineReport.getUrb()));
+//        txtProtein.setText((urineReport.getProtein()));
+//        txtPH.setText((urineReport.getPh()));
+//        txtBlood.setText((urineReport.getBlood()));
+//        txtSG.setText((urineReport.getSg()));
+//        txtKet.setText((urineReport.getKet()));
+//        txtBili.setText((urineReport.getBili()));
+//        txtUrineGlucose.setText((urineReport.getGlucose()));
+//        txtASC.setText((urineReport.getAsc()));
+
+
+         //   Diabetes report
+
+        txtdiabetes.setText(glucoseModel.getPtGlucose());
+
 //        if(urineReport.getLeuko()<1){
 //            txtLeuko.setText("Nil");
 //        }else if(urineReport.getLeuko()<16){
@@ -272,35 +297,35 @@ public class PrintReport extends AppCompatActivity {
 //            txtLeuko.setText("Large");
 //        }
 //        String Report = "Your Report Summary : \n";
-        int toreport = 0;
+//        int toreport = 0;
 //        if (urineReport.getLeuko() > 16) {
 //            toreport++;
 //            Report += txtLeuko.getText() +  " Leukocyte Detected in urine \n";
 //        }
-//
+
 //        txtNitrate.setText(String.valueOf(urineReport.getNit()));
-//        if(urineReport.getNit()<1){
-//            txtNitrate.setText("Negative");
-//        }else if (urineReport.getNit() < 2) {
-//            toreport++;
-//            Report += "Small amount of Nitrates detected in urine \n";
-//        }else if(urineReport.getNit()>2){
-//            toreport++;
-//            Report += "Nitrates detected in urine \n";
-//        }
-//        if(urineReport.getUrb()<2){
-//            txtURB.setText("Normal");
-//        }else {
+////        if(urineReport.getNit()<1){
+////            txtNitrate.setText("Negative");
+////        }else if (urineReport.getNit() < 2) {
+////            toreport++;
+////            Report += "Small amount of Nitrates detected in urine \n";
+////        }else if(urineReport.getNit()>2){
+////            toreport++;
+////            Report += "Nitrates detected in urine \n";
+////        }
+////        if(urineReport.getUrb()<2){
+////            txtURB.setText("Normal");
+////        }else {
 //            txtURB.setText(String.valueOf(urineReport.getUrb()));
-//        }
-//        if (urineReport.getUrb() > 1) {
-//            Report += "Urobilirubin is Higher than Normal Range \n";
-//        }
-//        if(urineReport.getProtein()<1){
-//            txtProtein.setText("Negative");
-//        }else if(urineReport.getProtein()<16){
-//            txtProtein.setText("Trace");
-//        } else {
+////        }
+////        if (urineReport.getUrb() > 1) {
+////            Report += "Urobilirubin is Higher than Normal Range \n";
+////        }
+////        if(urineReport.getProtein()<1){
+////            txtProtein.setText("Negative");
+////        }else if(urineReport.getProtein()<16){
+////            txtProtein.setText("Trace");
+////        } else {
 //            txtProtein.setText(String.valueOf(urineReport.getProtein()));
 //        }
 //        if (urineReport.getProtein() > 150) {

@@ -45,7 +45,6 @@ public class DiabetesActivity extends AppCompatActivity {
         newPatient = getIntent().getParcelableExtra("patient");
 
         labDB = new LabDB(getApplicationContext());
-//        vitalSign = labDB.getLastVitalSign(ptno);
         dialog = new ProgressDialog(this);
         dialog.setCanceledOnTouchOutside(false);
         dialog.setCancelable(false);
