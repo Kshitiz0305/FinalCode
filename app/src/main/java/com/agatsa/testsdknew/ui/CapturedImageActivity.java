@@ -1101,6 +1101,8 @@ public  class CapturedImageActivity extends AppCompatActivity {
             } else {
                 if (dialog.isShowing())
                     dialog.dismiss();
+                pref.edit().putInt("UTF",1).apply();
+                Log.d("vitaltestflag",String.valueOf(pref.getInt("UTF",0)));
                 CapturedImageActivity.super.onBackPressed();
                 Toast.makeText(getApplicationContext(), "Patient Saved " , Toast.LENGTH_LONG).show();
 

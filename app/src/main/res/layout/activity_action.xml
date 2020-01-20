@@ -98,7 +98,7 @@
                             android:layout_height="match_parent"
                             android:fontFamily="@font/sfpro_display_semibold"
                             android:gravity="center"
-
+                            android:background="@drawable/textview_ripple_effect"
                             android:padding="@dimen/_5sdp"
                             android:text="New Patient"
                             android:textColor="@color/colorPrimaryDark"
@@ -169,6 +169,7 @@
                             android:layout_height="match_parent"
                             android:fontFamily="@font/sfpro_display_semibold"
                             android:gravity="center"
+                            android:background="@drawable/textview_ripple_effect"
                             android:padding="@dimen/_5sdp"
                             android:text="Existing Patient"
                             android:textColor="@color/colorPrimaryDark"

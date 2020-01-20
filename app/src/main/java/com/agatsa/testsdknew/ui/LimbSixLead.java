@@ -33,6 +33,7 @@ import com.agatsa.sanketlife.development.Success;
 import com.agatsa.sanketlife.development.UserDetails;
 import com.agatsa.testsdknew.BuildConfig;
 import com.agatsa.testsdknew.Models.ECGReport;
+import com.agatsa.testsdknew.Models.PatientModel;
 import com.agatsa.testsdknew.R;
 import com.agatsa.testsdknew.customviews.DialogUtil;
 import com.agatsa.testsdknew.databinding.ActivityLimbLeadBinding;
@@ -71,6 +72,7 @@ public class LimbSixLead extends AppCompatActivity {
     final CompositeDisposable compositeDisposable = new CompositeDisposable();
 
     GifImageView gifImageView;
+    PatientModel patientModel;
     ArrayList<String> buttoncollectionshide = new ArrayList<String>(Arrays.asList("txtlimbleadone","txtlimboneagain","txtlimbleadtwo","txtlimbtwoagain","txtlimbagain","ll_savereport","ll_report","ll_complete"));
     ArrayList<String> buttoncollectionsshow=new ArrayList<String>(Arrays.asList("txtlimbleadone","txtlimboneagain"));
 
@@ -83,6 +85,7 @@ public class LimbSixLead extends AppCompatActivity {
 
         pref = this.getSharedPreferences("sunyahealth", Context.MODE_PRIVATE);
         ptno = pref.getString("PTNO", "");
+        patientModel = getIntent().getParcelableExtra("patient");
 //        labdb = new LabDB(getApplicationContext());
 //        ecgReport=labdb.getLastEcgSign(ptno);
         mContext = getApplicationContext();
@@ -354,7 +357,7 @@ again=true;
 
     public void makePDF(EcgConfig ecgConfig) {
         InitiateEcg initiateEcg = new InitiateEcg();
-        initiateEcg.makeEcgReport(mContext, new UserDetails("Vikas", "24", "Male"), true, SECRET_ID, ecgConfig, new PdfCallback() {
+        initiateEcg.makeEcgReport(mContext, new UserDetails(patientModel.getPtName(), patientModel.getPtAge(), patientModel.getPtSex()), true, SECRET_ID, ecgConfig, new PdfCallback() {
             @Override
             public void onPdfAvailable(EcgConfig ecgConfig) {
 

@@ -88,6 +88,8 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
+                            android:background="@drawable/textview_ripple_effect"
+
                             android:fontFamily="@font/sfpro_display_semibold"
                             android:text=" Take Lead 1"
                             android:textColor="@color/colorPrimaryDark"
@@ -115,6 +117,8 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
+                            android:background="@drawable/textview_ripple_effect"
+
                             android:fontFamily="@font/sfpro_display_semibold"
                             android:text="Take Lead 1 again"
                             android:textColor="@color/colorPrimaryDark"
@@ -145,6 +149,8 @@
                             android:layout_weight="1"
                             android:fontFamily="@font/sfpro_display_semibold"
                             android:text=" Take Lead 2"
+                            android:background="@drawable/textview_ripple_effect"
+
                             android:textColor="@color/colorPrimaryDark"
                             android:textSize="15.7sp" />
 
@@ -171,6 +177,8 @@
                             android:layout_weight="1"
                             android:fontFamily="@font/sfpro_display_semibold"
                             android:text="Take Lead 2 again"
+                            android:background="@drawable/textview_ripple_effect"
+
                             android:textColor="@color/colorPrimaryDark"
                             android:textSize="15.7sp" />
 
@@ -200,6 +208,8 @@
                             android:layout_weight="1"
                             android:fontFamily="@font/sfpro_display_semibold"
                             android:text="Take Limb again"
+                            android:background="@drawable/textview_ripple_effect"
+
                             android:textColor="@color/colorPrimaryDark"
                             android:textSize="15.7sp" />
 

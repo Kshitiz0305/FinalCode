@@ -34,6 +34,7 @@ import com.agatsa.sanketlife.development.UserDetails;
 import com.agatsa.sanketlife.models.EcgTypes;
 import com.agatsa.testsdknew.BuildConfig;
 import com.agatsa.testsdknew.Models.ECGReport;
+import com.agatsa.testsdknew.Models.PatientModel;
 import com.agatsa.testsdknew.R;
 import com.agatsa.testsdknew.customviews.DialogUtil;
 import com.agatsa.testsdknew.databinding.ActivityTwelveLeadBinding;
@@ -76,6 +77,7 @@ public class TwelveLeadEcg extends AppCompatActivity {
 
     GifImageView gifImageView;
 ActivityTwelveLeadBinding binding;
+PatientModel patientModel;
 
 
 
@@ -85,6 +87,7 @@ ActivityTwelveLeadBinding binding;
        binding = DataBindingUtil.setContentView(this,R.layout.activity_twelve_lead);
         pref = this.getSharedPreferences("sunyahealth", Context.MODE_PRIVATE);
         ptno = pref.getString("PTNO", "");
+        patientModel = getIntent().getParcelableExtra("patient");
 //        labdb = new LabDB(getApplicationContext());
 //        ecgReport=labdb.getLastEcgSign(ptno);
         mContext = getApplicationContext();
@@ -809,7 +812,7 @@ ActivityTwelveLeadBinding binding;
     public void makePDF(EcgConfig ecgConfig) {
 
         InitiateEcg initiateEcg = new InitiateEcg();
-        initiateEcg.makeEcgReport(mContext, new UserDetails("Vikas", "24", "Male"), true, SECRET_ID, ecgConfig, new PdfCallback() {
+        initiateEcg.makeEcgReport(mContext, new UserDetails(patientModel.getPtName(), patientModel.getPtAge(), patientModel.getPtSex()), true, SECRET_ID, ecgConfig, new PdfCallback() {
             @Override
             public void onPdfAvailable(EcgConfig ecgConfig) {
                 Log.e("makepdfpath", ecgConfig.getFileUrl());

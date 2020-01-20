@@ -122,22 +122,24 @@ public class DiabetesActivity extends AppCompatActivity {
 
                 if (dialog.isShowing())
                     dialog.dismiss();
-                Toast.makeText(getApplicationContext(), "Already saved " + newPatient.getPtNo() + " V " + glucoseModel.getRow_id(), Toast.LENGTH_LONG).show();
+                Toast.makeText(getApplicationContext(), "Already saved " , Toast.LENGTH_LONG).show();
 
             } else if (s == 3) {
 
 
                 if (dialog.isShowing())
                     dialog.dismiss();
-                Toast.makeText(getApplicationContext(), "Exception catched " + newPatient.getPtNo() + " V " + glucoseModel.getRow_id(), Toast.LENGTH_LONG).show();
+                Toast.makeText(getApplicationContext(), "Exception catched " , Toast.LENGTH_LONG).show();
 
             } else {
                 if (dialog.isShowing())
                     dialog.dismiss();
 
-                  pref.edit().putInt("DF",1);
+                  pref.edit().putInt("DF",1).apply();
+                Log.d("vitaltestflag",String.valueOf(pref.getInt("DF",0)));
+
                 DiabetesActivity.super.onBackPressed();
-               Toast.makeText(getApplicationContext(), "Patient Saved " + newPatient.getPtNo() + " V " + glucoseModel.getRow_id(), Toast.LENGTH_LONG).show();
+               Toast.makeText(getApplicationContext(), "Patient Saved " , Toast.LENGTH_LONG).show();
             }
         }
     }

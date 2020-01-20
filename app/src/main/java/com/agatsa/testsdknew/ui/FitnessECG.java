@@ -38,6 +38,7 @@ import com.agatsa.sanketlife.development.UserDetails;
 import com.agatsa.sanketlife.models.EcgTypes;
 import com.agatsa.testsdknew.BuildConfig;
 import com.agatsa.testsdknew.Models.ECGReport;
+import com.agatsa.testsdknew.Models.PatientModel;
 import com.agatsa.testsdknew.R;
 import com.agatsa.testsdknew.customviews.DialogUtil;
 import com.agatsa.testsdknew.databinding.ActivityFitnessEcgBinding;
@@ -69,6 +70,7 @@ public class FitnessECG extends AppCompatActivity implements ResponseCallback {
 
  ActivityFitnessEcgBinding binding;
  final CompositeDisposable compositeDisposable =  new CompositeDisposable();
+ PatientModel patientModel;
 
 
 
@@ -81,9 +83,12 @@ public class FitnessECG extends AppCompatActivity implements ResponseCallback {
 
         pref = this.getSharedPreferences("sunyahealth", Context.MODE_PRIVATE);
         ptno = pref.getString("PTNO", "");
+        patientModel = getIntent().getParcelableExtra("patient");
 //        labdb = new LabDB(getApplicationContext());
 //        ecgReport=labdb.getLastEcgSign(ptno);
         mContext = getApplicationContext();
+
+
 
         initiateEcg = new InitiateEcg();
         initViews();
@@ -424,7 +429,7 @@ public class FitnessECG extends AppCompatActivity implements ResponseCallback {
     public void createLongPDF(LongEcgConfig longEcgConfig) {
 
         InitiateEcg initiateEcg = new InitiateEcg();
-        initiateEcg.makeLongEcgReport(mContext, new UserDetails("Vikas", "24", "Male"), true, SECRET_ID, longEcgConfig, new LongPdfCallBack() {
+        initiateEcg.makeLongEcgReport(mContext, new UserDetails(patientModel.getPtName(), patientModel.getPtAge(), patientModel.getPtSex()), true, SECRET_ID, longEcgConfig, new LongPdfCallBack() {
             @Override
             public void onPdfAvailable(LongEcgConfig ecgConfig) {
                 Log.e("path", longEcgConfig.getFileUrl());

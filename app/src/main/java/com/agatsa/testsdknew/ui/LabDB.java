@@ -770,14 +770,16 @@ public class LabDB extends SQLiteOpenHelper {
     }
 
 
-    public ECGReport getSingleLeadEcgSign(String pt_no) {
+    public ECGReport getSingleLeadEcgSign(String pt_no,String ecgtype) {
         ECGReport ecgReport = new ECGReport();
         SQLiteDatabase db = this.getReadableDatabase();
 
-        Cursor cursor = db.query(TABLE_ECG_SIGN, new String[]{COLUMN_ID, COLUMN_HEARTRATE,
-                        COLUMN_PR, COLUMN_QT, COLUMN_QTC,
-                        COLUMN_QRS, COLUMN_SDNN, COLUMN_RMSSD,COLUMN_MRR,COLUMN_FINDING}, COLUMN_PT_NO + "=?",
-                new String[]{String.valueOf(pt_no)}, null, null, COLUMN_ID + " DESC", String.valueOf(1));
+        Cursor cursor=db.rawQuery("select "+COLUMN_ID+","+ COLUMN_HEARTRATE+","+COLUMN_PR+","+ COLUMN_QT+","+ COLUMN_QTC+","+COLUMN_QRS+","+ COLUMN_SDNN+","+ COLUMN_RMSSD+","+COLUMN_MRR+","+COLUMN_FINDING+","+COLUMN_ECGTYPE+" from "+ TABLE_ECG_SIGN +" where "+ COLUMN_ECGTYPE +"="+"\""+ecgtype+"\""+ " ORDER BY "+COLUMN_ID+" DESC LIMIT 1",null);
+
+//        Cursor cursor = db.query(TABLE_ECG_SIGN, new String[]{COLUMN_ID, COLUMN_HEARTRATE,
+//                        COLUMN_PR, COLUMN_QT, COLUMN_QTC,
+//                        COLUMN_QRS, COLUMN_SDNN, COLUMN_RMSSD,COLUMN_MRR,COLUMN_FINDING,COLUMN_ECGTYPE}, COLUMN_PT_NO + "=?",
+//                new String[]{String.valueOf(pt_no)}, null, null, COLUMN_ID + " DESC", String.valueOf(1));
         if (cursor.moveToFirst()) {
             ecgReport.setRow_id((cursor.getString(0)));
             ecgReport.setHeartrate((float) Double.parseDouble(cursor.getString(1)));

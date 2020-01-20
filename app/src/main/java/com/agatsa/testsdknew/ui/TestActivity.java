@@ -35,36 +35,27 @@ if(patientModel!=null){
 
 }
 
-binding.btnNewPatient.setOnClickListener(new View.OnClickListener() {
-    @Override
-    public void onClick(View view) {
+binding.btnNewPatient.setOnClickListener(view -> {
 
-        Intent i = new Intent(TestActivity.this,LandingActivity.class);
-        startActivity(i);
+    Intent i = new Intent(TestActivity.this,LandingActivity.class);
+    startActivity(i);
 
 
-    }
 });
 
 
-        binding.btnTest.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(TestActivity.this,TestListActivity.class);
-                intent.putExtra("ptid",ptid);
-                intent.putExtra("patient",patientModel);
-                startActivity(intent);
+        binding.btnTest.setOnClickListener(view -> {
+            Intent intent = new Intent(TestActivity.this,TestListActivity.class);
+            intent.putExtra("ptid",ptid);
+            intent.putExtra("patient",patientModel);
+            startActivity(intent);
 
 
-            }
         });
-        binding.logout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
+        binding.logout.setOnClickListener(view -> {
 //                android.os.Process.killProcess(android.os.Process.myPid());
-                System.exit(0);
+            System.exit(0);
 
-            }
         });
 
 
@@ -73,13 +64,10 @@ binding.btnNewPatient.setOnClickListener(new View.OnClickListener() {
     public void onBackPressed() {
 
         if (patientModel != null) {
-            DialogUtil.getOKCancelDialog(this, "", "Do you want to discard the test of " + patientModel.getPtName(), "Yes", "No", new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialogInterface, int i) {
-                    Intent intent = new Intent(TestActivity.this, LandingActivity.class);
-                    startActivity(intent);
+            DialogUtil.getOKCancelDialog(this, "", "Do you want to discard the test of " + patientModel.getPtName(), "Yes", "No", (dialogInterface, i) -> {
+                Intent intent = new Intent(TestActivity.this, LandingActivity.class);
+                startActivity(intent);
 
-                }
             });
         }
 

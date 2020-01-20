@@ -1094,7 +1094,7 @@
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
                                     android:layout_gravity="center"
-                                    android:background="@drawable/ripple_effect"
+                                    android:background="@drawable/button_ripple_effect"
 
                                     android:fontFamily="@font/sfpro_display_semibold"
                                     android:text="SAVE"

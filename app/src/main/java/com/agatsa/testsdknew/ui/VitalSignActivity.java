@@ -149,11 +149,6 @@ public class VitalSignActivity extends AppCompatActivity  {
 
 
 
-    public void navigatetonextactivity(){
-        Intent intent = new Intent(VitalSignActivity.this,TestListActivity.class);
-        startActivity(intent);
-    }
-
 
 
 
@@ -206,18 +201,20 @@ public class VitalSignActivity extends AppCompatActivity  {
             if (s == 2) {
                 if (dialog.isShowing())
                     dialog.dismiss();
-                Toast.makeText(getApplicationContext(), "Already saved " + newPatient.getPtNo() + " V " + vitalSign.getRow_id(), Toast.LENGTH_LONG).show();
+                Toast.makeText(getApplicationContext(), "Already saved " , Toast.LENGTH_LONG).show();
 
             } else if (s == 3) {
                 if (dialog.isShowing())
                     dialog.dismiss();
-                Toast.makeText(getApplicationContext(), "Exception catched " + newPatient.getPtNo() + " V " + vitalSign.getRow_id(), Toast.LENGTH_LONG).show();
+                Toast.makeText(getApplicationContext(), "Exception catched " , Toast.LENGTH_LONG).show();
 
             } else {
                 if (dialog.isShowing())
                     dialog.dismiss();
+                pref.edit().putInt("VTF",1).apply();
+                Log.d("vitaltestflag",String.valueOf(pref.getInt("VTF",0)));
                 VitalSignActivity.super.onBackPressed();
-                Toast.makeText(getApplicationContext(), "Patient Saved " + newPatient.getPtNo() + " V " + vitalSign.getRow_id(), Toast.LENGTH_LONG).show();
+                Toast.makeText(getApplicationContext(), "Patient Saved ", Toast.LENGTH_LONG).show();
             }
 
         }

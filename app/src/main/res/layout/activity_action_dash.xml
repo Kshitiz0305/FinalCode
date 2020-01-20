@@ -92,6 +92,7 @@
                             android:layout_height="match_parent"
                             android:fontFamily="@font/sfpro_display_semibold"
                             android:gravity="center"
+                            android:background="@drawable/textview_ripple_effect"
                             android:padding="@dimen/_5sdp"
                             android:text="Vital Test"
                             android:textColor="@color/colorPrimaryDark"
@@ -133,6 +134,8 @@
                             android:layout_height="match_parent"
                             android:fontFamily="@font/sfpro_display_semibold"
                             android:gravity="center"
+                            android:background="@drawable/textview_ripple_effect"
+
                             android:padding="@dimen/_5sdp"
                             android:text="ECG Test"
                             android:textColor="@color/colorPrimaryDark"
@@ -176,6 +179,8 @@
                             android:fontFamily="@font/sfpro_display_semibold"
                             android:gravity="center"
                             android:padding="@dimen/_5sdp"
+                            android:background="@drawable/textview_ripple_effect"
+
                             android:text="Urine Test"
                             android:textColor="@color/colorPrimaryDark"
                             android:textSize="@dimen/_18sdp" />
@@ -220,6 +225,8 @@
                             android:fontFamily="@font/sfpro_display_semibold"
                             android:gravity="center"
                             android:padding="@dimen/_5sdp"
+                            android:background="@drawable/textview_ripple_effect"
+
                             android:text="Diabetes"
                             android:textColor="@color/colorPrimaryDark"
                             android:textSize="@dimen/_18sdp" />
@@ -261,6 +268,7 @@
                 android:padding="8sp"
                 android:layout_alignParentBottom="true"
                 android:textColor="@color/colorPrimaryDark"
+
                 android:textSize="18sp"
                 android:id="@+id/btn_print"
                 android:layout_marginLeft="@dimen/_5sdp"
