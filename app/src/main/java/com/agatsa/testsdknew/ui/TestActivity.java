@@ -1,17 +1,15 @@
 package com.agatsa.testsdknew.ui;
 
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.IntentCompat;
 import androidx.databinding.DataBindingUtil;
 
 import com.agatsa.testsdknew.Models.PatientModel;
 import com.agatsa.testsdknew.R;
 import com.agatsa.testsdknew.customviews.DialogUtil;
-import com.agatsa.testsdknew.databinding.ActivityActionBinding;
 import com.agatsa.testsdknew.databinding.TestActionBinding;
 
 public class TestActivity extends AppCompatActivity {
@@ -53,8 +51,8 @@ binding.btnNewPatient.setOnClickListener(view -> {
 
         });
         binding.logout.setOnClickListener(view -> {
-//                android.os.Process.killProcess(android.os.Process.myPid());
-            System.exit(0);
+            finishAffinity();
+
 
         });
 
@@ -67,11 +65,14 @@ binding.btnNewPatient.setOnClickListener(view -> {
             DialogUtil.getOKCancelDialog(this, "", "Do you want to discard the test of " + patientModel.getPtName(), "Yes", "No", (dialogInterface, i) -> {
                 Intent intent = new Intent(TestActivity.this, LandingActivity.class);
                 startActivity(intent);
+                finishAffinity();
 
             });
         }
 
     }
+
+
 
 
 }

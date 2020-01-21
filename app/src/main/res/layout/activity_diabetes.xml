@@ -8,6 +8,9 @@
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_marginLeft="10dp"
+        app:cardCornerRadius="@dimen/_10kdp"
+        app:cardElevation="@dimen/_2kdp"
+        app:cardMaxElevation="@dimen/_4kdp"
         android:layout_marginTop="8dp"
         android:layout_marginRight="10dp"
         android:layout_height="match_parent">
@@ -24,21 +27,41 @@
                 android:orientation="vertical">
 
 
-                <TextView
+                <RelativeLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="@font/sfpro_display_bold"
-                    android:gravity="center"
-                    android:padding="8sp"
-                    android:text="@string/diabetes"
-                    android:textColor="@color/colorPrimaryDark"
-                    android:textSize="17sp" />
+                    android:layout_height="wrap_content">
 
+                    <TextView
+                        android:id="@+id/patientName"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/_110sdp"
+                        android:textSize="17sp"
+                        android:fontFamily="@font/sfpro_display_bold"
+                        android:padding="8sp"
+                        android:text="Diabetes"
+                        android:textAlignment="textEnd"
+                        android:textColor="@color/colorPrimaryDark"
+                        />
 
+                    <ImageView
+                        android:id="@+id/help"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentEnd="true"
+                        android:layout_marginRight="@dimen/_5sdp"
+                        android:src="@drawable/ic_question"
+                        android:fontFamily="@font/sfpro_display_semibold"
+                        android:gravity="right"
+                        android:padding="8sp"
+                        android:textColor="@color/colorPrimaryDark"
+                        android:textSize="15sp" />
+                </RelativeLayout>
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
                     android:background="@color/graylight" />
+
 
 
             </LinearLayout>

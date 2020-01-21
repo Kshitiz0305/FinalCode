@@ -8,6 +8,7 @@ import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 
@@ -65,13 +66,17 @@ public class DiabetesActivity extends AppCompatActivity {
 
         });
 
+//        binding.help.setOnClickListener(view -> {
+//
+//        });
+
     }
 
 
 
     @Override
     public void onBackPressed() {
-        DialogUtil.getOKCancelDialog(this, "", "Do you want to discard the  diabetes test of " + ptname + "?", "Yes","No", (dialogInterface, i) ->
+        DialogUtil.getOKCancelDialog(this, "", "Do you want to discard the  diabetes test of " + newPatient.getPtName() + "?", "Yes","No", (dialogInterface, i) ->
         DiabetesActivity.super.onBackPressed());
     }
 

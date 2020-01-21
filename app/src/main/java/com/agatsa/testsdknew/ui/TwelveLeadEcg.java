@@ -96,41 +96,32 @@ PatientModel patientModel;
 
         hideAndSeek(new ArrayList<>(Arrays.asList("txttwelveleadone")),false);
 
-   binding.btnReport.setOnClickListener(new View.OnClickListener() {
-       @Override
-       public void onClick(View view) {
-           Log.d("rantest","viewing pdf");
+   binding.btnReport.setOnClickListener(view -> {
+       Log.d("rantest","viewing pdf");
 
-           if(!pdfurl.equals(""))
-           {
-               Log.d("rantest","url available");
-               File file = new File(pdfurl);
-               Intent intent = new Intent(Intent.ACTION_VIEW);
+       if(!pdfurl.equals(""))
+       {
+           Log.d("rantest","url available");
+           File file = new File(pdfurl);
+           Intent intent = new Intent(Intent.ACTION_VIEW);
 
-               // set leadIndex to give temporary permission to external app to use your FileProvider
-               intent.setFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+           // set leadIndex to give temporary permission to external app to use your FileProvider
+           intent.setFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
 
-               // generate URI, I defined authority as the application ID in the Manifest, the last param is file I want to open
-               Uri photoURI = FileProvider.getUriForFile(TwelveLeadEcg.this,
-                       BuildConfig.APPLICATION_ID + ".provider",
-                       file);
-               // I am opening a PDF file so I give it a valid MIME type
-               intent.setDataAndType(photoURI, "application/pdf");
+           // generate URI, I defined authority as the application ID in the Manifest, the last param is file I want to open
+           Uri photoURI = FileProvider.getUriForFile(TwelveLeadEcg.this,
+                   BuildConfig.APPLICATION_ID + ".provider",
+                   file);
+           // I am opening a PDF file so I give it a valid MIME type
+           intent.setDataAndType(photoURI, "application/pdf");
 
-               // validate that the device can open your File!
-               startActivity(intent);
+           // validate that the device can open your File!
+           startActivity(intent);
 
 
 
-       }}
-   });
-   binding.btnComplete.setOnClickListener(new View.OnClickListener() {
-       @Override
-       public void onClick(View view) {
-
-           TwelveLeadEcg.this.onBackPressed();
-       }
-   });
+   }});
+   binding.btnComplete.setOnClickListener(view -> TwelveLeadEcg.this.onBackPressed());
 
 
 
@@ -185,22 +176,9 @@ PatientModel patientModel;
     @Override
     public void onBackPressed() {
 
-        DialogUtil.getOKCancelDialog(this, "Warning", "Do you want to complete Twelve Lead Test?", "Yes", "No", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialogInterface, int i) {
-
-                TwelveLeadEcg.super.onBackPressed();
+        DialogUtil.getOKCancelDialog(this, "Warning", "Do you want to complete Twelve Lead Test?", "Yes", "No", (dialogInterface, i) -> TwelveLeadEcg.super.onBackPressed(), (dialogInterface, i) -> {
 
 
-
-
-            }
-        }, new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialogInterface, int i) {
-
-
-            }
         });
 
 
@@ -348,7 +326,7 @@ PatientModel patientModel;
             if(!again&&x==2){
                 leadIndex =0;
                 x=0;
-                showDynamicimage("gif_lead2");
+                showDynamicimage("gif_leadv1");
                 showDynamicDescription("ecginfo");
                 hideAndSeek(buttoncollectionshide,true);
                 ArrayList<String> buttoncollectionsshow11=new ArrayList<String>(Arrays.asList("txttwelveleadtwoagain","txttwelvevone"));
@@ -360,7 +338,7 @@ PatientModel patientModel;
                 leadIndex =0;
                 x=0;
                 again=false;
-                showDynamicimage("gif_lead2");
+                showDynamicimage("gif_leadv1");
                 showDynamicDescription("ecginfo");
                 hideAndSeek(buttoncollectionshide,true);
                 ArrayList<String> buttoncollectionsshow12=new ArrayList<String>(Arrays.asList("txttwelveleadtwoagain","txttwelvevone"));
@@ -379,7 +357,7 @@ PatientModel patientModel;
             if(!again&&x==2){
                 leadIndex =0;
                 x=0;
-                showDynamicimage("gif_lead2");
+                showDynamicimage("gif_leadv2");
                 showDynamicDescription("ecginfo");
                 hideAndSeek(buttoncollectionshide,true);
                 ArrayList<String> buttoncollectionsshow11=new ArrayList<String>(Arrays.asList("txttwelvevoneagain","txttwelvevtwo"));
@@ -411,7 +389,7 @@ PatientModel patientModel;
             if(!again&&x==2){
                 leadIndex =0;
                 x=0;
-                showDynamicimage("gif_lead2");
+                showDynamicimage("gif_leadv3");
                 showDynamicDescription("ecginfo");
                 hideAndSeek(buttoncollectionshide,true);
                 ArrayList<String> buttoncollectionsshow11=new ArrayList<String>(Arrays.asList("txttwelvevtwoagain","txttwelvevthree"));
@@ -423,7 +401,7 @@ PatientModel patientModel;
                 leadIndex =0;
                 x=0;
                 again=false;
-                showDynamicimage("gif_lead2");
+                showDynamicimage("gif_leadv3");
                 showDynamicDescription("ecginfo");
                 hideAndSeek(buttoncollectionshide,true);
                 ArrayList<String> buttoncollectionsshow12=new ArrayList<String>(Arrays.asList("txttwelvevtwoagain","txttwelvevthree"));
@@ -443,7 +421,7 @@ PatientModel patientModel;
             if(!again&&x==2){
                 leadIndex =0;
                 x=0;
-                showDynamicimage("gif_lead2");
+                showDynamicimage("gif_leadv4");
                 showDynamicDescription("ecginfo");
                 hideAndSeek(buttoncollectionshide,true);
                 ArrayList<String> buttoncollectionsshow11=new ArrayList<String>(Arrays.asList("txttwelvevthreeagain","txttwelvevfour"));
@@ -455,7 +433,7 @@ PatientModel patientModel;
                 leadIndex =0;
                 x=0;
                 again=false;
-                showDynamicimage("gif_lead2");
+                showDynamicimage("gif_leadv4");
                 showDynamicDescription("ecginfo");
                 hideAndSeek(buttoncollectionshide,true);
                 ArrayList<String> buttoncollectionsshow12=new ArrayList<String>(Arrays.asList("txttwelvevthreeagain","txttwelvevfour"));
@@ -475,7 +453,7 @@ PatientModel patientModel;
             if(!again&&x==2){
                 leadIndex =0;
                 x=0;
-                showDynamicimage("gif_lead2");
+                showDynamicimage("gif_leadv5");
                 showDynamicDescription("ecginfo");
                 hideAndSeek(buttoncollectionshide,true);
                 ArrayList<String> buttoncollectionsshow11=new ArrayList<String>(Arrays.asList("txttwelvevfouragain","txttwelvevfive"));
@@ -487,7 +465,7 @@ PatientModel patientModel;
                 leadIndex =0;
                 x=0;
                 again=false;
-                showDynamicimage("gif_lead2");
+                showDynamicimage("gif_leadv5");
                 showDynamicDescription("ecginfo");
                 hideAndSeek(buttoncollectionshide,true);
                 ArrayList<String> buttoncollectionsshow12=new ArrayList<String>(Arrays.asList("txttwelvevfouragain","txttwelvevfive"));
@@ -506,7 +484,7 @@ PatientModel patientModel;
             if(!again&&x==2){
                 leadIndex =0;
                 x=0;
-                showDynamicimage("gif_lead2");
+                showDynamicimage("gif_leadv6");
                 showDynamicDescription("ecginfo");
                 hideAndSeek(buttoncollectionshide,true);
                 ArrayList<String> buttoncollectionsshow11=new ArrayList<String>(Arrays.asList("txttwelvevfiveagain","txttwelvevsix"));
@@ -518,7 +496,7 @@ PatientModel patientModel;
                 leadIndex =0;
                 x=0;
                 again=false;
-                showDynamicimage("gif_lead2");
+                showDynamicimage("gif_leadv6");
                 showDynamicDescription("ecginfo");
                 hideAndSeek(buttoncollectionshide,true);
                 ArrayList<String> buttoncollectionsshow12=new ArrayList<String>(Arrays.asList("txttwelvevfiveagain","txttwelvevsix"));
@@ -538,7 +516,7 @@ PatientModel patientModel;
             if(!again&&x==2){
                 leadIndex =0;
                 x=0;
-                showDynamicimage("gif_lead2");
+                showDynamicimage("gif_leadv6");
                 showDynamicDescription("ecginfo");
                 hideAndSeek(buttoncollectionshide,true);
                 ArrayList<String> buttoncollectionsshow11=new ArrayList<String>(Arrays.asList("txttwelvevsixagain","btnSaveTwelveLeadrecord"));
@@ -550,7 +528,7 @@ PatientModel patientModel;
                 leadIndex =0;
                 x=0;
                 again=false;
-                showDynamicimage("gif_lead2");
+                showDynamicimage("gif_leadv6");
                 showDynamicDescription("ecginfo");
                 hideAndSeek(buttoncollectionshide,true);
                 ArrayList<String> buttoncollectionsshow12=new ArrayList<String>(Arrays.asList("txttwelvevsixagain","btnSaveTwelveLeadrecord"));
@@ -570,7 +548,7 @@ PatientModel patientModel;
             if(!again&&x==2){
                 leadIndex =0;
                 x=0;
-                showDynamicimage("gif_lead2");
+                showDynamicimage("gif_leadv6");
                 showDynamicDescription("ecginfo");
                 hideAndSeek(buttoncollectionshide,true);
                 ArrayList<String> buttoncollectionsshow11=new ArrayList<String>(Arrays.asList("txttwelvevsixagain","btnSaveTwelveLeadrecord"));
@@ -582,7 +560,7 @@ PatientModel patientModel;
                 leadIndex =0;
                 x=0;
                 again=false;
-                showDynamicimage("gif_lead2");
+                showDynamicimage("gif_leadv6");
                 showDynamicDescription("ecginfo");
                 hideAndSeek(buttoncollectionshide,true);
                 ArrayList<String> buttoncollectionsshow12=new ArrayList<String>(Arrays.asList("txttwelvevsixagain","btnSaveTwelveLeadrecord"));

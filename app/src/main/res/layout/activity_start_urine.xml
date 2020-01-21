@@ -9,53 +9,76 @@
         android:background="@color/colorOffWhite"
         android:layout_height="match_parent">
 
-        <TextView
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Test List"
-            android:gravity="center"
-            android:fontFamily="@font/sfpro_display_bold"
-            android:padding="8sp"
-            android:textColor="@color/colorPrimaryDark"
-            android:textSize="17sp" />
+            android:layout_height="wrap_content">
 
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/_110sdp"
+                android:textSize="17sp"
+                android:fontFamily="@font/sfpro_display_bold"
+                android:padding="8sp"
+                android:text="Start Urine Test"
+                android:textAlignment="textEnd"
+                android:textColor="@color/colorPrimaryDark"
+                />
+
+            <ImageView
+                android:id="@+id/help"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_marginRight="@dimen/_5sdp"
+                android:src="@drawable/ic_question"
+                android:fontFamily="@font/sfpro_display_semibold"
+                android:gravity="right"
+                android:padding="8sp"
+                android:textColor="@color/colorPrimaryDark"
+                android:textSize="15sp" />
+        </RelativeLayout>
         <View
             android:layout_width="match_parent"
             android:layout_height="1dp"
             android:background="@color/graylight" />
 
 
+
+
+
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
-
+            android:orientation="vertical"
+            android:layout_height="wrap_content">
             <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
+                android:layout_height="wrap_content"
+                >
                 <TextView
-                    android:id="@+id/patientName"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginRight="@dimen/_5sdp"
+                    android:text="Hi Kshitiz"
+                    android:textAlignment="textEnd"
                     android:fontFamily="@font/sfpro_display_semibold"
                     android:padding="8sp"
-                    android:text="Hi Ranjan"
-                    android:textAlignment="textEnd"
+                    android:visibility="gone"
                     android:textColor="@color/colorPrimaryDark"
-                    android:textSize="15sp" />
+                    android:id="@+id/patientName"
+                    android:textSize="15sp"
+                    android:layout_marginRight="@dimen/_5sdp"
+                    android:layout_height="wrap_content"/>
 
                 <TextView
-                    android:id="@+id/haName"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentEnd="true"
                     android:layout_marginRight="@dimen/_5sdp"
                     android:fontFamily="@font/sfpro_display_semibold"
                     android:gravity="right"
                     android:padding="8sp"
-                    android:text="Hi Ranjan"
+                    android:visibility="gone"
+                    android:id="@+id/haName"
+                    android:text="Hi Kshitiz"
+                    android:layout_alignParentEnd="true"
                     android:textColor="@color/colorPrimaryDark"
                     android:textSize="15sp" />
             </RelativeLayout>
@@ -72,7 +95,7 @@
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/_260sdp"
+                    android:layout_height="244dp"
                     android:layout_marginTop="@dimen/_10sdp"
                     android:orientation="vertical"
                     android:weightSum="10">
@@ -86,13 +109,14 @@
                         android:orientation="horizontal">
 
                         <TextView
-                            android:layout_width="@dimen/_175sdp"
+                            android:id="@+id/elevenparam"
+                            android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:background="@drawable/textview_ripple_effect"
                             android:fontFamily="@font/sfpro_display_semibold"
                             android:gravity="center"
                             android:padding="@dimen/_5sdp"
-                            android:text="Vital Test"
+                            android:text="11 parameter"
                             android:textColor="@color/colorPrimaryDark"
                             android:textSize="@dimen/_18sdp" />
 
@@ -101,14 +125,16 @@
                             android:layout_height="match_parent"
                             android:layout_marginLeft="5dp"
                             android:layout_marginRight="5dp"
-                            android:background="@drawable/gradient_vertical" />
+                            android:background="@drawable/gradient_vertical"
+                            android:visibility="gone" />
 
                         <ImageView
                             android:layout_width="@dimen/_40sdp"
                             android:layout_height="@dimen/_40sdp"
                             android:layout_gravity="end"
                             android:paddingRight="@dimen/_3sdp"
-                            android:src="@drawable/vital_icon" />
+                            android:src="@drawable/vital_icon"
+                            android:visibility="gone" />
 
                     </LinearLayout>
 
@@ -128,14 +154,14 @@
                         android:orientation="horizontal">
 
                         <TextView
-                            android:layout_width="@dimen/_175sdp"
+                            android:id="@+id/twoparam"
+                            android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:background="@drawable/textview_ripple_effect"
                             android:fontFamily="@font/sfpro_display_semibold"
                             android:gravity="center"
-
                             android:padding="@dimen/_5sdp"
-                            android:text="ECG Test"
+                            android:text="2 parameter"
                             android:textColor="@color/colorPrimaryDark"
                             android:textSize="@dimen/_18sdp" />
 
@@ -144,14 +170,16 @@
                             android:layout_height="match_parent"
                             android:layout_marginLeft="5dp"
                             android:layout_marginRight="5dp"
-                            android:background="@drawable/gradient_vertical" />
+                            android:background="@drawable/gradient_vertical"
+                            android:visibility="gone" />
 
                         <ImageView
                             android:layout_width="@dimen/_40sdp"
                             android:layout_height="@dimen/_40sdp"
                             android:layout_gravity="end"
                             android:paddingRight="@dimen/_3sdp"
-                            android:src="@drawable/ecg_icon" />
+                            android:src="@drawable/ecg_icon"
+                            android:visibility="gone" />
 
                     </LinearLayout>
 
@@ -172,14 +200,14 @@
                         android:orientation="horizontal">
 
                         <TextView
-                            android:layout_width="@dimen/_175sdp"
+                            android:id="@+id/uric_acid"
+                            android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:background="@drawable/textview_ripple_effect"
                             android:fontFamily="@font/sfpro_display_semibold"
                             android:gravity="center"
                             android:padding="@dimen/_5sdp"
-
-                            android:text="Urine Test"
+                            android:text="Uric Acid"
                             android:textColor="@color/colorPrimaryDark"
                             android:textSize="@dimen/_18sdp" />
 
@@ -189,7 +217,8 @@
                             android:layout_height="match_parent"
                             android:layout_marginLeft="5dp"
                             android:layout_marginRight="5dp"
-                            android:background="@drawable/gradient_vertical" />
+                            android:background="@drawable/gradient_vertical"
+                            android:visibility="gone" />
 
                         <ImageView
 
@@ -197,16 +226,18 @@
                             android:layout_height="@dimen/_40sdp"
                             android:layout_gravity="end"
                             android:paddingRight="@dimen/_3sdp"
-                            android:src="@drawable/urine_icon" />
+                            android:src="@drawable/urine_icon"
+                            android:visibility="gone" />
 
                     </LinearLayout>
 
                     <View
                         android:layout_width="match_parent"
-                        android:layout_height="1dp"
+                        android:layout_height="2dp"
 
                         android:layout_marginTop="@dimen/_10kdp"
-                        android:background="@color/graylight" />
+                        android:background="@color/graylight"
+                        android:visibility="gone" />
 
                     <LinearLayout
                         android:id="@+id/diabetesTest"
@@ -215,7 +246,8 @@
                         android:layout_gravity="center"
                         android:layout_marginTop="@dimen/_15sdp"
                         android:background="@drawable/bg_gray_border"
-                        android:orientation="horizontal">
+                        android:orientation="horizontal"
+                        android:visibility="gone">
 
                         <TextView
                             android:layout_width="@dimen/_175sdp"
@@ -256,6 +288,7 @@
         <RelativeLayout
             android:layout_marginTop="@dimen/_20sdp"
             android:layout_width="wrap_content"
+            android:visibility="gone"
             android:layout_marginBottom="5sp"
             android:layout_height="wrap_content">
 

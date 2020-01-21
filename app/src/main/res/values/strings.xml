@@ -77,6 +77,26 @@
     <string name="take_again">Take Again</string>
     <string name="or">OR</string>
     <string name="fitness_test">Fitness Test</string>
+    <string name="twelve_lead">Twelve Lead</string>
+    <string name="take_lead_1">Take Lead 1</string>
+    <string name="take_lead_1_again">Take Lead 1 again</string>
+    <string name="lead_2_again">Lead 2 Again</string>
+    <string name="v_1">V 1</string>
+    <string name="v_1_again">V 1 Again</string>
+    <string name="v_2">V 2</string>
+    <string name="v_2_again">V 2 Again</string>
+    <string name="v_3">V 3</string>
+    <string name="v_3_again">V 3 Again</string>
+    <string name="v_4">V 4</string>
+    <string name="v_4_again">V 4 Again</string>
+    <string name="v_5">V 5</string>
+    <string name="v_5_again">V 5 Again</string>
+    <string name="v_6">V 6</string>
+    <string name="v_6_again">V 6 Again</string>
+    <string name="take_twelve_lead_again">Take Twelve Lead Again</string>
+    <string name="save_record">SAVE RECORD</string>
+    <string name="view_report">VIEW REPORT</string>
+    <string name="complete_test">COMPLETE TEST</string>
 
 
 </resources>

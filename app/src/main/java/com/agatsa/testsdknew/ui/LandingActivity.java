@@ -41,8 +41,8 @@ public class LandingActivity extends AppCompatActivity {
 
         });
 
-binding.logout.setOnClickListener(view -> finish());
-
+       binding.logout.setOnClickListener(view ->
+              finishAffinity());
 
 
 
@@ -51,8 +51,7 @@ binding.logout.setOnClickListener(view -> finish());
 
     @Override
     public void onBackPressed() {
-        super.onBackPressed();
-        finish();
+      finishAffinity();
 
     }
 

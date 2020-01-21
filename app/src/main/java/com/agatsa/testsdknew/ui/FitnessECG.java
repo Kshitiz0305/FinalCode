@@ -63,6 +63,8 @@ public class FitnessECG extends AppCompatActivity implements ResponseCallback {
     SharedPreferences pref;
     ECGReport ecgReport=new ECGReport();
 
+    Button bt_view;
+
    public static int state=0;
     InitiateEcg initiateEcg;
     static  String pdfurl="";
@@ -84,8 +86,6 @@ public class FitnessECG extends AppCompatActivity implements ResponseCallback {
         pref = this.getSharedPreferences("sunyahealth", Context.MODE_PRIVATE);
         ptno = pref.getString("PTNO", "");
         patientModel = getIntent().getParcelableExtra("patient");
-//        labdb = new LabDB(getApplicationContext());
-//        ecgReport=labdb.getLastEcgSign(ptno);
         mContext = getApplicationContext();
 
 
@@ -131,51 +131,7 @@ public class FitnessECG extends AppCompatActivity implements ResponseCallback {
 
 
 
-        binding.btView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Log.d("rantest","viewing pdf");
 
-                if(!pdfurl.equals(""))
-                {
-                    state=0;
-                    Log.d("rantest","url available");
-                    File file = new File(pdfurl);
-                    Intent intent = new Intent(Intent.ACTION_VIEW);
-
-                    // set leadIndex to give temporary permission to external app to use your FileProvider
-                    intent.setFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
-
-                    // generate URI, I defined authority as the application ID in the Manifest, the last param is file I want to open
-                    Uri photoURI = FileProvider.getUriForFile(FitnessECG.this,
-                            BuildConfig.APPLICATION_ID + ".provider",
-                            file);
-                    // I am opening a PDF file so I give it a valid MIME type
-                    intent.setDataAndType(photoURI, "application/pdf");
-
-                    // validate that the device can open your File!
-                    startActivity(intent);
-
-
-
-
-                }
-
-
-
-
-
-            }
-        });
-
-
-        binding.btnBack.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-                FitnessECG.this.onBackPressed();
-            }
-        });
 
 
         initOnClickListener();
@@ -185,22 +141,9 @@ public class FitnessECG extends AppCompatActivity implements ResponseCallback {
     @Override
     public void onBackPressed() {
 
-        DialogUtil.getOKCancelDialog(this, "Warning", "Do you want to complete Chest Six Lead Test?", "Yes", "No", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialogInterface, int i) {
-
-                FitnessECG.super.onBackPressed();
+        DialogUtil.getOKCancelDialog(this, "Warning", "Do you want to complete Chest Six Lead Test?", "Yes", "No", (dialogInterface, i) -> FitnessECG.super.onBackPressed(), (dialogInterface, i) -> {
 
 
-
-
-            }
-        }, new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialogInterface, int i) {
-
-
-            }
         });
 
 
@@ -214,6 +157,8 @@ public class FitnessECG extends AppCompatActivity implements ResponseCallback {
         fitnesstxttakeagain=findViewById(R.id.fitnesstxttakeagain);
         fitnessbtnsavell=findViewById(R.id.fitnessbtnsavell);
         fitnessviewreportll=findViewById(R.id.fitnessviewreportll);
+        bt_view=findViewById(R.id.bt_view);
+
 
 
 
@@ -223,22 +168,53 @@ public class FitnessECG extends AppCompatActivity implements ResponseCallback {
     private void initOnClickListener() {
 
 
-        fitnesstxtLeadOne.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                state=state+1;
-                new Handler().postDelayed(() -> FitnessECG.this.getlongReadingForECG(1, 60), 2000);
-            }
+        fitnesstxtLeadOne.setOnClickListener(v -> {
+            state=state+1;
+            new Handler().postDelayed(() -> FitnessECG.this.getlongReadingForECG(1, 60), 2000);
         });
 
-        fitnessbtnSavereport.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+        fitnessbtnSavereport.setOnClickListener(v -> {
 
 //                state=state+1;
-                saveLongEcg();
-            }
+            saveLongEcg();
         });
+
+        bt_view.setOnClickListener(view -> {
+            Log.d("rantest","viewing pdf");
+
+            if(!pdfurl.equals(""))
+            {
+                state=0;
+                Log.d("rantest","url available");
+                File file = new File(pdfurl);
+                Intent intent = new Intent(Intent.ACTION_VIEW);
+
+                // set leadIndex to give temporary permission to external app to use your FileProvider
+                intent.setFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+
+                // generate URI, I defined authority as the application ID in the Manifest, the last param is file I want to open
+                Uri photoURI = FileProvider.getUriForFile(FitnessECG.this,
+                        BuildConfig.APPLICATION_ID + ".provider",
+                        file);
+                // I am opening a PDF file so I give it a valid MIME type
+                intent.setDataAndType(photoURI, "application/pdf");
+
+                // validate that the device can open your File!
+                startActivity(intent);
+
+
+
+
+            }
+
+
+
+
+
+        });
+
+
+        binding.btnBack.setOnClickListener(view -> FitnessECG.this.onBackPressed());
 
 
 
@@ -410,10 +386,7 @@ public class FitnessECG extends AppCompatActivity implements ResponseCallback {
             @Override
             public void onSuccess(Success success, LongEcgConfig ecgConfig) {
 
-
-
-
-                 setMobileDataEnabled(FitnessECG.this,false);
+                setMobileDataEnabled(FitnessECG.this,false);
                  showProgress("Generating Report");
                 createLongPDF(ecgConfig);
             }
@@ -432,8 +405,8 @@ public class FitnessECG extends AppCompatActivity implements ResponseCallback {
         initiateEcg.makeLongEcgReport(mContext, new UserDetails(patientModel.getPtName(), patientModel.getPtAge(), patientModel.getPtSex()), true, SECRET_ID, longEcgConfig, new LongPdfCallBack() {
             @Override
             public void onPdfAvailable(LongEcgConfig ecgConfig) {
-                Log.e("path", longEcgConfig.getFileUrl());
-                String filePath = longEcgConfig.getFileUrl();
+                Log.e("path", ecgConfig.getFileUrl());
+                String filePath = ecgConfig.getFileUrl();
                 pdfurl =filePath;
                 Toast.makeText(mContext, "Pdf Generated", Toast.LENGTH_SHORT).show();
 
@@ -449,7 +422,6 @@ public class FitnessECG extends AppCompatActivity implements ResponseCallback {
                 ecgReport.setMrr(ecgConfig.getmRR());
                 ecgReport.setFinding(ecgConfig.getFinding());
                 ecgReport.setEcgType("LSL");
-
                 ecgReport.setFilepath(ecgConfig.getFileUrl());
                 compositeDisposable.add(db.updateEcgObserVable(ecgReport)
                         .subscribeOn(Schedulers.io())
@@ -510,16 +482,7 @@ public class FitnessECG extends AppCompatActivity implements ResponseCallback {
         });
     }
 
-    public void hideSoftKeyboard() {
-        View view = this.getCurrentFocus();
 
-
-        if (view != null) {
-            InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-            assert imm != null;
-            imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
-        }
-    }
 
 
 
@@ -538,13 +501,6 @@ public class FitnessECG extends AppCompatActivity implements ResponseCallback {
         return super.onOptionsItemSelected(item);
     }
 
-//    @Override
-//    public void onBackPressed() {
-//        super.onBackPressed();
-//        Intent intent = new Intent(FitnessECG.this, EcgOptionsActivity.class);
-//        startActivity(intent);
-//
-//    }
 
 
     @Override
@@ -555,10 +511,7 @@ public class FitnessECG extends AppCompatActivity implements ResponseCallback {
     @Override
     public void onSuccess(Success success) {
         Toast.makeText(mContext, success.getSuccessMsg(), Toast.LENGTH_SHORT).show();
-//         Log.d("ktest","came in success");
-//        fitnessbtnSavereport.setVisibility(View.VISIBLE);
-//        fitnesstxttakeagain.setVisibility(View.VISIBLE);
-//        fitnesstxtLeadOne.setVisibility(View.GONE);
+
 
     }
 }

@@ -110,39 +110,36 @@ PatientModel patientModel;
         hideAndSeek(buttoncollectionsshowstart,false);
 //         hideshow is to be deleted
 
-        binding.btRprt.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Log.d("rantest","viewing pdf");
+        binding.btRprt.setOnClickListener(view -> {
+            Log.d("rantest","viewing pdf");
 
-                if(!pdfUrl.equals(""))
-                {
-                    Log.d("rantest","url available");
-                    File file = new File(pdfUrl);
-                    Intent intent = new Intent(Intent.ACTION_VIEW);
+            if(!pdfUrl.equals(""))
+            {
+                Log.d("rantest","url available");
+                File file = new File(pdfUrl);
+                Intent intent = new Intent(Intent.ACTION_VIEW);
 
-                    // set leadIndex to give temporary permission to external app to use your FileProvider
-                    intent.setFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+                // set leadIndex to give temporary permission to external app to use your FileProvider
+                intent.setFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
 
-                    // generate URI, I defined authority as the application ID in the Manifest, the last param is file I want to open
-                    Uri photoURI = FileProvider.getUriForFile(ChestSixLead.this,
-                            BuildConfig.APPLICATION_ID + ".provider",
-                            file);
-                    // I am opening a PDF file so I give it a valid MIME type
-                    intent.setDataAndType(photoURI, "application/pdf");
+                // generate URI, I defined authority as the application ID in the Manifest, the last param is file I want to open
+                Uri photoURI = FileProvider.getUriForFile(ChestSixLead.this,
+                        BuildConfig.APPLICATION_ID + ".provider",
+                        file);
+                // I am opening a PDF file so I give it a valid MIME type
+                intent.setDataAndType(photoURI, "application/pdf");
 
-                    // validate that the device can open your File!
-                    startActivity(intent);
-
-
-
-
-                }
+                // validate that the device can open your File!
+                startActivity(intent);
 
 
 
 
             }
+
+
+
+
         });
         binding.btsavePdfReport.setOnClickListener(v ->{
 
@@ -239,14 +236,7 @@ PatientModel patientModel;
 
 
     private void initOnClickListener() {
-        binding.btComplete.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-                ChestSixLead.this.onBackPressed();
-
-            }
-        });
+        binding.btComplete.setOnClickListener(view -> ChestSixLead.this.onBackPressed());
 
        txtvone.setOnClickListener(v -> {
            leadIndex=1;
@@ -420,22 +410,9 @@ PatientModel patientModel;
     @Override
     public void onBackPressed() {
 
-        DialogUtil.getOKCancelDialog(this, "Warning", "Do you want to complete Chest Six Lead Test?", "Yes", "No", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialogInterface, int i) {
-
-                ChestSixLead.super.onBackPressed();
+        DialogUtil.getOKCancelDialog(this, "Warning", "Do you want to complete Chest Six Lead Test?", "Yes", "No", (dialogInterface, i) -> ChestSixLead.super.onBackPressed(), (dialogInterface, i) -> {
 
 
-
-
-            }
-        }, new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialogInterface, int i) {
-
-
-            }
         });
 
 
@@ -591,7 +568,7 @@ PatientModel patientModel;
         if(leadIndex ==0&&again){
 //
             again =false;
-            showDynamicimage("gif_lead1");
+            showDynamicimage("gif_leadv1");
             showDynamicDescription("ecginfo");
             hideAndSeek(buttoncollectionshide,true);
             ArrayList<String> buttoncollectionsshow0=new ArrayList<String>(Arrays.asList("txtvone"));
@@ -604,7 +581,7 @@ PatientModel patientModel;
             if(!again&&x==2){
                 leadIndex =0;
                 x=0;
-                showDynamicimage("gif_lead2");
+                showDynamicimage("gif_leadv2");
                 showDynamicDescription("ecginfo");
                 hideAndSeek(buttoncollectionshide,true);
                 ArrayList<String> buttoncollectionsshow11=new ArrayList<String>(Arrays.asList("txtvoneagain","txtvtwo"));
@@ -616,7 +593,7 @@ PatientModel patientModel;
                 leadIndex =0;
                 x=0;
                 again=false;
-                showDynamicimage("gif_lead2");
+                showDynamicimage("gif_leadv2");
                 showDynamicDescription("ecginfo");
                 hideAndSeek(buttoncollectionshide,true);
                 ArrayList<String> buttoncollectionsshow11=new ArrayList<String>(Arrays.asList("txtvoneagain","txtvtwo"));
@@ -633,7 +610,7 @@ PatientModel patientModel;
 //                 this is as lead one pressed and performed test for the fir5st time
                 leadIndex =0;
                 x=0;
-                showDynamicimage("gif_lead2");
+                showDynamicimage("gif_leadv3");
                 showDynamicDescription("ecginfo");
                 hideAndSeek(buttoncollectionshide,true);
                 ArrayList<String> buttoncollectionsshow21=new ArrayList<String>(Arrays.asList("txtvtwoagain","txtvthree"));
@@ -645,7 +622,7 @@ PatientModel patientModel;
                 leadIndex =0;
                 x=0;
                 again=false;
-                showDynamicimage("gif_lead2");
+                showDynamicimage("gif_leadv3");
                 showDynamicDescription("ecginfo");
                 hideAndSeek(buttoncollectionshide,true);
                 ArrayList<String> buttoncollectionsshow22=new ArrayList<String>(Arrays.asList("txtvtwoagain","txtvthree"));
@@ -665,7 +642,7 @@ PatientModel patientModel;
 //                 this is as lead one pressed and performed test for the fir5st time
                 leadIndex = 0;
                 x = 0;
-                showDynamicimage("gif_lead2");
+                showDynamicimage("gif_leadv4");
                 showDynamicDescription("ecginfo");
                 hideAndSeek(buttoncollectionshide, true);
                 ArrayList<String> buttoncollectionsshow21 = new ArrayList<String>(Arrays.asList("txtvthreeagain", "txtvfour"));
@@ -675,7 +652,7 @@ PatientModel patientModel;
                 leadIndex = 0;
                 x = 0;
                 again = false;
-                showDynamicimage("gif_lead2");
+                showDynamicimage("gif_leadv4");
                 showDynamicDescription("ecginfo");
                 hideAndSeek(buttoncollectionshide, true);
                 ArrayList<String> buttoncollectionsshow22 = new ArrayList<String>(Arrays.asList("txtvthreeagain", "txtvfour"));
@@ -689,7 +666,7 @@ PatientModel patientModel;
 //                 this is as lead one pressed and performed test for the fir5st time
                 leadIndex = 0;
                 x = 0;
-                showDynamicimage("gif_lead2");
+                showDynamicimage("gif_leadv5");
                 showDynamicDescription("ecginfo");
                 hideAndSeek(buttoncollectionshide, true);
                 ArrayList<String> buttoncollectionsshow21 = new ArrayList<String>(Arrays.asList("txtvfouragain", "txtvfive"));
@@ -699,7 +676,7 @@ PatientModel patientModel;
                 leadIndex = 0;
                 x = 0;
                 again = false;
-                showDynamicimage("gif_lead2");
+                showDynamicimage("gif_leadv5");
                 showDynamicDescription("ecginfo");
                 hideAndSeek(buttoncollectionshide, true);
                 ArrayList<String> buttoncollectionsshow22 = new ArrayList<String>(Arrays.asList("txtvfouragain", "txtvfive"));
@@ -715,7 +692,7 @@ PatientModel patientModel;
 //                 this is as lead one pressed and performed test for the fir5st time
                 leadIndex = 0;
                 x = 0;
-                showDynamicimage("gif_lead2");
+                showDynamicimage("gif_leadv6");
                 showDynamicDescription("ecginfo");
                 hideAndSeek(buttoncollectionshide, true);
                 ArrayList<String> buttoncollectionsshow21 = new ArrayList<String>(Arrays.asList("txtvfiveagain", "txtvsix"));
@@ -725,7 +702,7 @@ PatientModel patientModel;
                 leadIndex = 0;
                 x = 0;
                 again = false;
-                showDynamicimage("gif_lead2");
+                showDynamicimage("gif_leadv6");
                 showDynamicDescription("ecginfo");
                 hideAndSeek(buttoncollectionshide, true);
                 ArrayList<String> buttoncollectionsshow22 = new ArrayList<String>(Arrays.asList("txtvfiveagain", "txtvsix"));
@@ -745,7 +722,7 @@ PatientModel patientModel;
 //                 this is as lead one pressed and performed test for the fir5st time
                 leadIndex = 0;
                 x = 0;
-                showDynamicimage("gif_lead2");
+                showDynamicimage("gif_leadv6");
                 showDynamicDescription("ecginfo");
                 hideAndSeek(buttoncollectionshide, true);
                 ArrayList<String> buttoncollectionsshow21 = new ArrayList<String>(Arrays.asList("txtvsixagain","btnSavelimbreport"));
@@ -755,7 +732,7 @@ PatientModel patientModel;
                 leadIndex = 0;
                 x = 0;
                 again = false;
-                showDynamicimage("gif_lead2");
+                showDynamicimage("gif_leadv6");
                 showDynamicDescription("ecginfo");
                 hideAndSeek(buttoncollectionshide, true);
                 ArrayList<String> buttoncollectionsshow22 = new ArrayList<String>(Arrays.asList("txtvsixagain","btnSavelimbreport"));

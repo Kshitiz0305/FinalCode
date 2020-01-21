@@ -242,6 +242,7 @@ public  class CapturedImageActivity extends AppCompatActivity {
     private String bilirubin;
     private String glucose;
     private String ascorbic_acid;
+    ImageView help;
 
     static {
         System.loadLibrary("opencv_java3");
@@ -268,15 +269,16 @@ public  class CapturedImageActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_captured_image);
         pref = this.getSharedPreferences("sunyahealth", Context.MODE_PRIVATE);
-        dialog= new ProgressDialog(this);
         ptno = pref.getString("PTNO", "");
         patientModel = getIntent().getParcelableExtra("patient");
+        dialog= new ProgressDialog(this);
         checkPermissions();
         detected = false;
         mActivity = CapturedImageActivity.this;
         mImageView = findViewById(R.id.camera_photo);
         description = findViewById(R.id.description);
         process = findViewById(R.id.done);
+        help=findViewById(R.id.help);
         report_list = findViewById(R.id.btnReport);
         labDB=new LabDB(getApplicationContext());
         saveurinetest = findViewById(R.id.saveurinetest);
@@ -306,6 +308,10 @@ public  class CapturedImageActivity extends AppCompatActivity {
 
 
         });
+
+//        help.setOnClickListener(view -> {
+//
+//        });
 
     }
 
@@ -1116,8 +1122,8 @@ public  class CapturedImageActivity extends AppCompatActivity {
 //       here back is handled in async postexecute to avoid memory leak  this activity is already killed in back
 
 
-        DialogUtil.getOKCancelDialog(this, "", "Do you want to exit by  saving the  urine test of " + patientModel.getPtName(), "Yes","No", (dialogInterface, i) -> {
-            new SaveData().execute();
+        DialogUtil.getOKCancelDialog(this, "", "Do you want to discard the  urine test of " + patientModel.getPtName()+"?", "Yes","No", (dialogInterface, i) -> {
+//            new SaveData().execute();
 //            CapturedImageActivity.super.onBackPressed();
 
         });

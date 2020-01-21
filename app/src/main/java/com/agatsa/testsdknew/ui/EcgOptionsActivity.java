@@ -85,53 +85,50 @@ public class EcgOptionsActivity extends AppCompatActivity {
         syncimg=findViewById(R.id.syncimg);
         longsyncimg=findViewById(R.id.longsyncimg);
 
-        binding.btComplete.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
+        binding.btComplete.setOnClickListener(view -> {
 
-                 int oneatleastSet =0;
-                for(String s : keys){
+             int oneatleastSet =0;
+            for(String s : keys){
 
-                    Log.d("rantestlastvalue","value of "+s+" "+String.valueOf(sharedPreferences.getInt(s,0)));
-                    if(sharedPreferences.getInt(s,0)==1){
+                Log.d("rantestlastvalue","value of "+s+" "+String.valueOf(sharedPreferences.getInt(s,0)));
+                if(sharedPreferences.getInt(s,0)==1){
 
 
-                        Log.d("rantestlastvalue",String.valueOf(sharedPreferences.getInt(s,0)));
-                        oneatleastSet =sharedPreferences.getInt(s,0);
-
-                    }
-
-
-                }
-                Log.d("rantestlastvalue",String.valueOf(oneatleastSet));
-
-                if(oneatleastSet==1){
-
-
-                    Toast.makeText(EcgOptionsActivity.this, "Tick hune khalko back", Toast.LENGTH_SHORT).show();
-
-                    sharedPreferences.edit().putInt("ECGF",1);
-                    EcgOptionsActivity.this.onBackPressed();
-
-
-
-
-                }
-                else {
-                    Toast.makeText(EcgOptionsActivity.this, "Tick nahune khalko back", Toast.LENGTH_SHORT).show();
-
-                    EcgOptionsActivity.this.onBackPressed();
-
-
-
+                    Log.d("rantestlastvalue",String.valueOf(sharedPreferences.getInt(s,0)));
+                    oneatleastSet =sharedPreferences.getInt(s,0);
 
                 }
 
+
+            }
+            Log.d("rantestlastvalue",String.valueOf(oneatleastSet));
+
+            if(oneatleastSet==1){
+
+
+                Toast.makeText(EcgOptionsActivity.this, "Tick hune khalko back", Toast.LENGTH_SHORT).show();
+
+                sharedPreferences.edit().putInt("ECGF",1);
+                EcgOptionsActivity.this.onBackPressed();
 
 
 
 
             }
+            else {
+                Toast.makeText(EcgOptionsActivity.this, "Tick nahune khalko back", Toast.LENGTH_SHORT).show();
+
+                EcgOptionsActivity.this.onBackPressed();
+
+
+
+
+            }
+
+
+
+
+
         });
 
 
@@ -242,6 +239,25 @@ public class EcgOptionsActivity extends AppCompatActivity {
 
 
     }
+
+
+    @Override
+    public void onBackPressed() {
+
+        DialogUtil.getOKCancelDialog(this, "", "Do you want to discard the  test of " + patientModel.getPtName(), "Yes","No", (dialogInterface, i) -> {
+
+          EcgOptionsActivity.super.onBackPressed();
+
+
+        });
+
+
+
+
+
+    }
+
+
 
 
 

@@ -50,7 +50,8 @@
 
         <activity android:name=".ui.MainActivity" />
         <activity android:name=".ui.NewMainActivity" />
-        <activity android:name=".ui.LandingActivity" />
+        <activity android:name=".ui.LandingActivity"
+            android:noHistory="true"/>
         <activity android:name=".ui.PatientActivity" />
         <activity android:name=".ui.PrintReport" />
         <activity android:name=".ui.PersonalDetailsActivity" />
@@ -58,8 +59,11 @@
         <activity android:name=".ui.RegisterDeviceActivity" />
         <activity android:name=".ui.VitalSignActivity" />
         <activity android:name=".ui.TestListActivity" />
-        <activity android:name=".ui.TestActivity" />
+        <activity android:name=".ui.TestActivity"
+            android:noHistory="true"
+            />
         <activity android:name=".ui.DiabetesActivity" />
+        <activity android:name=".ui.StartUrineActivity" />
 
 
 
