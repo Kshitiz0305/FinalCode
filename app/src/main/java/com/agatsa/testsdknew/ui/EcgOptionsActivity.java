@@ -244,7 +244,7 @@ public class EcgOptionsActivity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
 
-        DialogUtil.getOKCancelDialog(this, "", "Do you want to discard the  test of " + patientModel.getPtName(), "Yes","No", (dialogInterface, i) -> {
+        DialogUtil.getOKCancelDialog(this, "", "Do you want to save the  test of " + patientModel.getPtName(), "Yes","No", (dialogInterface, i) -> {
 
           EcgOptionsActivity.super.onBackPressed();
 

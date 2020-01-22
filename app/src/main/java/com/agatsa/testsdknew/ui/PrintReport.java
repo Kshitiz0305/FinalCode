@@ -65,7 +65,7 @@ public class PrintReport extends AppCompatActivity {
     TextView twelveleadecgheartrate,twelveleadecgpr,twelveleadecgqt,twelveleadecgqtc,twelveleadecgqrs,twelveleadecgsdnn,twelveleadecgrmssd,twelveleadecgmrr,twelveleadecgfinding;
     TextView txtdiabetes;
 
-    ArrayList<String> keys = new  ArrayList<>(Arrays.asList("VTF","SLF","CSLF","LISLF","TLF","LSLF","UTF","DF"));
+    ArrayList<String> keys = new  ArrayList<>(Arrays.asList("VTF","DF","SLF","CSLF","LISLF","TLF","LSLF","UTF"));
 
     TextView txtReport;
     Button printreport;
@@ -662,7 +662,7 @@ public class PrintReport extends AppCompatActivity {
                            vitalsigncv.setVisibility(View.VISIBLE);
                            txtTemp.setText(String.valueOf(vitalSign.getTempt()));
                            txtWeight.setText(vitalSign.getWeight() + " Kg");
-                           txtHeight.setText(vitalSign.getHeight() + " feet");
+                           txtHeight.setText(vitalSign.getHeight() + " Inches");
                            txtPulse.setText( String.valueOf(vitalSign.getPulse()));
                            txtSTO2.setText(String.valueOf(vitalSign.getSto2()));
 
@@ -763,6 +763,8 @@ public class PrintReport extends AppCompatActivity {
             outputStream.write(textSize);
             outputStream.write(reporttoprint.getBytes());
             outputStream.write(left);
+            outputStream.write("Lalitpur Municipality Ward 3 \n\n".getBytes());
+            outputStream.write("---------------------------\n".getBytes());
             outputStream.write("Patient Details\n".getBytes());
             outputStream.write("---------------------------\n".getBytes());
             String ptLine ="Patient Name :";
@@ -775,7 +777,7 @@ public class PrintReport extends AppCompatActivity {
             outputStream.write(("Age/Sex : " + AgeSexConcat  + "\n").getBytes());
             outputStream.write("\n".getBytes());
 
-            outputStream.write("---------------------------\n".getBytes());
+
             for (String s : keys){
 
                 if(pref.getInt(s,0)==1){
@@ -785,10 +787,11 @@ public class PrintReport extends AppCompatActivity {
                         case "VTF":
 //                        this is to be done in asynctask and view loading is to be done in post execution
 //                            vitalSign = db.getLastVitalSign(pt_no);
+                                outputStream.write("---------------------------\n".getBytes());
                                 outputStream.write("Vital Sign\n".getBytes());
                                 outputStream.write("-----------------------------\n".getBytes());
                                 outputStream.write(("Weight :" +txtWeight.getText() + "\n").getBytes());
-                                outputStream.write(("Height :" + txtHeight.getText() + "\n").getBytes());
+                                outputStream.write(("Height :" + txtHeight.getText() +"\n").getBytes());
                                 outputStream.write(("BMI:" + txtBMI.getText() + "\n").getBytes());
                                 outputStream.write(("Temp :" + txtTemp.getText() + "\n") .getBytes());
                                 outputStream.write(("Pulse :" + txtPulse.getText() + "\n") .getBytes());
@@ -802,10 +805,10 @@ public class PrintReport extends AppCompatActivity {
                         case "DF":
 //
 
-                            outputStream.write("---------------------------\n".getBytes());
+                            outputStream.write("-----------------------------\n".getBytes());
                             outputStream.write("Diabetes Test Sign\n".getBytes());
                             outputStream.write("-----------------------------\n".getBytes());
-                            outputStream.write(("Glucose Level :" +txtdiabetes.getText() + "\n").getBytes());
+                            outputStream.write(("Glucose Level : " +txtdiabetes.getText() + "\n\n").getBytes());
 
 
 
@@ -815,7 +818,7 @@ public class PrintReport extends AppCompatActivity {
 //                        this is to be done in asynctask and view loading is to be done in post execution
 //                            ecgReport=    db.getSingleLeadEcgSign(pt_no,"SL");
 
-                                outputStream.write("---------------------------\n".getBytes());
+                                outputStream.write("-----------------------------\n".getBytes());
                                 outputStream.write("Single Lead Ecg Sign\n".getBytes());
                                 outputStream.write("-----------------------------\n".getBytes());
                                 outputStream.write(("Pr :" + pr.getText() + "\n").getBytes());
@@ -836,7 +839,7 @@ public class PrintReport extends AppCompatActivity {
 //                        this is to be done in asynctask and view loading is to be done in post execution
 //                            ecgReport=    db.getSingleLeadEcgSign(pt_no);
 
-                                outputStream.write("---------------------------\n".getBytes());
+                                outputStream.write("-----------------------------\n".getBytes());
                                 outputStream.write("Chest Six Lead Ecg Sign\n".getBytes());
                                 outputStream.write("-----------------------------\n".getBytes());
                                 outputStream.write(("Pr :" +chestleadecgpr.getText() + "\n").getBytes());
@@ -857,7 +860,7 @@ public class PrintReport extends AppCompatActivity {
                         case "LISLF":
 //                        this is to be done in asynctask and view loading is to be done in post execution
 //                            ecgReport=    db.getSingleLeadEcgSign(pt_no);
-                                outputStream.write("---------------------------\n".getBytes());
+                                outputStream.write("-----------------------------\n".getBytes());
                                 outputStream.write("Limb Six Lead Ecg Sign\n".getBytes());
                                 outputStream.write("-----------------------------\n".getBytes());
                                 outputStream.write(("Pr :" + limbsixleadecgpr.getText() + "\n").getBytes());
@@ -878,7 +881,7 @@ public class PrintReport extends AppCompatActivity {
 //                            ecgReport=    db.getSingleLeadEcgSign(pt_no);
 
 
-                                outputStream.write("---------------------------\n".getBytes());
+                                outputStream.write("-----------------------------\n".getBytes());
                                 outputStream.write("Twelve Lead Ecg Sign\n".getBytes());
                                 outputStream.write("-----------------------------\n".getBytes());
                                 outputStream.write(("Pr :" + twelveleadecgpr.getText() + "\n").getBytes());
@@ -900,7 +903,7 @@ public class PrintReport extends AppCompatActivity {
 //                            ecgReport=    db.getSingleLeadEcgSign(pt_no);
 
 
-                                outputStream.write("---------------------------\n".getBytes());
+                                outputStream.write("-----------------------------\n".getBytes());
                                 outputStream.write("Long Lead Ecg Sign\n".getBytes());
                                 outputStream.write("-----------------------------\n".getBytes());
                                 outputStream.write(("Pr :" + longpr.getText() + "\n").getBytes());
@@ -924,7 +927,7 @@ public class PrintReport extends AppCompatActivity {
 //                        this is to be done in asynctask and view loading is to be done in post execution
 
 
-                                outputStream.write("---------------------------\n".getBytes());
+                                outputStream.write("-----------------------------\n".getBytes());
                                 outputStream.write("Urine Test Sign\n".getBytes());
                                 outputStream.write("-----------------------------\n".getBytes());
                                 outputStream.write(("Leukocytes :" +txtLeuko.getText() + "\n").getBytes());
@@ -938,7 +941,7 @@ public class PrintReport extends AppCompatActivity {
                                 outputStream.write(("Bilirubin :" + txtBili.getText() + "\n").getBytes());
                                 outputStream.write(("Glucose :" + txtUrineGlucose.getText() + "\n").getBytes());
                                 outputStream.write(("Ascorbic acid :" + txtASC.getText() + "\n").getBytes());
-                                outputStream.write("---------------------------\n".getBytes());
+
 
 
                             break;
@@ -948,7 +951,7 @@ public class PrintReport extends AppCompatActivity {
 
                 }
             }
-            outputStream.write("Lalitpur Municipality Ward 3 \n".getBytes());
+
             outputStream.write("\n".getBytes());
             outputStream.write(("Printed Date " + Calendar.getInstance().getTime()).getBytes());
             outputStream.write("\n\n\n".getBytes());
