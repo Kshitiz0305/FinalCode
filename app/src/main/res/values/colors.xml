@@ -14,4 +14,6 @@
     <color name="colorTransparentBlack">#AA000000</color>
     <color name="dark_red">#ff0000</color>
     <color name="green">#3FB596</color>
+    <color name="colorSuccess">#4CAF50</color>
+    <color name="colorError">#F44336</color>
 </resources>

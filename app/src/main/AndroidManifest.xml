@@ -52,11 +52,9 @@
         <activity android:name=".ui.NewMainActivity" />
         <activity android:name=".ui.PatientEntryActivity"
             android:noHistory="true"/>
-        <activity android:name=".ui.PatientActivity" />
         <activity android:name=".ui.PrintReport" />
         <activity android:name=".ui.PersonalDetailsActivity" />
 
-        <activity android:name=".ui.RegisterDeviceActivity" />
         <activity android:name=".ui.VitalSignActivity" />
         <activity android:name=".ui.PerformTestListActivity" />
         <activity android:name=".ui.PerformTestActivity"

@@ -24,6 +24,10 @@
     <string name="Leadtwoecginfo">For Lead LL Place Side Sensor On Extreme left side of the stomach </string>
     <string name="diabetesinfo"> Diabetes Info </string>
     <string name="urineinfo">Urine Info </string>
+    <string name="msg_no_internet">Please check your internet connection</string>
+    <string name="msg_timeout">Connection TimeOut! Please check your internet connection.</string>
+    <string name="msg_503">503: The server could not be found. Please try again after some time.</string>
+    <string name="msg_404">404: URL not found. Please try again after some time.</string>
 
 
     <string name="address">Address</string>

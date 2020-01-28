@@ -131,7 +131,7 @@ public class ExistingPatientActivity extends AppCompatActivity {
 
                        }
                        else {
-                           DialogUtil.getOKDialog(ExistingPatientActivity.this,"","Search not found","ok");
+                           DialogUtil.getOKDialog(ExistingPatientActivity.this,"","Data not found","ok");
                        }
                             },
                             throwable -> Log.d("rantest", "Unable to get username")));
@@ -152,7 +152,7 @@ public class ExistingPatientActivity extends AppCompatActivity {
 
                                     }
                                     else {
-                                        DialogUtil.getOKDialog(ExistingPatientActivity.this,"","Search not found","ok");
+                                        DialogUtil.getOKDialog(ExistingPatientActivity.this,"","Data not found","ok");
                                     }
 
 
@@ -185,13 +185,6 @@ public class ExistingPatientActivity extends AppCompatActivity {
     }
 
 
-
-    public  void  updateSearchTable(PatientModel patientModel){
-
-
-
-
-    }
 
 
 

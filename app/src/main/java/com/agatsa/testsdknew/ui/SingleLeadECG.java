@@ -470,17 +470,7 @@ SingleLeadECG extends AppCompatActivity implements ResponseCallback {
     @Override
     public void onBackPressed() {
 
-        DialogUtil.getOKCancelDialog(this, "Warning", "Do you want to complete Single Lead Test?", "Yes", "No", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialogInterface, int i) {
-
-                SingleLeadECG.super.onBackPressed();
-
-
-
-
-            }
-        }, (dialogInterface, i) -> {
+        DialogUtil.getOKCancelDialog(this, "Warning", "Do you want to complete Single Lead Test?", "Yes", "No", (dialogInterface, i) -> SingleLeadECG.super.onBackPressed(), (dialogInterface, i) -> {
 
 
         });

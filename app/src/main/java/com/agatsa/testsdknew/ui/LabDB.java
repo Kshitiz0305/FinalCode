@@ -9,8 +9,6 @@ import android.database.sqlite.SQLiteOpenHelper;
 import android.os.Build;
 import android.os.Environment;
 import android.util.Log;
-
-
 import com.agatsa.testsdknew.Models.BloodReport;
 import com.agatsa.testsdknew.Models.ECGReport;
 import com.agatsa.testsdknew.Models.GlucoseModel;
@@ -20,7 +18,6 @@ import com.agatsa.testsdknew.Models.UrineReport;
 import com.agatsa.testsdknew.Models.VitalSign;
 import org.json.JSONArray;
 import org.json.JSONObject;
-
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -29,7 +26,7 @@ import java.nio.channels.FileChannel;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
-import java.util.Observable;
+
 
 import io.reactivex.Flowable;
 
