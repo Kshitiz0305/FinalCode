@@ -1,7 +1,9 @@
 package com.agatsa.testsdknew.ui;
 
 import android.content.ActivityNotFoundException;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 
@@ -25,6 +27,7 @@ import com.agatsa.sanketlife.development.Success;
 import com.agatsa.sanketlife.development.UserDetails;
 import com.agatsa.sanketlife.models.EcgTypes;
 import com.agatsa.testsdknew.BuildConfig;
+import com.agatsa.testsdknew.Models.PatientModel;
 import com.agatsa.testsdknew.R;
 //import com.agatsa.sanketlife.models.EcgTypes;
 
@@ -42,12 +45,18 @@ public class HistoryActivity extends AppCompatActivity implements HistoryCallbac
     List<LongEcgConfig> longEcgConfigInternals = new ArrayList<>();
     RecyclerView recyclerView;
     InitiateEcg initiateEcg;
+    PatientModel patientModel;
+    SharedPreferences pref;
+    String ptno="";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_history);
         toolbar = findViewById(R.id.toolbar);
+        pref = this.getSharedPreferences("sunyahealth", Context.MODE_PRIVATE);
+        ptno = pref.getString("PTNO", "");
+        patientModel = getIntent().getParcelableExtra("patient");
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         initiateEcg = new InitiateEcg();
@@ -69,7 +78,7 @@ public class HistoryActivity extends AppCompatActivity implements HistoryCallbac
     public void syncEcgData(EcgConfig ecgConfig) {
         InitiateEcg initiateEcg = new InitiateEcg();
         initiateEcg.syncEcgData(getApplicationContext(), ecgConfig,
-                new UserDetails("Vikas", "24", "Male"), true, SECRET_ID, new SyncEcgCallBack() {
+                new UserDetails(patientModel.getPtName(), patientModel.getPtAge(), patientModel.getPtSex()), true, SECRET_ID, new SyncEcgCallBack() {
                     @Override
                     public void onSuccess(Success success, EcgConfig ecgConfig) {
                         Toast.makeText(getApplicationContext(),success.getSuccessMsg(), Toast.LENGTH_SHORT).show();
@@ -143,7 +152,7 @@ public class HistoryActivity extends AppCompatActivity implements HistoryCallbac
     public void syncStressData(LongEcgConfig longEcgConfig) {
         InitiateEcg initiateEcg = new InitiateEcg();
         initiateEcg.syncLongEcgData(getApplicationContext(), longEcgConfig,
-                new UserDetails("Vikas", "24", "Male"), true, SECRET_ID, new SyncLongEcgCallBack() {
+                new UserDetails(patientModel.getPtName(), patientModel.getPtAge(), patientModel.getPtSex()), true, SECRET_ID, new SyncLongEcgCallBack() {
                     @Override
                     public void onSuccess(Success success, LongEcgConfig longEcgConfig) {
                         Toast.makeText(getApplicationContext(),success.getSuccessMsg(), Toast.LENGTH_SHORT).show();
@@ -177,9 +186,7 @@ public class HistoryActivity extends AppCompatActivity implements HistoryCallbac
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case android.R.id.home:
-                Intent intent = new Intent(HistoryActivity.this, EcgOptionsActivity.class);
-                startActivity(intent);
-                finish();
+                HistoryActivity.super.onBackPressed();
                 break;
         }
 
@@ -188,9 +195,8 @@ public class HistoryActivity extends AppCompatActivity implements HistoryCallbac
 
     @Override
     public void onBackPressed() {
-        super.onBackPressed();
-        Intent intent = new Intent(HistoryActivity.this, EcgOptionsActivity.class);
-        startActivity(intent);
+        HistoryActivity.super.onBackPressed();
+
 
     }
 }

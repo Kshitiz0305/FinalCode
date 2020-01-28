@@ -8,11 +8,16 @@ import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
 
@@ -66,9 +71,24 @@ public class DiabetesActivity extends AppCompatActivity {
 
         });
 
-//        binding.help.setOnClickListener(view -> {
-//
-//        });
+        binding.help.setOnClickListener(view -> {
+
+            final AlertDialog.Builder alert = new AlertDialog.Builder(DiabetesActivity.this);
+            View mView = getLayoutInflater().inflate(R.layout.help_dailog,null);
+            Button btn_okay = (Button)mView.findViewById(R.id.btn_okay);
+            TextView diabetestxt=(TextView)mView.findViewById(R.id.infotxt);
+            diabetestxt.setText(getResources().getString(R.string.diabetesinfo));
+            alert.setView(mView);
+            final AlertDialog alertDialog = alert.create();
+            alertDialog.setCanceledOnTouchOutside(false);
+
+            btn_okay.setOnClickListener(v -> {
+                alertDialog.dismiss();
+            });
+            alertDialog.show();
+
+
+        });
 
     }
 

@@ -2,7 +2,6 @@ package com.agatsa.testsdknew.ui;
 
 import android.Manifest;
 import android.app.Activity;
-import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -32,7 +31,7 @@ public class SplashActivity extends Activity {
         pref = this.getSharedPreferences("sunyahealth", Context.MODE_PRIVATE);
 
             navigateToNextActivity();
-            Toast.makeText(this,"All permissions granted successfully",Toast.LENGTH_SHORT).show();
+            Toast.makeText(this,"Ready To Start",Toast.LENGTH_SHORT).show();
 
     }
 
@@ -98,7 +97,7 @@ public class SplashActivity extends Activity {
             editor = pref.edit();
             editor.apply();
 // this is to be done now
-            Intent mainIntent = new Intent(SplashActivity.this, LandingActivity.class);
+            Intent mainIntent = new Intent(SplashActivity.this, PatientEntryActivity.class);
             SplashActivity.this.startActivity(mainIntent);
             SplashActivity.this.finish();
 

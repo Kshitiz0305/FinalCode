@@ -213,7 +213,7 @@ catch (Exception e){
 
         txtlimboneagain.setOnClickListener(v ->{
 leadIndex =1;
-again=true;
+   again=true;
 
 
             getReadingForECG(1);
@@ -451,7 +451,8 @@ again=true;
                 leadIndex =0;
                 x=0;
                 showDynamicimage("gif_lead2");
-                showDynamicDescription("ecginfo");
+//                showDynamicDescription("ecginfo");
+                description.setText(getResources().getString(R.string.Leadtwoecginfo));
                 hideAndSeek(buttoncollectionshide,true);
                 ArrayList<String> buttoncollectionsshow11=new ArrayList<String>(Arrays.asList("txtlimbtwoagain","ll_savereport"));
                 hideAndSeek(buttoncollectionsshow11,false);
@@ -463,7 +464,9 @@ again=true;
                 x=0;
                 again=false;
                 showDynamicimage("gif_lead2");
-                showDynamicDescription("ecginfo");
+//                showDynamicDescription("ecginfo");
+                description.setText(getResources().getString(R.string.Leadtwoecginfo));
+
                 hideAndSeek(buttoncollectionshide,true);
                 ArrayList<String> buttoncollectionsshow12=new ArrayList<String>(Arrays.asList("txtlimbtwoagain","ll_savereport"));
                 hideAndSeek(buttoncollectionsshow12,false);
@@ -480,7 +483,8 @@ again=true;
                 leadIndex =0;
                 x=0;
                 showDynamicimage("gif_lead2");
-                showDynamicDescription("ecginfo");
+//                showDynamicDescription("ecginfo");
+                description.setText(getResources().getString(R.string.Leadtwoecginfo));
                 hideAndSeek(buttoncollectionshide,true);
                 ArrayList<String> buttoncollectionsshow21=new ArrayList<String>(Arrays.asList("txtlimboneagain","txtlimbleadtwo"));
                 hideAndSeek(buttoncollectionsshow21,false);
@@ -492,8 +496,9 @@ again=true;
                 x=0;
                 again=false;
                 showDynamicimage("gif_lead2");
-                showDynamicDescription("ecginfo");
+//                showDynamicDescription("ecginfo");
                 hideAndSeek(buttoncollectionshide,true);
+                description.setText(getResources().getString(R.string.Leadtwoecginfo));
                 ArrayList<String> buttoncollectionsshow22=new ArrayList<String>(Arrays.asList("txtlimboneagain","txtlimbleadtwo"));
                 hideAndSeek(buttoncollectionsshow22,false);
 

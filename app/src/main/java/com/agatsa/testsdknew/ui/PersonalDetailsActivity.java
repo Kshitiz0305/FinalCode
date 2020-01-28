@@ -4,14 +4,12 @@ import android.Manifest;
 import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
-import android.os.Environment;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
@@ -24,7 +22,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.ActivityCompat;
 import androidx.databinding.DataBindingUtil;
 
 import com.agatsa.testsdknew.Models.PatientModel;
@@ -42,19 +39,14 @@ import com.hornet.dateconverter.DatePicker.DatePickerDialog;
 import com.hornet.dateconverter.Model;
 
 import java.io.BufferedReader;
-import java.io.File;
-import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.Reader;
 import java.io.StringWriter;
 import java.io.Writer;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import br.com.ilhasoft.support.validation.Validator;
@@ -819,7 +811,7 @@ catch (Exception e){
                 editor.putString("PTNO", pt_id);
                 editor.apply();
                 Toast.makeText(getApplicationContext(), "Patient Saved " + newPatient.getPtNo() + " V " + vitalSign.getRow_id(), Toast.LENGTH_LONG).show();
-                Intent intent = new Intent(PersonalDetailsActivity.this,TestActivity.class);
+                Intent intent = new Intent(PersonalDetailsActivity.this, PerformTestActivity.class);
                 intent.putExtra("patient",newPatient);
                 intent.putExtra("ptid",pt_id);
                 startActivity(intent);
@@ -912,10 +904,11 @@ catch (Exception e){
 
         }, (dialogInterface, i) -> {
 
-            Intent intent = new Intent(PersonalDetailsActivity.this, PatientActivity.class);
-            intent.putExtra("PTNO", pt_id);
-            intent.putExtra("duid", duid);
-            setResult(-1, intent);
+            Intent intent = new Intent(PersonalDetailsActivity.this, PatientEntryActivity.class);
+            startActivity(intent);
+//            intent.putExtra("PTNO", pt_id);
+//            intent.putExtra("duid", duid);
+//            setResult(-1, intent);
             finish();
 
         });

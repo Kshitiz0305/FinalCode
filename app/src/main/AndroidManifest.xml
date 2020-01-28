@@ -44,13 +44,13 @@
         <activity android:name=".ui.FitnessECG"/>
         <activity android:name=".ui.ChestSixLead"/>
         <activity android:name=".ui.TwelveLeadEcg"/>
-        <activity android:name=".ui.CapturedImageActivity"/>
+        <activity android:name=".ui.UrineTestActivity"/>
 
 
 
         <activity android:name=".ui.MainActivity" />
         <activity android:name=".ui.NewMainActivity" />
-        <activity android:name=".ui.LandingActivity"
+        <activity android:name=".ui.PatientEntryActivity"
             android:noHistory="true"/>
         <activity android:name=".ui.PatientActivity" />
         <activity android:name=".ui.PrintReport" />
@@ -58,8 +58,8 @@
 
         <activity android:name=".ui.RegisterDeviceActivity" />
         <activity android:name=".ui.VitalSignActivity" />
-        <activity android:name=".ui.TestListActivity" />
-        <activity android:name=".ui.TestActivity"
+        <activity android:name=".ui.PerformTestListActivity" />
+        <activity android:name=".ui.PerformTestActivity"
             android:noHistory="true"
             />
         <activity android:name=".ui.DiabetesActivity" />
@@ -80,7 +80,7 @@
         <activity android:name=".ui.PdfViewActivity" />
         <activity android:name=".ui.ECGactivity" />
         <activity android:name=".ui.ViewPDFActivity" />
-        <activity android:name=".ui.SearchActivity"
+        <activity android:name=".ui.ExistingPatientActivity"
             android:windowSoftInputMode="stateAlwaysHidden"/>
     </application>
 

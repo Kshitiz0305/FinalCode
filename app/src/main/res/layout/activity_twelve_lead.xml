@@ -138,9 +138,8 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
-
                             android:fontFamily="@font/sfpro_display_semibold"
-                            android:text="@string/lead_2"
+                            android:text="Take Lead 2"
                             android:textColor="@color/colorPrimaryDark"
                             android:textSize="15.7sp" />
 
@@ -168,7 +167,7 @@
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:fontFamily="@font/sfpro_display_semibold"
-                            android:text="@string/lead_2_again"
+                            android:text="Take Lead 2 Again"
 
                             android:textColor="@color/colorPrimaryDark"
                             android:textSize="15.7sp" />
@@ -197,7 +196,7 @@
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:fontFamily="@font/sfpro_display_semibold"
-                            android:text="@string/v_1"
+                            android:text="Take V1"
 
                             android:textColor="@color/colorPrimaryDark"
                             android:textSize="15.7sp" />
@@ -226,7 +225,7 @@
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:fontFamily="@font/sfpro_display_semibold"
-                            android:text="@string/v_1_again"
+                            android:text="Take V1 Again"
                             android:textColor="@color/colorPrimaryDark"
                             android:textSize="15.7sp" />
 
@@ -254,7 +253,7 @@
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:fontFamily="@font/sfpro_display_semibold"
-                            android:text="@string/v_2"
+                            android:text="Take V2"
                             android:textColor="@color/colorPrimaryDark"
                             android:textSize="15.7sp" />
 
@@ -282,7 +281,7 @@
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:fontFamily="@font/sfpro_display_semibold"
-                            android:text="@string/v_2_again"
+                            android:text="Take V2 Again"
                             android:textColor="@color/colorPrimaryDark"
                             android:textSize="15.7sp" />
 
@@ -338,7 +337,6 @@
                             android:layout_weight="1"
                             android:fontFamily="@font/sfpro_display_semibold"
                             android:text="@string/v_3_again"
-
                             android:textColor="@color/colorPrimaryDark"
                             android:textSize="15.7sp" />
 

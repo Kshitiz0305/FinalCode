@@ -15,12 +15,11 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.agatsa.testsdknew.Models.PatientModel;
 import com.agatsa.testsdknew.R;
-import com.agatsa.testsdknew.databinding.TableItemBinding;
+import com.agatsa.testsdknew.databinding.ActivityExistingPatientBinding;
+import com.agatsa.testsdknew.databinding.ActivityExistingPatientSearchListBinding;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 public class PatientDetailAdapter extends RecyclerView.Adapter<PatientDetailAdapter.PatientDetailViewHolder> {
 
@@ -47,7 +46,7 @@ public class PatientDetailAdapter extends RecyclerView.Adapter<PatientDetailAdap
     @Override
     public PatientDetailViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         LayoutInflater layoutInflater = LayoutInflater.from(parent.getContext());
-        TableItemBinding cartBinding = DataBindingUtil.inflate(layoutInflater, R.layout.table_item,parent,false);
+        ActivityExistingPatientSearchListBinding cartBinding = DataBindingUtil.inflate(layoutInflater, R.layout.activity_existing_patient_search_list,parent,false);
         return new PatientDetailViewHolder(cartBinding);
     }
 
@@ -134,8 +133,8 @@ public class PatientDetailAdapter extends RecyclerView.Adapter<PatientDetailAdap
 //    }
 
     public class PatientDetailViewHolder extends RecyclerView.ViewHolder {
-        TableItemBinding tableItemBinding;
-        public PatientDetailViewHolder(@NonNull TableItemBinding itemView) {
+        ActivityExistingPatientSearchListBinding tableItemBinding;
+        public PatientDetailViewHolder(@NonNull ActivityExistingPatientSearchListBinding itemView) {
             super(itemView.getRoot());
             this.tableItemBinding = itemView;
             this.tableItemBinding.checker.setOnClickListener(new View.OnClickListener() {

@@ -15,6 +15,16 @@
     <string name="ecginfo">Place two thumbs on the front sensors.           As shown in the image.Keep your hands in the same position for 15 seconds. </string>
     <string name="name">Name</string>
     <string name="fitnessecginfo">Place two thumbs on the front sensors.           As shown in the image.Keep your hands in the same position for 60 seconds. </string>
+    <string name="V1ecginfo">For Lead V1 Place Side Sensor On Upper Right side of the chest(In the fourth intercostal space (between ribs 4 and 5) just to the right of the sternum (breastbone)) </string>
+    <string name="V2ecginfo">For Lead V2 Place Side Sensor On Upper left side of the chest(In the fourth intercostal space (between ribs 4 and 5) just to the left of the sternum.) </string>
+    <string name="V3ecginfo">For Lead V3 Place Side Sensor On Upper left side of the chest(Between leads V2 and V4.) </string>
+    <string name="V4ecginfo">For Lead V4 Place Side Sensor On Lower left side of the chest(In the fifth intercostal space (between ribs 5 and 6) in the mid-clavicular line.) </string>
+    <string name="V5ecginfo">For Lead V5 Place Side Sensor On Bottom left side of the chest(Horizontally even with V4, in the left anterior axillary line.) </string>
+    <string name="V6ecginfo">For Lead V6 Place Side Sensor On Extreme left side of the chest(Horizontally even with V4 and V5 in the mid-axillary line.) </string>
+    <string name="Leadtwoecginfo">For Lead LL Place Side Sensor On Extreme left side of the stomach </string>
+    <string name="diabetesinfo"> Diabetes Info </string>
+    <string name="urineinfo">Urine Info </string>
+
 
     <string name="address">Address</string>
     <string name="age_yrs">Age</string>
@@ -85,18 +95,20 @@
     <string name="v_1_again">V 1 Again</string>
     <string name="v_2">V 2</string>
     <string name="v_2_again">V 2 Again</string>
-    <string name="v_3">V 3</string>
-    <string name="v_3_again">V 3 Again</string>
-    <string name="v_4">V 4</string>
-    <string name="v_4_again">V 4 Again</string>
-    <string name="v_5">V 5</string>
-    <string name="v_5_again">V 5 Again</string>
-    <string name="v_6">V 6</string>
-    <string name="v_6_again">V 6 Again</string>
+    <string name="v_3"> Take V 3</string>
+    <string name="v_3_again"> Take V 3 Again</string>
+    <string name="v_4">Take V 4</string>
+    <string name="v_4_again">Take V 4 Again</string>
+    <string name="v_5">Take V 5</string>
+    <string name="v_5_again">Take V 5 Again</string>
+    <string name="v_6">Take V 6</string>
+    <string name="v_6_again">Take V 6 Again</string>
     <string name="take_twelve_lead_again">Take Twelve Lead Again</string>
     <string name="save_record">SAVE RECORD</string>
     <string name="view_report">VIEW REPORT</string>
     <string name="complete_test">COMPLETE TEST</string>
+    <string name="perform_test">Perform Test</string>
+    <string name="ok">Ok</string>
 
 
 </resources>

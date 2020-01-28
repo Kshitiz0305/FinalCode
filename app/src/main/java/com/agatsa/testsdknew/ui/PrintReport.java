@@ -11,7 +11,6 @@ import android.os.Handler;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -434,7 +433,7 @@ public class PrintReport extends AppCompatActivity {
     }
 
     private void navigatenext() {
-        Intent i = new Intent(PrintReport.this, LandingActivity.class);
+        Intent i = new Intent(PrintReport.this, PatientEntryActivity.class);
         startActivity(i);
 
     }
