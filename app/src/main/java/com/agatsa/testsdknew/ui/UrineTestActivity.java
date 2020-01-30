@@ -509,62 +509,123 @@ public  class UrineTestActivity extends AppCompatActivity {
         return Math.sqrt(weightR*r*r + weightG*g*g + weightB*b*b);
     }
 
+    public double[] rgb2lab (double[] inputColor ){
+        int num = 0;
+        Scalar RGB = new Scalar(0, 0, 0);
+        for (double value: inputColor){
+            value = value / 255;
+            if (value > 0.04045){
+                value = Math.pow((( value + 0.055) / 1.055), 2.4);
+            }else {
+                value = value / 12.92;
+            }
+            RGB.val[num] = value * 100;
+            num = num + 1;
+        }
+        Scalar XYZ = new Scalar(0, 0, 0);
+        double X = RGB.val[0] * 0.4124 + RGB.val[1] * 0.3576 + RGB.val[2] * 0.1805;
+        double Y = RGB.val[0] * 0.2126 + RGB.val[1] * 0.7152 + RGB.val[2] * 0.0722;
+        double Z = RGB.val[0] * 0.0193 + RGB.val[1] * 0.1192 + RGB.val[2] * 0.9505;
+        XYZ.val[0] = X;
+        XYZ.val[1] = Y;
+        XYZ.val[2] = Z;
+        XYZ.val[0] = XYZ.val[0] / 95.047;         // ref_X =  95.047   Observer= 2°, Illuminant= D65
+        XYZ.val[1] = XYZ.val[1] / 100.0;          // ref_Y = 100.000
+        XYZ.val[2] = XYZ.val[2] / 108.883;        // ref_Z = 108.883
+        for (int i = 0; i < 3; i++){
+            double value = XYZ.val[i];
+            if (value > 0.008856){
+                value = Math.pow(value, 0.3333333333333333);
+            }
+            else {
+                value = ( 7.787 * value ) + ( 16 / 116 );
+            }
+            XYZ.val[i] = value;
+        }
+//        Scalar Lab = new Scalar(0, 0, 0);
+        double[] lab = new double[3];
+        lab[0] = (116 * XYZ.val[1]) - 16;
+        lab[1] = 500 * (XYZ.val[0] - XYZ.val[1]);
+        lab[2] = 200 * (XYZ.val[1] - XYZ.val[2]);
+        return lab;
+    }
+
     public String calc(Mat test_patch, String index_no, List<Scalar> deviation){
-
-        for(Scalar dev: deviation){
-            for (int i = 0; i < 4; i++){
-                dev.val[i] = Math.floor(dev.val[i]/test_patch.width());
-            }
-        }
-        Scalar avg_deviation = new Scalar(0, 0, 0);
-        for (int i = 0; i < 3; i++){
-            for (int j = 0; j < 3; j++){
-                avg_deviation.val[i] = Math.floor((avg_deviation.val[i] + deviation.get(j).val[i])/3);
-            }
-        }
+//        for(Scalar dev: deviation){
+//            for (int i = 0; i < 2; i++){
+//                dev.val[i] = Math.floor(dev.val[i]/test_patch.width());
+//            }
+//        }
+//        Scalar avg_deviation = new Scalar(0, 0, 0);
+//        for (int i = 0; i < 3; i++){
+//            for (int j = 0; j < 3; j++){
+//                avg_deviation.val[i] = Math.floor((avg_deviation.val[i] + deviation.get(j).val[i])/3);
+//            }
+//        }
 //        Imgcodecs.imwrite("stepwiseout/patch.jpg", test_patch);
-        Imgproc.cvtColor(test_patch, test_patch, Imgproc.COLOR_BGR2RGB);
-        Imgproc.cvtColor(test_patch, test_patch, Imgproc.COLOR_RGB2Lab);
-
+        double[] temppixel1 = test_patch.get(0,0);
+        double[] temppixel = test_patch.get(5,5);
+        Imgproc.cvtColor(test_patch, test_patch, Imgproc.COLOR_RGBA2RGB);
+        temppixel1 = test_patch.get(0,0);
+        temppixel = test_patch.get(5,5);
+//        Imgproc.cvtColor(test_patch, test_patch, Imgproc.COLOR_BGR2RGB);
+//        Imgproc.cvtColor(test_patch, test_patch, Imgproc.COLOR_RGB2Lab);
+//        for(int i = 0; i < test_patch.rows(); i++){
+//            for(int j = 0; j < test_patch.cols(); j++){
+//                for (int k = 0; k < 3; k++){
+//                    double[] temp = test_patch.get(i, j);
+//                    temp[k] += avg_deviation.val[k];
+//                }
+//            }
+//        }
+        Scalar avg_color_test1 = Core.mean(test_patch);
+        // RGB to LAB
+        for(int i = 0; i < test_patch.rows(); i++){
+            for(int j = 0; j < test_patch.cols(); j++){
+                double[] temp1 = rgb2lab(test_patch.get(i, j));
+                test_patch.put(i, j, temp1);
+                System.out.println("hello");
+            }
+        }
         Scalar avg_color_test = Core.mean(test_patch);
-        for (int i = 0; i < 3; i++){
-            avg_color_test.val[i] += avg_deviation.val[i];
+//        for (int i = 0; i < 3; i++){
+//            avg_color_test.val[i] += avg_deviation.val[i];
+//        }
+        avg_color_test.val[0] += 20;
+        if (index_no == "2"){
+            avg_color_test.val[0] -= 20;
         }
         HashMap<String, Double> score = new HashMap<>();
         try {
             Mat temp = new Mat();
 //            File[] files = new File( "pics/dus11/" + index_no).listFiles();
             String[] files = assetManager.list("pics/dus11/" + index_no);
-
             for (String file: files){
                 InputStream is = assetManager.open("pics/dus11/" + index_no + "/" + file);
                 Bitmap  bitmap = BitmapFactory.decodeStream(is);
                 Utils.bitmapToMat(bitmap, temp);
                 Mat ref_image = temp;
+                Scalar avg_color_ref12 = Core.mean(ref_image);
                 Imgproc.resize(ref_image, ref_image, test_patch.size());
-                Imgproc.cvtColor(ref_image, ref_image, Imgproc.COLOR_BGR2RGB);
-                Imgproc.cvtColor(ref_image, ref_image, Imgproc.COLOR_RGB2Lab);
+                Imgproc.cvtColor(ref_image, ref_image, Imgproc.COLOR_RGBA2RGB);
+
+//                Imgproc.cvtColor(ref_image, ref_image, Imgproc.COLOR_RGB2Lab);
+                Scalar avg_color_ref1 = Core.mean(ref_image);
+                // RGB to LAB
+                for(int i = 0; i < ref_image.rows(); i++){
+                    for(int j = 0; j < ref_image.cols(); j++){
+                        double[] temp1 = rgb2lab(ref_image.get(i, j));
+                        ref_image.put(i, j, temp1);
+                        System.out.println("hello");
+                    }
+                }
                 Scalar avg_color_ref = Core.mean(ref_image);
-
-                int red1 = (int) avg_color_test.val[0];
-                int green1 = (int) avg_color_test.val[1];
-                int blue1 = (int) avg_color_test.val[2];
-                int red2 = (int) avg_color_ref.val[0];
-                int green2 = (int) avg_color_ref.val[1];
-                int blue2 = (int) avg_color_ref.val[2];
-
-                double maxColDist = 764.8339663572415;
-                double d1 = colourDistance(red1,green1,blue1,red2,green2,blue2);
-                String s1 = (int) Math.round(((maxColDist-d1)/maxColDist)*100) + "% match";
                 double mf = calculate_distance(avg_color_test, avg_color_ref);
-
-
                 score.put(file, mf);
             }
         } catch (IOException e) {
             Toast.makeText(this, "Error Loading dus11 files", Toast.LENGTH_LONG).show();
         }
-
         Map<String, Double> lab_score = sortByValue(score);
 //        for (Map.Entry<String, Double> en : lab_score.entrySet()) {
 //            System.out.println(en.getKey() + " = " +
@@ -572,8 +633,17 @@ public  class UrineTestActivity extends AppCompatActivity {
 //
 //        }
         Object myKey = lab_score.keySet().toArray()[0];
+        if(index_no == "2"){
+            if(myKey.toString() == "3.png"){
+                return  "0.png";
+            }else {
+                return myKey.toString();
+            }
+        } else {
+            return myKey.toString();
+        }
 //        System.out.println(Double.toString(lab_score.get(myKey)));
-        return myKey.toString();
+//        return myKey.toString();
     }
 
     public List<Scalar> ref_process(Mat ref){

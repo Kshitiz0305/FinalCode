@@ -810,7 +810,7 @@ catch (Exception e){
                 SharedPreferences.Editor editor = pref.edit();
                 editor.putString("PTNO", pt_id);
                 editor.apply();
-                Toast.makeText(getApplicationContext(), "Patient Saved " + newPatient.getPtNo() + " V " + vitalSign.getRow_id(), Toast.LENGTH_LONG).show();
+                Toast.makeText(getApplicationContext(), "Patient Saved " , Toast.LENGTH_LONG).show();
                 Intent intent = new Intent(PersonalDetailsActivity.this, PerformTestActivity.class);
                 intent.putExtra("patient",newPatient);
                 intent.putExtra("ptid",pt_id);

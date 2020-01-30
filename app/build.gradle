@@ -1,6 +1,6 @@
 apply plugin: 'com.android.application'
-apply plugin: 'kotlin-android-extensions'
-apply plugin: 'kotlin-android'
+//apply plugin: 'kotlin-android-extensions'
+//apply plugin: 'kotlin-android'
 
 android {
     compileSdkVersion 28
@@ -66,8 +66,8 @@ dependencies {
 
 //     for qr code
     implementation 'com.dlazaro66.qrcodereaderview:qrcodereaderview:2.0.3'
-    implementation "androidx.core:core-ktx:+"
-    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+//    implementation "androidx.core:core-ktx:+"
+//    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
 
 // for dynamic library
     implementation 'com.intuit.sdp:sdp-android:1.0.6'
