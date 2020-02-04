@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto" >
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginRight="10dp"
+            android:layout_height="match_parent">
+
+            <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/sfpro_display_bold"
+                        android:gravity="center"
+                        android:padding="8sp"
+                        android:text="Blood Pressure"
+                        android:textColor="@color/colorPrimaryDark"
+                        android:textSize="17sp" />
+
+
+
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="2"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/sfpro_display_semibold"
+                        android:padding="8sp"
+                        android:text="BP (Systolic)"
+                        android:textColor="@color/colorPrimaryDark"
+                        android:textSize="15sp" />
+
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:orientation="horizontal">
+
+                        <EditText
+                            android:id="@+id/BPSys"
+                            android:layout_width="100dp"
+                            android:layout_height="40sp"
+                            android:layout_marginLeft="@dimen/_5sdp"
+                            android:layout_marginRight="@dimen/_5sdp"
+                            android:layout_weight="1"
+
+                            android:background="@drawable/bg_gray_border"
+                            android:maxLength="6"
+
+                            android:fontFamily="@font/sf_pro_display_medium"
+                            android:inputType="numberDecimal"
+                            android:padding="8sp"
+                            android:textSize="13sp"
+                            app:validateEmpty="@{true}" />
+
+
+                    </LinearLayout>
+
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/_135sdp"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/sfpro_display_semibold"
+                        android:padding="8sp"
+                        android:text="Diastolic"
+                        android:textColor="@color/colorPrimaryDark"
+                        android:textSize="15sp" />
+
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:orientation="horizontal">
+
+                        <EditText
+                            android:id="@+id/BPDias"
+                            android:layout_width="100dp"
+                            android:layout_height="40sp"
+                            android:layout_marginLeft="@dimen/_5sdp"
+                            android:layout_marginRight="@dimen/_5sdp"
+                            android:layout_weight="1"
+                            android:background="@drawable/bg_gray_border"
+
+                            android:fontFamily="@font/sf_pro_display_medium"
+                            android:inputType="numberDecimal"
+                            android:maxLength="6"
+
+                            android:padding="8sp"
+                            android:textSize="13sp"
+                            app:validateEmpty="@{true}" />
+
+
+                    </LinearLayout>
+
+
+                    <Button
+                        android:id="@+id/btnsavebloodpressure"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                         android:background="@color/colorPrimaryDark"
+                        android:text="SAVE"
+                        android:layout_marginRight="@dimen/_10sdp"
+                        android:layout_marginLeft="@dimen/_10sdp"
+                        android:layout_marginTop="@dimen/_8sdp"
+                        android:textColor="@color/white"
+                        android:visibility="visible" />
+
+
+                </LinearLayout>
+
+
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
+    </ScrollView>
+</layout>

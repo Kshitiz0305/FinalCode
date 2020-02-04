@@ -7,26 +7,26 @@ package com.agatsa.testsdknew.Models;
 public class VitalSign {
     String pt_no;
     String row_id;
-    String weight;
-    String height;
-    String tempt;
-    String pulse;
-    String bps;
-    String bpd;
-    String sto2;
-    String glucose;
+    double weight;
+    double height;
+    double tempt;
+    double pulse;
+    double bps;
+    double bpd;
+    double sto2;
+    double glucose;
 
     public VitalSign(){
         pt_no = "";
         row_id ="";
-        weight ="";
-        height ="";
-        tempt ="";
-        pulse ="";
-        bps="";
-        bpd ="";
-        sto2 ="";
-        glucose ="";
+        weight = 0;
+        height =0;
+        tempt =0;
+        pulse =0;
+        bps=0;
+        bpd =0;
+        sto2 =0;
+        glucose =0;
     }
 
 
@@ -46,67 +46,67 @@ public class VitalSign {
         this.row_id = row_id;
     }
 
-    public String getWeight() {
+    public double getWeight() {
         return weight;
     }
 
-    public void setWeight(String weight) {
+    public void setWeight(double weight) {
         this.weight = weight;
     }
 
-    public String getHeight() {
+    public double getHeight() {
         return height;
     }
 
-    public void setHeight(String height) {
+    public void setHeight(double height) {
         this.height = height;
     }
 
-    public String getTempt() {
+    public double getTempt() {
         return tempt;
     }
 
-    public void setTempt(String tempt) {
+    public void setTempt(double tempt) {
         this.tempt = tempt;
     }
 
-    public String getPulse() {
+    public double getPulse() {
         return pulse;
     }
 
-    public void setPulse(String pulse) {
+    public void setPulse(double pulse) {
         this.pulse = pulse;
     }
 
-    public String getBps() {
+    public double getBps() {
         return bps;
     }
 
-    public void setBps(String bps) {
+    public void setBps(double bps) {
         this.bps = bps;
     }
 
-    public String getBpd() {
+    public double getBpd() {
         return bpd;
     }
 
-    public void setBpd(String bpd) {
+    public void setBpd(double bpd) {
         this.bpd = bpd;
     }
 
-    public String getSto2() {
+    public double getSto2() {
         return sto2;
     }
 
-    public void setSto2(String sto2) {
+    public void setSto2(double sto2) {
         this.sto2 = sto2;
     }
 
-    public String getGlucose() {
+    public double getGlucose() {
         return glucose;
     }
 
-    public void setGlucose(String glucose) {
+    public void setGlucose(double glucose) {
         this.glucose = glucose;
     }
 }

@@ -203,14 +203,7 @@ public class FitnessECG extends AppCompatActivity implements ResponseCallback {
                 startActivity(intent);
 
 
-
-
             }
-
-
-
-
-
         });
 
 

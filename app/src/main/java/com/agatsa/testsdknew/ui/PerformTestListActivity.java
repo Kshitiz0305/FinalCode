@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.view.View;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
@@ -72,11 +73,42 @@ public class PerformTestListActivity extends AppCompatActivity {
 
        });
 
-        binding.btnPrint.setOnClickListener(view -> {
+        binding.report.setOnClickListener(view -> {
             Intent i = new Intent(PerformTestListActivity.this, PrintReport.class);
             i.putExtra("PTNO", pt_id);
             i.putExtra("patient",patientModel);
             startActivity(i);
+
+        });
+        binding.completetest.setOnClickListener(v -> {
+            DialogUtil.getOKCancelDialog(this, "", "Do you want to complete the  test of " + patientname, "Yes","No", (dialogInterface, i) -> {
+
+                pref.edit().putInt("VTF",0).apply();
+                pref.edit().putInt("UTF",0).apply();
+                pref.edit().putInt("DF",0).apply();
+                pref.edit().putInt("SLF",0).apply();
+                pref.edit().putInt("CSLF",0).apply();
+                pref.edit().putInt("LISLF",0).apply();
+                pref.edit().putInt("TLF",0).apply();
+                pref.edit().putInt("LSLF",0).apply();
+
+                Intent i1=new Intent(this, PatientEntryActivity.class);
+                i1.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(i1);
+                finish();
+
+
+            });
+
+        });
+
+
+        binding.bloodpressure.setOnClickListener(v -> {
+            Intent i = new Intent(PerformTestListActivity.this, BloodPressureActivity.class);
+            i.putExtra("PTNO", pt_id);
+            i.putExtra("patient",patientModel);
+            startActivity(i);
+
 
         });
 

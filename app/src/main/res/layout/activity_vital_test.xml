@@ -76,7 +76,7 @@
                         android:fontFamily="@font/sf_pro_display_medium"
                         android:inputType="numberDecimal"
                         android:padding="8sp"
-                        android:maxLength="3"
+                        android:maxLength="6"
                         android:textSize="13sp"
                         app:validateEmpty="@{true}" />
 
@@ -123,7 +123,7 @@
                         android:inputType="numberDecimal"
 
                         android:padding="8sp"
-                        android:maxLength="3"
+                        android:maxLength="6"
 
                         android:textSize="13sp"
                         app:validateEmpty="@{true}" />
@@ -165,55 +165,10 @@
                         android:layout_weight="1"
                         android:background="@drawable/bg_gray_border"
                         android:fontFamily="@font/sf_pro_display_medium"
-                        android:maxLength="3"
+                        android:maxLength="6"
 
                         android:inputType="numberDecimal"
 
-                        android:padding="8sp"
-                        android:textSize="13sp"
-                        app:validateEmpty="@{true}" />
-
-
-                </LinearLayout>
-
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="2"
-                android:orientation="vertical">
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="@font/sfpro_display_semibold"
-                    android:padding="8sp"
-                    android:text="Pulse"
-                    android:textColor="@color/colorPrimaryDark"
-                    android:textSize="15sp" />
-
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:gravity="center"
-                    android:orientation="horizontal">
-
-                    <EditText
-                        android:id="@+id/txtPulse"
-                        android:layout_width="100dp"
-                        android:layout_height="40sp"
-                        android:layout_marginLeft="@dimen/_5sdp"
-                        android:layout_marginRight="@dimen/_5sdp"
-
-                        android:maxLength="3"
-
-                        android:layout_weight="1"
-                        android:background="@drawable/bg_gray_border"
-                        android:fontFamily="@font/sf_pro_display_medium"
-                        android:inputType="numberDecimal"
                         android:padding="8sp"
                         android:textSize="13sp"
                         app:validateEmpty="@{true}" />
@@ -254,7 +209,7 @@
                         android:layout_marginRight="@dimen/_5sdp"
                         android:layout_weight="1"
 
-                        android:maxLength="3"
+                        android:maxLength="6"
 
                         android:background="@drawable/bg_gray_border"
                         android:fontFamily="@font/sf_pro_display_medium"
@@ -269,6 +224,7 @@
 
             </LinearLayout>
 
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -280,6 +236,53 @@
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/sfpro_display_semibold"
                     android:padding="8sp"
+                    android:text="Pulse"
+                    android:textColor="@color/colorPrimaryDark"
+                    android:textSize="15sp" />
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:orientation="horizontal">
+
+                    <EditText
+                        android:id="@+id/txtPulse"
+                        android:layout_width="100dp"
+                        android:layout_height="40sp"
+                        android:layout_marginLeft="@dimen/_5sdp"
+                        android:layout_marginRight="@dimen/_5sdp"
+
+                        android:maxLength="6"
+
+                        android:layout_weight="1"
+                        android:background="@drawable/bg_gray_border"
+                        android:fontFamily="@font/sf_pro_display_medium"
+                        android:inputType="numberDecimal"
+                        android:padding="8sp"
+                        android:textSize="13sp"
+                        app:validateEmpty="@{true}" />
+
+
+                </LinearLayout>
+
+
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="2"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/sfpro_display_semibold"
+                    android:padding="8sp"
+                    android:visibility="gone"
                     android:text="BP (Systolic)"
                     android:textColor="@color/colorPrimaryDark"
                     android:textSize="15sp" />
@@ -295,18 +298,19 @@
                         android:id="@+id/txtBPSys"
                         android:layout_width="100dp"
                         android:layout_height="40sp"
+                        android:visibility="gone"
                         android:layout_marginLeft="@dimen/_5sdp"
                         android:layout_marginRight="@dimen/_5sdp"
                         android:layout_weight="1"
 
                         android:background="@drawable/bg_gray_border"
-                        android:maxLength="3"
+                        android:maxLength="6"
 
                         android:fontFamily="@font/sf_pro_display_medium"
                         android:inputType="numberDecimal"
                         android:padding="8sp"
                         android:textSize="13sp"
-                        app:validateEmpty="@{true}" />
+                       />
 
 
                 </LinearLayout>
@@ -316,7 +320,7 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/_135sdp"
+                android:layout_height="78dp"
                 android:orientation="vertical">
 
                 <TextView
@@ -325,6 +329,7 @@
                     android:fontFamily="@font/sfpro_display_semibold"
                     android:padding="8sp"
                     android:text="Diastolic"
+                    android:visibility="gone"
                     android:textColor="@color/colorPrimaryDark"
                     android:textSize="15sp" />
 
@@ -343,14 +348,13 @@
                         android:layout_marginRight="@dimen/_5sdp"
                         android:layout_weight="1"
                         android:background="@drawable/bg_gray_border"
-
                         android:fontFamily="@font/sf_pro_display_medium"
                         android:inputType="numberDecimal"
-                        android:maxLength="3"
-
+                        android:maxLength="6"
                         android:padding="8sp"
                         android:textSize="13sp"
-                        app:validateEmpty="@{true}" />
+                        android:visibility="gone"
+                        />
 
 
                 </LinearLayout>
@@ -361,11 +365,11 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:background="@drawable/rect_orange"
-                    android:text="SAVE"
-                    android:layout_marginRight="@dimen/_10sdp"
                     android:layout_marginLeft="@dimen/_10sdp"
                     android:layout_marginTop="@dimen/_8sdp"
+                    android:layout_marginRight="@dimen/_10sdp"
+                    android:background="@drawable/rect_orange"
+                    android:text="SAVE"
                     android:textColor="@color/white"
                     android:visibility="visible" />
 

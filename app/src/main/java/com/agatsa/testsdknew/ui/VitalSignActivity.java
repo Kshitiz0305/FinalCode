@@ -47,12 +47,7 @@ public class VitalSignActivity extends AppCompatActivity  {
         binding = DataBindingUtil.setContentView(this, R.layout.activity_vital_test);
         validator = new Validator(binding);
         validator.enableFormValidationMode();
-
-
-
-//        setContentView(R.layout.activity_vital_test);
         pref = this.getSharedPreferences("sunyahealth", Context.MODE_PRIVATE);
-
         ptno = pref.getString("PTNO", "");
         newPatient = getIntent().getParcelableExtra("patient");
         Log.d("rantestvitalpt",ptno);
@@ -60,7 +55,6 @@ public class VitalSignActivity extends AppCompatActivity  {
 
 
         labDB = new LabDB(getApplicationContext());
-        vitalSign = labDB.getLastVitalSign(ptno);
         dialog = new ProgressDialog(this);
         dialog.setCanceledOnTouchOutside(false);
         dialog.setCancelable(false);
@@ -70,54 +64,40 @@ public class VitalSignActivity extends AppCompatActivity  {
         txtTemp = findViewById(R.id.txtTemp);
         txtPulse = findViewById(R.id.txtPulse);
         txtSTO2 = findViewById(R.id.txtSto2);
-        txtBPS = findViewById(R.id.txtBPSys);
-        txtBPD = findViewById(R.id.txtBPDias);
+//        txtBPS = findViewById(R.id.txtBPSys);
+//        txtBPD = findViewById(R.id.txtBPDias);
 //        txtglucose=findViewById(R.id.txtglucose);
 
-//        if(vitalSign != null) {
-//            txtWeight.setText(String.valueOf(vitalSign.getWeight()));
-//            txtHeight.setText(String.valueOf(vitalSign.getHeight()));
-//            txtTemp.setText(String.valueOf(vitalSign.getTempt()));
-//            txtPulse.setText(String.valueOf(vitalSign.getPulse()));
-//            txtSTO2.setText(String.valueOf(vitalSign.getSto2()));
-//            txtBPS.setText(String.valueOf(vitalSign.getBps()));
-//            txtBPD.setText(String.valueOf(vitalSign.getBpd()));
-////            txtBPD.setText(String.valueOf(vitalSign.getGlucose()));
-//
-//        }
+
 
         btnSave = findViewById(R.id.btnsave);
         btnSave.setOnClickListener(v -> {
             if(validator.validate()){
-                if(Integer.valueOf(txtWeight.getText().toString())> 200){
+                if(Double.parseDouble(txtWeight.getText().toString())> 200){
                     Toast.makeText(this,"Invalid Weight",Toast.LENGTH_LONG).show();
 
-                }else  if(Integer.valueOf(txtHeight.getText().toString())> 100){
+                }else  if(Double.parseDouble(txtHeight.getText().toString())> 100){
                     Toast.makeText(this,"Invalid Height",Toast.LENGTH_LONG).show();
 
-                }else if(Integer.parseInt(txtTemp.getText().toString())<90 || Integer.parseInt(txtTemp.getText().toString())>108){
+                }else if(Double.parseDouble(txtTemp.getText().toString())<90 || Double.parseDouble(txtTemp.getText().toString())>108){
                     Toast.makeText(this,"Invalid Temprature",Toast.LENGTH_LONG).show();
 
-                }else if(Integer.parseInt(txtPulse.getText().toString())<40 || Integer.parseInt(txtPulse.getText().toString())>150 ){
+                }else if(Double.parseDouble(txtPulse.getText().toString())<40 || Double.parseDouble(txtPulse.getText().toString())>150 ){
                     Toast.makeText(this,"Invalid Pulse",Toast.LENGTH_LONG).show();
 
-                }else if(Integer.parseInt(txtSTO2.getText().toString())<40 || Integer.parseInt(txtSTO2.getText().toString())>150){
+                }else if(Double.parseDouble(txtSTO2.getText().toString())<40 ||Double.parseDouble(txtSTO2.getText().toString())>150){
                     Toast.makeText(this,"Invalid STO2",Toast.LENGTH_LONG).show();
-
-
-
-                }else if(Integer.parseInt(txtBPS.getText().toString())<20 || Integer.parseInt(txtBPS.getText().toString())>250){
-                    Toast.makeText(this,"Invalid Blood Pressure (Systolic)",Toast.LENGTH_LONG).show();
-
-
-
-                }else if(Integer.parseInt(txtBPD.getText().toString())<20 || Integer.parseInt(txtBPD.getText().toString())>250){
-                    Toast.makeText(this,"Invalid Blood Pressure (Dyostolic)",Toast.LENGTH_LONG).show();
-
+//                }else if(Integer.parseInt(txtBPS.getText().toString())<20 || Integer.parseInt(txtBPS.getText().toString())>250){
+//                    Toast.makeText(this,"Invalid Blood Pressure (Systolic)",Toast.LENGTH_LONG).show();
+//
+//
+//
+//                }else if(Integer.parseInt(txtBPD.getText().toString())<20 || Integer.parseInt(txtBPD.getText().toString())>250){
+//                    Toast.makeText(this,"Invalid Blood Pressure (Dyostolic)",Toast.LENGTH_LONG).show();
+//
 
                 }else{
                     new SaveData().execute();
-//                    navigatetonextactivity();
 
 
                 }
@@ -149,13 +129,6 @@ public class VitalSignActivity extends AppCompatActivity  {
 
 
 
-
-
-
-
-
-
-
     @SuppressLint("StaticFieldLeak")
     private class SaveData extends AsyncTask<String, Void, Integer> {
         @Override
@@ -177,13 +150,13 @@ public class VitalSignActivity extends AppCompatActivity  {
             }
             // Save Vital Sign
             vitalSign.setPt_no(ptno);
-            vitalSign.setWeight((getEdittextValue(txtWeight)));
-            vitalSign.setHeight((getEdittextValue(txtHeight)));
-            vitalSign.setTempt((getEdittextValue(txtTemp)));
-            vitalSign.setPulse((getEdittextValue(txtPulse)));
-            vitalSign.setSto2((getEdittextValue(txtSTO2)));
-            vitalSign.setBpd((getEdittextValue(txtBPD)));
-            vitalSign.setBps((getEdittextValue(txtBPS)));
+            vitalSign.setWeight(Double.parseDouble((getEdittextValue(txtWeight))));
+            vitalSign.setHeight(Double.parseDouble((getEdittextValue(txtHeight))));
+            vitalSign.setTempt(Double.parseDouble((getEdittextValue(txtTemp))));
+            vitalSign.setPulse(Double.parseDouble((getEdittextValue(txtPulse))));
+            vitalSign.setSto2(Double.parseDouble((getEdittextValue(txtSTO2))));
+//            vitalSign.setBpd(Double.parseDouble((getEdittextValue(txtBPD))));
+//            vitalSign.setBps(Double.parseDouble((getEdittextValue(txtBPS))));
             String last_vitalsign_row_id = db.SaveVitalSign(vitalSign);
             try {
                 Thread.sleep(1000);
@@ -214,7 +187,7 @@ public class VitalSignActivity extends AppCompatActivity  {
                 pref.edit().putInt("VTF",1).apply();
                 Log.d("vitaltestflag",String.valueOf(pref.getInt("VTF",0)));
                 VitalSignActivity.super.onBackPressed();
-                Toast.makeText(getApplicationContext(), "Patient Saved ", Toast.LENGTH_LONG).show();
+                Toast.makeText(getApplicationContext(), "Vital Test  Saved ", Toast.LENGTH_LONG).show();
             }
 
         }

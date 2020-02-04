@@ -114,7 +114,7 @@
                     android:layout_marginLeft="@dimen/_10kdp"
                     android:layout_marginTop="@dimen/_10kdp"
                     android:layout_marginRight="@dimen/_10kdp"
-                    android:background="@drawable/rect_orange"
+                    android:background="@color/colorPrimaryDark"
                     android:text="SAVE"
                     android:textColor="@color/white" />
 

@@ -13,6 +13,7 @@ public class PatientModel implements Parcelable {
     String user_id;
     String ptName;
     String ptAddress;
+    String ptCity;
     String ptContactNo;
     String ptEmail;
     String ptAge;
@@ -41,6 +42,7 @@ public PatientModel(){
         user_id = in.readString();
         ptName = in.readString();
         ptAddress = in.readString();
+        ptCity=in.readString();
         ptContactNo = in.readString();
         ptEmail = in.readString();
         ptAge = in.readString();
@@ -65,6 +67,7 @@ public PatientModel(){
         dest.writeString(user_id);
         dest.writeString(ptName);
         dest.writeString(ptAddress);
+        dest.writeString(ptCity);
         dest.writeString(ptContactNo);
         dest.writeString(ptEmail);
         dest.writeString(ptAge);
@@ -98,6 +101,14 @@ public PatientModel(){
             return new PatientModel[size];
         }
     };
+
+    public String getPtCity() {
+        return ptCity;
+    }
+
+    public void setPtCity(String ptCity) {
+        this.ptCity = ptCity;
+    }
 
     public void setmUuid(String mUuid) {
         this.mUuid = mUuid;

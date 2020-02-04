@@ -64,7 +64,7 @@ public class PersonalDetailsActivity extends AppCompatActivity implements DatePi
     PatientModel newPatient = new PatientModel();
     VitalSign vitalSign = new VitalSign();
     EditText txtPtName, txtPtAddress, txtPtContactNo, txtEmail,noofboys,noofgirls,drug_allergies,medicationmedicinename;
-    EditText txtAge,disease,smokepcs,alcoholpegs;
+    EditText txtAge,disease,smokepcs,alcoholpegs,city;
     RadioButton optMale, optFemale, optOther,optyes,optno;
     RadioButton married, unmarried, divorced,widowed;
     private static int TAKE_PICTURE = 111;
@@ -119,6 +119,7 @@ ArrayList<String>  placesnames = new ArrayList<>();
         txtPtAddress = findViewById(R.id.wardNo);
         txtPtContactNo = findViewById(R.id.txtContactNo);
         txtEmail = findViewById(R.id.txtemail);
+        city = findViewById(R.id.city);
 
         smokepcs=findViewById(R.id.et_smoking);
         alcoholpegs=findViewById(R.id.et_alcohol);
@@ -135,6 +136,7 @@ ArrayList<String>  placesnames = new ArrayList<>();
 
         married=findViewById(R.id.married);
         unmarried=findViewById(R.id.unmarried);
+
         divorced=findViewById(R.id.divorced);
         widowed=findViewById(R.id.widowed);
         noofboys=findViewById(R.id.noofboys);
@@ -622,6 +624,12 @@ catch (Exception e){
             }else{
                 newPatient.setPtContactNo(getEdittextValue(txtPtContactNo));
 
+            }
+
+            if(city.getText().toString().equals("")){
+                newPatient.setPtCity("nil");
+            }else{
+                newPatient.setPtCity(getEdittextValue(city));
             }
 //            newPatient.setPtContactNo(contactData);
 

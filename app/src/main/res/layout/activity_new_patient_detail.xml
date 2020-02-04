@@ -164,14 +164,14 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:orientation="horizontal"
-                            android:weightSum="10"
+                            android:weightSum="2"
                             android:gravity="center">
 
                             <com.chivorn.smartmaterialspinner.SmartMaterialSpinner
                                 android:id="@+id/sp_district"
                                 android:layout_width="0dp"
                                 android:layout_height="match_parent"
-                                android:layout_weight="4"
+                                android:layout_weight="1"
                                 android:fontFamily="@font/sf_pro_display_medium"
                                 android:padding="@dimen/_2sdp"
                                 app:smsp_alwaysShowFloatingLabel="false"
@@ -192,11 +192,11 @@
                                 android:id="@+id/sp_place"
                                 android:layout_width="0dp"
                                 android:layout_height="match_parent"
-                                android:layout_weight="4"
+                                android:layout_weight="1"
                                 app:smsp_alwaysShowFloatingLabel="false"
                                 app:smsp_enableErrorLabel="false"
                                 app:smsp_enableFloatingLabel="false"
-                                app:smsp_hint="Select Municipality/VDC"
+                                app:smsp_hint=" Municipality/VDC"
                                 app:smsp_searchHint="Municipality/VDC"
                                 android:padding="@dimen/_2sdp"
                                 app:smsp_isSearchable="true"
@@ -211,17 +211,17 @@
 
 
                             <EditText
-                                android:id="@+id/wardNo"
+
                                 android:layout_width="0dp"
                                 android:layout_height="40sp"
                                 android:layout_weight="2"
                                 android:maxLength="2"
                                 android:textSize="13sp"
+                                android:visibility="gone"
                                 android:hint="Ward"
                                 android:textAlignment="viewStart"
                                 android:fontFamily="@font/sf_pro_display_medium"
                                 android:inputType="number"
-                                app:validateEmpty="@{true}"
                                 android:padding="8sp"
                                 />
 
@@ -232,11 +232,94 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="*"
+                                android:visibility="gone"
                                 android:textColor="@color/dark_red"
                                 android:layout_marginLeft="@dimen/_2sdp"
                                 android:textSize="20sp"/>
 
                         </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:padding="8sp"
+                            android:weightSum="2">
+                            <LinearLayout
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+
+                                android:layout_weight="1">
+
+                                <!--                  <TextView-->
+                                <!--                      android:layout_width="match_parent"-->
+                                <!--                      android:layout_height="wrap_content"-->
+                                <!--                      android:text="Date of Birth"-->
+                                <!--                      android:fontFamily="@font/sfpro_display_semibold"-->
+                                <!--                      android:padding="8sp"-->
+                                <!--                      android:textColor="@color/colorPrimaryDark"-->
+                                <!--                      android:textSize="15sp" />-->
+
+
+                                <EditText
+
+                                    android:layout_width="match_parent"
+                                    android:id="@+id/city"
+                                    android:layout_height="40dp"
+                                    android:cursorVisible="true"
+                                    android:background="@drawable/bg_gray_border"
+                                    android:fontFamily="@font/sf_pro_display_medium"
+                                    android:textCursorDrawable="@null"
+                                    android:imeOptions="actionNext"
+                                    android:padding="8sp"
+                                    android:hint="City"
+                                    android:textSize="13sp"
+                                    android:importantForAutofill="no"
+                                    tools:ignore="SpUsage" />
+
+
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:layout_marginLeft="@dimen/_5sdp"
+                                android:orientation="vertical">
+
+                                <EditText
+                                    android:id="@+id/wardNo"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="40dp"
+                                    android:cursorVisible="true"
+                                    android:maxLength="3"
+                                    android:hint="Ward"
+                                    android:background="@drawable/bg_gray_border"
+                                    android:fontFamily="@font/sf_pro_display_medium"
+                                    android:textCursorDrawable="@null"
+                                    android:imeOptions="actionNext"
+                                    app:validateEmpty="@{true}"
+                                    android:inputType="number"
+                                    android:padding="8sp"
+                                    android:textSize="13sp"
+                                    android:importantForAutofill="no"
+                                    tools:ignore="SpUsage" />
+
+
+                            </LinearLayout>
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="*"
+                                android:layout_gravity="center"
+                                android:textColor="@color/dark_red"
+                                android:layout_marginLeft="@dimen/_2sdp"
+                                android:textSize="20sp"/>
+
+
+                        </LinearLayout>
+
+
 
 
                     </LinearLayout>

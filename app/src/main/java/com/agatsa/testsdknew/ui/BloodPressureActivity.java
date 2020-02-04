@@ -3,107 +3,97 @@ package com.agatsa.testsdknew.ui;
 import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
 import android.content.Context;
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.Gravity;
-import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
-import android.widget.LinearLayout;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
 
-import com.agatsa.testsdknew.Models.GlucoseModel;
+import com.agatsa.testsdknew.Models.BloodPressureModel;
 import com.agatsa.testsdknew.Models.PatientModel;
 import com.agatsa.testsdknew.R;
 import com.agatsa.testsdknew.customviews.DialogUtil;
-import com.agatsa.testsdknew.databinding.ActivityDiabetesBinding;
+import com.agatsa.testsdknew.databinding.ActivityBloodPressureBinding;
 
 import br.com.ilhasoft.support.validation.Validator;
 
-public class DiabetesActivity extends AppCompatActivity {
-    SharedPreferences pref;
-    String ptno = "";
-    PatientModel newPatient = new PatientModel();
-    LabDB labDB;
-    String ptname;
-    ActivityDiabetesBinding binding;
-    Validator validator;
-    GlucoseModel glucoseModel=new GlucoseModel();
-    private ProgressDialog dialog;
+public class BloodPressureActivity extends AppCompatActivity {
 
+    ActivityBloodPressureBinding binding;
+    Validator validator;
+
+    EditText  BPS, BPD;
+
+    SharedPreferences pref;
+    LabDB labDB;
+    ProgressDialog dialog;
+    PatientModel newPatient;
+    String ptno = " ";
+   BloodPressureModel bloodPressureModel=new BloodPressureModel();
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        binding = DataBindingUtil.setContentView(this, R.layout.activity_diabetes);
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_blood_pressure);
         validator = new Validator(binding);
         validator.enableFormValidationMode();
+        BPS = findViewById(R.id.BPSys);
+        BPD = findViewById(R.id.BPDias);
         pref = this.getSharedPreferences("sunyahealth", Context.MODE_PRIVATE);
         ptno = pref.getString("PTNO", "");
         newPatient = getIntent().getParcelableExtra("patient");
-
+        Log.d("bloodpressurelpt",ptno);
         labDB = new LabDB(getApplicationContext());
         dialog = new ProgressDialog(this);
         dialog.setCanceledOnTouchOutside(false);
         dialog.setCancelable(false);
 
+        binding.btnsavebloodpressure.setOnClickListener(v -> {
+            if(validator.validate()) {
+                if (Double.parseDouble(BPS.getText().toString()) < 20 || Double.parseDouble(BPS.getText().toString()) > 250) {
+                    Toast.makeText(this, "Invalid Blood Pressure (Systolic)", Toast.LENGTH_LONG).show();
 
-//        if(glucoseModel != null) {
-//          binding.txtglucose.setText(binding.txtglucose.toString());
-//
-//
-//        }
 
-        binding.btnsaveglucose.setOnClickListener(v -> {
-            if(validator.validate()){
-               new SaveData().execute();
+                } else if (Double.parseDouble(BPD.getText().toString()) < 20 || Double.parseDouble(BPD.getText().toString()) > 250) {
+                    Toast.makeText(this, "Invalid Blood Pressure (Dyostolic)", Toast.LENGTH_LONG).show();
 
+
+                } else {
+                    new SaveData().execute();
+
+
+                }
 
             }
 
-        });
-
-        binding.help.setOnClickListener(view -> {
-
-            final AlertDialog.Builder alert = new AlertDialog.Builder(DiabetesActivity.this);
-            View mView = getLayoutInflater().inflate(R.layout.help_dailog,null);
-            Button btn_okay = (Button)mView.findViewById(R.id.btn_okay);
-            TextView diabetestxt=(TextView)mView.findViewById(R.id.infotxt);
-            diabetestxt.setText(getResources().getString(R.string.diabetesinfo));
-            alert.setView(mView);
-            final AlertDialog alertDialog = alert.create();
-            alertDialog.setCanceledOnTouchOutside(false);
-
-            btn_okay.setOnClickListener(v -> {
-                alertDialog.dismiss();
-            });
-            alertDialog.show();
-
 
         });
+
+
+
+
+
+
 
     }
-
-
 
     @Override
     public void onBackPressed() {
-        DialogUtil.getOKCancelDialog(this, "", "Do you want to discard the  diabetes test of " + newPatient.getPtName() + "?", "Yes","No", (dialogInterface, i) ->
-        DiabetesActivity.super.onBackPressed());
+
+        DialogUtil.getOKCancelDialog(this, "", "Do you want to discard the  vital test of " + newPatient.getPtName(), "Yes","No", (dialogInterface, i) -> {
+            BloodPressureActivity.super.onBackPressed();
+
+        });
+
+
+
+
+
     }
-
-
-
-
-
 
 
     @SuppressLint("StaticFieldLeak")
@@ -125,17 +115,18 @@ public class DiabetesActivity extends AppCompatActivity {
                 e.printStackTrace();
                 return 3;
             }
-            // Save Vital Sign
-            glucoseModel.setPt_no(ptno);
-            glucoseModel.setPtGlucose((getEdittextValue(binding.txtglucose)));
-            String last_vitalsign_row_id = db.SaveGlucoseSign(glucoseModel);
+            // Save Bloodpressure Sign
+            bloodPressureModel.setPt_no(ptno);
+            bloodPressureModel.setDiastolic(Double.parseDouble(BPD.getText().toString()));
+            bloodPressureModel.setSystolic(Double.parseDouble(BPS.getText().toString()));
+            String last_vitalsign_row_id = db.SaveBloodpressureSign(bloodPressureModel);
             try {
                 Thread.sleep(1000);
             } catch (InterruptedException e) {
                 e.printStackTrace();
                 return 3;
             }
-            glucoseModel.setRow_id(last_vitalsign_row_id);
+            bloodPressureModel.setRow_id(last_vitalsign_row_id);
             return 1;
         }
 
@@ -143,15 +134,11 @@ public class DiabetesActivity extends AppCompatActivity {
         protected void onPostExecute(Integer s) {
             super.onPostExecute(s);
             if (s == 2) {
-
-
                 if (dialog.isShowing())
                     dialog.dismiss();
                 Toast.makeText(getApplicationContext(), "Already saved " , Toast.LENGTH_LONG).show();
 
             } else if (s == 3) {
-
-
                 if (dialog.isShowing())
                     dialog.dismiss();
                 Toast.makeText(getApplicationContext(), "Exception catched " , Toast.LENGTH_LONG).show();
@@ -159,17 +146,14 @@ public class DiabetesActivity extends AppCompatActivity {
             } else {
                 if (dialog.isShowing())
                     dialog.dismiss();
-
-                  pref.edit().putInt("DF",1).apply();
-                Log.d("vitaltestflag",String.valueOf(pref.getInt("DF",0)));
-
-                DiabetesActivity.super.onBackPressed();
-               Toast.makeText(getApplicationContext(), "Diabetes Test Saved " , Toast.LENGTH_LONG).show();
+//                pref.edit().putInt("BTF",1).apply();
+//                Log.d("vitaltestflag",String.valueOf(pref.getInt("VTF",0)));
+                BloodPressureActivity.super.onBackPressed();
+                Toast.makeText(getApplicationContext(), "Blood Pressure Test Saved ", Toast.LENGTH_LONG).show();
             }
+
         }
     }
 
-    public String getEdittextValue(EditText editText) {
-        return editText.getText().toString();
-    }
+
 }

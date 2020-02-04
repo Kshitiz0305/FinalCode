@@ -18,6 +18,7 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
 
+import com.agatsa.testsdknew.Models.BloodPressureModel;
 import com.agatsa.testsdknew.Models.BloodReport;
 import com.agatsa.testsdknew.Models.ECGReport;
 import com.agatsa.testsdknew.Models.GlucoseModel;
@@ -26,6 +27,7 @@ import com.agatsa.testsdknew.Models.PatientModel;
 import com.agatsa.testsdknew.Models.UrineReport;
 import com.agatsa.testsdknew.Models.VitalSign;
 import com.agatsa.testsdknew.R;
+import com.agatsa.testsdknew.customviews.DialogUtil;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -39,7 +41,7 @@ import java.util.UUID;
 
 public class PrintReport extends AppCompatActivity {
     String pt_no = "";
-    PatientModel patientModel=new PatientModel();
+    PatientModel patientModel;
     VitalSign vitalSign;
     BloodReport bloodReport;
     UrineReport urineReport;
@@ -55,6 +57,7 @@ public class PrintReport extends AppCompatActivity {
     LabDB db;
 
     GlucoseModel glucoseModel;
+    BloodPressureModel bloodPressureModel;
 
 
     TextView heartrate,pr,qt,qtc,qrs,sdnn,rmssd,mrr,finding;
@@ -67,7 +70,7 @@ public class PrintReport extends AppCompatActivity {
     ArrayList<String> keys = new  ArrayList<>(Arrays.asList("VTF","DF","SLF","CSLF","LISLF","TLF","LSLF","UTF"));
 
     TextView txtReport;
-    Button printreport;
+    Button printreport,completeprintreport;
     static String AgeSexConcat;
 
    CardView vitalsigncv,diabetescv,urinereportcv,fitnessecgcv,singleleadecgcv,chestleadecgcv,limbsixleadecgcv,twelveleadecgcv;
@@ -84,6 +87,7 @@ public class PrintReport extends AppCompatActivity {
     volatile boolean stopWorker;
     String value = "",  duid = "", device_id = "";
     SharedPreferences pref;
+    String City;
     boolean isPrintClicked = false;
 
     @Override
@@ -93,6 +97,9 @@ public class PrintReport extends AppCompatActivity {
         pref = this.getSharedPreferences("sunyahealth", Context.MODE_PRIVATE);
         pt_no =pref.getString("PTNO","");
         patientModel = getIntent().getParcelableExtra("patient");
+
+
+
 //        if (pt_no == null) pt_no = "";
         if (pt_no.equals("")) {
             Toast.makeText(getApplicationContext(), "No Patient Selected", Toast.LENGTH_SHORT).show();
@@ -243,6 +250,17 @@ public class PrintReport extends AppCompatActivity {
          db = new LabDB(getApplicationContext());
         initViews();
 
+        completeprintreport=findViewById(R.id.completeprintreport);
+
+        completeprintreport.setOnClickListener(v -> {
+            DialogUtil.getOKCancelDialog(this, "", "Do you want to complete the  test of " + patientModel.getPtName(), "Yes","No", (dialogInterface, i) -> {
+              navigatenext();
+
+
+            });
+
+        });
+
 
 
 
@@ -258,10 +276,10 @@ public class PrintReport extends AppCompatActivity {
         // Set Text
         // Patient Details
         txtPtName.setText(patientModel.getPtName());
-        Log.d("address",patientModel.getPtAddress());
-        Log.d("name",patientModel.getPtName());
+//        Log.d("city",patientModel.getPtCity());
+//        Log.d("name",patientModel.getPtName());
 
-        String address=patientModel.getPtAddress();
+        String address=patientModel.getPtAddress() + "," + patientModel.getPtCity();
 
         txtPtAddress.setText(address);
         String AgeSex = patientModel.getPtAge();
@@ -426,7 +444,7 @@ public class PrintReport extends AppCompatActivity {
                 value = "";
                 isPrintClicked = true;
                 PrintThisReport();
-                navigatenext();
+
             }
         });
 
@@ -654,21 +672,46 @@ public class PrintReport extends AppCompatActivity {
 
 
                    case "VTF":
-//                        this is to be done in asynctask and view loading is to be done in post execution
+//                        this is to be done in asynctask and view loading is to be done in post executionv
                        vitalSign = db.getLastVitalSign(pt_no);
+                       bloodPressureModel = db.getbloodpressuresign(pt_no);
                        if(vitalSign!=null) {
 
                            vitalsigncv.setVisibility(View.VISIBLE);
-                           txtTemp.setText(String.valueOf(vitalSign.getTempt()));
+//                           txtTemp.setText(String.valueOf(vitalSign.getTempt()));
                            txtWeight.setText(vitalSign.getWeight() + " Kg");
                            txtHeight.setText(vitalSign.getHeight() + " Inches");
-                           txtPulse.setText( String.valueOf(vitalSign.getPulse()));
+//                           txtPulse.setText( String.valueOf(vitalSign.getPulse()));
                            txtSTO2.setText(String.valueOf(vitalSign.getSto2()));
 
+
+                           //For Temperature
+                           double temp= Double.parseDouble(String.valueOf(vitalSign.getTempt()));
+                           String TEMP = String.format("%.2f", temp);
+                           if (temp < 97 ) {
+                               TEMP += "(Low Body Temperature)";
+                           } else if(temp > 97 || temp < 100) {
+                               TEMP += "(Normal)";
+                           }else{
+                               TEMP += "(Fever)";
+                           }
+                           txtTemp.setText(TEMP);
+
+                           //For Pulse
+                           double pulse=Double.parseDouble(String.valueOf(vitalSign.getPulse()));
+                           String PULSE = String.format("%.2f", pulse);
+                           if (pulse < 90) {
+                               PULSE += "(Clinical Emergency)";
+                           } else {
+                               PULSE += "(Normal)";
+
+                           }
+                           txtPulse.setText(PULSE);
+
                            // For BMI
-                           double heightinmeter = (Double.parseDouble(vitalSign.getHeight())* 0.0254);
+                           double heightinmeter = (Double.parseDouble(String.valueOf(vitalSign.getHeight()))* 0.0254);
                            double m2 = heightinmeter * heightinmeter;
-                           double weight =Double.parseDouble(vitalSign.getWeight()) ;
+                           double weight =Double.parseDouble(String.valueOf(vitalSign.getWeight())) ;
                            double bmi = weight / m2;
                            String BMI = String.format("%.2f", bmi);
                            if (bmi < 18.5) {
@@ -681,10 +724,38 @@ public class PrintReport extends AppCompatActivity {
                                BMI += "(Obese Range)";
                            }
                            txtBMI.setText(BMI);
-                           String bp = String.valueOf(vitalSign.getBps());
-                           bp = bp + "/";
-                           bp = bp + vitalSign.getBpd();
-                           txtBP.setText(bp);
+
+                           double systolic=Double.parseDouble(String.valueOf(bloodPressureModel.getSystolic()));
+                           double diasystolic=Double.parseDouble(String.valueOf(bloodPressureModel.getDiastolic()));
+                           String SBP = String.format("%.2f", systolic);
+                           String DBP = String.format("%.2f", diasystolic);
+                           SBP=SBP + "/";
+                           DBP=SBP + DBP;
+
+                           if(systolic < 90 || diasystolic < 60 ){
+                               DBP += "(Low BP)";
+
+                           }else if(systolic < 120  || diasystolic < 80 ){
+                               DBP +="(Normal)";
+
+                           }else if(systolic < 140  || diasystolic < 90 ){
+                               DBP +="(HyperTension Pre)";
+
+
+                           }else if(systolic < 160  || diasystolic < 100 ){
+                               DBP +="(Hypertension I)";
+
+                           }else if(systolic > 190  || diasystolic > 120 ){
+                               DBP +="(Hypertension II)";
+
+                           }
+                           txtBP.setText(DBP);
+
+//                           String bp = String.valueOf(bloodPressureModel.getSystolic());
+//                           if()
+//                           bp = bp + "/";
+//                           bp = bp + bloodPressureModel.getDiastolic();
+//                           txtBP.setText(bp);
                            txtSTO2.setText(String.valueOf(vitalSign.getSto2()));
                        }
                        break;
@@ -772,7 +843,7 @@ public class PrintReport extends AppCompatActivity {
             ptLine += patientModel.getPtName();
             ptLine += "\n";
             outputStream.write(ptLine.getBytes());
-            outputStream.write(("Address : " + patientModel.getPtAddress() + "\n").getBytes());
+            outputStream.write(("Address : " + patientModel.getPtAddress()  + "," + patientModel.getPtCity()+ "\n").getBytes());
             outputStream.write(("Age/Sex : " + AgeSexConcat  + "\n").getBytes());
             outputStream.write("\n".getBytes());
 
@@ -962,14 +1033,14 @@ public class PrintReport extends AppCompatActivity {
             value+=e.toString()+ "\n" +"Excep Print \n";
             Toast.makeText(this, value, Toast.LENGTH_LONG).show();
         }
-        pref.edit().putInt("VTF",0).apply();
-        pref.edit().putInt("UTF",0).apply();
-        pref.edit().putInt("DF",0).apply();
-        pref.edit().putInt("SLF",0).apply();
-        pref.edit().putInt("CSLF",0).apply();
-        pref.edit().putInt("LISLF",0).apply();
-        pref.edit().putInt("TLF",0).apply();
-        pref.edit().putInt("LSLF",0).apply();
+//        pref.edit().putInt("VTF",0).apply();
+//        pref.edit().putInt("UTF",0).apply();
+//        pref.edit().putInt("DF",0).apply();
+//        pref.edit().putInt("SLF",0).apply();
+//        pref.edit().putInt("CSLF",0).apply();
+//        pref.edit().putInt("LISLF",0).apply();
+//        pref.edit().putInt("TLF",0).apply();
+//        pref.edit().putInt("LSLF",0).apply();
         isPrintClicked = false;
     }
 
@@ -977,5 +1048,13 @@ public class PrintReport extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
         isPrintClicked = false;
+    }
+
+    @Override
+    public void onBackPressed() {
+        Intent i1=new Intent(this, PatientEntryActivity.class);
+        i1.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        startActivity(i1);
+        finish();
     }
 }

@@ -9,6 +9,8 @@ import android.database.sqlite.SQLiteOpenHelper;
 import android.os.Build;
 import android.os.Environment;
 import android.util.Log;
+
+import com.agatsa.testsdknew.Models.BloodPressureModel;
 import com.agatsa.testsdknew.Models.BloodReport;
 import com.agatsa.testsdknew.Models.ECGReport;
 import com.agatsa.testsdknew.Models.GlucoseModel;
@@ -61,12 +63,12 @@ public class LabDB extends SQLiteOpenHelper {
     private static final String COLUMN_PT_AGE = "ptAge";
     private static final String COLUMN_PT_DOB= "ptDob";
     private static final String COLUMN_PT_SEX = "ptSex";
+    private static final String COLUMN_PT_CITY = "ptCity";
     private static final String COLUMN_PT_MARITALSTATUS = "ptMaritalstatus";
     private static final String COLUMN_PT_NO_OF_BOYS = "ptNoOfBoys";
     private static final String COLUMN_PT_NO_OF_GIRLS = "ptNoOfGirls";
     private static final String COLUMN_PT_DRUG_ALLERGIES = "ptDrugAllergies";
     private static final String COLUMN_PT_DISEASE = "ptDisease";
-    private static final String COLUMN_PT_MEDICATION = "ptMedication";
     private static final String COLUMN_PT_MEDICATION_MEDICINE = "ptMedicationMedicine";
     private static final String COLUMN_PT_SMOKING = "ptSmoking";
     private static final String COLUMN_PT_ALCOHOL = "ptAlcohol";
@@ -129,6 +131,12 @@ public class LabDB extends SQLiteOpenHelper {
     private static final String COLUMN_DIABETES = "diabetes";
 
 
+    private static final String TABLE_BLOOD_PRESSURE = "blood_pressure_test";
+    // Columns of Diabetes Test
+    private static final String COLUMN_SYSTOLIC = "systolic";
+    private static final String COLUMN_DIASTOLIC = "diastolic";
+
+
 
 
     // Patient Blood Test Report
@@ -186,6 +194,7 @@ public class LabDB extends SQLiteOpenHelper {
                 + COLUMN_PT_AGE + " TEXT,"
                 + COLUMN_PT_DOB + " TEXT,"
                 + COLUMN_PT_SEX + " TEXT,"
+                + COLUMN_PT_CITY + " TEXT,"
                 + COLUMN_PT_MARITALSTATUS + " TEXT,"
                 + COLUMN_PT_NO_OF_BOYS + " TEXT,"
                 + COLUMN_PT_NO_OF_GIRLS + " TEXT,"
@@ -220,6 +229,15 @@ public class LabDB extends SQLiteOpenHelper {
                 + COLUMN_ADDEDDATE + " TEXT,"
                 + COLUMN_UPDATEDDATE + " TEXT)";
         db.execSQL(CREATE_DIABETES_TABLE);
+
+        String CREATE_BLOOD_PRESSURE_TABLE = "CREATE TABLE " + TABLE_BLOOD_PRESSURE + "("
+                + COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT,"
+                + COLUMN_PT_NO + " INTEGER,"
+                + COLUMN_SYSTOLIC + " REAL DEFAULT 0,"
+                + COLUMN_DIASTOLIC + " REAL DEFAULT 0,"
+                + COLUMN_ADDEDDATE + " TEXT,"
+                + COLUMN_UPDATEDDATE + " TEXT)";
+        db.execSQL(CREATE_BLOOD_PRESSURE_TABLE);
 
         String CREATE_ECGSIGN_TABLE = "CREATE TABLE " + TABLE_ECG_SIGN + "("
                 + COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT,"
@@ -304,11 +322,13 @@ public class LabDB extends SQLiteOpenHelper {
         values.put(COLUMN_PT_NO, ptdetail.getId());
         values.put(COLUMN_PT_NAME, ptdetail.getPtName());
         values.put(COLUMN_PT_ADDRESS, ptdetail.getPtAddress());
+
         values.put(COLUMN_PT_CONTACTNO, ptdetail.getPtContactNo());
         values.put(COLUMN_PT_EMAIL, ptdetail.getPtEmail());
         values.put(COLUMN_PT_AGE, ptdetail.getPtAge());
         values.put(COLUMN_PT_DOB, ptdetail.getPtDob());
         values.put(COLUMN_PT_SEX, ptdetail.getPtSex());
+        values.put(COLUMN_PT_CITY, ptdetail.getPtCity());
         values.put(COLUMN_PT_MARITALSTATUS, ptdetail.getPtmaritalstatus());
         values.put(COLUMN_PT_NO_OF_BOYS, ptdetail.getPtnoofboys());
        values.put(COLUMN_PT_NO_OF_GIRLS, ptdetail.getPtnoofgirls());
@@ -389,6 +409,7 @@ public class LabDB extends SQLiteOpenHelper {
             patientModel.setPtEmail(cursor.getString(5));
             patientModel.setPtAge(cursor.getString(6));
             patientModel.setPtSex(cursor.getString(8));
+            patientModel.setPtCity(cursor.getString(9));
             patientModelList.add(patientModel);
 
 
@@ -620,6 +641,29 @@ public class LabDB extends SQLiteOpenHelper {
 
     }
 
+    public String SaveBloodpressureSign(BloodPressureModel bloodPressureModel) {
+        String result = "";
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put(COLUMN_PT_NO, bloodPressureModel.getPt_no());
+        values.put(COLUMN_SYSTOLIC, bloodPressureModel.getSystolic());
+        values.put(COLUMN_DIASTOLIC, bloodPressureModel.getDiastolic());
+        values.put(COLUMN_UPDATEDDATE, Calendar.getInstance().getTimeInMillis() / 1000);
+
+        if (!bloodPressureModel.getRow_id() .equals("")) {
+            db.update(TABLE_BLOOD_PRESSURE, values, COLUMN_ID + "=?", new String[]{String.valueOf(bloodPressureModel.getRow_id())});
+            result = bloodPressureModel.getRow_id();
+        } else {
+            values.put(COLUMN_ADDEDDATE, Calendar.getInstance().getTimeInMillis() / 1000);
+            db.insert(TABLE_BLOOD_PRESSURE, null, values);
+            result = getLastID(TABLE_BLOOD_PRESSURE, db);
+        }
+        db.close();
+        return result;
+
+    }
+
+
 
     public Flowable<String> updateEcgObserVable(ECGReport ecgReport) {
 
@@ -807,13 +851,13 @@ public class LabDB extends SQLiteOpenHelper {
                 new String[]{String.valueOf(pt_no)}, null, null, COLUMN_ID + " DESC", String.valueOf(1));
         if (cursor.moveToFirst()) {
             vitalSign.setRow_id((cursor.getString(0)));
-            vitalSign.setWeight((cursor.getString(1)));
-            vitalSign.setHeight((cursor.getString(2)));
-            vitalSign.setTempt((cursor.getString(3)));
-            vitalSign.setPulse((cursor.getString(4)));
-            vitalSign.setBps((cursor.getString(5)));
-            vitalSign.setBpd((cursor.getString(6)));
-            vitalSign.setSto2((cursor.getString(7)));
+            vitalSign.setWeight(Double.parseDouble((cursor.getString(1))));
+            vitalSign.setHeight(Double.parseDouble((cursor.getString(2))));
+            vitalSign.setTempt(Double.parseDouble((cursor.getString(3))));
+            vitalSign.setPulse(Double.parseDouble((cursor.getString(4))));
+            vitalSign.setBps(Double.parseDouble((cursor.getString(5))));
+            vitalSign.setBpd(Double.parseDouble((cursor.getString(6))));
+            vitalSign.setSto2(Double.parseDouble((cursor.getString(7))));
 //            vitalSign.setGlucose((cursor.getString(8)));
         }
         vitalSign.setPt_no(pt_no);
@@ -840,6 +884,25 @@ public class LabDB extends SQLiteOpenHelper {
         return glucoseModel;
     }
 
+    public BloodPressureModel getbloodpressuresign(String pt_no) {
+        BloodPressureModel bloodPressureModel = new BloodPressureModel();
+        SQLiteDatabase db = this.getReadableDatabase();
+//
+        Cursor cursor = db.query(TABLE_BLOOD_PRESSURE, new String[]{COLUMN_ID,
+                        COLUMN_SYSTOLIC,COLUMN_DIASTOLIC}, COLUMN_PT_NO + "=?",
+                new String[]{String.valueOf(pt_no)}, null, null, COLUMN_ID + " DESC", String.valueOf(1));
+        if (cursor.moveToFirst()) {
+            bloodPressureModel.setRow_id(cursor.getString(0));
+            bloodPressureModel.setSystolic(Double.parseDouble((cursor.getString(1))));
+            bloodPressureModel.setDiastolic(Double.parseDouble((cursor.getString(2))));
+
+        }
+        bloodPressureModel.setPt_no(pt_no);
+        cursor.close();
+        db.close();
+        return bloodPressureModel;
+    }
+
 
     public String getLastEcg( ) {
         SQLiteDatabase db = this.getReadableDatabase();
@@ -864,34 +927,34 @@ public class LabDB extends SQLiteOpenHelper {
 
 
 
-    public ArrayList<VitalSign> getAllVitalSignData() {
-        ArrayList<VitalSign> vs = new ArrayList<VitalSign>();
-
-        SQLiteDatabase db = this.getReadableDatabase();
-
-        Cursor cursor = db.query(TABLE_VITAL_SIGN, new String[]{COLUMN_ID, COLUMN_WEIGHT,
-                        COLUMN_HEIGHT, COLUMN_TEMP, COLUMN_PULSE,
-                        COLUMN_BP_S, COLUMN_BP_D, COLUMN_STO2},
-                null, null, null, null, COLUMN_ID + " ASC", null);
-        if (cursor.moveToFirst()) {
-            do {
-                VitalSign vitalSign = new VitalSign();
-                vitalSign.setRow_id(cursor.getString(0));
-                 vitalSign.setPt_no(cursor.getString(1));
-                vitalSign.setWeight((cursor.getString(2)));
-                vitalSign.setHeight((cursor.getString(3)));
-                vitalSign.setTempt((cursor.getString(4)));
-                vitalSign.setPulse((cursor.getString(5)));
-                vitalSign.setBps((cursor.getString(6)));
-                vitalSign.setBpd((cursor.getString(7)));
-                vitalSign.setSto2((cursor.getString(8)));
-                vs.add(vitalSign);
-            } while (cursor.moveToNext());
-        }
-        cursor.close();
-        db.close();
-        return vs;
-    }
+//    public ArrayList<VitalSign> getAllVitalSignData() {
+//        ArrayList<VitalSign> vs = new ArrayList<VitalSign>();
+//
+//        SQLiteDatabase db = this.getReadableDatabase();
+//
+//        Cursor cursor = db.query(TABLE_VITAL_SIGN, new String[]{COLUMN_ID, COLUMN_WEIGHT,
+//                        COLUMN_HEIGHT, COLUMN_TEMP, COLUMN_PULSE,
+//                        COLUMN_BP_S, COLUMN_BP_D, COLUMN_STO2},
+//                null, null, null, null, COLUMN_ID + " ASC", null);
+//        if (cursor.moveToFirst()) {
+//            do {
+//                VitalSign vitalSign = new VitalSign();
+//                vitalSign.setRow_id(cursor.getString(0));
+//                 vitalSign.setPt_no(cursor.getString(1));
+//                vitalSign.setWeight((cursor.getString(2)));
+//                vitalSign.setHeight((cursor.getString(3)));
+//                vitalSign.setTempt((cursor.getString(4)));
+//                vitalSign.setPulse((cursor.getString(5)));
+//                vitalSign.setBps((cursor.getString(6)));
+//                vitalSign.setBpd((cursor.getString(7)));
+//                vitalSign.setSto2((cursor.getString(8)));
+//                vs.add(vitalSign);
+//            } while (cursor.moveToNext());
+//        }
+//        cursor.close();
+//        db.close();
+//        return vs;
+//    }
 
     public String SaveBloodReport(BloodReport bloodReport) {
         String result = "";

@@ -106,27 +106,18 @@ public class EcgOptionsActivity extends AppCompatActivity {
             if(oneatleastSet==1){
 
 
-                Toast.makeText(EcgOptionsActivity.this, "Tick hune khalko back", Toast.LENGTH_SHORT).show();
+//                Toast.makeText(EcgOptionsActivity.this, "Tick hune khalko back", Toast.LENGTH_SHORT).show();
 
                 sharedPreferences.edit().putInt("ECGF",1);
                 EcgOptionsActivity.this.onBackPressed();
 
-
-
-
             }
             else {
-                Toast.makeText(EcgOptionsActivity.this, "Tick nahune khalko back", Toast.LENGTH_SHORT).show();
+//                Toast.makeText(EcgOptionsActivity.this, "Tick nahune khalko back", Toast.LENGTH_SHORT).show();
 
                 EcgOptionsActivity.this.onBackPressed();
 
-
-
-
             }
-
-
-
 
 
         });
@@ -228,16 +219,6 @@ public class EcgOptionsActivity extends AppCompatActivity {
 
         });
 
-
-
-
-
-
-
-
-
-
-
     }
 
 
@@ -259,23 +240,12 @@ public class EcgOptionsActivity extends AppCompatActivity {
 
 
 
-
-
-
-
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.menu_pair, menu);
         return true;
     }
-
-
-
-
-
-
-
 
 
 
@@ -322,10 +292,5 @@ public class EcgOptionsActivity extends AppCompatActivity {
         }
     }
 
-//    @Override
-//    public void onBackPressed() {
-//
-//
-//        super.onBackPressed();
-//    }
+
 }

@@ -20,6 +20,7 @@ import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
+import android.os.Handler;
 import android.provider.MediaStore;
 import android.util.Log;
 import android.view.View;
@@ -279,7 +280,6 @@ public  class UrineTestActivity extends AppCompatActivity {
         saveurinetest = findViewById(R.id.saveurinetest);
         assetManager = getAssets();
 
-
         if (!OpenCVLoader.initDebug()) {
             Toast.makeText(this, "OpenCV not Loaded", Toast.LENGTH_LONG).show();
             description.setText("OpenCV was not loaded, Please try again.");
@@ -312,6 +312,7 @@ public  class UrineTestActivity extends AppCompatActivity {
     }
 
     public void process(){
+
         if (detected){
             detected = false;
         }
@@ -323,6 +324,19 @@ public  class UrineTestActivity extends AppCompatActivity {
 //        Utils.matToBitmap(mat, testBitmap);
         Mat quad = new Mat();
         try {
+//            final ProgressDialog progress = new ProgressDialog(this);
+//            progress.setMessage("Starting Urine Test...");
+//            progress.show();
+//
+//            Runnable progressRunnable = new Runnable() {
+//                @Override
+//                public void run() {
+//                    progress.cancel();
+//
+//                }
+//            };
+//            Handler pdCanceller = new Handler();
+//            pdCanceller.postDelayed(progressRunnable, 2000);
             quad = board_detect(mat);
 
             int x = (int) (quad.width()*0.20);
@@ -344,6 +358,7 @@ public  class UrineTestActivity extends AppCompatActivity {
                 detected = false;
             }
         } catch (Exception e) {
+
             new AlertDialog.Builder(UrineTestActivity.this)
                     .setTitle("Error")
                     .setMessage("Please take picture again!")
@@ -357,11 +372,13 @@ public  class UrineTestActivity extends AppCompatActivity {
     }
 
     public void startCamera(){
+
         Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         takePictureIntent.putExtra("android.intent.extras.FLASH_MODE_ON", 1);
         if (takePictureIntent.resolveActivity(getPackageManager()) != null) {
             File photoFile = null;
             try {
+
                 photoFile = createImageFile();
             } catch (IOException ex) {
 //                new AlertDialog.Builder(UrineTestActivity.this)
@@ -374,6 +391,7 @@ public  class UrineTestActivity extends AppCompatActivity {
 //                        }).show();
             }
             if (photoFile != null) {
+
                 Uri photoURI = FileProvider.getUriForFile(UrineTestActivity.this,
                         "com.agatsa.testsdknew" + ".provider",
                         photoFile);
@@ -563,6 +581,19 @@ public  class UrineTestActivity extends AppCompatActivity {
 //            }
 //        }
 //        Imgcodecs.imwrite("stepwiseout/patch.jpg", test_patch);
+//        double ref_vals[][][] = {
+//                { {}, {}, {}, {}, {} },
+//                { {}, {}, {} },
+//                { {}, {}, {}, {}, {} },
+//                { {}, {}, {}, {}, {}, {} },
+//                { {}, {}, {}, {}, {}, {}, {} },
+//                { {}, {}, {}, {}, {}, {}, {} },
+//                { {}, {}, {}, {}, {}, {}, {} },
+//                { {}, {}, {}, {}, {}, {} },
+//                { {}, {}, {}, {} },
+//                { {}, {}, {}, {}, {}, {} },
+//                { {}, {}, {} },
+//        };
         double[] temppixel1 = test_patch.get(0,0);
         double[] temppixel = test_patch.get(5,5);
         Imgproc.cvtColor(test_patch, test_patch, Imgproc.COLOR_RGBA2RGB);
@@ -630,18 +661,18 @@ public  class UrineTestActivity extends AppCompatActivity {
 //        for (Map.Entry<String, Double> en : lab_score.entrySet()) {
 //            System.out.println(en.getKey() + " = " +
 //                    " = " + en.getValue());
-//
 //        }
         Object myKey = lab_score.keySet().toArray()[0];
-        if(index_no == "2"){
-            if(myKey.toString() == "3.png"){
-                return  "0.png";
-            }else {
-                return myKey.toString();
-            }
-        } else {
-            return myKey.toString();
-        }
+//        if(index_no == "2"){
+//            if(myKey.toString() == "3.png"){
+//                return  "0.png";
+//            }else {
+//                return myKey.toString();
+//            }
+//        } else {
+//            return myKey.toString();
+//        }
+        return  "0.png";
 //        System.out.println(Double.toString(lab_score.get(myKey)));
 //        return myKey.toString();
     }
@@ -754,8 +785,6 @@ public  class UrineTestActivity extends AppCompatActivity {
         bilirubin = test_values.get(8).get(report[8]);
         glucose = test_values.get(9).get(report[9]);
         ascorbic_acid = test_values.get(10).get(report[10]);
-
-
 
         reportVal = new String[11];
         for (int i = 0; i < 11; i++){
@@ -1077,6 +1106,7 @@ public  class UrineTestActivity extends AppCompatActivity {
     }
 
     private void setPic() {
+
         // Get the dimensions of the View
 //        int targetW = mImageView.getWidth();
 //        int targetH = mImageView.getHeight();
@@ -1198,7 +1228,7 @@ public  class UrineTestActivity extends AppCompatActivity {
                 pref.edit().putInt("UTF",1).apply();
                 Log.d("vitaltestflag",String.valueOf(pref.getInt("UTF",0)));
                 UrineTestActivity.super.onBackPressed();
-                Toast.makeText(getApplicationContext(), "Patient Saved " , Toast.LENGTH_LONG).show();
+                Toast.makeText(getApplicationContext(), "Urine Test  Saved " , Toast.LENGTH_LONG).show();
 
             }
         }
@@ -1209,32 +1239,9 @@ public  class UrineTestActivity extends AppCompatActivity {
 
 //       here back is handled in async postexecute to avoid memory leak  this activity is already killed in back
 
-
         DialogUtil.getOKCancelDialog(this, "", "Do you want to discard the  urine test of " + patientModel.getPtName()+"?", "Yes","No", (dialogInterface, i) -> {
             UrineTestActivity.super.onBackPressed();
 
         });
-
-
-
-
-
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 }
-
