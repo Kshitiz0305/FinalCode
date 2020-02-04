@@ -324,19 +324,7 @@ public  class UrineTestActivity extends AppCompatActivity {
 //        Utils.matToBitmap(mat, testBitmap);
         Mat quad = new Mat();
         try {
-//            final ProgressDialog progress = new ProgressDialog(this);
-//            progress.setMessage("Starting Urine Test...");
-//            progress.show();
-//
-//            Runnable progressRunnable = new Runnable() {
-//                @Override
-//                public void run() {
-//                    progress.cancel();
-//
-//                }
-//            };
-//            Handler pdCanceller = new Handler();
-//            pdCanceller.postDelayed(progressRunnable, 2000);
+
             quad = board_detect(mat);
 
             int x = (int) (quad.width()*0.20);
@@ -594,11 +582,8 @@ public  class UrineTestActivity extends AppCompatActivity {
 //                { {}, {}, {}, {}, {}, {} },
 //                { {}, {}, {} },
 //        };
-        double[] temppixel1 = test_patch.get(0,0);
-        double[] temppixel = test_patch.get(5,5);
+
         Imgproc.cvtColor(test_patch, test_patch, Imgproc.COLOR_RGBA2RGB);
-        temppixel1 = test_patch.get(0,0);
-        temppixel = test_patch.get(5,5);
 //        Imgproc.cvtColor(test_patch, test_patch, Imgproc.COLOR_BGR2RGB);
 //        Imgproc.cvtColor(test_patch, test_patch, Imgproc.COLOR_RGB2Lab);
 //        for(int i = 0; i < test_patch.rows(); i++){
@@ -609,7 +594,67 @@ public  class UrineTestActivity extends AppCompatActivity {
 //                }
 //            }
 //        }
-        Scalar avg_color_test1 = Core.mean(test_patch);
+        Scalar avg_color_test = Core.mean(test_patch);
+
+        HashMap<String, Integer> color_seq = new HashMap<String, Integer>(){
+            {
+                put("r", 0);
+                put("g", 0);
+                put("b", 0);
+            }
+        };
+
+
+        int max_pos = 0;
+
+        for (int i = 0; i < 3; i++) {
+            max_pos = avg_color_test.val[i] > avg_color_test.val[max_pos] ? i : max_pos;
+        }
+
+        int min_pos = 0;
+
+        for (int i = 0; i < 3; i++) {
+            min_pos = avg_color_test.val[i] < avg_color_test.val[min_pos] ? i : min_pos;
+        }
+
+        List<Integer> set1 = new ArrayList<>();
+        set1.add(min_pos);
+        set1.add(max_pos);
+        List<Integer> set2 = new ArrayList<>();
+        set2.add(0);
+        set2.add(1);
+        set2.add(2);
+        set2.removeAll(set1);
+        int mid_pos = set2.get(0);
+
+        if (max_pos == 0)
+        {
+            color_seq.put("r", 2);
+        }
+        if (max_pos == 1)
+        {
+            color_seq.put("g", 2);
+        }
+        if (max_pos == 2)
+        {
+            color_seq.put("b", 2);
+        }
+
+        if (mid_pos == 0)
+        {
+            color_seq.put("r", 1);
+        }
+        if (mid_pos == 1)
+        {
+            color_seq.put("g", 1);
+        }
+        if (mid_pos == 2)
+        {
+            color_seq.put("b", 1);
+        }
+
+
+
         // RGB to LAB
         for(int i = 0; i < test_patch.rows(); i++){
             for(int j = 0; j < test_patch.cols(); j++){
@@ -618,14 +663,14 @@ public  class UrineTestActivity extends AppCompatActivity {
                 System.out.println("hello");
             }
         }
-        Scalar avg_color_test = Core.mean(test_patch);
+        Scalar abc = Core.mean(test_patch);
 //        for (int i = 0; i < 3; i++){
 //            avg_color_test.val[i] += avg_deviation.val[i];
 //        }
-        avg_color_test.val[0] += 20;
-        if (index_no == "2"){
-            avg_color_test.val[0] -= 20;
-        }
+//        avg_color_test.val[0] += 20;
+//        if (index_no == "2"){
+//            avg_color_test.val[0] -= 20;
+//        }
         HashMap<String, Double> score = new HashMap<>();
         try {
             Mat temp = new Mat();
@@ -636,24 +681,83 @@ public  class UrineTestActivity extends AppCompatActivity {
                 Bitmap  bitmap = BitmapFactory.decodeStream(is);
                 Utils.bitmapToMat(bitmap, temp);
                 Mat ref_image = temp;
-                Scalar avg_color_ref12 = Core.mean(ref_image);
+//                Scalar avg_color_ref12 = Core.mean(ref_image);
                 Imgproc.resize(ref_image, ref_image, test_patch.size());
                 Imgproc.cvtColor(ref_image, ref_image, Imgproc.COLOR_RGBA2RGB);
 
 //                Imgproc.cvtColor(ref_image, ref_image, Imgproc.COLOR_RGB2Lab);
-                Scalar avg_color_ref1 = Core.mean(ref_image);
-                // RGB to LAB
-                for(int i = 0; i < ref_image.rows(); i++){
-                    for(int j = 0; j < ref_image.cols(); j++){
-                        double[] temp1 = rgb2lab(ref_image.get(i, j));
-                        ref_image.put(i, j, temp1);
-                        System.out.println("hello");
-                    }
-                }
                 Scalar avg_color_ref = Core.mean(ref_image);
-                double mf = calculate_distance(avg_color_test, avg_color_ref);
-                score.put(file, mf);
+
+                HashMap<String, Integer> ref_color_seq = new HashMap<String, Integer>(){
+                    {
+                        put("r", 0);
+                        put("g", 0);
+                        put("b", 0);
+                    }
+                };
+
+                max_pos = 0;
+                for (int i = 0; i < 3; i++) {
+                    max_pos = avg_color_ref.val[i] > avg_color_ref.val[max_pos] ? i : max_pos;
+                }
+
+                min_pos = 0;
+                for (int i = 0; i < 3; i++) {
+                    min_pos = avg_color_ref.val[i] < avg_color_ref.val[min_pos] ? i : min_pos;
+                }
+                set1 = new ArrayList<>();
+                set1.add(min_pos);
+                set1.add(max_pos);
+                set2 = new ArrayList<>();
+                set2.add(0);
+                set2.add(1);
+                set2.add(2);
+                set2.removeAll(set1);
+                mid_pos = set2.get(0);
+
+                if (max_pos == 0)
+                {
+                    ref_color_seq.put("r", 2);
+                }
+                if (max_pos == 1)
+                {
+                    ref_color_seq.put("g", 2);
+                }
+                if (max_pos == 2)
+                {
+                    ref_color_seq.put("b", 2);
+                }
+
+                if (mid_pos == 0)
+                {
+                    ref_color_seq.put("r", 1);
+                }
+                if (mid_pos == 1)
+                {
+                    ref_color_seq.put("g", 1);
+                }
+                if (mid_pos == 2)
+                {
+                    ref_color_seq.put("b", 1);
+                }
+
+                if (ref_color_seq.equals(color_seq)) {
+                    System.out.println("nonono");
+                    // RGB to LAB
+                    for(int i = 0; i < ref_image.rows(); i++){
+                        for(int j = 0; j < ref_image.cols(); j++){
+                            double[] temp1 = rgb2lab(ref_image.get(i, j));
+                            ref_image.put(i, j, temp1);
+                            System.out.println("hello");
+                        }
+                    }
+                    Scalar avg_color_ref_lab = Core.mean(ref_image);
+                    Scalar avg_color_test_lab = new Scalar(abc.val[0] + 20, abc.val[1], abc.val[2]);
+                    double mf = calculate_distance(avg_color_test_lab, avg_color_ref_lab);
+                    score.put(file, mf);
+                }
             }
+
         } catch (IOException e) {
             Toast.makeText(this, "Error Loading dus11 files", Toast.LENGTH_LONG).show();
         }
@@ -662,6 +766,28 @@ public  class UrineTestActivity extends AppCompatActivity {
 //            System.out.println(en.getKey() + " = " +
 //                    " = " + en.getValue());
 //        }
+
+        if (lab_score.isEmpty()){
+            try {
+                Mat temp = new Mat();
+                String[] files = assetManager.list("pics/dus11/" + index_no);
+                for (String file: files){
+                    InputStream is = assetManager.open("pics/dus11/" + index_no + "/" + file);
+                    Bitmap  bitmap = BitmapFactory.decodeStream(is);
+                    Utils.bitmapToMat(bitmap, temp);
+                    Mat ref_image = temp;
+                    Imgproc.resize(ref_image, ref_image, test_patch.size());
+                    Imgproc.cvtColor(ref_image, ref_image, Imgproc.COLOR_RGBA2RGB);
+                    Scalar avg_color_ref = Core.mean(ref_image);
+                    double mf = calculate_distance(avg_color_test, avg_color_ref);
+                    score.put(file, mf);
+                }
+            } catch (IOException e) {
+                Toast.makeText(this, "Error Loading dus11 files", Toast.LENGTH_LONG).show();
+            }
+            lab_score = sortByValue(score);
+        }
+
         Object myKey = lab_score.keySet().toArray()[0];
 //        if(index_no == "2"){
 //            if(myKey.toString() == "3.png"){
@@ -672,9 +798,7 @@ public  class UrineTestActivity extends AppCompatActivity {
 //        } else {
 //            return myKey.toString();
 //        }
-        return  "0.png";
-//        System.out.println(Double.toString(lab_score.get(myKey)));
-//        return myKey.toString();
+        return  myKey.toString();
     }
 
     public List<Scalar> ref_process(Mat ref){
@@ -866,6 +990,19 @@ public  class UrineTestActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
+//            final ProgressDialog progress = new ProgressDialog(this);
+//            progress.setMessage("Starting Urine Test...");
+//            progress.show();
+//
+//            Runnable progressRunnable = new Runnable() {
+//                @Override
+//                public void run() {
+//                    progress.cancel();
+//
+//                }
+//            };
+//            Handler pdCanceller = new Handler();
+//            pdCanceller.postDelayed(progressRunnable, 2000);
             try {
                 setPic();
                 process();
