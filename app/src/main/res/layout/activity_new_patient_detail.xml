@@ -439,7 +439,7 @@
                                     android:textCursorDrawable="@null"
                                     android:imeOptions="actionNext"
                                     android:padding="8sp"
-                                    android:hint="YYYY/MM/DD"
+                                    android:hint="YYYY-MM-DD"
                                     android:textSize="13sp"
                                     android:importantForAutofill="no"
                                     tools:ignore="SpUsage" />

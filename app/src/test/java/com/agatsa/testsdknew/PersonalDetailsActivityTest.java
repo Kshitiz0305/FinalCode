@@ -1,6 +1,6 @@
 package com.agatsa.testsdknew;
 
-import com.agatsa.testsdknew.ui.PersonalDetailsActivity;
+import com.agatsa.testsdknew.ui.Personaldetails.PersonalDetailsActivity;
 
 import org.junit.Before;
 import org.junit.Test;

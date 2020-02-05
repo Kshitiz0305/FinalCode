@@ -54,9 +54,7 @@ import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.schedulers.Schedulers;
 
 
-public  class
-
-SingleLeadECG extends AppCompatActivity implements ResponseCallback {
+public  class SingleLeadECG extends AppCompatActivity implements ResponseCallback {
     private static final String CLIENT_ID = "5a3b4c16b4a56b000132f5d5b4580266565440bda51dcb4122d39844";
     private static final String SECRET_ID = "5a3b4c16b4a56b000132f5d5746be305d56c49e49cc88b12ccb05d71";
     private Button btnsavereport,back;
@@ -401,6 +399,7 @@ SingleLeadECG extends AppCompatActivity implements ResponseCallback {
                     ecgReport.setEcgType("SL");
                     ecgReport.setFilepath(ecgConfig.getFileUrl());
                     Log.d("url",ecgConfig.getFileUrl());
+
                     mDisposable.add(db.updateEcgObserVable(ecgReport)
                             .subscribeOn(Schedulers.io())
                             .observeOn(AndroidSchedulers.mainThread())
@@ -429,7 +428,7 @@ SingleLeadECG extends AppCompatActivity implements ResponseCallback {
 
 
                     Log.e("makepdfpath", ecgConfig.getFileUrl());
-                    String filePath = ecgConfig.getFileUrl();
+//                    String filePath = ecgConfig.getFileUrl();
                     pdfuri = ecgConfig.getFileUrl();
                     binding.viewreportll.setVisibility(View.VISIBLE);
                     binding.btViewreport.setVisibility(View.VISIBLE);

@@ -12,7 +12,7 @@ android {
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
-        buildConfigField "String", "BASE_URL", '"http://sajilodeal.com/"'
+        buildConfigField "String", "BASE_URL", '"http://192.168.254.11:8000/"'
     }
     buildTypes {
         release {
@@ -80,8 +80,8 @@ dependencies {
     implementation 'com.facebook.stetho:stetho-okhttp3:1.5.1'
 
     /* Rx Android */
+    implementation 'io.reactivex.rxjava2:rxjava:2.2.2'
     implementation 'io.reactivex.rxjava2:rxandroid:2.1.0'
-    implementation 'io.reactivex.rxjava2:rxjava:2.2.1'
 
     /* Room */
     implementation 'androidx.room:room-runtime:2.2.0-alpha02'

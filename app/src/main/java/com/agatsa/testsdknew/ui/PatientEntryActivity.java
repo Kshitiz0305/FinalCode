@@ -2,18 +2,13 @@ package com.agatsa.testsdknew.ui;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Environment;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
 
 import com.agatsa.testsdknew.R;
 import com.agatsa.testsdknew.databinding.ActivityPatientEntryBinding;
-
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.nio.channels.FileChannel;
+import com.agatsa.testsdknew.ui.Personaldetails.PersonalDetailsActivity;
 
 
 public class PatientEntryActivity extends AppCompatActivity {
@@ -37,7 +32,7 @@ public class PatientEntryActivity extends AppCompatActivity {
         binding.btnNewPatient.setOnClickListener(view -> {
 
 
-            Intent i = new Intent(PatientEntryActivity.this,PersonalDetailsActivity.class);
+            Intent i = new Intent(PatientEntryActivity.this, PersonalDetailsActivity.class);
             startActivity(i);
 
 

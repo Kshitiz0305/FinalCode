@@ -123,9 +123,6 @@ PatientModel patientModel;
    }});
    binding.btnComplete.setOnClickListener(view -> TwelveLeadEcg.this.onBackPressed());
 
-
-
-
         initViews();
         initOnClickListener();
     }
