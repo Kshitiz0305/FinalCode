@@ -30,11 +30,7 @@
                 android:text="@string/patient_report"
                 android:textStyle="bold"
                 android:textSize="17dp" />
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="5dp"
-                android:visibility="gone"
-                android:background="@color/graylight" />
+
 
             <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"

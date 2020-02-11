@@ -7,10 +7,21 @@
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:showIn="@layout/activity_history">
 
+
+
+<!--    <ImageView-->
+<!--        android:layout_width="@dimen/_30sdp"-->
+<!--        android:layout_height="@dimen/_30sdp"-->
+<!--        android:id="@+id/syncallkist"-->
+<!--        android:visibility="gone"-->
+<!--        android:layout_marginTop="@dimen/_5sdp"-->
+<!--        android:background="@drawable/ic_sync_all" />-->
+
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerView"
         android:layout_width="match_parent"
-        android:layout_marginTop="60dp"
+        android:layout_marginTop="30dp"
         android:layout_height="wrap_content">
 
     </androidx.recyclerview.widget.RecyclerView>

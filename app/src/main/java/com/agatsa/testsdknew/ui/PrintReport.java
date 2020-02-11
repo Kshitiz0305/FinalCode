@@ -254,7 +254,15 @@ public class PrintReport extends AppCompatActivity {
 
         completeprintreport.setOnClickListener(v -> {
             DialogUtil.getOKCancelDialog(this, "", "Do you want to complete the  test of " + patientModel.getPtName(), "Yes","No", (dialogInterface, i) -> {
-              navigatenext();
+                pref.edit().putInt("VTF",0).apply();
+                pref.edit().putInt("UTF",0).apply();
+                pref.edit().putInt("DF",0).apply();
+                pref.edit().putInt("SLF",0).apply();
+                pref.edit().putInt("CSLF",0).apply();
+                pref.edit().putInt("LISLF",0).apply();
+                pref.edit().putInt("TLF",0).apply();
+                pref.edit().putInt("LSLF",0).apply();
+               navigatenext();
 
 
             });
@@ -1052,9 +1060,6 @@ public class PrintReport extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        Intent i1=new Intent(this, PatientEntryActivity.class);
-        i1.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        startActivity(i1);
-        finish();
+       PrintReport.super.onBackPressed();
     }
 }

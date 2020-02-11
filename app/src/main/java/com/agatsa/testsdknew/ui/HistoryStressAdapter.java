@@ -81,19 +81,9 @@ public class HistoryStressAdapter extends RecyclerView.Adapter<HistoryStressAdap
 
             textViewreadings.setText(readings);
 
-            buttonViewPDF.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    historyCallback.viewPdfStress(config);
-                }
-            });
+            buttonViewPDF.setOnClickListener(view -> historyCallback.viewPdfStress(config));
 
-            buttonSync.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    historyCallback.syncStressData(config);
-                }
-            });
+            buttonSync.setOnClickListener(view -> historyCallback.syncStressData(config));
         }
 
         void bindEcgConfig(final EcgConfig config) {

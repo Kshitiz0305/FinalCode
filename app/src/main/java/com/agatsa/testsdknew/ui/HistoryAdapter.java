@@ -18,7 +18,7 @@ import java.util.List;
 
 public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.HistoryViewHolder> {
 
-    private List<EcgConfig> data = new ArrayList<>();
+     List<EcgConfig> data=new ArrayList<>();
     private Context mContext;
     private HistoryCallback historyCallback;
 
@@ -41,6 +41,10 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.HistoryV
             holder.bindLongEcgConfig((LongEcgConfigInternal) data.get(position));
         } else {*/
             holder.bindEcgConfig(data.get(position));
+            holder.itemView.setOnClickListener(v -> {
+
+
+            });
         /*}*/
     }
 
@@ -50,19 +54,21 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.HistoryV
     }
 
 
+
+
     public class HistoryViewHolder extends RecyclerView.ViewHolder {
 
         TextView textViewHeartRate;
         TextView textViewFindings;
         TextView textViewreadings;
-        Button buttonSync, buttonViewPDF;
+        Button buttonSync,buttonViewPDF;
+
 
         HistoryViewHolder(View itemView) {
             super(itemView);
             textViewFindings = itemView.findViewById(R.id.textViewFindings);
             textViewHeartRate = itemView.findViewById(R.id.textViewHeartRate);
             textViewreadings = itemView.findViewById(R.id.readings);
-
             buttonSync = itemView.findViewById(R.id.buttonSync);
             buttonViewPDF = itemView.findViewById(R.id.buttonViewPDF);
         }
@@ -95,7 +101,25 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.HistoryV
             textViewreadings.setText(readings);
             buttonViewPDF.setOnClickListener(view -> historyCallback.viewPdf(config));
 
-            buttonSync.setOnClickListener(view -> historyCallback.syncEcgData(config));
+            buttonSync.setOnClickListener(view -> {
+                for(int i = 0; i < data.size();i++){
+                    historyCallback.syncEcgData(data.get(i));
+
+
+                }
+
+
+//                for(int i=0;i<data.size();i++){
+//                   if(data.get(i)!=null){
+//                       historyCallback.syncEcgData(config);
+//
+//                   }
+//
+//
+//
+//                }
+
+            });
         }
     }
 }

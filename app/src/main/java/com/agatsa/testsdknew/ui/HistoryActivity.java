@@ -1,5 +1,6 @@
 package com.agatsa.testsdknew.ui;
 
+import android.app.ProgressDialog;
 import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.Intent;
@@ -13,8 +14,11 @@ import androidx.core.content.FileProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.os.Handler;
 import android.util.Log;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.agatsa.sanketlife.callbacks.SyncEcgCallBack;
@@ -46,7 +50,10 @@ public class HistoryActivity extends AppCompatActivity implements HistoryCallbac
     RecyclerView recyclerView;
     InitiateEcg initiateEcg;
     PatientModel patientModel;
+    ImageView syncallimg;
     SharedPreferences pref;
+    EcgConfig ecgConfig;
+    TestHistoryAdapter testHistoryAdapter;
     String ptno="";
 
     @Override
@@ -57,24 +64,71 @@ public class HistoryActivity extends AppCompatActivity implements HistoryCallbac
         pref = this.getSharedPreferences("sunyahealth", Context.MODE_PRIVATE);
         ptno = pref.getString("PTNO", "");
         patientModel = getIntent().getParcelableExtra("patient");
-        setSupportActionBar(toolbar);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        syncallimg=findViewById(R.id.syncallimg);
+
+
         initiateEcg = new InitiateEcg();
 
         recyclerView = findViewById(R.id.recyclerView);
 
         if(getIntent().getStringExtra("type").equalsIgnoreCase(EcgTypes.NORMAL_ECG)) {
             ecgConfigInternals = initiateEcg.getListOfUnsyncedEcg(getApplicationContext(),"test");
+          Log.d("List", String.valueOf(initiateEcg.getListOfUnsyncedEcg(getApplicationContext(),"test")));
             recyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext(),LinearLayoutManager.VERTICAL,false));
-            recyclerView.setAdapter(new HistoryAdapter(getApplicationContext(), ecgConfigInternals,this));
+//            recyclerView.setAdapter(new HistoryAdapter(getApplicationContext(), ecgConfigInternals,this));
+            recyclerView.setAdapter(new TestHistoryAdapter(getApplicationContext(),ecgConfigInternals));
         } else {
             longEcgConfigInternals = initiateEcg.getListOfUnsyncedLongEcg(getApplicationContext(),"test");
             recyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext(),LinearLayoutManager.VERTICAL,false));
-            recyclerView.setAdapter(new HistoryStressAdapter(getApplicationContext(), longEcgConfigInternals,this));
+           recyclerView.setAdapter(new HistoryStressAdapter(getApplicationContext(), longEcgConfigInternals,this));
         }
+
+        syncallimg.setOnClickListener(v -> {
+            if(ecgConfigInternals.isEmpty()){
+                Toast.makeText(this, "No Data To sync", Toast.LENGTH_SHORT).show();
+
+
+            }else{
+                for(int i=0;i<ecgConfigInternals.size();i++){
+                    syncEcgData(ecgConfigInternals.get(i));
+
+
+
+
+                }
+
+
+            }
+
+
+        });
+
+
     }
 
-    @Override
+
+    void navigatenext()
+    {
+        final ProgressDialog progress = new ProgressDialog(this);
+        progress.setMessage("Syncing...");
+        progress.show();
+
+        Runnable progressRunnable = new Runnable() {
+            @Override
+            public void run() {
+                progress.cancel();
+                HistoryActivity.super.onBackPressed();
+
+            }
+        };
+        Handler pdCanceller = new Handler();
+        pdCanceller.postDelayed(progressRunnable, 10000);
+
+    }
+
+
+
+
     public void syncEcgData(EcgConfig ecgConfig) {
         InitiateEcg initiateEcg = new InitiateEcg();
         initiateEcg.syncEcgData(getApplicationContext(), ecgConfig,
@@ -83,10 +137,12 @@ public class HistoryActivity extends AppCompatActivity implements HistoryCallbac
                     public void onSuccess(Success success, EcgConfig ecgConfig) {
                         Toast.makeText(getApplicationContext(),success.getSuccessMsg(), Toast.LENGTH_SHORT).show();
                         refreshEcg();
-                        String filePath = ecgConfig.getFileUrl();
-                        Intent intent = new Intent(HistoryActivity.this, PdfViewActivity.class);
-                        intent.putExtra("fileUrl", filePath);
-                        startActivity(intent);
+
+
+//                        String filePath = ecgConfig.getFileUrl();
+//                        Intent intent = new Intent(HistoryActivity.this, PdfViewActivity.class);
+//                        intent.putExtra("fileUrl", filePath);
+//                        startActivity(intent);
                     }
 
                     @Override
@@ -94,9 +150,17 @@ public class HistoryActivity extends AppCompatActivity implements HistoryCallbac
                         Toast.makeText(getApplicationContext(), errors.getErrorMsg(), Toast.LENGTH_SHORT).show();
                     }
                 });
+
+
+
+
     }
 
-    @Override
+
+
+
+
+
     public void viewPdf(EcgConfig ecgConfig) {
         try {
             if (!ecgConfig.getFileUrl().equals("")) {
@@ -122,7 +186,7 @@ public class HistoryActivity extends AppCompatActivity implements HistoryCallbac
         }
     }
 
-    @Override
+
     public void viewPdfStress(LongEcgConfig longEcgConfig) {
         try {
             if (!longEcgConfig.getFileUrl().equals("")) {
@@ -148,7 +212,7 @@ public class HistoryActivity extends AppCompatActivity implements HistoryCallbac
         }
     }
 
-    @Override
+
     public void syncStressData(LongEcgConfig longEcgConfig) {
         InitiateEcg initiateEcg = new InitiateEcg();
         initiateEcg.syncLongEcgData(getApplicationContext(), longEcgConfig,
@@ -199,4 +263,6 @@ public class HistoryActivity extends AppCompatActivity implements HistoryCallbac
 
 
     }
+
+
 }

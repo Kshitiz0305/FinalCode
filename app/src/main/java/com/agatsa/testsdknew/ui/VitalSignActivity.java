@@ -7,8 +7,11 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Environment;
 import android.os.Handler;
 import android.util.Log;
 import android.widget.Button;
@@ -23,6 +26,10 @@ import com.agatsa.testsdknew.Models.VitalSign;
 import com.agatsa.testsdknew.R;
 import com.agatsa.testsdknew.customviews.DialogUtil;
 import com.agatsa.testsdknew.databinding.ActivityVitalTestBinding;
+import com.agatsa.testsdknew.utils.CSVWriter;
+
+import java.io.File;
+import java.io.FileWriter;
 
 import br.com.ilhasoft.support.validation.Validator;
 
@@ -98,6 +105,7 @@ public class VitalSignActivity extends AppCompatActivity  {
 
                 }else{
                     new SaveData().execute();
+                    exportDB();
 
 
                 }
@@ -158,6 +166,7 @@ public class VitalSignActivity extends AppCompatActivity  {
 //            vitalSign.setBpd(Double.parseDouble((getEdittextValue(txtBPD))));
 //            vitalSign.setBps(Double.parseDouble((getEdittextValue(txtBPS))));
             String last_vitalsign_row_id = db.SaveVitalSign(vitalSign);
+
             try {
                 Thread.sleep(1000);
             } catch (InterruptedException e) {
@@ -195,5 +204,44 @@ public class VitalSignActivity extends AppCompatActivity  {
 
     public String getEdittextValue(EditText editText) {
         return editText.getText().toString();
+    }
+
+    private void exportDB() {
+
+        LabDB dbhelper = new LabDB(getApplicationContext());
+        File exportDir = new File(Environment.getExternalStorageDirectory(), "/CSV/");
+        if (!exportDir.exists())
+        {
+            exportDir.mkdirs();
+        }
+
+        File file = new File(exportDir, "VitalSign.csv");
+        try
+        {
+            file.createNewFile();
+            CSVWriter csvWrite = new CSVWriter(new FileWriter(file));
+            SQLiteDatabase db = dbhelper.getReadableDatabase();
+            Cursor curCSV = db.rawQuery("SELECT * FROM vital_sign",null);
+            csvWrite.writeNext(curCSV.getColumnNames());
+            while(curCSV.moveToNext())
+            {
+                //Which column you want to exprort
+                String arrStr[] ={curCSV.getString(0),curCSV.getString(1),
+                        curCSV.getString(2),curCSV.getString(3),
+                        curCSV.getString(4),curCSV.getString(5),
+                        curCSV.getString(6),curCSV.getString(7),
+                        curCSV.getString(8),curCSV.getString(9),
+                        curCSV.getString(10),curCSV.getString(11)};
+                csvWrite.writeNext(arrStr);
+            }
+            csvWrite.close();
+            curCSV.close();
+        }
+        catch(Exception sqlEx)
+        {
+            Log.e("MainActivity", sqlEx.getMessage(), sqlEx);
+        }
+
+
     }
 }

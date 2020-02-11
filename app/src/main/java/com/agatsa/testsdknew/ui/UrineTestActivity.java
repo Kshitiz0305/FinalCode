@@ -13,6 +13,7 @@ import android.content.pm.PackageManager;
 import android.content.res.AssetManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Color;
 import android.graphics.Matrix;
 import android.media.ExifInterface;
 import android.net.Uri;
@@ -21,6 +22,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.os.Handler;
+import android.os.SystemClock;
 import android.provider.MediaStore;
 import android.util.Log;
 import android.view.View;
@@ -42,6 +44,8 @@ import com.agatsa.testsdknew.Models.PatientModel;
 import com.agatsa.testsdknew.Models.UrineReport;
 import com.agatsa.testsdknew.R;
 import com.agatsa.testsdknew.customviews.DialogUtil;
+import com.google.common.primitives.Doubles;
+import com.google.common.primitives.Ints;
 
 import org.opencv.android.OpenCVLoader;
 import org.opencv.android.Utils;
@@ -74,6 +78,8 @@ import java.util.List;
 import java.util.Map;
 
 
+import static com.google.common.primitives.Doubles.max;
+import static com.google.common.primitives.Doubles.min;
 import static org.opencv.imgproc.Imgproc.CHAIN_APPROX_SIMPLE;
 import static org.opencv.imgproc.Imgproc.RETR_EXTERNAL;
 
@@ -84,6 +90,7 @@ public  class UrineTestActivity extends AppCompatActivity {
     PatientModel patientModel=new PatientModel();
     private AssetManager assetManager;
     LabDB labDB;
+    boolean startDetect;
     UrineReport urineReport=new UrineReport();
     private ProgressDialog dialog;
     HashMap<Integer, String> test_names = new HashMap<Integer, String>(){
@@ -153,12 +160,12 @@ public  class UrineTestActivity extends AppCompatActivity {
             put(5, new HashMap<String, String>(){
                 {
                     put("0.png", "Negative");
-                    put("1.png", "Hemolysis Trace");
-                    put("2.png", "+25 RBC/μL");
+                    put("1.png", "Negative");
+                    put("2.png", "Trace +25 RBC/μL");
                     put("3.png", "++80 RBC/μL");
                     put("4.png", "+++200 RBC/μL");
                     put("5.png", "Non Hemolysis+10 RBC/μL");
-                    put("6.png", "++80 RBC/μL");
+                    put("6.png", "Non Hemolysis ++80 RBC/μL");
                 }
             });
             put(6, new HashMap<String, String>(){
@@ -270,6 +277,7 @@ public  class UrineTestActivity extends AppCompatActivity {
         dialog= new ProgressDialog(this);
         checkPermissions();
         detected = false;
+        startDetect = false;
         mActivity = UrineTestActivity.this;
         mImageView = findViewById(R.id.camera_photo);
         description = findViewById(R.id.description);
@@ -294,7 +302,8 @@ public  class UrineTestActivity extends AppCompatActivity {
             startCamera();
         }
 
-        process.setOnClickListener(v -> {mImageView.setImageResource(0); startCamera(); report = new String[11]; });
+        process.setOnClickListener(v -> {mImageView.setImageResource(0);
+        startCamera(); report = new String[11]; });
 
         report_list.setOnClickListener(v -> showDialog(UrineTestActivity.this, report));
 
@@ -312,7 +321,19 @@ public  class UrineTestActivity extends AppCompatActivity {
     }
 
     public void process(){
-
+//            final ProgressDialog progress = new ProgressDialog(this);
+//            progress.setMessage("Starting Urine Test...");
+//            progress.show();
+//
+//            Runnable progressRunnable = new Runnable() {
+//                @Override
+//                public void run() {
+//                    progress.cancel();
+//
+//                }
+//            };
+//            Handler pdCanceller = new Handler();
+//            pdCanceller.postDelayed(progressRunnable, 2000);
         if (detected){
             detected = false;
         }
@@ -356,10 +377,12 @@ public  class UrineTestActivity extends AppCompatActivity {
                         dialog.dismiss();
                         startCamera();}).show();
         }
+        startDetect = false;
 
     }
 
     public void startCamera(){
+        startDetect = false;
 
         Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         takePictureIntent.putExtra("android.intent.extras.FLASH_MODE_ON", 1);
@@ -556,18 +579,75 @@ public  class UrineTestActivity extends AppCompatActivity {
         return lab;
     }
 
+    public boolean determine_yellow(double[] RGB) {
+        double r = RGB[0] / 255;
+        double g = RGB[1] / 255;
+        double b = RGB[2] / 255;
+        double[] rgb = new double[] {r, g, b};
+        double _max = max(rgb);
+        double _min = min(rgb);
+        double diff = _max - _min;
+        if(diff == 0.0){
+            diff = 1.0;
+        }
+        double h = 0.0;
+        if (_max == r){
+            h = (g - b) / diff;
+        }
+        if (_max == g){
+            h = 2.0 + (b - r) / diff;
+        }
+        if (_max == b){
+            h = 4.0 + (r - g) / diff;
+        }
+        h *= 60;
+
+        if (h < 0){
+            h += 360;
+        }
+        System.out.println(h);
+        return  h > 45 && h < 68;
+    }
+
+    public boolean determine_green(double[] RGB) {
+        double r = RGB[0] / 255;
+        double g = RGB[1] / 255;
+        double b = RGB[2] / 255;
+        double[] rgb = new double[] {r, g, b};
+        double _max = max(rgb);
+        double _min = min(rgb);
+        double diff = _max - _min;
+        if(diff == 0.0){
+            diff = 1.0;
+        }
+        double h = 0.0;
+        if (_max == r){
+            h = (g - b) / diff;
+        }
+        if (_max == g){
+            h = 2.0 + (b - r) / diff;
+        }
+        if (_max == b){
+            h = 4.0 + (r - g) / diff;
+        }
+        h *= 60;
+
+        if (h < 0){
+            h += 360;
+        }
+        return h > 61 && h < 148;
+    }
+
+    private static int[] getRGBArr(int pixel) {
+        int alpha = (pixel >> 24) & 0xff;
+        int red = (pixel >> 16) & 0xff;
+        int green = (pixel >> 8) & 0xff;
+        int blue = (pixel) & 0xff;
+
+        return new int[]{red, green, blue};
+    }
+
     public String calc(Mat test_patch, String index_no, List<Scalar> deviation){
-//        for(Scalar dev: deviation){
-//            for (int i = 0; i < 2; i++){
-//                dev.val[i] = Math.floor(dev.val[i]/test_patch.width());
-//            }
-//        }
-//        Scalar avg_deviation = new Scalar(0, 0, 0);
-//        for (int i = 0; i < 3; i++){
-//            for (int j = 0; j < 3; j++){
-//                avg_deviation.val[i] = Math.floor((avg_deviation.val[i] + deviation.get(j).val[i])/3);
-//            }
-//        }
 //        Imgcodecs.imwrite("stepwiseout/patch.jpg", test_patch);
 //        double ref_vals[][][] = {
 //                { {}, {}, {}, {}, {} },
@@ -583,7 +663,24 @@ public  class UrineTestActivity extends AppCompatActivity {
 //                { {}, {}, {} },
 //        };
 
+//        if (index_no.equals("11")) {
+//            try {
+//                Mat temp_patch = new Mat();
+//                InputStream is = assetManager.open("pics/dus11/" + "11" + "/" + "1.png");
+//                Bitmap bitmap_patch = BitmapFactory.decodeStream(is);
+//                Utils.bitmapToMat(bitmap_patch, temp_patch);
+//                Imgproc.resize(temp_patch, temp_patch, test_patch.size());
+//                test_patch = temp_patch;
+//            } catch (Exception e) {
+//                System.out.println("hello error from " + e.getMessage().toString());
+//                Log.d("hello error from",e.getMessage());
+//            }
+//        }
+
+        boolean blood_high = false;
+        Mat temp_rgb_patch = new Mat();
         Imgproc.cvtColor(test_patch, test_patch, Imgproc.COLOR_RGBA2RGB);
+        test_patch.copyTo(temp_rgb_patch);
 //        Imgproc.cvtColor(test_patch, test_patch, Imgproc.COLOR_BGR2RGB);
 //        Imgproc.cvtColor(test_patch, test_patch, Imgproc.COLOR_RGB2Lab);
 //        for(int i = 0; i < test_patch.rows(); i++){
@@ -653,12 +750,21 @@ public  class UrineTestActivity extends AppCompatActivity {
             color_seq.put("b", 1);
         }
 
-
-
         // RGB to LAB
         for(int i = 0; i < test_patch.rows(); i++){
             for(int j = 0; j < test_patch.cols(); j++){
                 double[] temp1 = rgb2lab(test_patch.get(i, j));
+                if (index_no.equals("1")){
+                    temp1[0] += 22;
+                    temp1[0] = temp1[0] > 92? 96: temp1[0];
+                    temp1[2] = temp1[2] > 0 && temp1[2] < 5? 10: temp1[2];
+                } else if (index_no.equals("8") || index_no.equals("9") || index_no.equals("6")) {
+                    temp1[0] += 20;
+                }
+                else if (index_no.equals("7")){
+                    temp1[0] += 8;
+//                    temp1[2] = temp1[2] > 20 && temp1[2] < 35? 70: temp1[2];
+                }
                 test_patch.put(i, j, temp1);
                 System.out.println("hello");
             }
@@ -672,10 +778,12 @@ public  class UrineTestActivity extends AppCompatActivity {
 //            avg_color_test.val[0] -= 20;
 //        }
         HashMap<String, Double> score = new HashMap<>();
+
         try {
             Mat temp = new Mat();
 //            File[] files = new File( "pics/dus11/" + index_no).listFiles();
             String[] files = assetManager.list("pics/dus11/" + index_no);
+            Arrays.sort(files);
             for (String file: files){
                 InputStream is = assetManager.open("pics/dus11/" + index_no + "/" + file);
                 Bitmap  bitmap = BitmapFactory.decodeStream(is);
@@ -684,6 +792,46 @@ public  class UrineTestActivity extends AppCompatActivity {
 //                Scalar avg_color_ref12 = Core.mean(ref_image);
                 Imgproc.resize(ref_image, ref_image, test_patch.size());
                 Imgproc.cvtColor(ref_image, ref_image, Imgproc.COLOR_RGBA2RGB);
+
+                if (index_no.equals("6")){
+                    if (file.equals("5.png") || file.equals("6.png")){
+                        Map<Integer, Integer> colorMap = new HashMap<>();
+                        for (int i = 0; i < temp_rgb_patch.rows(); i++) {
+                            for (int j = 0; j < temp_rgb_patch.cols(); j++) {
+                                double[] temp_rgb = temp_rgb_patch.get(i, j);
+                                int A = 255;
+                                int R = (int) temp_rgb[0];
+                                int G = (int) temp_rgb[1];
+                                int B = (int) temp_rgb[2];
+                                int rgb = (A & 0xff) << 24 | (R & 0xff) << 16 | (G & 0xff) << 8 | (B & 0xff);
+//                                if (!isGray(getRGBArr(rgb))) {
+                                Integer counter = colorMap.get(rgb);
+                                if (counter == null) {
+                                    counter = 0;
+                                }
+                                colorMap.put(rgb, ++counter);
+//                                }
+                            }
+                        }
+                        List<Map.Entry<Integer, Integer>> list = new LinkedList<>(colorMap.entrySet());
+
+                        Collections.sort(list, (Map.Entry<Integer, Integer> obj1, Map.Entry<Integer, Integer> obj2)
+                                -> ((Comparable) obj1.getValue()).compareTo(obj2.getValue()));
+
+                        Map.Entry<Integer, Integer> yellow = list.get(list.size() - 1);
+                        Map.Entry<Integer, Integer> green = list.get(list.size() - 2);
+                        int[] y = getRGBArr(yellow.getKey());
+                        int[] g = getRGBArr(green.getKey());
+                        double[] YELLOW = Doubles.toArray(Ints.asList(y));
+                        double[] GREEN = Doubles.toArray(Ints.asList(g));
+                        boolean condition_yellow = determine_yellow(YELLOW);
+                        boolean condition_green = determine_green(GREEN);
+                        if (condition_yellow && condition_green){
+                            blood_high = true;
+                        }
+                    }
+                }
+
 
 //                Imgproc.cvtColor(ref_image, ref_image, Imgproc.COLOR_RGB2Lab);
                 Scalar avg_color_ref = Core.mean(ref_image);
@@ -741,27 +889,40 @@ public  class UrineTestActivity extends AppCompatActivity {
                     ref_color_seq.put("b", 1);
                 }
 
-                if (ref_color_seq.equals(color_seq)) {
+                if (ref_color_seq.equals(color_seq) && !index_no.equals("6")) {
                     System.out.println("nonono");
                     // RGB to LAB
                     for(int i = 0; i < ref_image.rows(); i++){
                         for(int j = 0; j < ref_image.cols(); j++){
                             double[] temp1 = rgb2lab(ref_image.get(i, j));
                             ref_image.put(i, j, temp1);
-                            System.out.println("hello");
                         }
                     }
                     Scalar avg_color_ref_lab = Core.mean(ref_image);
-                    Scalar avg_color_test_lab = new Scalar(abc.val[0] + 20, abc.val[1], abc.val[2]);
+                    Scalar avg_color_test_lab;
+
+                    avg_color_test_lab = abc;
+
+//                    if (index_no == "1"){
+//                        avg_color_test_lab = new Scalar(abc.val[0] + 18, abc.val[1], abc.val[2]);
+//                    } else {
+//                        avg_color_test_lab = new Scalar(abc.val[0], abc.val[1], abc.val[2]);
+//                    }
+
                     double mf = calculate_distance(avg_color_test_lab, avg_color_ref_lab);
                     score.put(file, mf);
                 }
+//                else if(ref_color_seq.equals(color_seq) && index_no.equals("6") && (file.equals("0.png") || file.equals("1.png"))) {
+//                    double mf = calculate_distance(avg_color_test, avg_color_ref);
+//                    score.put(file, mf);
+//                }
             }
 
         } catch (IOException e) {
             Toast.makeText(this, "Error Loading dus11 files", Toast.LENGTH_LONG).show();
         }
         Map<String, Double> lab_score = sortByValue(score);
+        System.out.println("shf");
 //        for (Map.Entry<String, Double> en : lab_score.entrySet()) {
 //            System.out.println(en.getKey() + " = " +
 //                    " = " + en.getValue());
@@ -778,8 +939,55 @@ public  class UrineTestActivity extends AppCompatActivity {
                     Mat ref_image = temp;
                     Imgproc.resize(ref_image, ref_image, test_patch.size());
                     Imgproc.cvtColor(ref_image, ref_image, Imgproc.COLOR_RGBA2RGB);
+
+                    if (index_no.equals("6")){
+                        if (file.equals("5.png") || file.equals("6.png")){
+                            Map<Integer, Integer> colorMap = new HashMap<>();
+                            for (int i = 0; i < temp_rgb_patch.rows(); i++) {
+                                for (int j = 0; j < temp_rgb_patch.cols(); j++) {
+                                    double[] temp_rgb = temp_rgb_patch.get(i, j);
+                                    int A = 255;
+                                    int R = (int) temp_rgb[0];
+                                    int G = (int) temp_rgb[1];
+                                    int B = (int) temp_rgb[2];
+                                    int rgb = (A & 0xff) << 24 | (R & 0xff) << 16 | (G & 0xff) << 8 | (B & 0xff);
+//                                if (!isGray(getRGBArr(rgb))) {
+                                    Integer counter = colorMap.get(rgb);
+                                    if (counter == null) {
+                                        counter = 0;
+                                    }
+                                    colorMap.put(rgb, ++counter);
+//                                }
+                                }
+                            }
+                            List<Map.Entry<Integer, Integer>> list = new LinkedList<>(colorMap.entrySet());
+
+                            Collections.sort(list, (Map.Entry<Integer, Integer> obj1, Map.Entry<Integer, Integer> obj2)
+                                    -> ((Comparable) obj1.getValue()).compareTo(obj2.getValue()));
+
+                            Map.Entry<Integer, Integer> yellow = list.get(list.size() - 1);
+                            Map.Entry<Integer, Integer> green = list.get(list.size() - 2);
+                            int[] y = getRGBArr(yellow.getKey());
+                            int[] g = getRGBArr(green.getKey());
+                            double[] YELLOW = Doubles.toArray(Ints.asList(y));
+                            double[] GREEN = Doubles.toArray(Ints.asList(g));
+                            boolean condition_yellow = determine_yellow(YELLOW);
+                            boolean condition_green = determine_green(GREEN);
+                            if (condition_yellow && condition_green){
+                                blood_high = true;
+                            }
+                        }
+                    }
+
+                    // RGB to LAB
+                    for(int i = 0; i < ref_image.rows(); i++){
+                        for(int j = 0; j < ref_image.cols(); j++){
+                            double[] temp1 = rgb2lab(ref_image.get(i, j));
+                            ref_image.put(i, j, temp1);
+                        }
+                    }
                     Scalar avg_color_ref = Core.mean(ref_image);
-                    double mf = calculate_distance(avg_color_test, avg_color_ref);
+                    double mf = calculate_distance(abc, avg_color_ref);
                     score.put(file, mf);
                 }
             } catch (IOException e) {
@@ -798,8 +1006,24 @@ public  class UrineTestActivity extends AppCompatActivity {
 //        } else {
 //            return myKey.toString();
 //        }
-        return  myKey.toString();
+
+        String key = myKey.toString();
+//        if (index_no.equals("7")){
+//            Toast.makeText(this, key, Toast.LENGTH_SHORT).show();
+//        }
+        if (index_no.equals("6")){
+            if (!key.equals("6.png")){
+                if (blood_high){
+                    key = "5.png";
+                } else if (key.equals("5.png") || key.equals("6.png")){
+                    key = "0.png";
+                }
+            }
+        }
+        return  key;
     }
+
+
 
     public List<Scalar> ref_process(Mat ref){
         int ref_h = ref.height(), ref_w = ref.width();
@@ -989,14 +1213,19 @@ public  class UrineTestActivity extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
+
+
         if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
+//            new Progressdailog().execute();
+
 //            final ProgressDialog progress = new ProgressDialog(this);
 //            progress.setMessage("Starting Urine Test...");
 //            progress.show();
-//
+
 //            Runnable progressRunnable = new Runnable() {
 //                @Override
 //                public void run() {
+//
 //                    progress.cancel();
 //
 //                }
@@ -1004,8 +1233,13 @@ public  class UrineTestActivity extends AppCompatActivity {
 //            Handler pdCanceller = new Handler();
 //            pdCanceller.postDelayed(progressRunnable, 2000);
             try {
+                startDetect = true;
+//                super.onResume();
+//               new AsyncClass(this).execute();
                 setPic();
                 process();
+//                progress.cancel();
+//                System.out.println("sjcfg");
             } catch (Exception e){
 //                new AlertDialog.Builder(UrineTestActivity.this)
 //                        .setTitle("Error: Image")
@@ -1021,6 +1255,63 @@ public  class UrineTestActivity extends AppCompatActivity {
             }
         }
     }
+//    ProgressDialog progress;
+
+//    Thread t1 = new Thread(){
+//        public void run(){
+////            progress = new ProgressDialog(UrineTestActivity.this);
+////            progress.setMessage("Starting Urine Test...");
+////            progress.show();
+//        }
+//    };
+    Thread t2 = new Thread(){
+
+        public void run(){
+
+            setPic();
+            process();
+//            progress.dismiss();
+        }
+    };
+//    @Override
+//    protected void onResume() {
+//        super.onResume();
+//        if (startDetect){
+//            new AsyncClass(this).execute();
+//            Runnable progressRunnable = new Runnable() {
+//                @Override
+//                public void run() {
+//                    progress = new ProgressDialog(UrineTestActivity.this);
+//                    progress.setMessage("Starting Urine Test...");
+//                    progress.show();
+//                    t2.start();
+//
+//
+//                }
+//            };
+//            Handler pdCanceller = new Handler();
+//            pdCanceller.postDelayed(progressRunnable, 2000);
+//            ProgressDialog progress;
+//
+//            t2.start();
+//            progress = new ProgressDialog(UrineTestActivity.this);
+//            progress.setMessage("Starting Urine Test...");
+//            progress.show();
+//            try {
+//                Thread.sleep(3000);
+//                progress.cancel();
+//            } catch (Exception e){
+//
+//            }
+//
+//
+////            setPic();
+////            process();
+////            progress.dismiss();
+//        }
+////        new AsyncClass(this).execute();
+//
+//    }
 
     private File createImageFile() throws IOException {
         // Create an image file name
@@ -1370,6 +1661,76 @@ public  class UrineTestActivity extends AppCompatActivity {
             }
         }
     }
+//    private class Progressdailog extends AsyncTask<String, Void, Integer> {
+//        @Override
+//        protected void onPreExecute() {
+//            super.onPreExecute();
+//            dialog.setMessage("Start Urine Test");
+//            dialog.show();
+//        }
+//
+//        @Override
+//        protected Integer doInBackground(String... strings) {
+////
+////            LabDB db = new LabDB(getApplicationContext());
+////            try {
+////                Thread.sleep(1000);
+////            } catch (InterruptedException e) {
+////                e.printStackTrace();
+////                return 3;
+////            }
+////            // Save Vital Sign
+////            urineReport.setPt_no(ptno);
+////            Log.d("pt_no",ptno);
+////            urineReport.setLeuko(leukocytes);
+////            urineReport.setNit(nitrite);
+////            urineReport.setUrb(urobilinogen);
+////            urineReport.setProtein(protein);
+////            urineReport.setPh(ph);
+////            urineReport.setBlood(blood);
+////            urineReport.setSg(specific_gravity);
+////            urineReport.setKet(ketones);
+////            urineReport.setBili(bilirubin);
+////            urineReport.setGlucose(glucose);
+////            urineReport.setAsc(ascorbic_acid);
+////
+////
+////            String last_vitalsign_row_id = db.SaveUrineReport(urineReport);
+////            try {
+////                Thread.sleep(1000);
+////            } catch (InterruptedException e) {
+////                e.printStackTrace();
+////                return 3;
+////            }
+////            urineReport.setRow_id(last_vitalsign_row_id);
+//            return 1;
+//        }
+//
+//        @Override
+//        protected void onPostExecute(Integer s) {
+//            super.onPostExecute(s);
+//            dialog.dismiss();
+////            if (s == 2) {
+////                if (dialog.isShowing())
+////                    dialog.dismiss();
+////                Toast.makeText(getApplicationContext(), "Already saved " , Toast.LENGTH_LONG).show();
+////
+////            } else if (s == 3) {
+////                if (dialog.isShowing())
+////                    dialog.dismiss();
+////                Toast.makeText(getApplicationContext(), "Exception catched ", Toast.LENGTH_LONG).show();
+////
+////            } else {
+////                if (dialog.isShowing())
+////                    dialog.dismiss();
+////                pref.edit().putInt("UTF",1).apply();
+////                Log.d("vitaltestflag",String.valueOf(pref.getInt("UTF",0)));
+////                UrineTestActivity.super.onBackPressed();
+////                Toast.makeText(getApplicationContext(), "Urine Test  Saved " , Toast.LENGTH_LONG).show();
+////
+////            }
+//        }
+//    }
 
     @Override
     public void onBackPressed() {
@@ -1380,5 +1741,35 @@ public  class UrineTestActivity extends AppCompatActivity {
             UrineTestActivity.super.onBackPressed();
 
         });
+    }
+
+
+    public class AsyncClass extends AsyncTask<Void, String, Void> {
+        private Context context;
+        ProgressDialog dialog;
+
+        public AsyncClass(Context cxt) {
+            context = cxt;
+            dialog = new ProgressDialog(context);
+        }
+
+        @Override
+        protected void onPreExecute() {
+            dialog.setTitle("Processing Image");
+            dialog.show();
+        }
+
+        @Override
+        protected Void doInBackground(Void... unused) {
+
+//            SystemClock.sleep(2000);
+
+            return (null);
+        }
+
+        @Override
+        protected void onPostExecute(Void unused) {
+            dialog.dismiss();
+        }
     }
 }
