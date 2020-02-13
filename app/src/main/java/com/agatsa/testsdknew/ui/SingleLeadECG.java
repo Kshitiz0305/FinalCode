@@ -6,10 +6,14 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
+import android.database.Cursor;
+import android.media.Image;
 import android.net.ConnectivityManager;
 import android.net.Uri;
 import android.net.wifi.WifiManager;
 import android.os.Bundle;
+import android.os.Environment;
+import android.provider.MediaStore;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
@@ -43,11 +47,20 @@ import com.agatsa.testsdknew.databinding.ActivitySingleLeadBinding;
 import com.ontbee.legacyforks.cn.pedant.SweetAlert.SweetAlertDialog;
 
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.OutputStream;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
+import java.nio.channels.FileChannel;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
+import java.util.SortedSet;
+import java.util.TreeSet;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
@@ -71,6 +84,8 @@ public  class SingleLeadECG extends AppCompatActivity implements ResponseCallbac
     ActivitySingleLeadBinding binding;
     static int state=0;
     public static String pdfuri="";
+    String dstPath = Environment.getExternalStorageDirectory() + File.separator + "sanket" + File.separator;
+
 
     InitiateEcg initiateEcg;
     private static final String[] REQUIRED_SDK_PERMISSIONS = new String[]{
@@ -93,6 +108,8 @@ public  class SingleLeadECG extends AppCompatActivity implements ResponseCallbac
         pref = this.getSharedPreferences("sunyahealth", Context.MODE_PRIVATE);
         ptno = pref.getString("PTNO","");
         patientModel = getIntent().getParcelableExtra("patient");
+
+
 
 
 
@@ -153,6 +170,7 @@ public  class SingleLeadECG extends AppCompatActivity implements ResponseCallbac
 
 
 
+
     private void initViews() {
         btnsavereport = findViewById(R.id.btnSavereport);
         LeadOne = findViewById(R.id.txtLeadOne);
@@ -165,6 +183,29 @@ public  class SingleLeadECG extends AppCompatActivity implements ResponseCallbac
 
 
     }
+
+//
+
+//    private void getImagesFromDCIM() {
+//        pDialog.setMessage("Fetching images from DCIM folder...");
+//        pDialog.show();
+//
+//        File dcimPath = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DCIM) + "/sanket");
+//        if (dcimPath.exists()) {
+//            Log.i("DCIM PATH", dcimPath.toString());
+//            pDialog.hide();
+//            Log.i("DCIM PATH", dcimPath.listFiles().toString());
+//            File[] files = dcimPath.listFiles();
+//
+//            for (int i = 0; i < files.length; i++) {
+//                Image image = new Image(files[i].getName(), files[i].toString());
+//            }
+//            mAdapter.notifyDataSetChanged();
+//        } else {
+//            pDialog.hide();
+//        }
+
+
 
     private void setMobileDataEnabled(Context context, boolean enabled) {
 
@@ -302,7 +343,6 @@ public  class SingleLeadECG extends AppCompatActivity implements ResponseCallbac
 
         });
 
-
 //        btncreatepdf.setOnClickListener(v -> {
 //
 //
@@ -323,6 +363,7 @@ public  class SingleLeadECG extends AppCompatActivity implements ResponseCallbac
         pDialog.setTitleText("Registering");
         pDialog.setCancelable(false);
     }
+
 
 
 //    public void getReadingForECG(int count) {
@@ -374,6 +415,8 @@ public  class SingleLeadECG extends AppCompatActivity implements ResponseCallbac
             }
         });
     }
+
+
 
 
 

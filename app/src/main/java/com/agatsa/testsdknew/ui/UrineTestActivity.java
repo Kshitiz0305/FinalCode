@@ -47,6 +47,7 @@ import com.agatsa.testsdknew.customviews.DialogUtil;
 import com.google.common.primitives.Doubles;
 import com.google.common.primitives.Ints;
 
+import org.joda.time.DateTime;
 import org.opencv.android.OpenCVLoader;
 import org.opencv.android.Utils;
 import org.opencv.core.Core;
@@ -62,11 +63,13 @@ import org.opencv.core.Size;
 import org.opencv.imgproc.Imgproc;
 
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Calendar;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
@@ -76,6 +79,7 @@ import java.util.LinkedHashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.Random;
 
 
 import static com.google.common.primitives.Doubles.max;
@@ -226,6 +230,7 @@ public  class UrineTestActivity extends AppCompatActivity {
     private Activity mActivity;
     private boolean detected;
     Bitmap currentpict;
+    private String patientAveragePatchTest;
     static final int REQUEST_TAKE_PHOTO = 1;
     String currentPhotoPath;
     private static final String[] REQUIRED_SDK_PERMISSIONS = new String[]{
@@ -276,6 +281,7 @@ public  class UrineTestActivity extends AppCompatActivity {
         patientModel = getIntent().getParcelableExtra("patient");
         dialog= new ProgressDialog(this);
         checkPermissions();
+        patientAveragePatchTest = "";
         detected = false;
         startDetect = false;
         mActivity = UrineTestActivity.this;
@@ -303,12 +309,29 @@ public  class UrineTestActivity extends AppCompatActivity {
         }
 
         process.setOnClickListener(v -> {mImageView.setImageResource(0);
-        startCamera(); report = new String[11]; });
+            startCamera(); report = null;
+//        new String[11];
+        });
 
-        report_list.setOnClickListener(v -> showDialog(UrineTestActivity.this, report));
+        report_list.setOnClickListener(v -> {
+            if (report==null) {
+                Toast.makeText(this, "Please click picture.", Toast.LENGTH_LONG).show();
+            } else {
+                showDialog(UrineTestActivity.this, report);
+            }
+        });
 
         saveurinetest.setOnClickListener(view -> {
-            new SaveData().execute();
+            SaveImage(final_strip, new SimpleDateFormat("yyyyMMdd_HHmmss").format(Calendar.getInstance().getTime()));
+            if(reportVal==null){
+                Toast.makeText(mActivity, "Please Click Picture To View Report", Toast.LENGTH_SHORT).show();
+
+            }else{
+                new SaveData().execute();
+
+            }
+
+
 
 
         });
@@ -316,10 +339,52 @@ public  class UrineTestActivity extends AppCompatActivity {
 
     }
 
-    public boolean save_report(String[] data){
-        return false;
+    private void SaveImage(Bitmap finalBitmap) {
+
+        String root = Environment.getExternalStorageDirectory().toString();
+        File myDir = new File(root + "/sunyahealth/urinestrip/");
+        if (!myDir.exists()) {
+            myDir.mkdirs();
+        }
+        String fname = patientModel.getPtName() +  ".jpg";
+        File file = new File (myDir, fname);
+        if (file.exists ())
+            file.delete ();
+        try {
+            FileOutputStream out = new FileOutputStream(file);
+            finalBitmap.compress(Bitmap.CompressFormat.JPEG, 90, out);
+            out.flush();
+            out.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
+    private void SaveImage(Bitmap finalBitmap, String dateTime) {
+
+        String root = Environment.getExternalStorageDirectory().toString();
+        File myDir = new File(root + "/sunyahealth/urinestrip/");
+        if (!myDir.exists()) {
+            myDir.mkdirs();
+        }
+        String fname = patientModel.getPtName() + dateTime +  ".jpg";
+        File file = new File (myDir, fname);
+        stripPhotoPathUri = file.getAbsolutePath();
+        File filetemp = new File (myDir, patientModel.getPtName() + ".jpg");
+        if (filetemp.exists())
+            filetemp.delete();
+
+        try {
+            FileOutputStream out = new FileOutputStream(file);
+            finalBitmap.compress(Bitmap.CompressFormat.JPEG, 90, out);
+            out.flush();
+            out.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    private String stripPhotoPathUri;
     public void process(){
 //            final ProgressDialog progress = new ProgressDialog(this);
 //            progress.setMessage("Starting Urine Test...");
@@ -512,11 +577,16 @@ public  class UrineTestActivity extends AppCompatActivity {
             Imgproc.rectangle(strip, new Point(x_point-radius, y_point-radius), new Point(x_point+radius, y_point+radius), new Scalar(255, 0, 255), 3);
         }
         Bitmap bitmap12 = Bitmap.createBitmap(strip.cols(), strip.rows(), Bitmap.Config.ARGB_8888);
+        final_strip = Bitmap.createBitmap(strip.cols(), strip.rows(), Bitmap.Config.ARGB_8888);
         Utils.matToBitmap(strip, bitmap12);
+        Utils.matToBitmap(strip, final_strip);
 //        MediaStore.Images.Media.insertImage(getContentResolver(), bitmap12, "roi1", "strip image");
         mImageView.setImageBitmap(bitmap12);
+        SaveImage(bitmap12);
         return reported;
     }
+
+    Bitmap final_strip;
 
     public double calculate_distance(Scalar tst, Scalar ref){
         double value = 0;
@@ -1020,6 +1090,8 @@ public  class UrineTestActivity extends AppCompatActivity {
                 }
             }
         }
+
+        patientAveragePatchTest += avg_color_test.toString();
         return  key;
     }
 
@@ -1257,7 +1329,7 @@ public  class UrineTestActivity extends AppCompatActivity {
     }
 //    ProgressDialog progress;
 
-//    Thread t1 = new Thread(){
+    //    Thread t1 = new Thread(){
 //        public void run(){
 ////            progress = new ProgressDialog(UrineTestActivity.this);
 ////            progress.setMessage("Starting Urine Test...");
@@ -1624,6 +1696,8 @@ public  class UrineTestActivity extends AppCompatActivity {
             urineReport.setBili(bilirubin);
             urineReport.setGlucose(glucose);
             urineReport.setAsc(ascorbic_acid);
+            urineReport.setAvgcolortest(patientAveragePatchTest);
+            urineReport.setstripPhotoPathUri(stripPhotoPathUri);
 
 
             String last_vitalsign_row_id = db.SaveUrineReport(urineReport);
@@ -1744,32 +1818,5 @@ public  class UrineTestActivity extends AppCompatActivity {
     }
 
 
-    public class AsyncClass extends AsyncTask<Void, String, Void> {
-        private Context context;
-        ProgressDialog dialog;
 
-        public AsyncClass(Context cxt) {
-            context = cxt;
-            dialog = new ProgressDialog(context);
-        }
-
-        @Override
-        protected void onPreExecute() {
-            dialog.setTitle("Processing Image");
-            dialog.show();
-        }
-
-        @Override
-        protected Void doInBackground(Void... unused) {
-
-//            SystemClock.sleep(2000);
-
-            return (null);
-        }
-
-        @Override
-        protected void onPostExecute(Void unused) {
-            dialog.dismiss();
-        }
-    }
 }

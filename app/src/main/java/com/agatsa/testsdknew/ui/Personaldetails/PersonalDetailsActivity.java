@@ -48,12 +48,15 @@ import com.hornet.dateconverter.Model;
 
 import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.Reader;
 import java.io.StringWriter;
 import java.io.Writer;
+import java.nio.channels.FileChannel;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
@@ -544,7 +547,11 @@ ArrayList<String>  placesnames = new ArrayList<>();
                             Toast.makeText(getApplicationContext(), "Saving Data", Toast.LENGTH_LONG).show();
                             newPatient.setId(encrypteddata);
                             new savedata().execute();
-                                exportDB();
+//                            if(isStoragePermissionGranted()){
+////                                exportDB();
+////                                exportDatabse("Test1.db");
+//                            }
+
 //                            personalDetailsPresenter.postpersonaldata(txtPtName.getText().toString(),"","",txtEmail.getText().toString(),txtPtContactNo.getText().toString(),binding.spDistrict.getSelectedItem().toString()+binding.spPlace.getSelectedItem().toString()+"+",city.getText().toString(),"Nepali",binding.etDob.getText().toString(),sex,true);
 
 
@@ -598,6 +605,8 @@ ArrayList<String>  placesnames = new ArrayList<>();
 
 
 }
+
+
 
 
 
@@ -968,6 +977,8 @@ ArrayList<String>  placesnames = new ArrayList<>();
 
     }
 
+
+
     private void exportDB() {
 
         LabDB dbhelper = new LabDB(getApplicationContext());
@@ -1010,6 +1021,36 @@ ArrayList<String>  placesnames = new ArrayList<>();
         }
 
 
+    }
+
+    public  boolean isStoragePermissionGranted() {
+        if (Build.VERSION.SDK_INT >= 23) {
+            if (checkSelfPermission(android.Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                    == PackageManager.PERMISSION_GRANTED) {
+                Log.v(TAG,"Permission is granted");
+                return true;
+            } else {
+
+                Log.v(TAG,"Permission is revoked");
+                ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, 1);
+                return false;
+            }
+        }
+        else { //permission is automatically granted on sdk<23 upon installation
+            Log.v(TAG,"Permission is granted");
+            return true;
+        }
+
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        if(grantResults[0]== PackageManager.PERMISSION_GRANTED){
+            Log.v(TAG,"Permission: "+permissions[0]+ "was "+grantResults[0]);
+            //resume tasks needing this permission
+           exportDB();
+        }
     }
 
 

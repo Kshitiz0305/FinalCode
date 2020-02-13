@@ -9,6 +9,9 @@
         <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
             android:layout_marginLeft="10dp"
+            app:cardCornerRadius="@dimen/_10kdp"
+            app:cardElevation="@dimen/_2kdp"
+            app:cardMaxElevation="@dimen/_4kdp"
             android:layout_marginTop="8dp"
             android:layout_marginRight="10dp"
             android:layout_height="match_parent">
@@ -28,6 +31,11 @@
                         android:text="Blood Pressure"
                         android:textColor="@color/colorPrimaryDark"
                         android:textSize="17sp" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/graylight" />
 
 
 
@@ -80,7 +88,7 @@
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/_135sdp"
+                    android:layout_height="@dimen/_120sdp"
                     android:orientation="vertical">
 
                     <TextView
@@ -125,7 +133,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
-                         android:background="@color/colorPrimaryDark"
+                         android:background="@drawable/rect_orange"
                         android:text="SAVE"
                         android:layout_marginRight="@dimen/_10sdp"
                         android:layout_marginLeft="@dimen/_10sdp"

@@ -1,12 +1,18 @@
 package com.agatsa.testsdknew.ui;
 
+import android.Manifest;
 import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Bundle;
+import android.os.Environment;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
@@ -19,6 +25,7 @@ import android.widget.Toast;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
 import androidx.databinding.DataBindingUtil;
 
 import com.agatsa.testsdknew.Models.GlucoseModel;
@@ -26,6 +33,10 @@ import com.agatsa.testsdknew.Models.PatientModel;
 import com.agatsa.testsdknew.R;
 import com.agatsa.testsdknew.customviews.DialogUtil;
 import com.agatsa.testsdknew.databinding.ActivityDiabetesBinding;
+import com.agatsa.testsdknew.utils.CSVWriter;
+
+import java.io.File;
+import java.io.FileWriter;
 
 import br.com.ilhasoft.support.validation.Validator;
 
@@ -34,6 +45,7 @@ public class DiabetesActivity extends AppCompatActivity {
     String ptno = "";
     PatientModel newPatient = new PatientModel();
     LabDB labDB;
+    String TAG = "Diabetes";
     String ptname;
     ActivityDiabetesBinding binding;
     Validator validator;
@@ -53,6 +65,7 @@ public class DiabetesActivity extends AppCompatActivity {
         labDB = new LabDB(getApplicationContext());
         dialog = new ProgressDialog(this);
         dialog.setCanceledOnTouchOutside(false);
+        labDB=new LabDB(this);
         dialog.setCancelable(false);
 
 
@@ -65,6 +78,7 @@ public class DiabetesActivity extends AppCompatActivity {
         binding.btnsaveglucose.setOnClickListener(v -> {
             if(validator.validate()){
                new SaveData().execute();
+
 
 
             }
@@ -172,4 +186,44 @@ public class DiabetesActivity extends AppCompatActivity {
     public String getEdittextValue(EditText editText) {
         return editText.getText().toString();
     }
+
+
+
+//    private void exportDiabetesDB() {
+//
+//        LabDB labDB = new LabDB(this);
+//        File exportDir = new File(Environment.getExternalStorageDirectory(), "/CSV/");
+//        if (!exportDir.exists())
+//        {
+//            exportDir.mkdirs();
+//        }
+//
+//        File file = new File(exportDir, "Diabetes.csv");
+//        try
+//        {
+//            file.createNewFile();
+//            CSVWriter csvWrite = new CSVWriter(new FileWriter(file));
+//            SQLiteDatabase db = labDB.getReadableDatabase();
+//            Cursor curCSV = db.rawQuery("SELECT * FROM diabetes_test",null);
+//            csvWrite.writeNext(curCSV.getColumnNames());
+//            while(curCSV.moveToNext())
+//            {
+//                //Which column you want to exprort
+//                String arrStr[] ={curCSV.getString(0),curCSV.getString(1),
+//                        curCSV.getString(2),curCSV.getString(3),
+//                        curCSV.getString(4),curCSV.getString(5),
+//                        curCSV.getString(6),curCSV.getString(7)};
+//                csvWrite.writeNext(arrStr);
+//            }
+//            csvWrite.close();
+//            curCSV.close();
+//        }
+//        catch(Exception sqlEx)
+//        {
+//            Log.e("MainActivity", sqlEx.getMessage(), sqlEx);
+//        }
+//
+//
+//    }
+
 }

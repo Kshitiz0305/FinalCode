@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.os.Environment;
 import android.view.View;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -13,6 +14,11 @@ import com.agatsa.testsdknew.Models.PatientModel;
 import com.agatsa.testsdknew.R;
 import com.agatsa.testsdknew.customviews.DialogUtil;
 import com.agatsa.testsdknew.databinding.ActivityPerformTestListBinding;
+
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.nio.channels.FileChannel;
 
 public class PerformTestListActivity extends AppCompatActivity {
 
@@ -82,6 +88,7 @@ public class PerformTestListActivity extends AppCompatActivity {
         });
         binding.completetest.setOnClickListener(v -> {
             DialogUtil.getOKCancelDialog(this, "", "Do you want to complete the  test of " + patientname, "Yes","No", (dialogInterface, i) -> {
+                exportDatabse("Test1.db");
 
                 pref.edit().putInt("VTF",0).apply();
                 pref.edit().putInt("UTF",0).apply();
@@ -150,6 +157,32 @@ public class PerformTestListActivity extends AppCompatActivity {
 
 
     }
+
+    public void exportDatabse(String databaseName) {
+        try {
+            File sd = Environment.getExternalStorageDirectory();
+            File data = Environment.getDataDirectory();
+
+            if (sd.canWrite()) {
+                String currentDBPath = "//data//"+getPackageName()+"//databases//"+databaseName+"";
+                String backupDBPath = "sunyahealth.db";
+                File currentDB = new File(data, currentDBPath);
+                File backupDB = new File(sd, backupDBPath);
+
+                if (currentDB.exists()) {
+                    FileChannel src = new FileInputStream(currentDB).getChannel();
+                    FileChannel dst = new FileOutputStream(backupDB).getChannel();
+                    dst.transferFrom(src, 0, src.size());
+                    src.close();
+                    dst.close();
+                }
+            }
+        } catch (Exception e) {
+
+        }
+    }
+
+
 
 
 

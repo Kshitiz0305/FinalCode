@@ -18,6 +18,8 @@ public class UrineReport {
     String bili;
     String glucose;
     String asc;
+    String avgcolortest;
+    String stripPhotoPathUri;
 
     public UrineReport() {
         this.pt_no ="";
@@ -33,6 +35,9 @@ public class UrineReport {
         this.bili = "";
         this.glucose = "";
         this.asc ="";
+        this.avgcolortest ="";
+        this.stripPhotoPathUri = "";
+
     }
 
     public String getPt_no() {
@@ -137,5 +142,21 @@ public class UrineReport {
 
     public void setAsc(String asc) {
         this.asc = asc;
+    }
+
+    public String getAvgcolortest() {
+        return avgcolortest;
+    }
+
+    public void setAvgcolortest(String avgcolortest) {
+        this.avgcolortest = avgcolortest;
+    }
+
+    public String getstripPhotoPathUri() {
+        return stripPhotoPathUri;
+    }
+
+    public void setstripPhotoPathUri(String strippath) {
+        this.stripPhotoPathUri = strippath;
     }
 }

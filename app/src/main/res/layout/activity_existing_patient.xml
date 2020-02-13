@@ -195,18 +195,17 @@
                         />
 
 
-
                     <Button
-                        android:layout_width="@dimen/_180sdp"
-                        android:layout_height="@dimen/_40sdp"
-                        android:orientation="horizontal"
                         android:id="@+id/btnproceed"
+                        android:layout_width="@dimen/_225sdp"
+                        android:layout_height="@dimen/_40sdp"
+                        android:layout_gravity="center"
                         android:layout_marginTop="@dimen/_25sdp"
-                        android:text="Proceed"
-                        android:textColor="@color/white"
-                        android:background="@drawable/rect_orange"
                         android:layout_marginBottom="@dimen/_5sdp"
-                        android:layout_gravity="center"/>
+                        android:background="@drawable/rect_orange"
+                        android:orientation="horizontal"
+                        android:text="Proceed"
+                        android:textColor="@color/white" />
 
                 </LinearLayout>
                 </androidx.cardview.widget.CardView>

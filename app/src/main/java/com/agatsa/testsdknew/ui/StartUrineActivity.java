@@ -57,13 +57,7 @@ public class StartUrineActivity extends AppCompatActivity {
         });
 
 
-        binding.twoparam.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Toast.makeText(StartUrineActivity.this, "Coming Soon", Toast.LENGTH_SHORT).show();
-
-            }
-        });
+        binding.twoparam.setOnClickListener(view -> Toast.makeText(StartUrineActivity.this, "Coming Soon", Toast.LENGTH_SHORT).show());
 
         binding.uricAcid.setOnClickListener(view -> {
             Toast.makeText(this, "Coming Soon", Toast.LENGTH_SHORT).show();

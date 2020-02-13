@@ -4,8 +4,11 @@ import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Environment;
 import android.util.Log;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -19,6 +22,10 @@ import com.agatsa.testsdknew.Models.PatientModel;
 import com.agatsa.testsdknew.R;
 import com.agatsa.testsdknew.customviews.DialogUtil;
 import com.agatsa.testsdknew.databinding.ActivityBloodPressureBinding;
+import com.agatsa.testsdknew.utils.CSVWriter;
+
+import java.io.File;
+import java.io.FileWriter;
 
 import br.com.ilhasoft.support.validation.Validator;
 
@@ -64,6 +71,7 @@ public class BloodPressureActivity extends AppCompatActivity {
 
                 } else {
                     new SaveData().execute();
+//                    exportDB();
 
 
                 }
@@ -84,7 +92,7 @@ public class BloodPressureActivity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
 
-        DialogUtil.getOKCancelDialog(this, "", "Do you want to discard the  vital test of " + newPatient.getPtName(), "Yes","No", (dialogInterface, i) -> {
+        DialogUtil.getOKCancelDialog(this, "", "Do you want to discard the  blood pressure test of " + newPatient.getPtName(), "Yes","No", (dialogInterface, i) -> {
             BloodPressureActivity.super.onBackPressed();
 
         });
@@ -154,6 +162,44 @@ public class BloodPressureActivity extends AppCompatActivity {
 
         }
     }
+
+    private void exportbloodpressureDB() {
+
+        LabDB dbhelper = new LabDB(getApplicationContext());
+        File exportDir = new File(Environment.getExternalStorageDirectory(), "/CSV/");
+        if (!exportDir.exists())
+        {
+            exportDir.mkdirs();
+        }
+
+        File file = new File(exportDir, "Bloodpressure.csv");
+        try
+        {
+            file.createNewFile();
+            CSVWriter csvWrite = new CSVWriter(new FileWriter(file));
+            SQLiteDatabase db = dbhelper.getReadableDatabase();
+            Cursor curCSV = db.rawQuery("SELECT * FROM blood_pressure_test",null);
+            csvWrite.writeNext(curCSV.getColumnNames());
+            while(curCSV.moveToNext())
+            {
+                //Which column you want to exprort
+                String arrStr[] ={curCSV.getString(0),curCSV.getString(1),
+                        curCSV.getString(2),curCSV.getString(3),
+                        curCSV.getString(4),curCSV.getString(5),
+                        curCSV.getString(6)};
+                csvWrite.writeNext(arrStr);
+            }
+            csvWrite.close();
+            curCSV.close();
+        }
+        catch(Exception sqlEx)
+        {
+            Log.e("MainActivity", sqlEx.getMessage(), sqlEx);
+        }
+
+
+    }
+
 
 
 }

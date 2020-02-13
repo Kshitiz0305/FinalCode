@@ -1,12 +1,21 @@
 package com.agatsa.testsdknew.ui;
 
+import android.Manifest;
+import android.annotation.SuppressLint;
+import android.app.ProgressDialog;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
 import android.bluetooth.BluetoothSocket;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
+import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Bundle;
+import android.os.Environment;
 import android.os.Handler;
 import android.util.Log;
 import android.view.View;
@@ -17,6 +26,7 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
+import androidx.core.app.ActivityCompat;
 
 import com.agatsa.testsdknew.Models.BloodPressureModel;
 import com.agatsa.testsdknew.Models.BloodReport;
@@ -28,18 +38,24 @@ import com.agatsa.testsdknew.Models.UrineReport;
 import com.agatsa.testsdknew.Models.VitalSign;
 import com.agatsa.testsdknew.R;
 import com.agatsa.testsdknew.customviews.DialogUtil;
+import com.agatsa.testsdknew.utils.CSVWriter;
 
+import java.io.File;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.lang.reflect.Method;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.Set;
 import java.util.UUID;
 
 public class PrintReport extends AppCompatActivity {
+    private static final String TAG ="" ;
     String pt_no = "";
     PatientModel patientModel;
     VitalSign vitalSign;
@@ -54,7 +70,8 @@ public class PrintReport extends AppCompatActivity {
     TextView txtBlood,txtSG,txtKet,txtBili,txtUrineGlucose,txtASC;
     TextView txtBMI;
     TextView txtBGNormalRange,txtTCNormalRange,txtUANormalRange;
-    LabDB db;
+    ProgressDialog dialog;
+    LabDB labDB;
 
     GlucoseModel glucoseModel;
     BloodPressureModel bloodPressureModel;
@@ -84,7 +101,9 @@ public class PrintReport extends AppCompatActivity {
     Thread workerThread;
     byte[] readBuffer;
     int readBufferPosition;
+    String currentDateandTime="";
     volatile boolean stopWorker;
+
     String value = "",  duid = "", device_id = "";
     SharedPreferences pref;
     String City;
@@ -96,7 +115,9 @@ public class PrintReport extends AppCompatActivity {
         setContentView(R.layout.activity_print_report);
         pref = this.getSharedPreferences("sunyahealth", Context.MODE_PRIVATE);
         pt_no =pref.getString("PTNO","");
+        dialog=new ProgressDialog(this);
         patientModel = getIntent().getParcelableExtra("patient");
+
 
 
 
@@ -105,6 +126,9 @@ public class PrintReport extends AppCompatActivity {
             Toast.makeText(getApplicationContext(), "No Patient Selected", Toast.LENGTH_SHORT).show();
             return;
         }
+
+
+
         // Patient Details
 //        txtPtNo = findViewById(R.id.txtPatientNo);
         txtPtName = findViewById(R.id.txtPatientName);
@@ -247,7 +271,7 @@ public class PrintReport extends AppCompatActivity {
 
 
         // Retrive From Database
-         db = new LabDB(getApplicationContext());
+         labDB = new LabDB(getApplicationContext());
         initViews();
 
         completeprintreport=findViewById(R.id.completeprintreport);
@@ -452,6 +476,8 @@ public class PrintReport extends AppCompatActivity {
                 value = "";
                 isPrintClicked = true;
                 PrintThisReport();
+//
+
 
             }
         });
@@ -589,7 +615,7 @@ public class PrintReport extends AppCompatActivity {
 //                   "SLF","CSLF","LISLF","TLF","LSLF"
                    case "SLF":
 //                        this is to be done in asynctask and view loading is to be done in post execution
-                       ecgReport=    db.getSingleLeadEcgSign(pt_no,"SL");
+                       ecgReport=    labDB.getSingleLeadEcgSign(pt_no,"SL");
                        if(ecgReport!=null) {
                            singleleadecgcv.setVisibility(View.VISIBLE);
                            pr.setText(String.valueOf(ecgReport.getPr()));
@@ -606,7 +632,7 @@ public class PrintReport extends AppCompatActivity {
 
                    case "CSLF":
 //                        this is to be done in asynctask and view loading is to be done in post execution
-                       ecgReport=    db.getSingleLeadEcgSign(pt_no,"CSL");
+                       ecgReport=    labDB.getSingleLeadEcgSign(pt_no,"CSL");
                        if(ecgReport!=null) {
 
                            chestleadecgcv.setVisibility(View.VISIBLE);
@@ -625,7 +651,7 @@ public class PrintReport extends AppCompatActivity {
 
                    case "LISLF":
 //                        this is to be done in asynctask and view loading is to be done in post execution
-                       ecgReport=    db.getSingleLeadEcgSign(pt_no,"LISL");
+                       ecgReport=    labDB.getSingleLeadEcgSign(pt_no,"LISL");
                        if(ecgReport!=null) {
 
                            limbsixleadecgcv.setVisibility(View.VISIBLE);
@@ -643,7 +669,7 @@ public class PrintReport extends AppCompatActivity {
 
                    case "TLF":
 //                        this is to be done in asynctask and view loading is to be done in post execution
-                       ecgReport=    db.getSingleLeadEcgSign(pt_no,"TL");
+                       ecgReport=    labDB.getSingleLeadEcgSign(pt_no,"TL");
                        if(ecgReport!=null) {
 
                            twelveleadecgcv.setVisibility(View.VISIBLE);
@@ -661,7 +687,7 @@ public class PrintReport extends AppCompatActivity {
 
                    case "LSLF":
 //                        this is to be done in asynctask and view loading is to be done in post execution
-                       ecgReport=    db.getSingleLeadEcgSign(pt_no,"LSL");
+                       ecgReport=    labDB.getSingleLeadEcgSign(pt_no,"LSL");
                        if(ecgReport!=null) {
 
                            fitnessecgcv.setVisibility(View.VISIBLE);
@@ -681,8 +707,8 @@ public class PrintReport extends AppCompatActivity {
 
                    case "VTF":
 //                        this is to be done in asynctask and view loading is to be done in post executionv
-                       vitalSign = db.getLastVitalSign(pt_no);
-                       bloodPressureModel = db.getbloodpressuresign(pt_no);
+                       vitalSign = labDB.getLastVitalSign(pt_no);
+                       bloodPressureModel = labDB.getbloodpressuresign(pt_no);
                        if(vitalSign!=null) {
 
                            vitalsigncv.setVisibility(View.VISIBLE);
@@ -770,7 +796,7 @@ public class PrintReport extends AppCompatActivity {
 
                    case "UTF":
 //                        this is to be done in asynctask and view loading is to be done in post execution
-                       urineReport = db.getLastUrineReport(pt_no);
+                       urineReport = labDB.getLastUrineReport(pt_no);
                        if(urineReport!=null) {
 
                            urinereportcv.setVisibility(View.VISIBLE);
@@ -790,7 +816,7 @@ public class PrintReport extends AppCompatActivity {
 
                    case "DF":
 //
-                       glucoseModel= db.getDiabetesSign(pt_no);
+                       glucoseModel= labDB.getDiabetesSign(pt_no);
                        if(glucoseModel!=null) {
 
                            diabetescv.setVisibility(View.VISIBLE);
@@ -1062,4 +1088,14 @@ public class PrintReport extends AppCompatActivity {
     public void onBackPressed() {
        PrintReport.super.onBackPressed();
     }
+
+
+
+
+
+
+
+
+
+
 }

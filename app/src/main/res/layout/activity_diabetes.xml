@@ -68,7 +68,7 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/_140sdp"
+                android:layout_height="@dimen/_120sdp"
                 android:layout_weight="2"
                 android:orientation="vertical">
 

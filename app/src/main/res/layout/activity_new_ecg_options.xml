@@ -45,6 +45,9 @@
 
         <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
+            app:cardCornerRadius="@dimen/_10kdp"
+            app:cardElevation="@dimen/_2kdp"
+            app:cardMaxElevation="@dimen/_4kdp"
             android:layout_height="wrap_content"
             android:layout_marginLeft="@dimen/_10sdp"
             android:layout_marginTop="10dp"

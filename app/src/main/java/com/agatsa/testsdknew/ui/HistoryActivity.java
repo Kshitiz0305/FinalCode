@@ -75,56 +75,37 @@ public class HistoryActivity extends AppCompatActivity implements HistoryCallbac
             ecgConfigInternals = initiateEcg.getListOfUnsyncedEcg(getApplicationContext(),"test");
           Log.d("List", String.valueOf(initiateEcg.getListOfUnsyncedEcg(getApplicationContext(),"test")));
             recyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext(),LinearLayoutManager.VERTICAL,false));
-//            recyclerView.setAdapter(new HistoryAdapter(getApplicationContext(), ecgConfigInternals,this));
-            recyclerView.setAdapter(new TestHistoryAdapter(getApplicationContext(),ecgConfigInternals));
+           recyclerView.setAdapter(new HistoryAdapter(getApplicationContext(), ecgConfigInternals,this));
+//            recyclerView.setAdapter(new TestHistoryAdapter(getApplicationContext(),ecgConfigInternals));
         } else {
             longEcgConfigInternals = initiateEcg.getListOfUnsyncedLongEcg(getApplicationContext(),"test");
             recyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext(),LinearLayoutManager.VERTICAL,false));
            recyclerView.setAdapter(new HistoryStressAdapter(getApplicationContext(), longEcgConfigInternals,this));
         }
 
-        syncallimg.setOnClickListener(v -> {
-            if(ecgConfigInternals.isEmpty()){
-                Toast.makeText(this, "No Data To sync", Toast.LENGTH_SHORT).show();
-
-
-            }else{
-                for(int i=0;i<ecgConfigInternals.size();i++){
-                    syncEcgData(ecgConfigInternals.get(i));
-
-
-
-
-                }
-
-
-            }
-
-
-        });
+//        syncallimg.setOnClickListener(v -> {
+//            if(ecgConfigInternals.isEmpty()){
+//                Toast.makeText(this, "No Data To sync", Toast.LENGTH_SHORT).show();
+//
+//
+//            }else{
+//                for(int i=0;i<ecgConfigInternals.size();i++){
+//                    syncEcgData(ecgConfigInternals.get(i));
+//
+//
+//
+//
+//                }
+//
+//
+//            }
+//
+//
+//        });
 
 
     }
 
-
-    void navigatenext()
-    {
-        final ProgressDialog progress = new ProgressDialog(this);
-        progress.setMessage("Syncing...");
-        progress.show();
-
-        Runnable progressRunnable = new Runnable() {
-            @Override
-            public void run() {
-                progress.cancel();
-                HistoryActivity.super.onBackPressed();
-
-            }
-        };
-        Handler pdCanceller = new Handler();
-        pdCanceller.postDelayed(progressRunnable, 10000);
-
-    }
 
 
 
@@ -137,12 +118,10 @@ public class HistoryActivity extends AppCompatActivity implements HistoryCallbac
                     public void onSuccess(Success success, EcgConfig ecgConfig) {
                         Toast.makeText(getApplicationContext(),success.getSuccessMsg(), Toast.LENGTH_SHORT).show();
                         refreshEcg();
-
-
-//                        String filePath = ecgConfig.getFileUrl();
-//                        Intent intent = new Intent(HistoryActivity.this, PdfViewActivity.class);
-//                        intent.putExtra("fileUrl", filePath);
-//                        startActivity(intent);
+                        String filePath = ecgConfig.getFileUrl();
+                        Intent intent = new Intent(HistoryActivity.this, PdfViewActivity.class);
+                        intent.putExtra("fileUrl", filePath);
+                        startActivity(intent);
                     }
 
                     @Override

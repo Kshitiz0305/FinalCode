@@ -5,8 +5,9 @@
     android:id="@+id/toolbar"
     android:layout_width="match_parent"
     android:layout_height="?attr/actionBarSize"
-    android:background="@color/colorPrimary"
-    app:titleTextColor="@color/white"
+
+    android:background="@color/colorOffWhite"
+    app:titleTextColor="@color/colorPrimaryDark"
     android:elevation="4dp"
     app:popupTheme="@style/AppTheme.PopupOverlay"
     app:theme="@style/ToolBarStyle" />
