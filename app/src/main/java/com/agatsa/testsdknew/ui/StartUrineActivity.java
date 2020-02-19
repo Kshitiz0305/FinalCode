@@ -16,6 +16,9 @@ import androidx.databinding.DataBindingUtil;
 import com.agatsa.testsdknew.Models.PatientModel;
 import com.agatsa.testsdknew.R;
 import com.agatsa.testsdknew.databinding.ActivityStartUrineBinding;
+import com.agatsa.testsdknew.ui.Urine.ElevenParameterActivity;
+import com.agatsa.testsdknew.ui.Urine.TwoParameterActivity;
+import com.agatsa.testsdknew.ui.Urine.UricAcidActivity;
 
 public class StartUrineActivity extends AppCompatActivity {
 
@@ -42,10 +45,11 @@ public class StartUrineActivity extends AppCompatActivity {
                 @Override
                 public void run() {
                     progress.cancel();
-                    Intent i = new Intent(StartUrineActivity.this, UrineTestActivity.class);
+                    Intent i = new Intent(StartUrineActivity.this, ElevenParameterActivity.class);
                     i.putExtra("PTNO", ptno);
                     i.putExtra("patient", patientModel);
                     startActivity(i);
+
 
                 }
             };
@@ -57,10 +61,48 @@ public class StartUrineActivity extends AppCompatActivity {
         });
 
 
-        binding.twoparam.setOnClickListener(view -> Toast.makeText(StartUrineActivity.this, "Coming Soon", Toast.LENGTH_SHORT).show());
+        binding.twoparam.setOnClickListener(view -> {
+            final ProgressDialog progress = new ProgressDialog(this);
+            progress.setMessage("Starting Urine Test...");
+            progress.show();
+
+            Runnable progressRunnable = new Runnable() {
+                @Override
+                public void run() {
+                    progress.cancel();
+                    Intent i = new Intent(StartUrineActivity.this, TwoParameterActivity.class);
+                    i.putExtra("PTNO", ptno);
+                    i.putExtra("patient", patientModel);
+                    startActivity(i);
+
+
+                }
+            };
+            Handler pdCanceller = new Handler();
+            pdCanceller.postDelayed(progressRunnable, 2000);
+
+        });
 
         binding.uricAcid.setOnClickListener(view -> {
-            Toast.makeText(this, "Coming Soon", Toast.LENGTH_SHORT).show();
+            final ProgressDialog progress = new ProgressDialog(this);
+            progress.setMessage("Starting Urine Test...");
+            progress.show();
+
+            Runnable progressRunnable = new Runnable() {
+                @Override
+                public void run() {
+                    progress.cancel();
+                    Intent i = new Intent(StartUrineActivity.this, UricAcidActivity.class);
+                    i.putExtra("PTNO", ptno);
+                    i.putExtra("patient", patientModel);
+                    startActivity(i);
+
+
+                }
+            };
+            Handler pdCanceller = new Handler();
+            pdCanceller.postDelayed(progressRunnable, 2000);
+
 
         });
 

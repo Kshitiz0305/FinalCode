@@ -2,11 +2,8 @@ package com.agatsa.testsdknew.ui;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
-import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
-import android.content.DialogInterface;
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
@@ -15,26 +12,21 @@ import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
-import android.os.Handler;
 import android.util.Log;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
-
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.databinding.DataBindingUtil;
-
 import com.agatsa.testsdknew.Models.PatientModel;
 import com.agatsa.testsdknew.Models.VitalSign;
 import com.agatsa.testsdknew.R;
 import com.agatsa.testsdknew.customviews.DialogUtil;
 import com.agatsa.testsdknew.databinding.ActivityVitalTestBinding;
 import com.agatsa.testsdknew.utils.CSVWriter;
-
 import java.io.File;
 import java.io.FileWriter;
-
 import br.com.ilhasoft.support.validation.Validator;
 
 public class VitalSignActivity extends AppCompatActivity  {
@@ -46,7 +38,7 @@ public class VitalSignActivity extends AppCompatActivity  {
     private ProgressDialog dialog;
     PatientModel newPatient;
     VitalSign vitalSign = new VitalSign();
-    EditText txtWeight, txtHeight, txtTemp, txtPulse, txtBPS, txtBPD, txtSTO2;
+    EditText txtWeight, txtHeight, txtTemp, txtPulse,txtSTO2;
     LabDB labDB;
     Validator validator;
     ActivityVitalTestBinding binding;
@@ -75,9 +67,7 @@ public class VitalSignActivity extends AppCompatActivity  {
         txtTemp = findViewById(R.id.txtTemp);
         txtPulse = findViewById(R.id.txtPulse);
         txtSTO2 = findViewById(R.id.txtSto2);
-//        txtBPS = findViewById(R.id.txtBPSys);
-//        txtBPD = findViewById(R.id.txtBPDias);
-//        txtglucose=findViewById(R.id.txtglucose);
+
 
 
 
@@ -98,19 +88,12 @@ public class VitalSignActivity extends AppCompatActivity  {
 
                 }else if(Double.parseDouble(txtSTO2.getText().toString())<40 ||Double.parseDouble(txtSTO2.getText().toString())>150){
                     Toast.makeText(this,"Invalid STO2",Toast.LENGTH_LONG).show();
-//                }else if(Integer.parseInt(txtBPS.getText().toString())<20 || Integer.parseInt(txtBPS.getText().toString())>250){
-//                    Toast.makeText(this,"Invalid Blood Pressure (Systolic)",Toast.LENGTH_LONG).show();
-//
-//
-//
-//                }else if(Integer.parseInt(txtBPD.getText().toString())<20 || Integer.parseInt(txtBPD.getText().toString())>250){
-//                    Toast.makeText(this,"Invalid Blood Pressure (Dyostolic)",Toast.LENGTH_LONG).show();
-//
+
 
                 }else{
                     new SaveData().execute();
 
-//                    exportDB();
+
 
 
                 }
@@ -125,15 +108,12 @@ public class VitalSignActivity extends AppCompatActivity  {
 
     @Override
     public void onBackPressed() {
-
-            DialogUtil.getOKCancelDialog(this, "", "Do you want to discard the  vital test of " + newPatient.getPtName(), "Yes","No", (dialogInterface, i) -> {
+        DialogUtil.getOKCancelDialog(this, "", "Do you want to discard the  vital test of " + newPatient.getPtName(), "Yes","No", (dialogInterface, i) -> {
 
                 VitalSignActivity.super.onBackPressed();
 
 
             });
-
-
 
 
 
@@ -169,8 +149,7 @@ public class VitalSignActivity extends AppCompatActivity  {
             vitalSign.setTempt(Double.parseDouble((getEdittextValue(txtTemp))));
             vitalSign.setPulse(Double.parseDouble((getEdittextValue(txtPulse))));
             vitalSign.setSto2(Double.parseDouble((getEdittextValue(txtSTO2))));
-//            vitalSign.setBpd(Double.parseDouble((getEdittextValue(txtBPD))));
-//            vitalSign.setBps(Double.parseDouble((getEdittextValue(txtBPS))));
+
             String last_vitalsign_row_id = db.SaveVitalSign(vitalSign);
 
             try {

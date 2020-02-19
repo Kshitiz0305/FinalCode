@@ -44,7 +44,7 @@
         <activity android:name=".ui.FitnessECG"/>
         <activity android:name=".ui.ChestSixLead"/>
         <activity android:name=".ui.TwelveLeadEcg"/>
-        <activity android:name=".ui.UrineTestActivity"/>
+        <activity android:name=".ui.Urine.ElevenParameterActivity"/>
 
 
 
@@ -63,6 +63,8 @@
         <activity android:name=".ui.DiabetesActivity" />
         <activity android:name=".ui.StartUrineActivity" />
         <activity android:name=".ui.BloodPressureActivity" />
+        <activity android:name=".ui.Urine.TwoParameterActivity" />
+        <activity android:name=".ui.Urine.UricAcidActivity" />
 
 
 

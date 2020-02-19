@@ -392,8 +392,6 @@ public class PatientEntryActivity extends AppCompatActivity {
 
     }
 
-
-
     @SuppressLint("StaticFieldLeak")
     private class SaveData extends AsyncTask<String, Void, Integer> {
         @Override

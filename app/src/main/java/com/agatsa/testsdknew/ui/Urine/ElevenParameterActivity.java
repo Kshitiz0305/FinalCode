@@ -1,4 +1,4 @@
-package com.agatsa.testsdknew.ui;
+package com.agatsa.testsdknew.ui.Urine;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
@@ -13,7 +13,6 @@ import android.content.pm.PackageManager;
 import android.content.res.AssetManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.graphics.Color;
 import android.graphics.Matrix;
 import android.media.ExifInterface;
 import android.net.Uri;
@@ -21,8 +20,6 @@ import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
-import android.os.Handler;
-import android.os.SystemClock;
 import android.provider.MediaStore;
 import android.util.Log;
 import android.view.View;
@@ -44,10 +41,11 @@ import com.agatsa.testsdknew.Models.PatientModel;
 import com.agatsa.testsdknew.Models.UrineReport;
 import com.agatsa.testsdknew.R;
 import com.agatsa.testsdknew.customviews.DialogUtil;
+import com.agatsa.testsdknew.ui.LabDB;
+import com.agatsa.testsdknew.utils.UrineBoardDetect;
 import com.google.common.primitives.Doubles;
 import com.google.common.primitives.Ints;
 
-import org.joda.time.DateTime;
 import org.opencv.android.OpenCVLoader;
 import org.opencv.android.Utils;
 import org.opencv.core.Core;
@@ -79,7 +77,6 @@ import java.util.LinkedHashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
-import java.util.Random;
 
 
 import static com.google.common.primitives.Doubles.max;
@@ -88,7 +85,7 @@ import static org.opencv.imgproc.Imgproc.CHAIN_APPROX_SIMPLE;
 import static org.opencv.imgproc.Imgproc.RETR_EXTERNAL;
 
 
-public  class UrineTestActivity extends AppCompatActivity {
+public  class ElevenParameterActivity extends AppCompatActivity {
     String ptno = " ";
     SharedPreferences pref;
     PatientModel patientModel=new PatientModel();
@@ -275,7 +272,7 @@ public  class UrineTestActivity extends AppCompatActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_urine_test);
+        setContentView(R.layout.activity_eleven_parameter_urine_test);
         pref = this.getSharedPreferences("sunyahealth", Context.MODE_PRIVATE);
         ptno = pref.getString("PTNO", "");
         patientModel = getIntent().getParcelableExtra("patient");
@@ -284,7 +281,7 @@ public  class UrineTestActivity extends AppCompatActivity {
         patientAveragePatchTest = "";
         detected = false;
         startDetect = false;
-        mActivity = UrineTestActivity.this;
+        mActivity = ElevenParameterActivity.this;
         mImageView = findViewById(R.id.camera_photo);
         description = findViewById(R.id.description);
         process = findViewById(R.id.done);
@@ -297,7 +294,7 @@ public  class UrineTestActivity extends AppCompatActivity {
         if (!OpenCVLoader.initDebug()) {
             Toast.makeText(this, "OpenCV not Loaded", Toast.LENGTH_LONG).show();
             description.setText("OpenCV was not loaded, Please try again.");
-//            new AlertDialog.Builder(UrineTestActivity.this)
+//            new AlertDialog.Builder(ElevenParameterActivity.this)
 //                    .setTitle("Error: OpenCV Initialization")
 //                    .setMessage("OpenCV was not loaded, Please try again.")
 //                    .setCancelable(false)
@@ -317,7 +314,7 @@ public  class UrineTestActivity extends AppCompatActivity {
             if (report==null) {
                 Toast.makeText(this, "Please click picture.", Toast.LENGTH_LONG).show();
             } else {
-                showDialog(UrineTestActivity.this, report);
+                showDialog(ElevenParameterActivity.this, report);
             }
         });
 
@@ -342,7 +339,7 @@ public  class UrineTestActivity extends AppCompatActivity {
     private void SaveImage(Bitmap finalBitmap) {
 
         String root = Environment.getExternalStorageDirectory().toString();
-        File myDir = new File(root + "/sunyahealth/urinestrip/");
+        File myDir = new File(root + "/sunyahealth/urinestrip/dus11/");
         if (!myDir.exists()) {
             myDir.mkdirs();
         }
@@ -363,7 +360,7 @@ public  class UrineTestActivity extends AppCompatActivity {
     private void SaveImage(Bitmap finalBitmap, String dateTime) {
 
         String root = Environment.getExternalStorageDirectory().toString();
-        File myDir = new File(root + "/sunyahealth/urinestrip/");
+        File myDir = new File(root + "/sunyahealth/urinestrip/dus11/");
         if (!myDir.exists()) {
             myDir.mkdirs();
         }
@@ -384,21 +381,9 @@ public  class UrineTestActivity extends AppCompatActivity {
         }
     }
 
+    UrineBoardDetect urineBoardDetect;
     private String stripPhotoPathUri;
     public void process(){
-//            final ProgressDialog progress = new ProgressDialog(this);
-//            progress.setMessage("Starting Urine Test...");
-//            progress.show();
-//
-//            Runnable progressRunnable = new Runnable() {
-//                @Override
-//                public void run() {
-//                    progress.cancel();
-//
-//                }
-//            };
-//            Handler pdCanceller = new Handler();
-//            pdCanceller.postDelayed(progressRunnable, 2000);
         if (detected){
             detected = false;
         }
@@ -408,10 +393,10 @@ public  class UrineTestActivity extends AppCompatActivity {
 //        Core.rotate(mat, mat, Core.ROTATE_90_COUNTERCLOCKWISE);
 //        Bitmap testBitmap = Bitmap.createBitmap(mat.cols(), mat.rows(), Bitmap.Config.ARGB_8888);
 //        Utils.matToBitmap(mat, testBitmap);
-        Mat quad = new Mat();
+        Mat quad;
         try {
-
-            quad = board_detect(mat);
+            quad = UrineBoardDetect.detect_board(mat);
+//            quad =  board_detect(mat);
 
             int x = (int) (quad.width()*0.20);
             int y = (int) (quad.height()*0.20);
@@ -433,7 +418,7 @@ public  class UrineTestActivity extends AppCompatActivity {
             }
         } catch (Exception e) {
 
-            new AlertDialog.Builder(UrineTestActivity.this)
+            new AlertDialog.Builder(ElevenParameterActivity.this)
                     .setTitle("Error")
                     .setMessage("Please take picture again!")
                     .setCancelable(false)
@@ -457,7 +442,7 @@ public  class UrineTestActivity extends AppCompatActivity {
 
                 photoFile = createImageFile();
             } catch (IOException ex) {
-//                new AlertDialog.Builder(UrineTestActivity.this)
+//                new AlertDialog.Builder(ElevenParameterActivity.this)
 //                        .setTitle("Error: Image File")
 //                        .setMessage("Something went wrong while creating the image file. Please restart.")
 //                        .setCancelable(false)
@@ -468,7 +453,7 @@ public  class UrineTestActivity extends AppCompatActivity {
             }
             if (photoFile != null) {
 
-                Uri photoURI = FileProvider.getUriForFile(UrineTestActivity.this,
+                Uri photoURI = FileProvider.getUriForFile(ElevenParameterActivity.this,
                         "com.agatsa.testsdknew" + ".provider",
                         photoFile);
                 takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI);
@@ -1215,7 +1200,7 @@ public  class UrineTestActivity extends AppCompatActivity {
         return report;
     }
 
-    public void showDialog(UrineTestActivity activity, final String[] report){
+    public void showDialog(ElevenParameterActivity activity, final String[] report){
 
         final Dialog dialog = new Dialog(activity, android.R.style.Theme_Black_NoTitleBar_Fullscreen);
         dialog.setCancelable(false);
@@ -1313,7 +1298,7 @@ public  class UrineTestActivity extends AppCompatActivity {
 //                progress.cancel();
 //                System.out.println("sjcfg");
             } catch (Exception e){
-//                new AlertDialog.Builder(UrineTestActivity.this)
+//                new AlertDialog.Builder(ElevenParameterActivity.this)
 //                        .setTitle("Error: Image")
 //                        .setMessage("Something went wrong while loading the captured image. Please capture photo again.")
 //                        .setCancelable(false)
@@ -1331,7 +1316,7 @@ public  class UrineTestActivity extends AppCompatActivity {
 
     //    Thread t1 = new Thread(){
 //        public void run(){
-////            progress = new ProgressDialog(UrineTestActivity.this);
+////            progress = new ProgressDialog(ElevenParameterActivity.this);
 ////            progress.setMessage("Starting Urine Test...");
 ////            progress.show();
 //        }
@@ -1353,7 +1338,7 @@ public  class UrineTestActivity extends AppCompatActivity {
 //            Runnable progressRunnable = new Runnable() {
 //                @Override
 //                public void run() {
-//                    progress = new ProgressDialog(UrineTestActivity.this);
+//                    progress = new ProgressDialog(ElevenParameterActivity.this);
 //                    progress.setMessage("Starting Urine Test...");
 //                    progress.show();
 //                    t2.start();
@@ -1366,7 +1351,7 @@ public  class UrineTestActivity extends AppCompatActivity {
 //            ProgressDialog progress;
 //
 //            t2.start();
-//            progress = new ProgressDialog(UrineTestActivity.this);
+//            progress = new ProgressDialog(ElevenParameterActivity.this);
 //            progress.setMessage("Starting Urine Test...");
 //            progress.show();
 //            try {
@@ -1729,7 +1714,7 @@ public  class UrineTestActivity extends AppCompatActivity {
                     dialog.dismiss();
                 pref.edit().putInt("UTF",1).apply();
                 Log.d("vitaltestflag",String.valueOf(pref.getInt("UTF",0)));
-                UrineTestActivity.super.onBackPressed();
+                ElevenParameterActivity.super.onBackPressed();
                 Toast.makeText(getApplicationContext(), "Urine Test  Saved " , Toast.LENGTH_LONG).show();
 
             }
@@ -1799,7 +1784,7 @@ public  class UrineTestActivity extends AppCompatActivity {
 ////                    dialog.dismiss();
 ////                pref.edit().putInt("UTF",1).apply();
 ////                Log.d("vitaltestflag",String.valueOf(pref.getInt("UTF",0)));
-////                UrineTestActivity.super.onBackPressed();
+////                ElevenParameterActivity.super.onBackPressed();
 ////                Toast.makeText(getApplicationContext(), "Urine Test  Saved " , Toast.LENGTH_LONG).show();
 ////
 ////            }
@@ -1812,7 +1797,7 @@ public  class UrineTestActivity extends AppCompatActivity {
 //       here back is handled in async postexecute to avoid memory leak  this activity is already killed in back
 
         DialogUtil.getOKCancelDialog(this, "", "Do you want to discard the  urine test of " + patientModel.getPtName()+"?", "Yes","No", (dialogInterface, i) -> {
-            UrineTestActivity.super.onBackPressed();
+            ElevenParameterActivity.super.onBackPressed();
 
         });
     }

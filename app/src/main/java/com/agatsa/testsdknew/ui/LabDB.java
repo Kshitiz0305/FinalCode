@@ -13,10 +13,10 @@ import com.agatsa.testsdknew.Models.ECGReport;
 import com.agatsa.testsdknew.Models.GlucoseModel;
 import com.agatsa.testsdknew.Models.LongECGReport;
 import com.agatsa.testsdknew.Models.PatientModel;
+import com.agatsa.testsdknew.Models.TwoParameterUrineModel;
+import com.agatsa.testsdknew.Models.UricAcidModel;
 import com.agatsa.testsdknew.Models.UrineReport;
 import com.agatsa.testsdknew.Models.VitalSign;
-import org.json.JSONArray;
-import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
@@ -126,6 +126,21 @@ public class LabDB extends SQLiteOpenHelper {
     private static final String COLUMN_SYSTOLIC = "systolic";
     private static final String COLUMN_DIASTOLIC = "diastolic";
 
+    private static final String TABLE_TWO_PARAMETER_URINE_TEST = "two_parameter_urine_test";
+    // Columns of Two Parameter Urine Test
+    private static final String COLUMN_MICROALBUMINE = "microalbumine";
+    private static final String COLUMN_CREATININE = "creatinine";
+    private static final String COLUMN_TWO_PARAMETER_AVERAGE_COLOR_TEST = "two_parameter_average_color_test";
+    private static final String COLUMN_TWO_PARAMETER_STRIP_PHOTO_URI = "two_parameter_strip_photo_uri";
+
+
+    private static final String TABLE_URIC_ACID = "uric_acid";
+    // Columns of Uric Acid Test
+    private static final String COLUMN_URINE_ACID_LEVEL = "acid_level";
+    private static final String COLUMN_URIC_ACID_AVERAGE_COLOR_TEST = "uric_acid_average_color_test";
+    private static final String COLUMN_URIC_ACID_STRIP_PHOTO_URI = "uric_acid_strip_photo_uri";
+
+
 
 
 
@@ -203,8 +218,6 @@ public class LabDB extends SQLiteOpenHelper {
                 + COLUMN_TEMP + " REAL DEFAULT 0,"
                 + COLUMN_PULSE + " REAL DEFAULT 0,"
                 + COLUMN_STO2 + " REAL DEFAULT 0,"
-                + COLUMN_BP_S + " REAL DEFAULT 0,"
-                + COLUMN_BP_D + " REAL DEFAULT 0,"
                 + COLUMN_ADDEDDATE + " TEXT,"
                 + COLUMN_UPDATEDDATE + " TEXT)";
         db.execSQL(CREATE_VITAL_SIGN_TABLE);
@@ -215,6 +228,27 @@ public class LabDB extends SQLiteOpenHelper {
                 + COLUMN_ADDEDDATE + " TEXT,"
                 + COLUMN_UPDATEDDATE + " TEXT)";
         db.execSQL(CREATE_DIABETES_TABLE);
+
+        String CREATE_TWO_PARAMETER_TABLE = "CREATE TABLE " + TABLE_TWO_PARAMETER_URINE_TEST + "("
+                + COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT,"
+                + COLUMN_PT_NO + " INTEGER,"
+                + COLUMN_MICROALBUMINE + " REAL DEFAULT 0,"
+                + COLUMN_CREATININE + " REAL DEFAULT 0,"
+                + COLUMN_TWO_PARAMETER_AVERAGE_COLOR_TEST + " TEXT,"
+                + COLUMN_TWO_PARAMETER_STRIP_PHOTO_URI+ " TEXT,"
+                + COLUMN_ADDEDDATE + " TEXT,"
+                + COLUMN_UPDATEDDATE + " TEXT)";
+        db.execSQL(CREATE_TWO_PARAMETER_TABLE);
+
+        String CREATE_URIC_ACID_TABLE = "CREATE TABLE " + TABLE_URIC_ACID + "("
+                + COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT,"
+                + COLUMN_PT_NO + " INTEGER,"
+                + COLUMN_URINE_ACID_LEVEL + " REAL DEFAULT 0,"
+                + COLUMN_URIC_ACID_AVERAGE_COLOR_TEST + " TEXT,"
+                + COLUMN_URIC_ACID_STRIP_PHOTO_URI+ " TEXT,"
+                + COLUMN_ADDEDDATE + " TEXT,"
+                + COLUMN_UPDATEDDATE + " TEXT)";
+        db.execSQL(CREATE_URIC_ACID_TABLE);
 
         String CREATE_BLOOD_PRESSURE_TABLE = "CREATE TABLE " + TABLE_BLOOD_PRESSURE + "("
                 + COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT,"
@@ -242,30 +276,16 @@ public class LabDB extends SQLiteOpenHelper {
                 + COLUMN_FILEPATH + " TEXT DEFAULT 'notFound' ,"
                 + COLUMN_UPDATEDDATE + " TEXT)";
         db.execSQL(CREATE_ECGSIGN_TABLE);
-        String CREATE_LONG_ECG_SIGN_TABLE = "CREATE TABLE " + TABLE_LONG_ECG_SIGN + "("
-                + COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT,"
-                + COLUMN_PT_NO + " INTEGER,"
-                + COLUMN_LONG_HEARTRATE + " REAL DEFAULT 0,"
-                + COLUMN_LONG_PR + " REAL DEFAULT 0,"
-                + COLUMN_LONG_QT + " REAL DEFAULT 0,"
-                + COLUMN_LONG_QTC + " REAL DEFAULT 0,"
-                + COLUMN_LONG_QRS + " REAL DEFAULT 0,"
-                + COLUMN_LONG_SDNN + " REAL DEFAULT 0,"
-                + COLUMN_LONG_RMSSD + " REAL DEFAULT 0,"
-                + COLUMN_LONG_MRR + " REAL DEFAULT 0,"
-                + COLUMN_LONG_FINDING + " REAL DEFAULT 0,"
-                + COLUMN_ADDEDDATE + " TEXT,"
-                + COLUMN_UPDATEDDATE + " TEXT)";
-        db.execSQL(CREATE_LONG_ECG_SIGN_TABLE);
-        String CREATE_BLOOD_REPORT_TABLE = "CREATE TABLE " + TABLE_BLOOD_TEST + "("
-                + COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT,"
-                + COLUMN_PT_NO + " INTEGER,"
-                + COLUMN_GLUCOSE + " REAL DEFAULT 0,"
-                + COLUMN_CHLORESTROL + " REAL DEFAULT 0,"
-                + COLUMN_URIC_ACID + " REAL DEFAULT 0,"
-                + COLUMN_ADDEDDATE + " TEXT,"
-                + COLUMN_UPDATEDDATE + " TEXT)";
-        db.execSQL(CREATE_BLOOD_REPORT_TABLE);
+
+//        String CREATE_BLOOD_REPORT_TABLE = "CREATE TABLE " + TABLE_BLOOD_TEST + "("
+//                + COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT,"
+//                + COLUMN_PT_NO + " INTEGER,"
+//                + COLUMN_GLUCOSE + " REAL DEFAULT 0,"
+//                + COLUMN_CHLORESTROL + " REAL DEFAULT 0,"
+//                + COLUMN_URIC_ACID + " REAL DEFAULT 0,"
+//                + COLUMN_ADDEDDATE + " TEXT,"
+//                + COLUMN_UPDATEDDATE + " TEXT)";
+//        db.execSQL(CREATE_BLOOD_REPORT_TABLE);
         String CREATE_URINE_REPORT_TABLE = "CREATE TABLE " + TABLE_URINE_TEST + "("
                 + COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT,"
                 + COLUMN_PT_NO + " INTEGER,"
@@ -490,8 +510,6 @@ public class LabDB extends SQLiteOpenHelper {
         values.put(COLUMN_TEMP, vitalSign.getTempt());
         values.put(COLUMN_PULSE, vitalSign.getPulse());
         values.put(COLUMN_STO2, vitalSign.getSto2());
-        values.put(COLUMN_BP_D, vitalSign.getBpd());
-        values.put(COLUMN_BP_S, vitalSign.getBps());
         values.put(COLUMN_UPDATEDDATE, Calendar.getInstance().getTimeInMillis() / 1000);
         if (!vitalSign.getRow_id() .equals("")) {
             db.update(TABLE_VITAL_SIGN, values, COLUMN_ID + "=?", new String[]{String.valueOf(vitalSign.getRow_id())});
@@ -504,6 +522,50 @@ public class LabDB extends SQLiteOpenHelper {
         db.close();
         return result;
     }
+
+    public String SaveTwoParameterUrinetest(TwoParameterUrineModel twoParameterUrineModel) {
+        String result = "";
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put(COLUMN_PT_NO, twoParameterUrineModel.getPt_no());
+        values.put(COLUMN_MICROALBUMINE, twoParameterUrineModel.getMicro());
+        values.put(COLUMN_CREATININE, twoParameterUrineModel.getCreat());
+        values.put(COLUMN_TWO_PARAMETER_AVERAGE_COLOR_TEST, twoParameterUrineModel.getAveragecolortest());
+        values.put(COLUMN_TWO_PARAMETER_STRIP_PHOTO_URI, twoParameterUrineModel.getPhotouri());
+        values.put(COLUMN_UPDATEDDATE, Calendar.getInstance().getTimeInMillis() / 1000);
+        if (!twoParameterUrineModel.getRow_id() .equals("")) {
+            db.update(TABLE_TWO_PARAMETER_URINE_TEST, values, COLUMN_ID + "=?", new String[]{String.valueOf(twoParameterUrineModel.getRow_id())});
+            result = twoParameterUrineModel.getRow_id();
+        } else {
+            values.put(COLUMN_ADDEDDATE, Calendar.getInstance().getTimeInMillis() / 1000);
+            db.insert(TABLE_TWO_PARAMETER_URINE_TEST, null, values);
+            result = getLastID(TABLE_TWO_PARAMETER_URINE_TEST, db);
+        }
+        db.close();
+        return result;
+    }
+
+    public String SaveUricAcid(UricAcidModel uricAcidModel) {
+        String result = "";
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put(COLUMN_PT_NO, uricAcidModel.getPt_no());
+        values.put(COLUMN_URINE_ACID_LEVEL, uricAcidModel.getAcid_level());
+        values.put(COLUMN_URIC_ACID_AVERAGE_COLOR_TEST, uricAcidModel.getAverage_color());
+        values.put(COLUMN_URIC_ACID_STRIP_PHOTO_URI, uricAcidModel.getPhoto_uri());
+        values.put(COLUMN_UPDATEDDATE, Calendar.getInstance().getTimeInMillis() / 1000);
+        if (!uricAcidModel.getRow_id() .equals("")) {
+            db.update(TABLE_URIC_ACID, values, COLUMN_ID + "=?", new String[]{String.valueOf(uricAcidModel.getRow_id())});
+            result = uricAcidModel.getRow_id();
+        } else {
+            values.put(COLUMN_ADDEDDATE, Calendar.getInstance().getTimeInMillis() / 1000);
+            db.insert(TABLE_URIC_ACID, null, values);
+            result = getLastID(TABLE_URIC_ACID, db);
+        }
+        db.close();
+        return result;
+    }
+
     public String SaveGlucoseSign(GlucoseModel glucoseModel) {
         String result = "";
         SQLiteDatabase db = this.getWritableDatabase();
@@ -700,6 +762,43 @@ public class LabDB extends SQLiteOpenHelper {
         db.close();
         return glucoseModel;
     }
+
+    public TwoParameterUrineModel gettwoparameterurinedata(String pt_no) {
+        TwoParameterUrineModel twoParameterUrineModel = new TwoParameterUrineModel();
+        SQLiteDatabase db = this.getReadableDatabase();
+//
+        Cursor cursor = db.query(TABLE_TWO_PARAMETER_URINE_TEST, new String[]{COLUMN_ID,
+                        COLUMN_MICROALBUMINE,COLUMN_CREATININE}, COLUMN_PT_NO + "=?",
+                new String[]{String.valueOf(pt_no)}, null, null, COLUMN_ID + " DESC", String.valueOf(1));
+        if (cursor.moveToFirst()) {
+            twoParameterUrineModel.setRow_id(cursor.getString(0));
+            twoParameterUrineModel.setMicro((cursor.getString(1)));
+            twoParameterUrineModel.setCreat((cursor.getString(1)));
+
+        }
+        twoParameterUrineModel.setPt_no(pt_no);
+        cursor.close();
+        db.close();
+        return twoParameterUrineModel;
+    }
+
+    public UricAcidModel geturicaciddata(String pt_no) {
+        UricAcidModel uricAcidModel = new UricAcidModel();
+        SQLiteDatabase db = this.getReadableDatabase();
+//
+        Cursor cursor = db.query(TABLE_URIC_ACID, new String[]{COLUMN_ID,
+                        COLUMN_URINE_ACID_LEVEL}, COLUMN_PT_NO + "=?",
+                new String[]{String.valueOf(pt_no)}, null, null, COLUMN_ID + " DESC", String.valueOf(1));
+        if (cursor.moveToFirst()) {
+            uricAcidModel.setRow_id(cursor.getString(0));
+            uricAcidModel.setAcid_level((cursor.getString(1)));
+
+        }
+        uricAcidModel.setPt_no(pt_no);
+        cursor.close();
+        db.close();
+        return uricAcidModel;
+    }
     public BloodPressureModel getbloodpressuresign(String pt_no) {
         BloodPressureModel bloodPressureModel = new BloodPressureModel();
         SQLiteDatabase db = this.getReadableDatabase();
@@ -750,6 +849,7 @@ public class LabDB extends SQLiteOpenHelper {
         db.close();
         return result;
     }
+
     public UrineReport getLastUrineReport(String pt_no) {
         UrineReport urineReport = new UrineReport();
         SQLiteDatabase db = this.getReadableDatabase();
