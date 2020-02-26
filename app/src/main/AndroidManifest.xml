@@ -60,7 +60,6 @@
         <activity android:name=".ui.PerformTestActivity"
             android:noHistory="true"
             />
-        <activity android:name=".ui.DiabetesActivity" />
         <activity android:name=".ui.StartUrineActivity" />
         <activity android:name=".ui.BloodPressureActivity" />
         <activity android:name=".ui.Urine.TwoParameterActivity" />
@@ -82,7 +81,9 @@
         <activity android:name=".ui.PdfViewActivity" />
         <activity android:name=".ui.ECGactivity" />
         <activity android:name=".ui.ViewPDFActivity" />
-        <activity android:name=".ui.ExistingPatientActivity"
+        <activity android:name=".ui.ExistingPatientActivity"/>
+        <activity android:name=".ui.NodaibetesActivity"/>
+        <activity android:name=".ui.NewDaibetesActivity"/>
             android:windowSoftInputMode="stateAlwaysHidden"/>
     </application>
 

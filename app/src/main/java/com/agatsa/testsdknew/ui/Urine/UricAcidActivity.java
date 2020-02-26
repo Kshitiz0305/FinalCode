@@ -76,6 +76,7 @@ import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 import static com.google.common.primitives.Doubles.max;
@@ -83,25 +84,32 @@ import static com.google.common.primitives.Doubles.min;
 import static org.opencv.imgproc.Imgproc.CHAIN_APPROX_SIMPLE;
 import static org.opencv.imgproc.Imgproc.RETR_EXTERNAL;
 
+/**
+ * <h1>Urinalysis of Uric Acid</h1>
+ * The UricAcidActivity implements OpenCV sdk to perform image processing on image of urine strip of Uric Acid.
+ * @author Anuj Karn
+ * @version 1.0
+ * @since 2019-12-15*/
+
 public class UricAcidActivity extends AppCompatActivity {
     ActivityUricAcidTestBinding binding;
 
 
-    String ptno = " ";
+    String ptNo = " ";
     SharedPreferences pref;
-    PatientModel patientModel=new PatientModel();
+    PatientModel patientModel = new PatientModel();
     private AssetManager assetManager;
     LabDB labDB;
     boolean startDetect;
     UricAcidModel uricAcidModel = new UricAcidModel();
     private ProgressDialog dialog;
-    HashMap<Integer, String> test_names = new HashMap<Integer, String>(){
+    HashMap<Integer, String> testPatchNames = new HashMap<Integer, String>(){
         {
             put(0, "Uric Acid");
         }
     };
 
-    HashMap<Integer, HashMap<String, String>> test_values = new HashMap<Integer, HashMap<String, String>>(){
+    HashMap<Integer, HashMap<String, String>> testPatchValues = new HashMap<Integer, HashMap<String, String>>(){
         {
             put(0, new HashMap<String, String>(){
                 {
@@ -119,11 +127,11 @@ public class UricAcidActivity extends AppCompatActivity {
     private final static int REQUEST_CODE_ASK_PERMISSIONS = 1;
     private ImageView mImageView;
     String[] report;
-    Button report_list, process,saveurinetest;
     TextView description;
     private Activity mActivity;
-    private boolean detected;
-    Bitmap currentpict;
+    private boolean isDetected;
+    Bitmap currentImage;
+    private String stripPhotoPathUri;
     private String patientAveragePatchTest;
     static final int REQUEST_TAKE_PHOTO = 1;
     String currentPhotoPath;
@@ -140,35 +148,19 @@ public class UricAcidActivity extends AppCompatActivity {
         System.loadLibrary("opencv_java3");
     }
 
-    public static Bitmap rotateImage(Bitmap source, float angle) {
-        Matrix matrix = new Matrix();
-        matrix.postRotate(angle);
-        return Bitmap.createBitmap(source, 0, 0, source.getWidth(), source.getHeight(),
-                matrix, true);
-    }
 
-    public static void restartActivity(Activity activity) {
-        if (Build.VERSION.SDK_INT >= 11) {
-            activity.recreate();
-        } else {
-            activity.finish();
-            activity.startActivity(activity.getIntent());
-        }
-    }
-    
-    
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding= DataBindingUtil.setContentView(this, R.layout.activity_uric_acid_test);
         pref = this.getSharedPreferences("sunyahealth", Context.MODE_PRIVATE);
-        ptno = pref.getString("PTNO", "");
+        ptNo = pref.getString("PTNO", "");
         patientModel = getIntent().getParcelableExtra("patient");
         dialog= new ProgressDialog(this);
         checkPermissions();
         patientAveragePatchTest = "";
-        detected = false;
+        isDetected = false;
         startDetect = false;
         mActivity = UricAcidActivity.this;
         mImageView = binding.uricAcidCameraPhoto;
@@ -233,6 +225,10 @@ public class UricAcidActivity extends AppCompatActivity {
 
     }
 
+    /**
+     * This method saves isDetected patch strip image inside sunyahealth directory for a temporary period of time.
+     * @param finalBitmap This parameter is the bitmap image to be saved.
+     * */
     private void SaveImage(Bitmap finalBitmap) {
 
         String root = Environment.getExternalStorageDirectory().toString();
@@ -254,6 +250,10 @@ public class UricAcidActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * This method saves the final permanent isDetected patch strip image inside sunyahealth directory.
+     * @param finalBitmap This bitmap is saved.
+     * @param dateTime This parameter is used to create image file name.*/
     private void SaveImage(Bitmap finalBitmap, String dateTime) {
 
         String root = Environment.getExternalStorageDirectory().toString();
@@ -278,58 +278,39 @@ public class UricAcidActivity extends AppCompatActivity {
         }
     }
 
-    private String stripPhotoPathUri;
+
+    /**
+     * This method processes the camera captured image.
+     * */
     public void process(){
-//            final ProgressDialog progress = new ProgressDialog(this);
-//            progress.setMessage("Starting Urine Test...");
-//            progress.show();
-//
-//            Runnable progressRunnable = new Runnable() {
-//                @Override
-//                public void run() {
-//                    progress.cancel();
-//
-//                }
-//            };
-//            Handler pdCanceller = new Handler();
-//            pdCanceller.postDelayed(progressRunnable, 2000);
-        if (detected){
-            detected = false;
+        if (isDetected){
+            isDetected = false;
         }
         Mat mat = new Mat();
-        Utils.bitmapToMat(currentpict, mat);
-//        Utils.bitmapToMat(bitmap, mat);
-//        Core.rotate(mat, mat, Core.ROTATE_90_COUNTERCLOCKWISE);
-//        Bitmap testBitmap = Bitmap.createBitmap(mat.cols(), mat.rows(), Bitmap.Config.ARGB_8888);
-//        Utils.matToBitmap(mat, testBitmap);
-        Mat quad = new Mat();
+        Utils.bitmapToMat(currentImage, mat);
+        Mat quad;
         try {
-
             quad = board_detect(mat);
-
             int x = (int) (quad.width()*0.20);
             int y = (int) (quad.height()*0.20);
             int width = (int) (quad.width()-(2*(quad.width()*0.20)));
             int height = (int) (quad.height()-(2*(quad.height()*0.20)));
             quad = quad.submat(new Rect(x, y, width, height));
             Core.rotate(quad, quad, Core.ROTATE_90_CLOCKWISE);
-//            Bitmap temp_quad = Bitmap.createBitmap(quad.cols(), quad.rows(), Bitmap.Config.ARGB_8888);
-//            Utils.matToBitmap(quad, temp_quad);
             report = processBoard(quad);
             if (report != null) {
                 report = clearify(report);
-
-                detected = true;
-                description.setText("Please check the detected strip, if found wrong detection, please restart the process by clicking the \"Open Camera\" button again.");
+                isDetected = true;
+                description.setText("Please check the isDetected strip, if found wrong detection, please restart the process by clicking the \"Open Camera\" button again.");
                 Toast.makeText(this, "Processing was completed.", Toast.LENGTH_SHORT);
             }else {
-                detected = false;
+                isDetected = false;
             }
         } catch (Exception e) {
 
             new AlertDialog.Builder(UricAcidActivity.this)
                     .setTitle("Error")
-                    .setMessage("Please take picture again!" + e.getMessage())
+                    .setMessage("Please take picture again!")
                     .setCancelable(false)
                     .setPositiveButton("Open Camera", (dialog, which) -> {
 //                        mImageView.setImageResource(0);
@@ -337,9 +318,10 @@ public class UricAcidActivity extends AppCompatActivity {
                         startCamera();}).show();
         }
         startDetect = false;
-
     }
 
+    /**
+     * This method starts device default camera activity.*/
     public void startCamera(){
         startDetect = false;
 
@@ -348,20 +330,11 @@ public class UricAcidActivity extends AppCompatActivity {
         if (takePictureIntent.resolveActivity(getPackageManager()) != null) {
             File photoFile = null;
             try {
-
                 photoFile = createImageFile();
             } catch (IOException ex) {
-//                new AlertDialog.Builder(UricAcidActivity.this)
-//                        .setTitle("Error: Image File")
-//                        .setMessage("Something went wrong while creating the image file. Please restart.")
-//                        .setCancelable(false)
-//                        .setPositiveButton("Okay", (dialog, which) -> {
-//                            dialog.dismiss();
-//                            restartActivity(mActivity);
-//                        }).show();
+                Log.d("Camera Start", "Failed to start camera activity.");
             }
             if (photoFile != null) {
-
                 Uri photoURI = FileProvider.getUriForFile(UricAcidActivity.this,
                         "com.agatsa.testsdknew" + ".provider",
                         photoFile);
@@ -371,6 +344,11 @@ public class UricAcidActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * This method is executed after user interaction with permission dialog.
+     * @param requestCode This parameter is a reqest code.
+     * @param permissions This parameter is list of all the permissions asked to the user.
+     * @param grantResults This parameter is the result of permission queries.*/
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String permissions[],
                                            @NonNull int[] grantResults) {
@@ -389,6 +367,10 @@ public class UricAcidActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * This method processes the isDetected urine board.
+     * @param board This parameter is the isDetected urine board from the image.
+     * @return String[] This returns the isDetected strip patches report.*/
     public String[] processBoard(Mat board){
         Mat temp_board = new Mat();
         board.copyTo(temp_board);
@@ -454,7 +436,7 @@ public class UricAcidActivity extends AppCompatActivity {
                 continue;
             }
 
-            //Rectangle detected
+            //Rectangle isDetected
             if (numberVertices >= 4 && numberVertices <= 6) {
 
                 List<Double> cos = new ArrayList<>();
@@ -499,13 +481,17 @@ public class UricAcidActivity extends AppCompatActivity {
         Imgproc.putText(im, label, pt, fontface, scale, new Scalar(255, 0, 0), thickness);
     }
 
+    /**
+     * This method detects strip from the urine board and analyzes the patches.
+     * @param img This parameter is the image of isDetected urine board.
+     * @param deviation This parameter os the List of Scalar values that contains the value for color deviation in camera captured image.
+     * @return String[] This returns the result of urine strip after analysis.*/
     private String[] get_strip(Mat img, List<Scalar> deviation) {
         Mat very_orig = new Mat();
         img.copyTo(very_orig);
         Mat orig = img.submat(new Rect(0, 0, (int) (img.width()*0.5), img.height()));
         int point = (int)( 0.72*orig.width());
         Mat roi = orig.submat(new Rect(point-5, 0, 10, (int) (orig.height()*0.5)));
-//        Mat roi = orig.submat(0, );
         Mat roi1 = very_orig.submat(new Rect(point-20, 0, 40, (int) (orig.height()*0.5)));
         System.out.println(roi.size());
         Mat roi_p1 = adjust_gamma(roi, 0.2);
@@ -521,26 +507,9 @@ public class UricAcidActivity extends AppCompatActivity {
         Mat edges = new Mat();
         Imgproc.Canny(vertical, edges, 100, 200);
         Mat padded = Mat.zeros(edges.rows(), edges.cols()+20, CvType.CV_8U);
-//        Core.copyMakeBorder(edges, padded, 0, 0, 10, 10, Core.BORDER_CONSTANT, new Scalar(0, 0, 0));
-//        int size = 30;
-//        Mat b = new Mat(size*3, size*3, CvType.CV_8UC1, new Scalar(0));
-//        Mat a = new Mat(size, size, CvType.CV_8UC1, new Scalar(255));
-//
-//        Mat bSubmat = padded.submat(padded.rows(), padded.rows(), padded.cols(), padded.cols()*2);
         Mat bSubmat = padded.submat(0, padded.rows(), 10, edges.cols()+10);
         edges.copyTo(bSubmat);
-//
-//        Mat imgPanel = new Mat(100, 250, CvType.CV_8UC1, new Scalar(0));
-//        Mat imgPanelRoi = new Mat(imgPanel, Rect(0, 0, edges.cols(), edges.rows()));
-//        edges.copyTo(padded, edges.submat(new Rect(10, 0, padded.cols()+10, edges.rows())));
-//        Bitmap ad = Bitmap.createBitmap(padded.cols(), padded.rows(), Bitmap.Config.ARGB_8888);
-//        Utils.matToBitmap(padded, ad);
-
-//        imgSrc.copyTo(imgPanelRoi);
-
         List<MatOfPoint> contours = new ArrayList<>();
-//        Bitmap aa = Bitmap.createBitmap(padded.cols(), padded.rows(), Bitmap.Config.RGB_565);
-//        Utils.matToBitmap(padded, aa);
         Imgproc.findContours(padded, contours, new Mat(), RETR_EXTERNAL, CHAIN_APPROX_SIMPLE);
         int max_y = 10000;
         for (MatOfPoint cnt: contours){
@@ -549,8 +518,6 @@ public class UricAcidActivity extends AppCompatActivity {
                 max_y = rect.y;
             }
         }
-//        MediaStore.Images.Media.insertImage(getContentResolver(), bitmap, "strip", "strip image");
-
         int temp_row_end = (int) (0.087*roi1.rows());
         Mat strip = roi1.submat(max_y, max_y + temp_row_end , 0, roi1.cols());
         Bitmap haha = Bitmap.createBitmap(strip.cols(), strip.rows(), Bitmap.Config.ARGB_8888);
@@ -562,7 +529,7 @@ public class UricAcidActivity extends AppCompatActivity {
         Imgproc.filter2D(strip_blurred, strip_blurred, -1, kernel);
         double[] ratio = {0.65};
         int x_point = (int) (strip.width()*0.5);
-        int radius = (int) (strip.width()/6);
+        int radius = (int) (strip.width()/4);
         String[] reported = new String[1];
         for (int i = 0; i < 1; i++){
             int y_point = Math.round((int)(ratio[i]*strip.height()));
@@ -574,7 +541,6 @@ public class UricAcidActivity extends AppCompatActivity {
         final_strip = Bitmap.createBitmap(strip.cols(), strip.rows(), Bitmap.Config.ARGB_8888);
         Utils.matToBitmap(strip, bitmap12);
         Utils.matToBitmap(strip, final_strip);
-//        MediaStore.Images.Media.insertImage(getContentResolver(), bitmap12, "roi1", "strip image");
         mImageView.setImageBitmap(bitmap12);
         SaveImage(bitmap12);
         return reported;
@@ -582,6 +548,10 @@ public class UricAcidActivity extends AppCompatActivity {
 
     Bitmap final_strip;
 
+    /**
+     * This method calculates distance between two Scalar values(Colors).
+     * @param tst This is the first Scalar value.
+     * @param ref This is the second Scalar value.*/
     public double calculate_distance(Scalar tst, Scalar ref){
         double value = 0;
         for(int i = 0; i < 4; i++){
@@ -602,6 +572,10 @@ public class UricAcidActivity extends AppCompatActivity {
         return Math.sqrt(weightR*r*r + weightG*g*g + weightB*b*b);
     }
 
+    /**
+     * This method converts color from RGB to LAB color space.
+     * @param inputColor This parameter is the color in RGB format.
+     * @return double[] This returns the color in the LAB color space.*/
     public double[] rgb2lab (double[] inputColor ){
         int num = 0;
         Scalar RGB = new Scalar(0, 0, 0);
@@ -643,6 +617,10 @@ public class UricAcidActivity extends AppCompatActivity {
         return lab;
     }
 
+    /**
+     * This method determines yellow color in the given color of RGB color space.
+     * @param RGB This parameter is the color in RGB color space
+     * @return boolean This returns the result of determination.*/
     public boolean determine_yellow(double[] RGB) {
         double r = RGB[0] / 255;
         double g = RGB[1] / 255;
@@ -673,6 +651,10 @@ public class UricAcidActivity extends AppCompatActivity {
         return  h > 45 && h < 68;
     }
 
+    /**
+     * This method determines green color in the given color of RGB color space.
+     * @param RGB This parameter is the color in RGB color space
+     * @return boolean This returns the result of determination.*/
     public boolean determine_green(double[] RGB) {
         double r = RGB[0] / 255;
         double g = RGB[1] / 255;
@@ -711,6 +693,12 @@ public class UricAcidActivity extends AppCompatActivity {
         return new int[]{red, green, blue};
     }
 
+    /**
+     * This method matches isDetected urine strip patches with the list of different color patches stored in the assets folder.
+     * @param test_patch This parameter is the image of isDetected strip patch.
+     * @param index_no This parameter represents the folder name inside assets folder.
+     * @param deviation This parameter is the deviation in RGB color in camera captured image.
+     * @return String This returns the matched patch file name.*/
     public String calc(Mat test_patch, String index_no, List<Scalar> deviation){
         Mat temp_rgb_patch = new Mat();
         Imgproc.cvtColor(test_patch, test_patch, Imgproc.COLOR_RGBA2RGB);
@@ -775,6 +763,7 @@ public class UricAcidActivity extends AppCompatActivity {
         for(int i = 0; i < test_patch.rows(); i++){
             for(int j = 0; j < test_patch.cols(); j++){
                 double[] temp1 = rgb2lab(test_patch.get(i, j));
+                temp1[0] += 15;
                 test_patch.put(i, j, temp1);
             }
         }
@@ -782,7 +771,6 @@ public class UricAcidActivity extends AppCompatActivity {
         HashMap<String, Double> score = new HashMap<>();
         try {
             Mat temp = new Mat();
-//            File[] files = new File( "pics/dus11/" + index_no).listFiles();
             String[] files = assetManager.list("pics/ua/" + index_no);
             Arrays.sort(files);
             for (String file: files){
@@ -790,10 +778,8 @@ public class UricAcidActivity extends AppCompatActivity {
                 Bitmap  bitmap = BitmapFactory.decodeStream(is);
                 Utils.bitmapToMat(bitmap, temp);
                 Mat ref_image = temp;
-//                Scalar avg_color_ref12 = Core.mean(ref_image);
                 Imgproc.resize(ref_image, ref_image, test_patch.size());
                 Imgproc.cvtColor(ref_image, ref_image, Imgproc.COLOR_RGBA2RGB);
-//                Imgproc.cvtColor(ref_image, ref_image, Imgproc.COLOR_RGB2Lab);
                 Scalar avg_color_ref = Core.mean(ref_image);
 
                 HashMap<String, Integer> ref_color_seq = new HashMap<String, Integer>(){
@@ -869,10 +855,6 @@ public class UricAcidActivity extends AppCompatActivity {
             Toast.makeText(this, "Error Loading dus11 files", Toast.LENGTH_LONG).show();
         }
         Map<String, Double> lab_score = sortByValue(score);
-//        for (Map.Entry<String, Double> en : lab_score.entrySet()) {
-//            System.out.println(en.getKey() + " = " +
-//                    " = " + en.getValue());
-//        }
 
         if (lab_score.isEmpty()){
             try {
@@ -908,8 +890,10 @@ public class UricAcidActivity extends AppCompatActivity {
         return  key;
     }
 
-
-
+    /**
+     * This method detects and processes RGB reference board.
+     * @param ref This parameter is the image of isDetected urine board.
+     * @return List<Scalar> This returns the isDetected RGB value from the RGB reference board.*/
     public List<Scalar> ref_process(Mat ref){
         int ref_h = ref.height(), ref_w = ref.width();
         ref = ref.submat(new Rect(0+(int)ref_w/2, 0, (int)ref_w/2, ref_h));
@@ -995,6 +979,11 @@ public class UricAcidActivity extends AppCompatActivity {
         return values;
     }
 
+    /**
+     * This method adjusts gamma value in the given image.
+     * @param image This parameter is the image in which gamma is to be adjusted.
+     * @param gamma This parameter is the value of gamma.
+     * @return Mat This returns the image with adjusted gamma.*/
     private Mat adjust_gamma(Mat image, double gamma) {
         Mat lut = new Mat(1, 256, CvType.CV_8UC1);
         lut.setTo(new Scalar(0));
@@ -1005,25 +994,34 @@ public class UricAcidActivity extends AppCompatActivity {
         return image;
     }
 
+    /**
+     * This method formats and prepares the isDetected strip result.
+     * @param report This parameter is the result of isDetected urine strip patches.
+     * @return String[] This returns the formatted report.*/
     public String[] clearify(String[] report){
-        uricAcidLevel = test_values.get(0).get(report[0]);
+        uricAcidLevel = testPatchValues.get(0).get(report[0]);
 
         reportVal = new String[1];
         for (int i = 0; i < 1; i++){
-            reportVal[i] = test_values.get(i).get(report[i]);
-//            report[i] = test_names.get(i) + ":  " + test_values.get(i).get(report[i]);
-            String temp = test_values.get(i).get(report[i]);
-            if (temp.equals("100") || temp.equals("300")){
-                report[i] = "Normal";
-            } else {
+            reportVal[i] = testPatchValues.get(i).get(report[i]);
+//            report[i] = testPatchNames.get(i) + ":  " + testPatchValues.get(i).get(report[i]);
+            String temp = testPatchValues.get(i).get(report[i]);
+            if (temp.equals("700") || temp.equals("1100") || temp.equals("1500")){
                 report[i] = "Abnormal";
+            } else {
+                report[i] = "Normal";
             }
-//            report[i] = test_names.get(i) + ":  " + (test_values.get(i).get(report[i]).equals("100") || test_values.get(i).get(report[i]).equals("300")? "Normal": "Abnormal");
+//            report[i] = testPatchNames.get(i) + ":  " + (testPatchValues.get(i).get(report[i]).equals("100") || testPatchValues.get(i).get(report[i]).equals("300")? "Normal": "Abnormal");
         }
         System.out.println("Completed making report.");
         return report;
     }
 
+    /**
+     * This method shows full screen dialog containing urine report.
+     * @param activity This parameter represents the activity in which the dialog is to be displayed.
+     * @param report This parameter represents the formatted urine report.
+     * */
     public void showDialog(UricAcidActivity activity, final String[] report){
 
         final Dialog dialog = new Dialog(activity, android.R.style.Theme_Black_NoTitleBar_Fullscreen);
@@ -1039,19 +1037,16 @@ public class UricAcidActivity extends AppCompatActivity {
             }
         });
 
-//        saveReport.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                save_report(report);
-//            }
-//        });
-
         ListView listView = (ListView) dialog.findViewById(R.id.listview);
         ArrayAdapter arrayAdapter = new ArrayAdapter(this,R.layout.list_item, R.id.tv, report);
         listView.setAdapter(arrayAdapter);
         dialog.show();
     }
 
+    /**
+     * This method sorts HashMap by value.
+     * @param score This parameter is the HashMap which needs to be sorted buy value.
+     * @return HashMap<String, Double> This returns the sorted HashMap.*/
     public static HashMap<String, Double> sortByValue(HashMap<String, Double> score) {
         List<Map.Entry<String, Double> > list =
                 new LinkedList<Map.Entry<String, Double> >(score.entrySet());
@@ -1069,6 +1064,9 @@ public class UricAcidActivity extends AppCompatActivity {
         return temp;
     }
 
+    /**
+     * Checks permission for camera and storage
+     */
     protected void checkPermissions() {
         final List<String> missingPermissions = new ArrayList<String>();
         // check all required dynamic permissions
@@ -1091,112 +1089,33 @@ public class UricAcidActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * This method is executed after image is captured.
+     * @param requestCode This parameter is the request code for the activity.
+     * @param resultCode This parameter is the result code for the result of the activity.
+     * @param data This parameter represents the data returned from the activity.*/
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-
         if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
-//            new Progressdailog().execute();
-
-//            final ProgressDialog progress = new ProgressDialog(this);
-//            progress.setMessage("Starting Urine Test...");
-//            progress.show();
-
-//            Runnable progressRunnable = new Runnable() {
-//                @Override
-//                public void run() {
-//
-//                    progress.cancel();
-//
-//                }
-//            };
-//            Handler pdCanceller = new Handler();
-//            pdCanceller.postDelayed(progressRunnable, 2000);
             try {
                 startDetect = true;
-//                super.onResume();
-//               new AsyncClass(this).execute();
                 setPic();
                 process();
-//                progress.cancel();
-//                System.out.println("sjcfg");
             } catch (Exception e){
-//                new AlertDialog.Builder(UricAcidActivity.this)
-//                        .setTitle("Error: Image")
-//                        .setMessage("Something went wrong while loading the captured image. Please capture photo again.")
-//                        .setCancelable(false)
-//                        .setPositiveButton("Open Camera", new DialogInterface.OnClickListener() {
-//                            @Override
-//                            public void onClick(DialogInterface dialog, int which) {
-//                                dialog.dismiss();
-//                                startCamera();
-//                            }
-//                        }).show();
+                Log.d("Camera Capture", "Failed to capture and save image.");
             }
         }
     }
-//    ProgressDialog progress;
 
-    //    Thread t1 = new Thread(){
-//        public void run(){
-////            progress = new ProgressDialog(UricAcidActivity.this);
-////            progress.setMessage("Starting Urine Test...");
-////            progress.show();
-//        }
-//    };
-    Thread t2 = new Thread(){
-
-        public void run(){
-
-            setPic();
-            process();
-//            progress.dismiss();
-        }
-    };
-//    @Override
-//    protected void onResume() {
-//        super.onResume();
-//        if (startDetect){
-//            new AsyncClass(this).execute();
-//            Runnable progressRunnable = new Runnable() {
-//                @Override
-//                public void run() {
-//                    progress = new ProgressDialog(UricAcidActivity.this);
-//                    progress.setMessage("Starting Urine Test...");
-//                    progress.show();
-//                    t2.start();
-//
-//
-//                }
-//            };
-//            Handler pdCanceller = new Handler();
-//            pdCanceller.postDelayed(progressRunnable, 2000);
-//            ProgressDialog progress;
-//
-//            t2.start();
-//            progress = new ProgressDialog(UricAcidActivity.this);
-//            progress.setMessage("Starting Urine Test...");
-//            progress.show();
-//            try {
-//                Thread.sleep(3000);
-//                progress.cancel();
-//            } catch (Exception e){
-//
-//            }
-//
-//
-////            setPic();
-////            process();
-////            progress.dismiss();
-//        }
-////        new AsyncClass(this).execute();
-//
-//    }
-
+    /**
+     * This method creates the image file for the camera captured image.
+     * @return File This returns the created image file  name.
+     * */
     private File createImageFile() throws IOException {
         // Create an image file name
-        String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
+        String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss", Locale.US).format(new Date());
         String imageFileName = "JPEG_" + timeStamp + "_";
         File storageDir = getExternalFilesDir(Environment.DIRECTORY_PICTURES);
         File image = File.createTempFile(
@@ -1210,6 +1129,12 @@ public class UricAcidActivity extends AppCompatActivity {
         return image;
     }
 
+    /**
+     * This method calculated the angle of three spade points.
+     * @param pt0 This parameter is the first point.
+     * @param pt1 This parameter is the second point.
+     * @param  pt2 This parameter is the third point.
+     * @return double This returns the calculated angle.*/
     private static double getAngle(Point pt1, Point pt2, Point pt0)
     {
         double dx1 = pt1.x - pt0.x;
@@ -1219,12 +1144,14 @@ public class UricAcidActivity extends AppCompatActivity {
         return (dx1*dx2 + dy1*dy2)/Math.sqrt((dx1*dx1 + dy1*dy1)*(dx2*dx2 + dy2*dy2) + 1e-10);
     }
 
+    /**
+     * This method detects urine board from the given image.
+     * @param img This parameter is the camera captured image.
+     * @return Mat This returns the isDetected urine board image.*/
     public Mat board_detect(Mat img){
         Mat orig = new Mat();
         img.copyTo(orig);
-
         // start processing
-
         Imgproc.cvtColor(img, img, Imgproc.COLOR_BGR2GRAY);
         Imgproc.GaussianBlur(img, img, new Size(3,3), 2, 2);
         Imgproc.Canny(img, img, 20, 60, 3, false);
@@ -1327,9 +1254,7 @@ public class UricAcidActivity extends AppCompatActivity {
             p2 = p3.clone();
             p3 = tempPoint.clone();
         }
-
         Mat quad = Mat.zeros((int)imgHeight * 2, (int)imgWidth * 2, CvType.CV_8UC3);
-
         MatOfPoint2f cornerMat = new MatOfPoint2f(p0, p1, p2, p3);
         MatOfPoint2f quadMat = new MatOfPoint2f(new Point(imgWidth*0.4, imgHeight*1.6),
                 new Point(imgWidth*0.4, imgHeight*0.4),
@@ -1338,12 +1263,13 @@ public class UricAcidActivity extends AppCompatActivity {
 
         Mat transmtx = Imgproc.getPerspectiveTransform(cornerMat, quadMat);
         Imgproc.warpPerspective(orig, quad, transmtx, quad.size());
-//        Bitmap bitmap = Bitmap.createBitmap(quad.width(), quad.height(), Bitmap.Config.RGB_565);
-//
-//        Utils.matToBitmap(quad, bitmap);
         return quad;
     }
 
+    /**
+     * This method sorts list of points according to x and y co ordinates.
+     * @param corners This parameter is the list of corners(Points)
+     * @return List<Point> This returns the sorted List of Point(Corner)*/
     private List<Point> sortCorners(List<Point> corners) {
 //        if (corners.size() == 0) return;
         Point p1 = corners.get(0);
@@ -1380,6 +1306,11 @@ public class UricAcidActivity extends AppCompatActivity {
         return Math.sqrt(a * a + b * b);
     }
 
+    /**
+     * This method finds intersection between two lines.
+     * @param a This parameter is a first line.
+     * @param b This parameter is a second line.
+     * @return Point This returns point of intersection*/
     private static Point computeIntersect(double[] a, double[] b) {
         if (a.length != 4 || b.length != 4)
             throw new ClassFormatError();
@@ -1395,6 +1326,10 @@ public class UricAcidActivity extends AppCompatActivity {
             return new Point(-1, -1);
     }
 
+    /**
+     * This method finds largest square from the list of MatOfPoint.
+     * @param squares This parameter is a list of MatOfPoint.
+     * @return int This returns the index of largest square.*/
     private static int findLargestSquare(List<MatOfPoint> squares) {
         if (squares.size() == 0)
             return -1;
@@ -1414,6 +1349,8 @@ public class UricAcidActivity extends AppCompatActivity {
         return max_square_idx;
     }
 
+    /**
+     * This method is adjusts image dimension and orientation.*/
     private void setPic() {
 
         // Get the dimensions of the View
@@ -1468,7 +1405,7 @@ public class UricAcidActivity extends AppCompatActivity {
             rotatedBitmap = bitmap;
         }
 
-        currentpict = rotatedBitmap;
+        currentImage = rotatedBitmap;
 //        mImageView.setImageBitmap(rotatedBitmap);
     }
 
@@ -1492,8 +1429,8 @@ public class UricAcidActivity extends AppCompatActivity {
                 return 3;
             }
             // Save Vital Sign
-            uricAcidModel.setPt_no(ptno);
-            Log.d("pt_no",ptno);
+            uricAcidModel.setPt_no(ptNo);
+            Log.d("pt_no",ptNo);
             uricAcidModel.setAcid_level(uricAcidLevel);
             uricAcidModel.setAverage_color(patientAveragePatchTest);
             uricAcidModel.setPhoto_uri(stripPhotoPathUri);
@@ -1515,103 +1452,39 @@ public class UricAcidActivity extends AppCompatActivity {
             if (s == 2) {
                 if (dialog.isShowing())
                     dialog.dismiss();
-                Toast.makeText(getApplicationContext(), "Already saved " , Toast.LENGTH_LONG).show();
+                Toast.makeText(getApplicationContext(), "Data Already Saved " , Toast.LENGTH_LONG).show();
 
             } else if (s == 3) {
                 if (dialog.isShowing())
                     dialog.dismiss();
-                Toast.makeText(getApplicationContext(), "Exception catched ", Toast.LENGTH_LONG).show();
+                Toast.makeText(getApplicationContext(), "Exception Caught ", Toast.LENGTH_LONG).show();
 
             } else {
                 if (dialog.isShowing())
                     dialog.dismiss();
                 pref.edit().putInt("UTF",1).apply();
-                Log.d("vitaltestflag",String.valueOf(pref.getInt("UTF",0)));
+                Log.d("vitalTestFlag",String.valueOf(pref.getInt("UTF",0)));
                 UricAcidActivity.super.onBackPressed();
                 Toast.makeText(getApplicationContext(), "Uric Acid Test Saved " , Toast.LENGTH_LONG).show();
 
             }
         }
     }
-//    private class Progressdailog extends AsyncTask<String, Void, Integer> {
-//        @Override
-//        protected void onPreExecute() {
-//            super.onPreExecute();
-//            dialog.setMessage("Start Urine Test");
-//            dialog.show();
-//        }
-//
-//        @Override
-//        protected Integer doInBackground(String... strings) {
-////
-////            LabDB db = new LabDB(getApplicationContext());
-////            try {
-////                Thread.sleep(1000);
-////            } catch (InterruptedException e) {
-////                e.printStackTrace();
-////                return 3;
-////            }
-////            // Save Vital Sign
-////            uricAcidModel.setPt_no(ptno);
-////            Log.d("pt_no",ptno);
-////            uricAcidModel.setLeuko(leukocytes);
-////            uricAcidModel.setNit(nitrite);
-////            uricAcidModel.setUrb(urobilinogen);
-////            uricAcidModel.setProtein(protein);
-////            uricAcidModel.setPh(ph);
-////            uricAcidModel.setBlood(blood);
-////            uricAcidModel.setSg(specific_gravity);
-////            uricAcidModel.setKet(ketones);
-////            uricAcidModel.setBili(bilirubin);
-////            uricAcidModel.setGlucose(glucose);
-////            uricAcidModel.setAsc(ascorbic_acid);
-////
-////
-////            String last_vitalsign_row_id = db.SaveUrineReport(uricAcidModel);
-////            try {
-////                Thread.sleep(1000);
-////            } catch (InterruptedException e) {
-////                e.printStackTrace();
-////                return 3;
-////            }
-////            uricAcidModel.setRow_id(last_vitalsign_row_id);
-//            return 1;
-//        }
-//
-//        @Override
-//        protected void onPostExecute(Integer s) {
-//            super.onPostExecute(s);
-//            dialog.dismiss();
-////            if (s == 2) {
-////                if (dialog.isShowing())
-////                    dialog.dismiss();
-////                Toast.makeText(getApplicationContext(), "Already saved " , Toast.LENGTH_LONG).show();
-////
-////            } else if (s == 3) {
-////                if (dialog.isShowing())
-////                    dialog.dismiss();
-////                Toast.makeText(getApplicationContext(), "Exception catched ", Toast.LENGTH_LONG).show();
-////
-////            } else {
-////                if (dialog.isShowing())
-////                    dialog.dismiss();
-////                pref.edit().putInt("UTF",1).apply();
-////                Log.d("vitaltestflag",String.valueOf(pref.getInt("UTF",0)));
-////                UricAcidActivity.super.onBackPressed();
-////                Toast.makeText(getApplicationContext(), "Urine Test  Saved " , Toast.LENGTH_LONG).show();
-////
-////            }
-//        }
-//    }
 
+    public static Bitmap rotateImage(Bitmap source, float angle) {
+        Matrix matrix = new Matrix();
+        matrix.postRotate(angle);
+        return Bitmap.createBitmap(source, 0, 0, source.getWidth(), source.getHeight(),
+                matrix, true);
+    }
+
+    /**
+     * This method is executed when back button is pressed.*/
     @Override
     public void onBackPressed() {
-
-//       here back is handled in async postexecute to avoid memory leak  this activity is already killed in back
-
+        // here back is handled in async postexecute to avoid memory leak  this activity is already killed in back
         DialogUtil.getOKCancelDialog(this, "", "Do you want to discard the  uric acid  test of " + patientModel.getPtName()+"?", "Yes","No", (dialogInterface, i) -> {
             UricAcidActivity.super.onBackPressed();
-
         });
     }
 }

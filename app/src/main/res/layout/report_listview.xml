@@ -3,6 +3,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
     android:padding="10dp"
+    android:background="@color/white_color"
     android:gravity="center"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent">
@@ -11,13 +12,16 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textSize="25sp"
+
+        android:fontFamily="@font/sfpro_display_bold"
         android:text="Urine Test Report"/>
 
     <ListView
+        android:id="@+id/listview"
         android:layout_width="wrap_content"
-        android:layout_height="0dp"
+        android:layout_height="599dp"
         android:layout_weight="1"
-        android:id="@+id/listview">
+        android:background="@color/white_color">
 
     </ListView>
     <LinearLayout
@@ -25,10 +29,17 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal">
         <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
             android:id="@+id/btndialogclose"
-            android:text="Close"/>
+            android:text="Close"
+            android:fontFamily="@font/sfpro_display_semibold"
+            android:layout_gravity="center"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_weight="1"
+            android:background="@drawable/rect_orange"
+            android:textColor="@color/white_color"/>
 
     </LinearLayout>
 

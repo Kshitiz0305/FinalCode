@@ -1,7 +1,5 @@
 package com.agatsa.testsdknew.ui;
 
-import android.Manifest;
-import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
@@ -9,13 +7,7 @@ import android.bluetooth.BluetoothSocket;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.content.pm.PackageManager;
-import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
-import android.os.AsyncTask;
-import android.os.Build;
 import android.os.Bundle;
-import android.os.Environment;
 import android.os.Handler;
 import android.util.Log;
 import android.view.View;
@@ -26,7 +18,6 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
-import androidx.core.app.ActivityCompat;
 
 import com.agatsa.testsdknew.Models.BloodPressureModel;
 import com.agatsa.testsdknew.Models.BloodReport;
@@ -38,19 +29,22 @@ import com.agatsa.testsdknew.Models.UrineReport;
 import com.agatsa.testsdknew.Models.VitalSign;
 import com.agatsa.testsdknew.R;
 import com.agatsa.testsdknew.customviews.DialogUtil;
-import com.agatsa.testsdknew.utils.CSVWriter;
 
-import java.io.File;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.lang.reflect.Method;
+import java.text.DateFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
+import java.time.ZoneOffset;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Locale;
 import java.util.Set;
 import java.util.UUID;
 
@@ -76,6 +70,8 @@ public class PrintReport extends AppCompatActivity {
     GlucoseModel glucoseModel;
     BloodPressureModel bloodPressureModel;
 
+    double latestmealdate;
+
 
     TextView heartrate,pr,qt,qtc,qrs,sdnn,rmssd,mrr,finding;
     TextView longheartrate,longpr,longqt,longqtc,longqrs,longsdnn,longrmssd,longmrr,longfinding;
@@ -90,7 +86,7 @@ public class PrintReport extends AppCompatActivity {
     Button printreport,completeprintreport;
     static String AgeSexConcat;
 
-   CardView vitalsigncv,diabetescv,urinereportcv,fitnessecgcv,singleleadecgcv,chestleadecgcv,limbsixleadecgcv,twelveleadecgcv;
+    CardView vitalsigncv,diabetescv,urinereportcv,fitnessecgcv,singleleadecgcv,chestleadecgcv,limbsixleadecgcv,twelveleadecgcv;
 
     // For Print
     BluetoothAdapter bluetoothAdapter;
@@ -101,13 +97,15 @@ public class PrintReport extends AppCompatActivity {
     Thread workerThread;
     byte[] readBuffer;
     int readBufferPosition;
-    String currentDateandTime="";
+    double currentDateandTime;
+
     volatile boolean stopWorker;
 
     String value = "",  duid = "", device_id = "";
     SharedPreferences pref;
     String City;
     boolean isPrintClicked = false;
+    String testtype="";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -271,10 +269,12 @@ public class PrintReport extends AppCompatActivity {
 
 
         // Retrive From Database
-         labDB = new LabDB(getApplicationContext());
+        labDB = new LabDB(getApplicationContext());
         initViews();
 
         completeprintreport=findViewById(R.id.completeprintreport);
+
+
 
         completeprintreport.setOnClickListener(v -> {
             DialogUtil.getOKCancelDialog(this, "", "Do you want to complete the  test of " + patientModel.getPtName(), "Yes","No", (dialogInterface, i) -> {
@@ -286,7 +286,7 @@ public class PrintReport extends AppCompatActivity {
                 pref.edit().putInt("LISLF",0).apply();
                 pref.edit().putInt("TLF",0).apply();
                 pref.edit().putInt("LSLF",0).apply();
-               navigatenext();
+                navigatenext();
 
 
             });
@@ -323,7 +323,7 @@ public class PrintReport extends AppCompatActivity {
 ////        // Fillup Vital Sign
 
 ////
-         // Fillup Single Lead  ECG Report
+        // Fillup Single Lead  ECG Report
 
 
         // Fillup Long ECG Report
@@ -354,7 +354,7 @@ public class PrintReport extends AppCompatActivity {
 
 
 
-         //   Diabetes report
+        //   Diabetes report
 
 
 
@@ -604,241 +604,315 @@ public class PrintReport extends AppCompatActivity {
     public void initViews(){
 
 
-        for (String s : keys){
+        for (String s : keys) {
 
-           if(pref.getInt(s,0)==1){
+            if (pref.getInt(s, 0) == 1) {
 
-               switch (s){
+                switch (s) {
 
 
 //
 //                   "SLF","CSLF","LISLF","TLF","LSLF"
-                   case "SLF":
+                    case "SLF":
 //                        this is to be done in asynctask and view loading is to be done in post execution
-                       ecgReport=    labDB.getSingleLeadEcgSign(pt_no,"SL");
-                       if(ecgReport!=null) {
-                           singleleadecgcv.setVisibility(View.VISIBLE);
-                           pr.setText(String.valueOf(ecgReport.getPr()));
-                           heartrate.setText(String.valueOf(ecgReport.getHeartrate()));
-                           qt.setText(String.valueOf(ecgReport.getQt()));
-                           qtc.setText(String.valueOf(ecgReport.getQtc()));
-                           qrs.setText(String.valueOf(ecgReport.getQrs()));
-                           sdnn.setText(String.valueOf(ecgReport.getSdnn()));
-                           rmssd.setText(String.valueOf(ecgReport.getRmssd()));
-                           mrr.setText(String.valueOf(ecgReport.getMrr()));
-                           finding.setText(ecgReport.getFinding());
-                       }
-                       break;
+                        ecgReport = labDB.getSingleLeadEcgSign(pt_no, "SL");
+                        if (ecgReport != null) {
+                            singleleadecgcv.setVisibility(View.VISIBLE);
+                            pr.setText(String.valueOf(ecgReport.getPr()));
+                            heartrate.setText(String.valueOf(ecgReport.getHeartrate()));
+                            qt.setText(String.valueOf(ecgReport.getQt()));
+                            qtc.setText(String.valueOf(ecgReport.getQtc()));
+                            qrs.setText(String.valueOf(ecgReport.getQrs()));
+                            sdnn.setText(String.valueOf(ecgReport.getSdnn()));
+                            rmssd.setText(String.valueOf(ecgReport.getRmssd()));
+                            mrr.setText(String.valueOf(ecgReport.getMrr()));
+                            finding.setText(ecgReport.getFinding());
+                        }
+                        break;
 
-                   case "CSLF":
+                    case "CSLF":
 //                        this is to be done in asynctask and view loading is to be done in post execution
-                       ecgReport=    labDB.getSingleLeadEcgSign(pt_no,"CSL");
-                       if(ecgReport!=null) {
+                        ecgReport = labDB.getSingleLeadEcgSign(pt_no, "CSL");
+                        if (ecgReport != null) {
 
-                           chestleadecgcv.setVisibility(View.VISIBLE);
-                           chestleadecgpr.setText(String.valueOf(ecgReport.getPr()));
-                           chestleadecgheartrate.setText(String.valueOf(ecgReport.getHeartrate()));
-                           chestleadecgqt.setText(String.valueOf(ecgReport.getQt()));
-                           chestleadecgqtc.setText(String.valueOf(ecgReport.getQtc()));
-                           chestleadecgqrs.setText(String.valueOf(ecgReport.getQrs()));
-                           chestleadecgsdnn.setText(String.valueOf(ecgReport.getSdnn()));
-                           chestleadecgrmssd.setText(String.valueOf(ecgReport.getRmssd()));
-                           chestleadecgmrr.setText(String.valueOf(ecgReport.getMrr()));
-                           chestleadecgfinding.setText(ecgReport.getFinding());
-                       }
-                       break;
+                            chestleadecgcv.setVisibility(View.VISIBLE);
+                            chestleadecgpr.setText(String.valueOf(ecgReport.getPr()));
+                            chestleadecgheartrate.setText(String.valueOf(ecgReport.getHeartrate()));
+                            chestleadecgqt.setText(String.valueOf(ecgReport.getQt()));
+                            chestleadecgqtc.setText(String.valueOf(ecgReport.getQtc()));
+                            chestleadecgqrs.setText(String.valueOf(ecgReport.getQrs()));
+                            chestleadecgsdnn.setText(String.valueOf(ecgReport.getSdnn()));
+                            chestleadecgrmssd.setText(String.valueOf(ecgReport.getRmssd()));
+                            chestleadecgmrr.setText(String.valueOf(ecgReport.getMrr()));
+                            chestleadecgfinding.setText(ecgReport.getFinding());
+                        }
+                        break;
 
 
-                   case "LISLF":
+                    case "LISLF":
 //                        this is to be done in asynctask and view loading is to be done in post execution
-                       ecgReport=    labDB.getSingleLeadEcgSign(pt_no,"LISL");
-                       if(ecgReport!=null) {
+                        ecgReport = labDB.getSingleLeadEcgSign(pt_no, "LISL");
+                        if (ecgReport != null) {
 
-                           limbsixleadecgcv.setVisibility(View.VISIBLE);
-                           limbsixleadecgpr.setText(String.valueOf(ecgReport.getPr()));
-                           limbsixleadecgheartrate.setText(String.valueOf(ecgReport.getHeartrate()));
-                           limbsixleadecgqt.setText(String.valueOf(ecgReport.getQt()));
-                           limbsixleadecgqtc.setText(String.valueOf(ecgReport.getQtc()));
-                           limbsixleadecgqrs.setText(String.valueOf(ecgReport.getQrs()));
-                           limbsixleadecgsdnn.setText(String.valueOf(ecgReport.getSdnn()));
-                           limbsixleadecgrmssd.setText(String.valueOf(ecgReport.getRmssd()));
-                           limbsixleadecgmrr.setText(String.valueOf(ecgReport.getMrr()));
-                           limbsixleadecgfinding.setText(ecgReport.getFinding());
-                       }
-                       break;
+                            limbsixleadecgcv.setVisibility(View.VISIBLE);
+                            limbsixleadecgpr.setText(String.valueOf(ecgReport.getPr()));
+                            limbsixleadecgheartrate.setText(String.valueOf(ecgReport.getHeartrate()));
+                            limbsixleadecgqt.setText(String.valueOf(ecgReport.getQt()));
+                            limbsixleadecgqtc.setText(String.valueOf(ecgReport.getQtc()));
+                            limbsixleadecgqrs.setText(String.valueOf(ecgReport.getQrs()));
+                            limbsixleadecgsdnn.setText(String.valueOf(ecgReport.getSdnn()));
+                            limbsixleadecgrmssd.setText(String.valueOf(ecgReport.getRmssd()));
+                            limbsixleadecgmrr.setText(String.valueOf(ecgReport.getMrr()));
+                            limbsixleadecgfinding.setText(ecgReport.getFinding());
+                        }
+                        break;
 
-                   case "TLF":
+                    case "TLF":
 //                        this is to be done in asynctask and view loading is to be done in post execution
-                       ecgReport=    labDB.getSingleLeadEcgSign(pt_no,"TL");
-                       if(ecgReport!=null) {
+                        ecgReport = labDB.getSingleLeadEcgSign(pt_no, "TL");
+                        if (ecgReport != null) {
 
-                           twelveleadecgcv.setVisibility(View.VISIBLE);
-                           twelveleadecgpr.setText(String.valueOf(ecgReport.getPr()));
-                           twelveleadecgheartrate.setText(String.valueOf(ecgReport.getHeartrate()));
-                           twelveleadecgqt.setText(String.valueOf(ecgReport.getQt()));
-                           twelveleadecgqtc.setText(String.valueOf(ecgReport.getQtc()));
-                           twelveleadecgqrs.setText(String.valueOf(ecgReport.getQrs()));
-                           twelveleadecgsdnn.setText(String.valueOf(ecgReport.getSdnn()));
-                           twelveleadecgrmssd.setText(String.valueOf(ecgReport.getRmssd()));
-                           twelveleadecgmrr.setText(String.valueOf(ecgReport.getMrr()));
-                           twelveleadecgfinding.setText(ecgReport.getFinding());
-                       }
-                       break;
+                            twelveleadecgcv.setVisibility(View.VISIBLE);
+                            twelveleadecgpr.setText(String.valueOf(ecgReport.getPr()));
+                            twelveleadecgheartrate.setText(String.valueOf(ecgReport.getHeartrate()));
+                            twelveleadecgqt.setText(String.valueOf(ecgReport.getQt()));
+                            twelveleadecgqtc.setText(String.valueOf(ecgReport.getQtc()));
+                            twelveleadecgqrs.setText(String.valueOf(ecgReport.getQrs()));
+                            twelveleadecgsdnn.setText(String.valueOf(ecgReport.getSdnn()));
+                            twelveleadecgrmssd.setText(String.valueOf(ecgReport.getRmssd()));
+                            twelveleadecgmrr.setText(String.valueOf(ecgReport.getMrr()));
+                            twelveleadecgfinding.setText(ecgReport.getFinding());
+                        }
+                        break;
 
-                   case "LSLF":
+                    case "LSLF":
 //                        this is to be done in asynctask and view loading is to be done in post execution
-                       ecgReport=    labDB.getSingleLeadEcgSign(pt_no,"LSL");
-                       if(ecgReport!=null) {
+                        ecgReport = labDB.getSingleLeadEcgSign(pt_no, "LSL");
+                        if (ecgReport != null) {
 
-                           fitnessecgcv.setVisibility(View.VISIBLE);
-                           longpr.setText(String.valueOf(ecgReport.getPr()));
-                           longheartrate.setText(String.valueOf(ecgReport.getHeartrate()));
-                           longqt.setText(String.valueOf(ecgReport.getQt()));
-                           longqtc.setText(String.valueOf(ecgReport.getQtc()));
-                           longqrs.setText(String.valueOf(ecgReport.getQrs()));
-                           longsdnn.setText(String.valueOf(ecgReport.getSdnn()));
-                           longrmssd.setText(String.valueOf(ecgReport.getRmssd()));
-                           longmrr.setText(String.valueOf(ecgReport.getMrr()));
-                           longfinding.setText(ecgReport.getFinding());
-                       }
-                       break;
+                            fitnessecgcv.setVisibility(View.VISIBLE);
+                            longpr.setText(String.valueOf(ecgReport.getPr()));
+                            longheartrate.setText(String.valueOf(ecgReport.getHeartrate()));
+                            longqt.setText(String.valueOf(ecgReport.getQt()));
+                            longqtc.setText(String.valueOf(ecgReport.getQtc()));
+                            longqrs.setText(String.valueOf(ecgReport.getQrs()));
+                            longsdnn.setText(String.valueOf(ecgReport.getSdnn()));
+                            longrmssd.setText(String.valueOf(ecgReport.getRmssd()));
+                            longmrr.setText(String.valueOf(ecgReport.getMrr()));
+                            longfinding.setText(ecgReport.getFinding());
+                        }
+                        break;
 
 
-
-                   case "VTF":
+                    case "VTF":
 //                        this is to be done in asynctask and view loading is to be done in post executionv
-                       vitalSign = labDB.getLastVitalSign(pt_no);
-                       bloodPressureModel = labDB.getbloodpressuresign(pt_no);
-                       if(vitalSign!=null) {
+                        vitalSign = labDB.getLastVitalSign(pt_no);
+                        bloodPressureModel = labDB.getbloodpressuresign(pt_no);
+                        if (vitalSign != null) {
 
-                           vitalsigncv.setVisibility(View.VISIBLE);
+                            vitalsigncv.setVisibility(View.VISIBLE);
 //                           txtTemp.setText(String.valueOf(vitalSign.getTempt()));
-                           txtWeight.setText(vitalSign.getWeight() + " Kg");
-                           txtHeight.setText(vitalSign.getHeight() + " Inches");
+                            txtWeight.setText(vitalSign.getWeight() + " Kg");
+                            txtHeight.setText(vitalSign.getHeight() + " Inches");
 //                           txtPulse.setText( String.valueOf(vitalSign.getPulse()));
-                           txtSTO2.setText(String.valueOf(vitalSign.getSto2()));
+                            txtSTO2.setText(String.valueOf(vitalSign.getSto2()));
 
 
-                           //For Temperature
-                           double temp= Double.parseDouble(String.valueOf(vitalSign.getTempt()));
-                           String TEMP = String.format("%.2f", temp);
-                           if (temp < 97 ) {
-                               TEMP += "(Low Body Temperature)";
-                           } else if(temp > 97 || temp < 100) {
-                               TEMP += "(Normal)";
-                           }else{
-                               TEMP += "(Fever)";
-                           }
-                           txtTemp.setText(TEMP);
+                            //For Temperature
+                            double temp = Double.parseDouble(String.valueOf(vitalSign.getTempt()));
+                            String TEMP = String.format("%.2f", temp);
+                            if (temp < 97) {
+                                TEMP += "(Low Body Temperature)";
+                            } else if (temp > 97 || temp < 100) {
+                                TEMP += "(Normal)";
+                            } else {
+                                TEMP += "(Fever)";
+                            }
+                            txtTemp.setText(TEMP);
 
-                           //For Pulse
-                           double pulse=Double.parseDouble(String.valueOf(vitalSign.getPulse()));
-                           String PULSE = String.format("%.2f", pulse);
-                           if (pulse < 90) {
-                               PULSE += "(Clinical Emergency)";
-                           } else {
-                               PULSE += "(Normal)";
+                            //For Pulse
+                            double pulse = Double.parseDouble(String.valueOf(vitalSign.getPulse()));
+                            String PULSE = String.format("%.2f", pulse);
+                            if (pulse < 90) {
+                                PULSE += "(Clinical Emergency)";
+                            } else {
+                                PULSE += "(Normal)";
 
-                           }
-                           txtPulse.setText(PULSE);
+                            }
+                            txtPulse.setText(PULSE);
 
-                           // For BMI
-                           double heightinmeter = (Double.parseDouble(String.valueOf(vitalSign.getHeight()))* 0.0254);
-                           double m2 = heightinmeter * heightinmeter;
-                           double weight =Double.parseDouble(String.valueOf(vitalSign.getWeight())) ;
-                           double bmi = weight / m2;
-                           String BMI = String.format("%.2f", bmi);
-                           if (bmi < 18.5) {
-                               BMI += "(Under Weight Range)";
-                           } else if (bmi < 24.9) {
-                               BMI += "(Healthy Weight Range)";
-                           } else if (bmi < 29.9) {
-                               BMI += "(Over Weight Range)";
-                           } else if (bmi < 39.9) {
-                               BMI += "(Obese Range)";
-                           }
-                           txtBMI.setText(BMI);
+                            // For BMI
+                            double heightinmeter = (Double.parseDouble(String.valueOf(vitalSign.getHeight())) * 0.0254);
+                            double m2 = heightinmeter * heightinmeter;
+                            double weight = Double.parseDouble(String.valueOf(vitalSign.getWeight()));
+                            double bmi = weight / m2;
+                            String BMI = String.format("%.2f", bmi);
+                            if (bmi < 18.5) {
+                                BMI += "(Under Weight Range)";
+                            } else if (bmi < 24.9) {
+                                BMI += "(Healthy Weight Range)";
+                            } else if (bmi < 29.9) {
+                                BMI += "(Over Weight Range)";
+                            } else if (bmi < 39.9) {
+                                BMI += "(Obese Range)";
+                            }
+                            txtBMI.setText(BMI);
 
-                           double systolic=Double.parseDouble(String.valueOf(bloodPressureModel.getSystolic()));
-                           double diasystolic=Double.parseDouble(String.valueOf(bloodPressureModel.getDiastolic()));
-                           String SBP = String.format("%.2f", systolic);
-                           String DBP = String.format("%.2f", diasystolic);
-                           SBP=SBP + "/";
-                           DBP=SBP + DBP;
+                            double systolic = Double.parseDouble(String.valueOf(bloodPressureModel.getSystolic()));
+                            double diasystolic = Double.parseDouble(String.valueOf(bloodPressureModel.getDiastolic()));
+                            String SBP = String.format("%.2f", systolic);
+                            String DBP = String.format("%.2f", diasystolic);
+                            SBP = SBP + "/";
+                            DBP = SBP + DBP;
 
-                           if(systolic < 90 || diasystolic < 60 ){
-                               DBP += "(Low BP)";
+                            if (systolic < 90 || diasystolic < 60) {
+                                DBP += "(Low BP)";
 
-                           }else if(systolic < 120  || diasystolic < 80 ){
-                               DBP +="(Normal)";
+                            } else if (systolic < 120 || diasystolic < 80) {
+                                DBP += "(Normal)";
 
-                           }else if(systolic < 140  || diasystolic < 90 ){
-                               DBP +="(HyperTension Pre)";
+                            } else if (systolic < 140 || diasystolic < 90) {
+                                DBP += "(HyperTension Pre)";
 
 
-                           }else if(systolic < 160  || diasystolic < 100 ){
-                               DBP +="(Hypertension I)";
+                            } else if (systolic < 160 || diasystolic < 100) {
+                                DBP += "(Hypertension I)";
 
-                           }else if(systolic > 190  || diasystolic > 120 ){
-                               DBP +="(Hypertension II)";
+                            } else if (systolic > 190 || diasystolic > 120) {
+                                DBP += "(Hypertension II)";
 
-                           }
-                           txtBP.setText(DBP);
+                            }
+                            txtBP.setText(DBP);
 
 //                           String bp = String.valueOf(bloodPressureModel.getSystolic());
 //                           if()
 //                           bp = bp + "/";
 //                           bp = bp + bloodPressureModel.getDiastolic();
 //                           txtBP.setText(bp);
-                           txtSTO2.setText(String.valueOf(vitalSign.getSto2()));
-                       }
-                       break;
+                            txtSTO2.setText(String.valueOf(vitalSign.getSto2()));
+                        }
+                        break;
 
-                   case "UTF":
+                    case "UTF":
 //                        this is to be done in asynctask and view loading is to be done in post execution
-                       urineReport = labDB.getLastUrineReport(pt_no);
-                       if(urineReport!=null) {
+                        urineReport = labDB.getLastUrineReport(pt_no);
+                        if (urineReport != null) {
 
-                           urinereportcv.setVisibility(View.VISIBLE);
-                           txtLeuko.setText((urineReport.getLeuko()));
-                           txtNitrate.setText((urineReport.getNit()));
-                           txtURB.setText((urineReport.getUrb()));
-                           txtProtein.setText((urineReport.getProtein()));
-                           txtPH.setText((urineReport.getPh()));
-                           txtBlood.setText((urineReport.getBlood()));
-                           txtSG.setText((urineReport.getSg()));
-                           txtKet.setText((urineReport.getKet()));
-                           txtBili.setText((urineReport.getBili()));
-                           txtUrineGlucose.setText((urineReport.getGlucose()));
-                           txtASC.setText((urineReport.getAsc()));
-                       }
-                       break;
+                            urinereportcv.setVisibility(View.VISIBLE);
+                            txtLeuko.setText((urineReport.getLeuko()));
+                            txtNitrate.setText((urineReport.getNit()));
+                            txtURB.setText((urineReport.getUrb()));
+                            txtProtein.setText((urineReport.getProtein()));
+                            txtPH.setText((urineReport.getPh()));
+                            txtBlood.setText((urineReport.getBlood()));
+                            txtSG.setText((urineReport.getSg()));
+                            txtKet.setText((urineReport.getKet()));
+                            txtBili.setText((urineReport.getBili()));
+                            txtUrineGlucose.setText((urineReport.getGlucose()));
+                            txtASC.setText((urineReport.getAsc()));
+                        }
+                        break;
 
-                   case "DF":
+                    case "DF":
 //
-                       glucoseModel= labDB.getDiabetesSign(pt_no);
-                       if(glucoseModel!=null) {
+                        glucoseModel = labDB.getDiabetesSign(pt_no);
+                        if (glucoseModel != null) {
 
-                           diabetescv.setVisibility(View.VISIBLE);
-                           txtdiabetes.setText(glucoseModel.getPtGlucose());
-                       }
-                       break;
+                            diabetescv.setVisibility(View.VISIBLE);
+//
+                            double value;
+                            value= Double.parseDouble(glucoseModel.getPtGlucose());
+                            testtype=glucoseModel.getPttesttype();
+                            currentDateandTime = System.currentTimeMillis();
+                            latestmealdate= Double.parseDouble(glucoseModel.getAddeddate());
+                            double difference=currentDateandTime-latestmealdate;
+                            Log.d("difference", String.valueOf(currentDateandTime));
+                            Log.d("difference", String.valueOf(latestmealdate));
+                            Log.d("difference", String.valueOf(difference));
+                            if(difference<=7200000.0){
+                                Toast.makeText(this, "Random(Expected High Level)", Toast.LENGTH_SHORT).show();
+
+                            }else if(difference>=7200000.0 && difference <=10800000.0){
+                                Toast.makeText(this, "Post Prandial  Glucose TestTest", Toast.LENGTH_SHORT).show();
+
+
+                            }else if(difference>=10800000.0){
+                                Toast.makeText(this, "Random(Expected Low Level)", Toast.LENGTH_SHORT).show();
+
+
+
+
+                            }
+
+                            if (testtype.equals("Post Prandial Glucose Test")) {
+
+
+                                String Random = String.format("%.2f", value);
+                                if (value < 180) {
+                                    Random += "(Normal)";
+                                } else if (value > 180) {
+                                    Random += "(Prediabetes)";
+
+                                }
+                                txtdiabetes.setText(Random);
 
 
 
 
 
-               }
 
 
+                            } else if (testtype.equals("Random Glucose Test")) {
+                                String Random = String.format("%.2f", value);
+
+                                if (value < 140 && value>0) {
+                                    Random += "(Normal)";
+                                } else if (value > 140 && value < 200) {
+                                    Random += "(Prediabetes)";
+
+                                } else if (value > 200) {
+                                    Random += "(Diabetes)";
 
 
-               }
+                                }
+                                txtdiabetes.setText(Random);
 
 
-           }
+                            } else {
+                                String Random = String.format("%.2f", value);
+                                if (value < 100 && value > 0) {
+                                    Random += "(Normal)";
+                                } else if (value > 100 && value < 125) {
+                                    Random += "(Prediabetes)";
+
+
+                                } else if (value > 125) {
+                                    Random += "(Diabetes)";
+
+                                }
+                                txtdiabetes.setText(Random);
+
+                            }
+                        }
+                        break;
+
+
+                }
+            }
 
         }
+
+
+
+
+
+
+
+
+
+
+
+    }
 
 
 
@@ -891,19 +965,19 @@ public class PrintReport extends AppCompatActivity {
                         case "VTF":
 //                        this is to be done in asynctask and view loading is to be done in post execution
 //                            vitalSign = db.getLastVitalSign(pt_no);
-                                outputStream.write("---------------------------\n".getBytes());
-                                outputStream.write("Vital Sign\n".getBytes());
-                                outputStream.write("-----------------------------\n".getBytes());
-                                outputStream.write(("Weight :" +txtWeight.getText() + "\n").getBytes());
-                                outputStream.write(("Height :" + txtHeight.getText() +"\n").getBytes());
-                                outputStream.write(("BMI:" + txtBMI.getText() + "\n").getBytes());
-                                outputStream.write(("Temp :" + txtTemp.getText() + "\n") .getBytes());
-                                outputStream.write(("Pulse :" + txtPulse.getText() + "\n") .getBytes());
-                                outputStream.write(("STO2 :" +txtSTO2.getText() + "\n") .getBytes());
-                                outputStream.write(("BP :" + txtBP.getText() + "\n").getBytes());
+                            outputStream.write("---------------------------\n".getBytes());
+                            outputStream.write("Vital Sign\n".getBytes());
+                            outputStream.write("-----------------------------\n".getBytes());
+                            outputStream.write(("Weight :" +txtWeight.getText() + "\n").getBytes());
+                            outputStream.write(("Height :" + txtHeight.getText() +"\n").getBytes());
+                            outputStream.write(("BMI:" + txtBMI.getText() + "\n").getBytes());
+                            outputStream.write(("Temp :" + txtTemp.getText() + "\n") .getBytes());
+                            outputStream.write(("Pulse :" + txtPulse.getText() + "\n") .getBytes());
+                            outputStream.write(("STO2 :" +txtSTO2.getText() + "\n") .getBytes());
+                            outputStream.write(("BP :" + txtBP.getText() + "\n").getBytes());
 
 
-                                break;
+                            break;
 
 
                         case "DF":
@@ -922,18 +996,18 @@ public class PrintReport extends AppCompatActivity {
 //                        this is to be done in asynctask and view loading is to be done in post execution
 //                            ecgReport=    db.getSingleLeadEcgSign(pt_no,"SL");
 
-                                outputStream.write("-----------------------------\n".getBytes());
-                                outputStream.write("Single Lead Ecg Sign\n".getBytes());
-                                outputStream.write("-----------------------------\n".getBytes());
-                                outputStream.write(("Pr :" + pr.getText() + "\n").getBytes());
-                                outputStream.write(("Heartrate :" + heartrate.getText() + "\n").getBytes());
-                                outputStream.write(("Qt:" + qt.getText() + "\n").getBytes());
-                                outputStream.write(("Qtc :" + qtc.getText() + "\n") .getBytes());
-                                outputStream.write(("Qrs :" + qrs.getText() + "\n") .getBytes());
-                                outputStream.write(("Sdnn :" +sdnn.getText() + "\n") .getBytes());
-                                outputStream.write(("Rmssd :" + rmssd.getText() + "\n").getBytes());
-                                outputStream.write(("Mrr :" + mrr.getText() + "\n").getBytes());
-                                outputStream.write(("Finding :" + finding.getText() + "\n").getBytes());
+                            outputStream.write("-----------------------------\n".getBytes());
+                            outputStream.write("Single Lead Ecg Sign\n".getBytes());
+                            outputStream.write("-----------------------------\n".getBytes());
+                            outputStream.write(("Pr :" + pr.getText() + "\n").getBytes());
+                            outputStream.write(("Heartrate :" + heartrate.getText() + "\n").getBytes());
+                            outputStream.write(("Qt:" + qt.getText() + "\n").getBytes());
+                            outputStream.write(("Qtc :" + qtc.getText() + "\n") .getBytes());
+                            outputStream.write(("Qrs :" + qrs.getText() + "\n") .getBytes());
+                            outputStream.write(("Sdnn :" +sdnn.getText() + "\n") .getBytes());
+                            outputStream.write(("Rmssd :" + rmssd.getText() + "\n").getBytes());
+                            outputStream.write(("Mrr :" + mrr.getText() + "\n").getBytes());
+                            outputStream.write(("Finding :" + finding.getText() + "\n").getBytes());
 
 
 
@@ -943,18 +1017,18 @@ public class PrintReport extends AppCompatActivity {
 //                        this is to be done in asynctask and view loading is to be done in post execution
 //                            ecgReport=    db.getSingleLeadEcgSign(pt_no);
 
-                                outputStream.write("-----------------------------\n".getBytes());
-                                outputStream.write("Chest Six Lead Ecg Sign\n".getBytes());
-                                outputStream.write("-----------------------------\n".getBytes());
-                                outputStream.write(("Pr :" +chestleadecgpr.getText() + "\n").getBytes());
-                                outputStream.write(("Heartrate :" + chestleadecgheartrate.getText() + "\n").getBytes());
-                                outputStream.write(("Qt:" + chestleadecgqt.getText() + "\n").getBytes());
-                                outputStream.write(("Qtc :" + chestleadecgqtc.getText() + "\n") .getBytes());
-                                outputStream.write(("Qrs :" + chestleadecgqrs.getText() + "\n") .getBytes());
-                                outputStream.write(("Sdnn :" +chestleadecgsdnn.getText() + "\n") .getBytes());
-                                outputStream.write(("Rmssd :" + chestleadecgrmssd.getText() + "\n").getBytes());
-                                outputStream.write(("Mrr :" + chestleadecgmrr.getText() + "\n").getBytes());
-                                outputStream.write(("Finding :" + chestleadecgfinding.getText() + "\n").getBytes());
+                            outputStream.write("-----------------------------\n".getBytes());
+                            outputStream.write("Chest Six Lead Ecg Sign\n".getBytes());
+                            outputStream.write("-----------------------------\n".getBytes());
+                            outputStream.write(("Pr :" +chestleadecgpr.getText() + "\n").getBytes());
+                            outputStream.write(("Heartrate :" + chestleadecgheartrate.getText() + "\n").getBytes());
+                            outputStream.write(("Qt:" + chestleadecgqt.getText() + "\n").getBytes());
+                            outputStream.write(("Qtc :" + chestleadecgqtc.getText() + "\n") .getBytes());
+                            outputStream.write(("Qrs :" + chestleadecgqrs.getText() + "\n") .getBytes());
+                            outputStream.write(("Sdnn :" +chestleadecgsdnn.getText() + "\n") .getBytes());
+                            outputStream.write(("Rmssd :" + chestleadecgrmssd.getText() + "\n").getBytes());
+                            outputStream.write(("Mrr :" + chestleadecgmrr.getText() + "\n").getBytes());
+                            outputStream.write(("Finding :" + chestleadecgfinding.getText() + "\n").getBytes());
 
 
 
@@ -964,18 +1038,18 @@ public class PrintReport extends AppCompatActivity {
                         case "LISLF":
 //                        this is to be done in asynctask and view loading is to be done in post execution
 //                            ecgReport=    db.getSingleLeadEcgSign(pt_no);
-                                outputStream.write("-----------------------------\n".getBytes());
-                                outputStream.write("Limb Six Lead Ecg Sign\n".getBytes());
-                                outputStream.write("-----------------------------\n".getBytes());
-                                outputStream.write(("Pr :" + limbsixleadecgpr.getText() + "\n").getBytes());
-                                outputStream.write(("Heartrate :" + limbsixleadecgheartrate.getText() + "\n").getBytes());
-                                outputStream.write(("Qt:" + limbsixleadecgqt.getText() + "\n").getBytes());
-                                outputStream.write(("Qtc :" + limbsixleadecgqtc.getText() + "\n") .getBytes());
-                                outputStream.write(("Qrs :" + limbsixleadecgqrs.getText() + "\n") .getBytes());
-                                outputStream.write(("Sdnn :" +limbsixleadecgsdnn.getText() + "\n") .getBytes());
-                                outputStream.write(("Rmssd :" + limbsixleadecgrmssd.getText() + "\n").getBytes());
-                                outputStream.write(("Mrr :" +limbsixleadecgmrr.getText() + "\n").getBytes());
-                                outputStream.write(("Finding :" + limbsixleadecgfinding.getText() + "\n").getBytes());
+                            outputStream.write("-----------------------------\n".getBytes());
+                            outputStream.write("Limb Six Lead Ecg Sign\n".getBytes());
+                            outputStream.write("-----------------------------\n".getBytes());
+                            outputStream.write(("Pr :" + limbsixleadecgpr.getText() + "\n").getBytes());
+                            outputStream.write(("Heartrate :" + limbsixleadecgheartrate.getText() + "\n").getBytes());
+                            outputStream.write(("Qt:" + limbsixleadecgqt.getText() + "\n").getBytes());
+                            outputStream.write(("Qtc :" + limbsixleadecgqtc.getText() + "\n") .getBytes());
+                            outputStream.write(("Qrs :" + limbsixleadecgqrs.getText() + "\n") .getBytes());
+                            outputStream.write(("Sdnn :" +limbsixleadecgsdnn.getText() + "\n") .getBytes());
+                            outputStream.write(("Rmssd :" + limbsixleadecgrmssd.getText() + "\n").getBytes());
+                            outputStream.write(("Mrr :" +limbsixleadecgmrr.getText() + "\n").getBytes());
+                            outputStream.write(("Finding :" + limbsixleadecgfinding.getText() + "\n").getBytes());
 
 
                             break;
@@ -985,18 +1059,18 @@ public class PrintReport extends AppCompatActivity {
 //                            ecgReport=    db.getSingleLeadEcgSign(pt_no);
 
 
-                                outputStream.write("-----------------------------\n".getBytes());
-                                outputStream.write("Twelve Lead Ecg Sign\n".getBytes());
-                                outputStream.write("-----------------------------\n".getBytes());
-                                outputStream.write(("Pr :" + twelveleadecgpr.getText() + "\n").getBytes());
-                                outputStream.write(("Heartrate :" +twelveleadecgheartrate.getText() + "\n").getBytes());
-                                outputStream.write(("Qt:" + twelveleadecgqt.getText() + "\n").getBytes());
-                                outputStream.write(("Qtc :" + twelveleadecgqtc.getText() + "\n") .getBytes());
-                                outputStream.write(("Qrs :" + twelveleadecgqrs.getText() + "\n") .getBytes());
-                                outputStream.write(("Sdnn :" +twelveleadecgsdnn.getText() + "\n") .getBytes());
-                                outputStream.write(("Rmssd :" +twelveleadecgrmssd.getText() + "\n").getBytes());
-                                outputStream.write(("Mrr :" + twelveleadecgmrr.getText() + "\n").getBytes());
-                                outputStream.write(("Finding :" + twelveleadecgfinding.getText() + "\n").getBytes());
+                            outputStream.write("-----------------------------\n".getBytes());
+                            outputStream.write("Twelve Lead Ecg Sign\n".getBytes());
+                            outputStream.write("-----------------------------\n".getBytes());
+                            outputStream.write(("Pr :" + twelveleadecgpr.getText() + "\n").getBytes());
+                            outputStream.write(("Heartrate :" +twelveleadecgheartrate.getText() + "\n").getBytes());
+                            outputStream.write(("Qt:" + twelveleadecgqt.getText() + "\n").getBytes());
+                            outputStream.write(("Qtc :" + twelveleadecgqtc.getText() + "\n") .getBytes());
+                            outputStream.write(("Qrs :" + twelveleadecgqrs.getText() + "\n") .getBytes());
+                            outputStream.write(("Sdnn :" +twelveleadecgsdnn.getText() + "\n") .getBytes());
+                            outputStream.write(("Rmssd :" +twelveleadecgrmssd.getText() + "\n").getBytes());
+                            outputStream.write(("Mrr :" + twelveleadecgmrr.getText() + "\n").getBytes());
+                            outputStream.write(("Finding :" + twelveleadecgfinding.getText() + "\n").getBytes());
 
 
 
@@ -1007,18 +1081,18 @@ public class PrintReport extends AppCompatActivity {
 //                            ecgReport=    db.getSingleLeadEcgSign(pt_no);
 
 
-                                outputStream.write("-----------------------------\n".getBytes());
-                                outputStream.write("Long Lead Ecg Sign\n".getBytes());
-                                outputStream.write("-----------------------------\n".getBytes());
-                                outputStream.write(("Pr :" + longpr.getText() + "\n").getBytes());
-                                outputStream.write(("Heartrate :" + longheartrate.getText() + "\n").getBytes());
-                                outputStream.write(("Qt:" + longqt.getText() + "\n").getBytes());
-                                outputStream.write(("Qtc :" + longqtc.getText() + "\n") .getBytes());
-                                outputStream.write(("Qrs :" + longqrs.getText() + "\n") .getBytes());
-                                outputStream.write(("Sdnn :" +longsdnn.getText() + "\n") .getBytes());
-                                outputStream.write(("Rmssd :" + longrmssd.getText() + "\n").getBytes());
-                                outputStream.write(("Mrr :" + longmrr.getText() + "\n").getBytes());
-                                outputStream.write(("Finding :" + longfinding.getText() + "\n").getBytes());
+                            outputStream.write("-----------------------------\n".getBytes());
+                            outputStream.write("Long Lead Ecg Sign\n".getBytes());
+                            outputStream.write("-----------------------------\n".getBytes());
+                            outputStream.write(("Pr :" + longpr.getText() + "\n").getBytes());
+                            outputStream.write(("Heartrate :" + longheartrate.getText() + "\n").getBytes());
+                            outputStream.write(("Qt:" + longqt.getText() + "\n").getBytes());
+                            outputStream.write(("Qtc :" + longqtc.getText() + "\n") .getBytes());
+                            outputStream.write(("Qrs :" + longqrs.getText() + "\n") .getBytes());
+                            outputStream.write(("Sdnn :" +longsdnn.getText() + "\n") .getBytes());
+                            outputStream.write(("Rmssd :" + longrmssd.getText() + "\n").getBytes());
+                            outputStream.write(("Mrr :" + longmrr.getText() + "\n").getBytes());
+                            outputStream.write(("Finding :" + longfinding.getText() + "\n").getBytes());
 
 
                             break;
@@ -1031,20 +1105,20 @@ public class PrintReport extends AppCompatActivity {
 //                        this is to be done in asynctask and view loading is to be done in post execution
 
 
-                                outputStream.write("-----------------------------\n".getBytes());
-                                outputStream.write("Urine Test Sign\n".getBytes());
-                                outputStream.write("-----------------------------\n".getBytes());
-                                outputStream.write(("Leukocytes :" +txtLeuko.getText() + "\n").getBytes());
-                                outputStream.write(("Nitrite :" + txtNitrate.getText() + "\n").getBytes());
-                                outputStream.write(("Urobilinogen:" + txtURB.getText()+ "\n").getBytes());
-                                outputStream.write(("Protein :" + txtProtein.getText() + "\n") .getBytes());
-                                outputStream.write(("pH :" + txtPH.getText() + "\n") .getBytes());
-                                outputStream.write(("Blood :" + txtBlood.getText() + "\n") .getBytes());
-                                outputStream.write(("Specific Gravity :" + txtSG.getText() + "\n").getBytes());
-                                outputStream.write(("Ketones :" + txtKet.getText() + "\n").getBytes());
-                                outputStream.write(("Bilirubin :" + txtBili.getText() + "\n").getBytes());
-                                outputStream.write(("Glucose :" + txtUrineGlucose.getText() + "\n").getBytes());
-                                outputStream.write(("Ascorbic acid :" + txtASC.getText() + "\n").getBytes());
+                            outputStream.write("-----------------------------\n".getBytes());
+                            outputStream.write("Urine Test Sign\n".getBytes());
+                            outputStream.write("-----------------------------\n".getBytes());
+                            outputStream.write(("Leukocytes :" +txtLeuko.getText() + "\n").getBytes());
+                            outputStream.write(("Nitrite :" + txtNitrate.getText() + "\n").getBytes());
+                            outputStream.write(("Urobilinogen:" + txtURB.getText()+ "\n").getBytes());
+                            outputStream.write(("Protein :" + txtProtein.getText() + "\n") .getBytes());
+                            outputStream.write(("pH :" + txtPH.getText() + "\n") .getBytes());
+                            outputStream.write(("Blood :" + txtBlood.getText() + "\n") .getBytes());
+                            outputStream.write(("Specific Gravity :" + txtSG.getText() + "\n").getBytes());
+                            outputStream.write(("Ketones :" + txtKet.getText() + "\n").getBytes());
+                            outputStream.write(("Bilirubin :" + txtBili.getText() + "\n").getBytes());
+                            outputStream.write(("Glucose :" + txtUrineGlucose.getText() + "\n").getBytes());
+                            outputStream.write(("Ascorbic acid :" + txtASC.getText() + "\n").getBytes());
 
 
 
@@ -1076,6 +1150,9 @@ public class PrintReport extends AppCompatActivity {
 //        pref.edit().putInt("TLF",0).apply();
 //        pref.edit().putInt("LSLF",0).apply();
         isPrintClicked = false;
+
+
+
     }
 
     @Override
@@ -1086,8 +1163,12 @@ public class PrintReport extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-       PrintReport.super.onBackPressed();
+        PrintReport.super.onBackPressed();
     }
+
+
+
+
 
 
 

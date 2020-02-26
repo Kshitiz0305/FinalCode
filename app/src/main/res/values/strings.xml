@@ -113,6 +113,18 @@
     <string name="complete_test">COMPLETE TEST</string>
     <string name="perform_test">Perform Test</string>
     <string name="ok">Ok</string>
+    <string name="breakfast">Breakfast</string>
+    <string name="lunch">lunch</string>
+    <string name="supper">Supper</string>
+    <string name="snack">Snacks</string>
+    <string name="random">Random</string>
+    <string name="post_prandial">Post Prandial</string>
+    <string name="fasting">Fasting</string>
+    <string name="start_diabetes_test">Start Diabetes Test</string>
+    <string name="r_u_ready">Any Meal Today after Wake Up?</string>
+    <string name="what_was_your_latest_meal">What was your latest Meal?</string>
+    <string name="any_meal_today_after_wake_up">Any Meal Today After Wake Up?</string>
+    <string name="fast_reading">Fasting  Reading Glucose Test</string>
 
 
 </resources>

@@ -4,28 +4,19 @@ import android.Manifest;
 import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
 import android.content.Context;
-import android.content.Intent;
 import android.content.SharedPreferences;
-import android.content.pm.PackageManager;
-import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
 import android.os.AsyncTask;
-import android.os.Build;
 import android.os.Bundle;
-import android.os.Environment;
 import android.util.Log;
-import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.ActivityCompat;
 import androidx.databinding.DataBindingUtil;
 
 import com.agatsa.testsdknew.Models.GlucoseModel;
@@ -33,11 +24,6 @@ import com.agatsa.testsdknew.Models.PatientModel;
 import com.agatsa.testsdknew.R;
 import com.agatsa.testsdknew.customviews.DialogUtil;
 import com.agatsa.testsdknew.databinding.ActivityDiabetesBinding;
-import com.agatsa.testsdknew.utils.CSVWriter;
-
-import java.io.File;
-import java.io.FileWriter;
-
 import br.com.ilhasoft.support.validation.Validator;
 
 public class DiabetesActivity extends AppCompatActivity {
@@ -142,6 +128,10 @@ public class DiabetesActivity extends AppCompatActivity {
             // Save Vital Sign
             glucoseModel.setPt_no(ptno);
             glucoseModel.setPtGlucose((getEdittextValue(binding.txtglucose)));
+            glucoseModel.setPtlatestmealtime("nil");
+            glucoseModel.setPtmealtype("Fasting Reading glucose test");
+            glucoseModel.setPttimetaken("nil");
+            glucoseModel.setPttesttype("nil");
             String last_vitalsign_row_id = db.SaveGlucoseSign(glucoseModel);
             try {
                 Thread.sleep(1000);

@@ -9,16 +9,17 @@
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:id="@+id/tv"
-        android:textColor="#fff"
-        android:paddingLeft="15dp"
+        android:textColor="#000"
+        android:fontFamily="@font/sfpro_display_semibold"
+        android:paddingLeft="20dp"
         android:gravity="center_vertical"
-        android:background="@color/colorTransparentBlack"
+        android:background="@color/smsp_white_color"
         android:textSize="20sp"
-        android:text="dus11 report"/>
+        android:text="Urinalysis Report"/>
 
     <View
         android:layout_width="match_parent"
         android:layout_height="10dp"
-        android:background="#000"/>
+        android:background="#f7f7f7"/>
 
 </LinearLayout>

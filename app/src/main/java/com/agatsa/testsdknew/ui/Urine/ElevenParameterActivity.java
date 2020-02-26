@@ -85,6 +85,13 @@ import static org.opencv.imgproc.Imgproc.CHAIN_APPROX_SIMPLE;
 import static org.opencv.imgproc.Imgproc.RETR_EXTERNAL;
 
 
+/**
+ * <h1>Urinalysis of DUS 11</h1>
+ * The ElevenParameterActivity implements OpenCV sdk to perform image processing on image of urine strip of DUS 11.
+ * @author Anuj Karn
+ * @version 1.0
+ * @since 2019-12-15*/
+
 public  class ElevenParameterActivity extends AppCompatActivity {
     String ptno = " ";
     SharedPreferences pref;
@@ -821,7 +828,6 @@ public  class ElevenParameterActivity extends AppCompatActivity {
 //                    temp1[2] = temp1[2] > 20 && temp1[2] < 35? 70: temp1[2];
                 }
                 test_patch.put(i, j, temp1);
-                System.out.println("hello");
             }
         }
         Scalar abc = Core.mean(test_patch);

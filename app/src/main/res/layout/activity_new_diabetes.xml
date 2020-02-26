@@ -1,0 +1,386 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <ScrollView
+        android:layout_height="match_parent"
+        android:layout_width="match_parent">
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_marginLeft="10dp"
+            app:cardCornerRadius="@dimen/_10kdp"
+            app:cardElevation="@dimen/_2kdp"
+            app:cardMaxElevation="@dimen/_4kdp"
+            android:layout_marginTop="@dimen/_3sdp"
+            android:layout_marginRight="10dp"
+            android:layout_height="wrap_content">
+
+            <LinearLayout
+
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <TextView
+                            android:id="@+id/patientName"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="@dimen/_110sdp"
+                            android:textSize="17sp"
+                            android:fontFamily="@font/sfpro_display_bold"
+                            android:padding="8sp"
+                            android:text="Diabetes"
+                            android:textAlignment="textEnd"
+                            android:textColor="@color/colorPrimaryDark"
+                            />
+
+                        <ImageView
+                            android:id="@+id/help"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentEnd="true"
+                            android:layout_marginRight="@dimen/_5sdp"
+                            android:src="@drawable/ic_question"
+                            android:fontFamily="@font/sfpro_display_semibold"
+                            android:gravity="right"
+                            android:padding="8sp"
+                            android:textColor="@color/colorPrimaryDark"
+                            android:textSize="15sp" />
+                    </RelativeLayout>
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:background="@color/graylight" />
+
+
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/sfpro_display_semibold"
+                        android:padding="8sp"
+                        android:text="@string/any_meal_today_after_wake_up"
+                        android:textColor="@color/colorPrimaryDark"
+                        android:textSize="@dimen/_15sdp" />
+
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/readings"
+                        android:layout_gravity="center"
+                        android:orientation="horizontal"
+                        android:visibility="visible">
+
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:orientation="vertical">
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:layout_marginRight="@dimen/_10kdp"
+                                android:orientation="horizontal"
+                                android:visibility="visible">
+
+                                <Button
+                                    android:id="@+id/buttonyes"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="@dimen/_35sdp"
+                                    android:layout_marginLeft="@dimen/_5sdp"
+                                    android:layout_gravity="center"
+                                    android:background="@drawable/rect_orange"
+                                    android:fontFamily="@font/sfpro_display_semibold"
+                                    android:text="YES"
+                                    android:textColor="@color/white"
+                                    android:visibility="visible" />
+
+
+                            </LinearLayout>
+
+                        </LinearLayout>
+
+
+                        <LinearLayout
+
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:orientation="vertical">
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:orientation="horizontal">
+
+                                <Button
+                                    android:id="@+id/buttonno"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="@dimen/_35sdp"
+                                    android:layout_gravity="center"
+                                    android:layout_marginRight="@dimen/_5sdp"
+                                    android:background="@drawable/rect_orange"
+                                    android:fontFamily="@font/sfpro_display_semibold"
+                                    android:text="NO"
+                                    android:textColor="@color/white"
+                                    android:visibility="visible" />
+
+
+                            </LinearLayout>
+
+
+                        </LinearLayout>
+
+
+                    </LinearLayout>
+
+
+
+                    <LinearLayout
+                        android:id="@+id/cardviewyes"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginTop="8dp"
+                        android:visibility="gone">
+
+
+                        <LinearLayout
+                            android:layout_width="fill_parent"
+                            android:layout_height="@dimen/_420sdp"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:fontFamily="@font/sfpro_display_semibold"
+                                android:padding="8sp"
+                                android:text="@string/what_was_your_latest_meal"
+                                android:textColor="@color/colorPrimaryDark"
+                                android:textSize="@dimen/_15sdp" />
+
+                            <RadioGroup
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content">
+
+                                <RadioButton
+                                    android:id="@+id/breakfast"
+                                    android:layout_width="140dp"
+                                    android:textSize="@dimen/_15sdp"
+                                    android:checked="true"
+                                    android:layout_height="wrap_content"
+                                    android:text="@string/breakfast" />
+
+                                <RadioButton
+                                    android:id="@+id/lunch"
+                                    android:layout_width="140dp"
+                                    android:textSize="@dimen/_15sdp"
+                                    android:layout_height="wrap_content"
+                                    android:text="@string/lunch" />
+
+
+                                <RadioButton
+                                    android:id="@+id/supper"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:textSize="@dimen/_15sdp"
+                                    android:text="@string/supper" />
+
+                                <RadioButton
+                                    android:id="@+id/Snack"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:textSize="@dimen/_15sdp"
+                                    android:text="@string/snack" />
+
+                            </RadioGroup>
+
+                            <View
+                                android:layout_width="match_parent"
+                                android:layout_height="1dp"
+                                android:layout_marginTop="@dimen/_5sdp"
+                                android:background="@color/graylight" />
+
+                            <LinearLayout
+                                android:id="@+id/mealtime"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="4sp"
+                                android:gravity="center"
+                                android:orientation="vertical">
+
+                                <TextView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:fontFamily="@font/sfpro_display_semibold"
+                                    android:padding="8sp"
+                                    android:text="Timing of the Meal"
+                                    android:textColor="@color/colorPrimaryDark"
+                                    android:textSize="@dimen/_15sdp" />
+
+
+                                <TextView
+                                    android:id="@+id/txttiming"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="40dp"
+                                    android:layout_marginLeft="@dimen/_5sdp"
+                                    android:layout_marginRight="@dimen/_5sdp"
+                                    android:layout_weight="1"
+                                    android:hint="HH:MM: a"
+                                    android:drawablePadding="@dimen/_3sdp"
+                                    android:padding="@dimen/_5sdp"
+                                    app:validateEmpty="@{true}"
+                                    android:textColorHighlight="@color/black"
+                                    android:textColor="@color/black"
+                                    android:background="@drawable/bg_gray_border"
+                                    android:drawableRight="@drawable/ic_time"
+                                    android:fontFamily="@font/sf_pro_display_medium"
+                                    android:imeOptions="actionNext"
+                                    android:importantForAutofill="no"
+                                    android:textCursorDrawable="@null"
+                                    android:textSize="@dimen/_15sdp" />
+
+
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="@dimen/_3sdp"
+                                android:gravity="center"
+                                android:visibility="visible"
+                                android:orientation="vertical">
+
+                                <TextView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:fontFamily="@font/sfpro_display_semibold"
+                                    android:padding="8sp"
+                                    android:text="ABC Glucose Test"
+                                    android:textColor="@color/colorPrimaryDark"
+                                    android:textSize="@dimen/_15sdp" />
+
+
+                                <Spinner
+                                    android:id="@+id/glucosetesttype"
+                                    style="@style/Base.Widget.AppCompat.Spinner.Underlined"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="40dp"
+                                    android:cursorVisible="true"
+                                    android:entries="@array/abcglucosetest"
+                                    android:fontFamily="@font/sf_pro_display_medium"
+                                    android:imeOptions="actionNext"
+                                    android:importantForAutofill="no"
+                                    android:padding="8sp" />
+
+
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="vertical">
+
+                                <TextView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:text="Glucose Level"
+                                    android:fontFamily="@font/sfpro_display_semibold"
+                                    android:padding="8sp"
+                                    android:textColor="@color/colorPrimaryDark"
+                                    android:textSize="@dimen/_15sdp" />
+
+
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:orientation="horizontal"
+                                    android:gravity="center"
+                                    >
+
+                                    <EditText
+                                        android:id="@+id/txtGlucoselevel"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="40dp"
+                                        android:layout_marginLeft="@dimen/_5sdp"
+                                        android:layout_marginRight="@dimen/_5sdp"
+                                        android:layout_weight="1"
+                                        android:drawablePadding="@dimen/_3sdp"
+                                        android:padding="@dimen/_5sdp"
+                                        app:validateEmpty="@{true}"
+                                        android:maxLength="3"
+                                        android:inputType="number"
+                                        android:textColorHighlight="@color/black"
+                                        android:textColor="@color/black"
+                                        android:background="@drawable/bg_gray_border"
+                                        android:fontFamily="@font/sf_pro_display_medium"
+                                        android:imeOptions="actionNext"
+                                        android:importantForAutofill="no"
+                                        android:textCursorDrawable="@null"
+                                        android:textSize="@dimen/_15sdp"/>
+
+
+
+                                </LinearLayout>
+
+
+                            </LinearLayout>
+
+
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="83dp"
+                                android:layout_marginRight="@dimen/_5sdp"
+                                android:layout_marginLeft="@dimen/_5sdp"
+                                android:orientation="horizontal"
+                                android:visibility="visible">
+
+                                <Button
+                                    android:id="@+id/btnsave"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="@dimen/_40sdp"
+                                    android:layout_gravity="center"
+                                    android:background="@drawable/rect_orange"
+                                    android:fontFamily="@font/sfpro_display_semibold"
+                                    android:text="SAVE"
+                                    android:textColor="@color/white"
+                                    android:visibility="visible" />
+
+
+                            </LinearLayout>
+
+
+                        </LinearLayout>
+                    </LinearLayout>
+
+
+                </LinearLayout>
+
+
+
+
+            </LinearLayout>
+
+        </androidx.cardview.widget.CardView>
+    </ScrollView>
+</layout>

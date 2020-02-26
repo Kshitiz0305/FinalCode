@@ -351,7 +351,7 @@ public class PatientEntryActivity extends AppCompatActivity {
 
 
     }
-    private void exportUrineDB() {
+    private void exportelevenparameterUrineDB() {
 
         LabDB labDB = new LabDB(this);
         File exportDir = new File(Environment.getExternalStorageDirectory().toString(), "/sunyahealth/CSV/"+currentDateandTime);
@@ -391,6 +391,81 @@ public class PatientEntryActivity extends AppCompatActivity {
 
 
     }
+    private void exporttwoparameterUrineDB() {
+
+        LabDB labDB = new LabDB(this);
+        File exportDir = new File(Environment.getExternalStorageDirectory().toString(), "/sunyahealth/CSV/"+currentDateandTime);
+        if (!exportDir.exists())
+        {
+            exportDir.mkdirs();
+        }
+
+        File file = new File(exportDir, "TwoParameterUrine.csv");
+        try
+        {
+            file.createNewFile();
+            CSVWriter csveurineWrite = new CSVWriter(new FileWriter(file));
+            SQLiteDatabase db = labDB.getReadableDatabase();
+            Cursor curtwoparameterurineCSV = db.rawQuery("SELECT * FROM  two_parameter_urine_test",null);
+            csveurineWrite.writeNext(curtwoparameterurineCSV.getColumnNames());
+            while(curtwoparameterurineCSV.moveToNext())
+            {
+                //Which column you want to exprort
+                String diabetesStr[] ={curtwoparameterurineCSV.getString(0),curtwoparameterurineCSV.getString(1),
+                        curtwoparameterurineCSV.getString(2),curtwoparameterurineCSV.getString(3),
+                        curtwoparameterurineCSV.getString(4),curtwoparameterurineCSV.getString(5),
+                        curtwoparameterurineCSV.getString(6),curtwoparameterurineCSV.getString(7)
+                };
+                csveurineWrite.writeNext(diabetesStr);
+            }
+            csveurineWrite.close();
+            curtwoparameterurineCSV.close();
+        }
+        catch(Exception sqlEx)
+        {
+            Log.e("MainActivity", sqlEx.getMessage(), sqlEx);
+        }
+
+
+    }
+    private void exporturicacid() {
+
+        LabDB labDB = new LabDB(this);
+        File exportDir = new File(Environment.getExternalStorageDirectory().toString(), "/sunyahealth/CSV/"+currentDateandTime);
+        if (!exportDir.exists())
+        {
+            exportDir.mkdirs();
+        }
+
+        File file = new File(exportDir, "UricAcid.csv");
+        try
+        {
+            file.createNewFile();
+            CSVWriter csveurineWrite = new CSVWriter(new FileWriter(file));
+            SQLiteDatabase db = labDB.getReadableDatabase();
+            Cursor cururicacidCSV = db.rawQuery("SELECT * FROM  uric_acid",null);
+            csveurineWrite.writeNext(cururicacidCSV.getColumnNames());
+            while(cururicacidCSV.moveToNext())
+            {
+                //Which column you want to exprort
+                String diabetesStr[] ={cururicacidCSV.getString(0),cururicacidCSV.getString(1),
+                        cururicacidCSV.getString(2),cururicacidCSV.getString(3),
+                        cururicacidCSV.getString(4),cururicacidCSV.getString(5),
+                        cururicacidCSV.getString(6)
+                };
+                csveurineWrite.writeNext(diabetesStr);
+            }
+            csveurineWrite.close();
+            cururicacidCSV.close();
+        }
+        catch(Exception sqlEx)
+        {
+            Log.e("MainActivity", sqlEx.getMessage(), sqlEx);
+        }
+
+
+    }
+
 
     @SuppressLint("StaticFieldLeak")
     private class SaveData extends AsyncTask<String, Void, Integer> {
@@ -416,7 +491,10 @@ public class PatientEntryActivity extends AppCompatActivity {
                 exportbloodpressureDB();
                 exportDiabetesDB();
                 exportECGDB();
-                exportUrineDB();
+                exportelevenparameterUrineDB();
+                exporttwoparameterUrineDB();
+                exporturicacid();
+
                 exportDatabse("Test1.db");
                copyfile();
 
@@ -491,7 +569,9 @@ public class PatientEntryActivity extends AppCompatActivity {
             exportDiabetesDB();
             exportECGDB();
             exportbloodpressureDB();
-            exportUrineDB();
+            exportelevenparameterUrineDB();
+            exporttwoparameterUrineDB();
+            exporturicacid();
             exportDatabse("Test1.db");
             copyfile();
         }

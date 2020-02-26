@@ -78,6 +78,7 @@ import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 import static com.google.common.primitives.Doubles.max;
@@ -85,14 +86,21 @@ import static com.google.common.primitives.Doubles.min;
 import static org.opencv.imgproc.Imgproc.CHAIN_APPROX_SIMPLE;
 import static org.opencv.imgproc.Imgproc.RETR_EXTERNAL;
 
+
+/**
+ * <h1>Urinalysis of DUS 2AC</h1>
+ * The TwoParameterActivity implements OpenCV sdk to perform image processing on image of urine strip of DUS 2AC.
+ * @author Anuj Karn
+ * @version 1.0
+ * @since 2019-12-15*/
+
 public class TwoParameterActivity extends AppCompatActivity {
 
     ActivityTwoParameterUrineTestBinding binding;
 
-
     String ptno = " ";
     SharedPreferences pref;
-    PatientModel patientModel=new PatientModel();
+    PatientModel patientModel = new PatientModel();
     private AssetManager assetManager;
     LabDB labDB;
     boolean startDetect;
@@ -118,8 +126,8 @@ public class TwoParameterActivity extends AppCompatActivity {
             put(1, new HashMap<String, String>(){
                 {
                     put("0.png", "10");
-                    put("1.png", "50");
-                    put("2.png", "100");
+                    put("1.png", "10");
+                    put("2.png", "50");
                     put("3.png", "200");
                     put("4.png", "300");
                 }
@@ -131,8 +139,9 @@ public class TwoParameterActivity extends AppCompatActivity {
     private final static int REQUEST_CODE_ASK_PERMISSIONS = 1;
     private ImageView mImageView;
     String[] report;
-    Button report_list, process,saveurinetest;
+    Bitmap final_strip;
     TextView description;
+    private String stripPhotoPathUri;
     private Activity mActivity;
     private boolean detected;
     Bitmap currentpict;
@@ -147,17 +156,7 @@ public class TwoParameterActivity extends AppCompatActivity {
     private String[] reportVal;
     private String microalbumin;
     private String creatinine;
-//    private String urobilinogen;
-//    private String protein;
-//    private String ph;
-//    private String blood;
-//    private String specific_gravity;
-//    private String ketones;
-//    private String bilirubin;
-//    private String glucose;
-//    private String ascorbic_acid;
-    ImageView help;
-
+    ImageView  help;
     static {
         System.loadLibrary("opencv_java3");
     }
@@ -168,18 +167,6 @@ public class TwoParameterActivity extends AppCompatActivity {
         return Bitmap.createBitmap(source, 0, 0, source.getWidth(), source.getHeight(),
                 matrix, true);
     }
-
-    public static void restartActivity(Activity activity) {
-        if (Build.VERSION.SDK_INT >= 11) {
-            activity.recreate();
-        } else {
-            activity.finish();
-            activity.startActivity(activity.getIntent());
-        }
-    }
-
-
-
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -196,31 +183,19 @@ public class TwoParameterActivity extends AppCompatActivity {
         mActivity = TwoParameterActivity.this;
         mImageView = binding.twoParameterCameraPhoto;
         description = binding.description;
-//        process = findViewById(R.id.done);
         help=findViewById(R.id.help);
-//        report_list = findViewById(R.id.btnReport);
         labDB=new LabDB(getApplicationContext());
-//        saveurinetest = findViewById(R.id.saveurinetest);
         assetManager = getAssets();
-
         if (!OpenCVLoader.initDebug()) {
             Toast.makeText(this, "OpenCV not Loaded", Toast.LENGTH_LONG).show();
             description.setText("OpenCV was not loaded, Please try again.");
-//            new AlertDialog.Builder(TwoParameterActivity.this)
-//                    .setTitle("Error: OpenCV Initialization")
-//                    .setMessage("OpenCV was not loaded, Please try again.")
-//                    .setCancelable(false)
-//                    .setPositiveButton("Okay", (dialog, which) -> restartActivity(mActivity)).show();
         } else {
-//            description.setText("OpenCV Loaded.");
-//            Toast.makeText(this, "OpenCV Loaded", Toast.LENGTH_LONG).show();
             startCamera();
         }
 
         binding.twoParameterOpenCamera.setOnClickListener(v -> {
             mImageView.setImageResource(0);
             startCamera(); report = null;
-//        new String[11];
         });
 
         binding.twoParameterViewReport.setOnClickListener(v -> {
@@ -232,25 +207,20 @@ public class TwoParameterActivity extends AppCompatActivity {
         });
 
         binding.twoParameterSaveReport.setOnClickListener(view -> {
-            SaveImage(final_strip, new SimpleDateFormat("yyyyMMdd_HHmmss").format(Calendar.getInstance().getTime()));
+            SaveImage(final_strip, new SimpleDateFormat("yyyyMMdd_HHmmss", Locale.US).format(Calendar.getInstance().getTime()));
             if(reportVal==null){
                 Toast.makeText(mActivity, "Please Click Picture To View Report", Toast.LENGTH_SHORT).show();
-
             }else{
                 new TwoParameterActivity.SaveData().execute();
-
             }
-
-
-
-
         });
-
-
     }
 
+    /**
+     * This method saves detected patch strip image inside sunyahealth directory for a temporary period of time.
+     * @param finalBitmap This parameter is the bitmap image to be saved.
+     * */
     private void SaveImage(Bitmap finalBitmap) {
-
         String root = Environment.getExternalStorageDirectory().toString();
         File myDir = new File(root + "/sunyahealth/urinestrip/dus2/");
         if (!myDir.exists()) {
@@ -270,8 +240,11 @@ public class TwoParameterActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * This method saves the final permanent detected patch strip image inside sunyahealth directory.
+     * @param finalBitmap This bitmap is saved.
+     * @param dateTime This parameter is used to create image file name.*/
     private void SaveImage(Bitmap finalBitmap, String dateTime) {
-
         String root = Environment.getExternalStorageDirectory().toString();
         File myDir = new File(root + "/sunyahealth/urinestrip/dus2/");
         if (!myDir.exists()) {
@@ -283,7 +256,6 @@ public class TwoParameterActivity extends AppCompatActivity {
         File filetemp = new File (myDir, patientModel.getPtName() + ".jpg");
         if (filetemp.exists())
             filetemp.delete();
-
         try {
             FileOutputStream out = new FileOutputStream(file);
             finalBitmap.compress(Bitmap.CompressFormat.JPEG, 90, out);
@@ -294,35 +266,18 @@ public class TwoParameterActivity extends AppCompatActivity {
         }
     }
 
-    private String stripPhotoPathUri;
+    /**
+     * This method processes the camera captured image.
+     * */
     public void process(){
-//            final ProgressDialog progress = new ProgressDialog(this);
-//            progress.setMessage("Starting Urine Test...");
-//            progress.show();
-//
-//            Runnable progressRunnable = new Runnable() {
-//                @Override
-//                public void run() {
-//                    progress.cancel();
-//
-//                }
-//            };
-//            Handler pdCanceller = new Handler();
-//            pdCanceller.postDelayed(progressRunnable, 2000);
         if (detected){
             detected = false;
         }
         Mat mat = new Mat();
         Utils.bitmapToMat(currentpict, mat);
-//        Utils.bitmapToMat(bitmap, mat);
-//        Core.rotate(mat, mat, Core.ROTATE_90_COUNTERCLOCKWISE);
-//        Bitmap testBitmap = Bitmap.createBitmap(mat.cols(), mat.rows(), Bitmap.Config.ARGB_8888);
-//        Utils.matToBitmap(mat, testBitmap);
         Mat quad = new Mat();
         try {
-
             quad = board_detect(mat);
-
             int x = (int) (quad.width()*0.20);
             int y = (int) (quad.height()*0.20);
             int width = (int) (quad.width()-(2*(quad.width()*0.20)));
@@ -334,7 +289,6 @@ public class TwoParameterActivity extends AppCompatActivity {
             report = processBoard(quad);
             if (report != null) {
                 report = clearify(report);
-
                 detected = true;
                 description.setText("Please check the detected strip, if found wrong detection, please restart the process by clicking the \"Open Camera\" button again.");
                 Toast.makeText(this, "Processing was completed.", Toast.LENGTH_SHORT);
@@ -342,7 +296,6 @@ public class TwoParameterActivity extends AppCompatActivity {
                 detected = false;
             }
         } catch (Exception e) {
-
             new AlertDialog.Builder(TwoParameterActivity.this)
                     .setTitle("Error")
                     .setMessage("Please take picture again!")
@@ -353,31 +306,22 @@ public class TwoParameterActivity extends AppCompatActivity {
                         startCamera();}).show();
         }
         startDetect = false;
-
     }
 
+    /**
+     * This method starts device default camera activity.*/
     public void startCamera(){
         startDetect = false;
-
         Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         takePictureIntent.putExtra("android.intent.extras.FLASH_MODE_ON", 1);
         if (takePictureIntent.resolveActivity(getPackageManager()) != null) {
             File photoFile = null;
             try {
-
                 photoFile = createImageFile();
             } catch (IOException ex) {
-//                new AlertDialog.Builder(TwoParameterActivity.this)
-//                        .setTitle("Error: Image File")
-//                        .setMessage("Something went wrong while creating the image file. Please restart.")
-//                        .setCancelable(false)
-//                        .setPositiveButton("Okay", (dialog, which) -> {
-//                            dialog.dismiss();
-//                            restartActivity(mActivity);
-//                        }).show();
+                Log.d("Image File", "Failed to craete image file.");
             }
             if (photoFile != null) {
-
                 Uri photoURI = FileProvider.getUriForFile(TwoParameterActivity.this,
                         "com.agatsa.testsdknew" + ".provider",
                         photoFile);
@@ -387,6 +331,11 @@ public class TwoParameterActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * This method is executed after user interaction with permission dialog.
+     * @param requestCode This parameter is a reqest code.
+     * @param permissions This parameter is list of all the permissions asked to the user.
+     * @param grantResults This parameter is the result of permission queries.*/
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String permissions[],
                                            @NonNull int[] grantResults) {
@@ -405,17 +354,21 @@ public class TwoParameterActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * This method processes the detected urine board.
+     * @param board This parameter is the detected urine board from the image.
+     * @return String[] This returns the detected strip patches report.*/
     public String[] processBoard(Mat board){
         Mat temp_board = new Mat();
         board.copyTo(temp_board);
         List<Scalar> standard_values = new ArrayList<>();
-//        standard_values.add(new Scalar(45, 0, 183, 0));
-//        standard_values.add(new Scalar(83, 134, 0, 0));
-//        standard_values.add(new Scalar(157, 53, 44, 0));
-        standard_values.add(new Scalar(0, 0, 255, 0));
-        standard_values.add(new Scalar(0, 255, 0, 0));
-        standard_values.add(new Scalar(255, 0, 0, 0));
-        List<Scalar> pixel_values = new ArrayList<>();
+        standard_values.add(new Scalar(45, 0, 183, 0));
+        standard_values.add(new Scalar(83, 134, 0, 0));
+        standard_values.add(new Scalar(157, 53, 44, 0));
+//        standard_values.add(new Scalar(0, 0, 255, 0));
+//        standard_values.add(new Scalar(0, 255, 0, 0));
+//        standard_values.add(new Scalar(255, 0, 0, 0));
+        List<Scalar> pixel_values;
         pixel_values = ref_process(temp_board);
         List<Scalar> deviation = new ArrayList<>();
         for (int i = 0; i < 3; i++){
@@ -425,17 +378,17 @@ public class TwoParameterActivity extends AppCompatActivity {
             }
             deviation.add(new Scalar(vals));
         }
-        String[] result = get_strip(temp_board, deviation);
-        return result;
+        return get_strip(temp_board, deviation);
     }
 
+    /**
+     * This method detects strip from the urine board and analyzes the patches.
+     * @param img This parameter is the image of detected urine board.
+     * @param deviation This parameter os the List of Scalar values that contains the value for color deviation in camera captured image.
+     * @return String[] This returns the result of urine strip after analysis.*/
     private String[] get_strip(Mat img, List<Scalar> deviation) {
-        Bitmap bitmaptest = Bitmap.createBitmap(img.cols(), img.rows(), Bitmap.Config.RGB_565);
-        Utils.matToBitmap(img, bitmaptest);
         Mat very_orig = new Mat();
         img.copyTo(very_orig);
-        int img_h = img.height();
-        int img_w = img.width();
         System.out.println(img.size());
         Mat orig = img.submat(new Rect(0, 0, (int) (img.width()*0.5), img.height()));
         int point = (int)( 0.72*orig.width());
@@ -449,9 +402,7 @@ public class TwoParameterActivity extends AppCompatActivity {
         Imgproc.cvtColor(blurred, hsv, Imgproc.COLOR_BGR2HSV);
         List<Mat> Hsv = new ArrayList<>();
         Core.split(blurred, Hsv);
-        Mat hue = Hsv.get(0);
         Mat sat = Hsv.get(1);
-        Mat value = Hsv.get(2);
         Mat vertical = new Mat();
         Imgproc.threshold(sat, vertical, 0, 255, Imgproc.THRESH_BINARY+Imgproc.THRESH_OTSU);
         Mat edges = new Mat();
@@ -467,11 +418,8 @@ public class TwoParameterActivity extends AppCompatActivity {
                 max_y = rect.y;
             }
         }
-//        MediaStore.Images.Media.insertImage(getContentResolver(), bitmap, "strip", "strip image");
-//        Mat strip = roi1.submat(new Rect(0, (int) (0.1*roi1.rows()), roi1.cols(), (int) (0.23*roi1.rows())));
         int temp_row_end = (int) (0.23*roi1.rows());
         Mat strip = roi1.submat(max_y - temp_row_end, max_y , 0, roi1.cols());
-//        Mat strip_blurred = roi1.submat(new Rect(0, (int) (0.1*roi1.rows()), roi1.width(), (int) (0.23*roi1.height())));
         Mat strip_blurred = roi1.submat(max_y - temp_row_end, max_y , 0, roi1.cols());
         Mat kernel = Mat.ones(new Size(5,5), CvType.CV_32F);
         Core.divide(kernel, new Scalar(25), kernel);
@@ -479,7 +427,7 @@ public class TwoParameterActivity extends AppCompatActivity {
         Imgproc.filter2D(strip_blurred, strip_blurred, -1, kernel);
         double[] ratio = {0.26,0.83};
         int x_point = (int) (strip.width()*0.5);
-        int radius = (int) (strip.width()/6);
+        int radius = (int) (strip.width()/8.56);
         String[] reported = new String[2];
         for (int i = 0; i < 2; i++){
             int y_point = Math.round((int)(ratio[i]*strip.height()));
@@ -491,14 +439,15 @@ public class TwoParameterActivity extends AppCompatActivity {
         final_strip = Bitmap.createBitmap(strip.cols(), strip.rows(), Bitmap.Config.ARGB_8888);
         Utils.matToBitmap(strip, bitmap12);
         Utils.matToBitmap(strip, final_strip);
-//        MediaStore.Images.Media.insertImage(getContentResolver(), bitmap12, "roi1", "strip image");
         mImageView.setImageBitmap(bitmap12);
         SaveImage(bitmap12);
         return reported;
     }
 
-    Bitmap final_strip;
-
+    /**
+     * This method calculates distance between two Scalar values(Colors).
+     * @param tst This is the first Scalar value.
+     * @param ref This is the second Scalar value.*/
     public double calculate_distance(Scalar tst, Scalar ref){
         double value = 0;
         for(int i = 0; i < 4; i++){
@@ -507,18 +456,10 @@ public class TwoParameterActivity extends AppCompatActivity {
         return value;
     }
 
-    public double colourDistance(int red1,int green1, int blue1, int red2, int green2, int blue2)
-    {
-        double rmean = ( red1 + red2 )/2;
-        int r = red1 - red2;
-        int g = green1 - green2;
-        int b = blue1 - blue2;
-        double weightR = 2 + rmean/256;
-        double weightG = 4.0;
-        double weightB = 2 + (255-rmean)/256;
-        return Math.sqrt(weightR*r*r + weightG*g*g + weightB*b*b);
-    }
-
+    /**
+     * This method converts color from RGB to LAB color space.
+     * @param inputColor This parameter is the color in RGB format.
+     * @return double[] This returns the color in the LAB color space.*/
     public double[] rgb2lab (double[] inputColor ){
         int num = 0;
         Scalar RGB = new Scalar(0, 0, 0);
@@ -548,18 +489,23 @@ public class TwoParameterActivity extends AppCompatActivity {
                 value = Math.pow(value, 0.3333333333333333);
             }
             else {
-                value = ( 7.787 * value ) + ( 16 / 116 );
+                value = ( 7.787 * value ) + ( 16f / 116f );
             }
             XYZ.val[i] = value;
         }
-//        Scalar Lab = new Scalar(0, 0, 0);
+
         double[] lab = new double[3];
+
         lab[0] = (116 * XYZ.val[1]) - 16;
         lab[1] = 500 * (XYZ.val[0] - XYZ.val[1]);
         lab[2] = 200 * (XYZ.val[1] - XYZ.val[2]);
         return lab;
     }
 
+    /**
+     * This method determines yellow color in the given color of RGB color space.
+     * @param RGB This parameter is the color in RGB color space
+     * @return boolean This returns the result of determination.*/
     public boolean determine_yellow(double[] RGB) {
         double r = RGB[0] / 255;
         double g = RGB[1] / 255;
@@ -586,10 +532,13 @@ public class TwoParameterActivity extends AppCompatActivity {
         if (h < 0){
             h += 360;
         }
-        System.out.println(h);
         return  h > 45 && h < 68;
     }
 
+    /**
+     * This method determines green color in the given color of RGB color space.
+     * @param RGB This parameter is the color in RGB color space
+     * @return boolean This returns the result of determination.*/
     public boolean determine_green(double[] RGB) {
         double r = RGB[0] / 255;
         double g = RGB[1] / 255;
@@ -619,21 +568,17 @@ public class TwoParameterActivity extends AppCompatActivity {
         return h > 61 && h < 148;
     }
 
-    private static int[] getRGBArr(int pixel) {
-        int alpha = (pixel >> 24) & 0xff;
-        int red = (pixel >> 16) & 0xff;
-        int green = (pixel >> 8) & 0xff;
-        int blue = (pixel) & 0xff;
-
-        return new int[]{red, green, blue};
-    }
-
+    /**
+     * This method matches detected urine strip patches with the list of different color patches stored in the assets folder.
+     * @param test_patch This parameter is the image of detected strip patch.
+     * @param index_no This parameter represents the folder name inside assets folder.
+     * @param deviation This parameter is the deviation in RGB color in camera captured image.
+     * @return String This returns the matched patch file name.*/
     public String calc(Mat test_patch, String index_no, List<Scalar> deviation){
         Mat temp_rgb_patch = new Mat();
         Imgproc.cvtColor(test_patch, test_patch, Imgproc.COLOR_RGBA2RGB);
         test_patch.copyTo(temp_rgb_patch);
         Scalar avg_color_test = Core.mean(test_patch);
-
         HashMap<String, Integer> color_seq = new HashMap<String, Integer>(){
             {
                 put("r", 0);
@@ -641,20 +586,14 @@ public class TwoParameterActivity extends AppCompatActivity {
                 put("b", 0);
             }
         };
-
-
         int max_pos = 0;
-
         for (int i = 0; i < 3; i++) {
             max_pos = avg_color_test.val[i] > avg_color_test.val[max_pos] ? i : max_pos;
         }
-
         int min_pos = 0;
-
         for (int i = 0; i < 3; i++) {
             min_pos = avg_color_test.val[i] < avg_color_test.val[min_pos] ? i : min_pos;
         }
-
         List<Integer> set1 = new ArrayList<>();
         set1.add(min_pos);
         set1.add(max_pos);
@@ -664,7 +603,6 @@ public class TwoParameterActivity extends AppCompatActivity {
         set2.add(2);
         set2.removeAll(set1);
         int mid_pos = set2.get(0);
-
         if (max_pos == 0)
         {
             color_seq.put("r", 2);
@@ -677,7 +615,6 @@ public class TwoParameterActivity extends AppCompatActivity {
         {
             color_seq.put("b", 2);
         }
-
         if (mid_pos == 0)
         {
             color_seq.put("r", 1);
@@ -690,41 +627,35 @@ public class TwoParameterActivity extends AppCompatActivity {
         {
             color_seq.put("b", 1);
         }
-
         // RGB to LAB
-        for(int i = 0; i < test_patch.rows(); i++){
-            for(int j = 0; j < test_patch.cols(); j++){
-                double[] temp1 = rgb2lab(test_patch.get(i, j));
-                    temp1[0] += 20;
-                test_patch.put(i, j, temp1);
+//        if (index_no.equals("1") || index_no.equals("2")) {
+            for(int i = 0; i < test_patch.rows(); i++){
+                for(int j = 0; j < test_patch.cols(); j++){
+                    double[] temp1 = rgb2lab(test_patch.get(i, j));
+                    if (index_no.equals("1")){
+                        temp1[0] += 20;
+                    } else {
+//                        temp1[0] += 10;
+//                        temp1[1] +=5;
+//                        temp1[2] +=5;
+                    }
+                    test_patch.put(i, j, temp1);
+                }
             }
-        }
+//        }
         Scalar abc = Core.mean(test_patch);
-//        for (int i = 0; i < 3; i++){
-//            avg_color_test.val[i] += avg_deviation.val[i];
-//        }
-//        avg_color_test.val[0] += 20;
-//        if (index_no == "2"){
-//            avg_color_test.val[0] -= 20;
-//        }
         HashMap<String, Double> score = new HashMap<>();
-
         try {
             Mat temp = new Mat();
-//            File[] files = new File( "pics/dus11/" + index_no).listFiles();
             String[] files = assetManager.list("pics/dus2/" + index_no);
-            Arrays.sort(files);
             for (String file: files){
                 InputStream is = assetManager.open("pics/dus2/" + index_no + "/" + file);
                 Bitmap  bitmap = BitmapFactory.decodeStream(is);
                 Utils.bitmapToMat(bitmap, temp);
                 Mat ref_image = temp;
-//                Scalar avg_color_ref12 = Core.mean(ref_image);
                 Imgproc.resize(ref_image, ref_image, test_patch.size());
                 Imgproc.cvtColor(ref_image, ref_image, Imgproc.COLOR_RGBA2RGB);
-
                 Scalar avg_color_ref = Core.mean(ref_image);
-
                 HashMap<String, Integer> ref_color_seq = new HashMap<String, Integer>(){
                     {
                         put("r", 0);
@@ -732,12 +663,10 @@ public class TwoParameterActivity extends AppCompatActivity {
                         put("b", 0);
                     }
                 };
-
                 max_pos = 0;
                 for (int i = 0; i < 3; i++) {
                     max_pos = avg_color_ref.val[i] > avg_color_ref.val[max_pos] ? i : max_pos;
                 }
-
                 min_pos = 0;
                 for (int i = 0; i < 3; i++) {
                     min_pos = avg_color_ref.val[i] < avg_color_ref.val[min_pos] ? i : min_pos;
@@ -751,7 +680,6 @@ public class TwoParameterActivity extends AppCompatActivity {
                 set2.add(2);
                 set2.removeAll(set1);
                 mid_pos = set2.get(0);
-
                 if (max_pos == 0)
                 {
                     ref_color_seq.put("r", 2);
@@ -764,7 +692,6 @@ public class TwoParameterActivity extends AppCompatActivity {
                 {
                     ref_color_seq.put("b", 2);
                 }
-
                 if (mid_pos == 0)
                 {
                     ref_color_seq.put("r", 1);
@@ -777,28 +704,27 @@ public class TwoParameterActivity extends AppCompatActivity {
                 {
                     ref_color_seq.put("b", 1);
                 }
-
-                if (ref_color_seq.equals(color_seq)) {
+//                if (ref_color_seq.equals(color_seq)) {
                     // RGB to LAB
-                    for(int i = 0; i < ref_image.rows(); i++){
-                        for(int j = 0; j < ref_image.cols(); j++){
-                            double[] temp1 = rgb2lab(ref_image.get(i, j));
-                            ref_image.put(i, j, temp1);
+//                    if (index_no.equals("1")) {
+                        for (int i = 0; i < ref_image.rows(); i++) {
+                            for (int j = 0; j < ref_image.cols(); j++) {
+                                double[] temp1 = rgb2lab(ref_image.get(i, j));
+                                ref_image.put(i, j, temp1);
+                            }
                         }
-                    }
+//                    }
                     Scalar avg_color_ref_lab = Core.mean(ref_image);
                     Scalar avg_color_test_lab;
                     avg_color_test_lab = abc;
                     double mf = calculate_distance(avg_color_test_lab, avg_color_ref_lab);
                     score.put(file, mf);
-                }
+//                }
             }
-
         } catch (IOException e) {
             Toast.makeText(this, "Error Loading dus11 files", Toast.LENGTH_LONG).show();
         }
         Map<String, Double> lab_score = sortByValue(score);
-
         if (lab_score.isEmpty()){
             try {
                 Mat temp = new Mat();
@@ -811,12 +737,14 @@ public class TwoParameterActivity extends AppCompatActivity {
                     Imgproc.resize(ref_image, ref_image, test_patch.size());
                     Imgproc.cvtColor(ref_image, ref_image, Imgproc.COLOR_RGBA2RGB);
                     // RGB to LAB
-                    for(int i = 0; i < ref_image.rows(); i++){
-                        for(int j = 0; j < ref_image.cols(); j++){
-                            double[] temp1 = rgb2lab(ref_image.get(i, j));
-                            ref_image.put(i, j, temp1);
+//                    if (index_no.equals("1")) {
+                        for (int i = 0; i < ref_image.rows(); i++) {
+                            for (int j = 0; j < ref_image.cols(); j++) {
+                                double[] temp1 = rgb2lab(ref_image.get(i, j));
+                                ref_image.put(i, j, temp1);
+                            }
                         }
-                    }
+//                    }
                     Scalar avg_color_ref = Core.mean(ref_image);
                     double mf = calculate_distance(abc, avg_color_ref);
                     score.put(file, mf);
@@ -826,15 +754,17 @@ public class TwoParameterActivity extends AppCompatActivity {
             }
             lab_score = sortByValue(score);
         }
-        Object myKey = lab_score.keySet().toArray()[0];
-        String key = myKey.toString();
         patientAveragePatchTest += avg_color_test.toString();
-        return  key;
+        return lab_score.keySet().toArray()[0].toString();
     }
 
+    /**
+     * This method detects and processes RGB reference board.
+     * @param ref This parameter is the image of detected urine board.
+     * @return List<Scalar> This returns the detected RGB value from the RGB reference board.*/
     public List<Scalar> ref_process(Mat ref){
         int ref_h = ref.height(), ref_w = ref.width();
-        ref = ref.submat(new Rect(0+(int)ref_w/2, 0, (int)ref_w/2, ref_h));
+        ref = ref.submat(new Rect(ref_w/2, 0, ref_w/2, ref_h));
         Mat blurred = new Mat();
         Imgproc.medianBlur(ref, blurred, 3);
         double gamma = 0.1;
@@ -844,7 +774,6 @@ public class TwoParameterActivity extends AppCompatActivity {
         Imgproc.cvtColor(adjusted, hsv, Imgproc.COLOR_BGR2HSV);
         List<Mat> Hsv = new ArrayList<>();
         Core.split(hsv, Hsv);
-        Mat hue = Hsv.get(0);
         Mat sat = Hsv.get(1);
         Mat value = Hsv.get(2);
         Mat vertical = new Mat();
@@ -871,9 +800,7 @@ public class TwoParameterActivity extends AppCompatActivity {
         Imgproc.cvtColor(refimg, hsv, Imgproc.COLOR_BGR2HSV);
         Hsv.clear();
         Core.split(hsv, Hsv);
-        hue = Hsv.get(0);
         sat = Hsv.get(1);
-        value = Hsv.get(2);
         vertical = new Mat();
         Imgproc.threshold(sat, vertical, 0, 255, Imgproc.THRESH_BINARY + Imgproc.THRESH_OTSU);
         Imgproc.erode(vertical, vertical, kernel, new Point(-1, -1), 2);
@@ -905,8 +832,8 @@ public class TwoParameterActivity extends AppCompatActivity {
         List<Scalar> values = new ArrayList<>();
         for (int i = 0; i < 3; i++){
             Rect r = Imgproc.boundingRect(contours.get(i));
-            int center_x = (int) ((2*r.x + r.width)/2);
-            int center_y = (int) ((2*r.y + r.height)/2);
+            int center_x = (2*r.x + r.width)/2;
+            int center_y = (2*r.y + r.height)/2;
             int rad = 10;
             Mat patch = refimg.submat(new Rect(center_x-rad, center_y-rad, rad, rad));
             Scalar avg_color_test = Core.mean(patch);
@@ -915,6 +842,11 @@ public class TwoParameterActivity extends AppCompatActivity {
         return values;
     }
 
+    /**
+     * This method adjusts gamma value in the given image.
+     * @param image This parameter is the image in which gamma is to be adjusted.
+     * @param gamma This parameter is the value of gamma.
+     * @return Mat This returns the image with adjusted gamma.*/
     private Mat adjust_gamma(Mat image, double gamma) {
         Mat lut = new Mat(1, 256, CvType.CV_8UC1);
         lut.setTo(new Scalar(0));
@@ -925,17 +857,20 @@ public class TwoParameterActivity extends AppCompatActivity {
         return image;
     }
 
+    /**
+     * This method formats and prepares the detected strip result.
+     * @param report This parameter is the result of detected urine strip patches.
+     * @return String[] This returns the formatted report.*/
     public String[] clearify(String[] report){
         microalbumin = test_values.get(0).get(report[0]);
         creatinine = test_values.get(1).get(report[1]);
-
         reportVal = new String[2];
         String micro = test_values.get(0).get(report[0]);
         String creat = test_values.get(1).get(report[1]);
         if (micro.equals("10")){
             if (creat.equals("10")){
                 report[0] = "Recollect specimen";
-            } else if (creat.equals("50") || creat.equals("100") || creat.equals("200") || creat.equals("300")){
+            } else {
                 report[0] = "Normal";
             }
         } else if (micro.equals("30")){
@@ -963,29 +898,23 @@ public class TwoParameterActivity extends AppCompatActivity {
         }
         for (int i = 0; i < 2; i++){
             reportVal[i] = test_values.get(i).get(report[i]);
-//            report[i] = test_names.get(i) + ":  " + test_values.get(i).get(report[i]);
         }
         System.out.println("Completed making report.");
-//        report[report.length -1] = null;
+        report[report.length-1] = "";
         return report;
     }
 
+    /**
+     * This method shows full screen dialog containing urine report.
+     * @param activity This parameter represents the activity in which the dialog is to be displayed.
+     * @param report This parameter represents the formatted urine report.
+     * */
     public void showDialog(TwoParameterActivity activity, final String[] report){
-
         final Dialog dialog = new Dialog(activity, android.R.style.Theme_Black_NoTitleBar_Fullscreen);
         dialog.setCancelable(false);
         dialog.setContentView(R.layout.report_listview);
-
         Button btndialogclose = (Button) dialog.findViewById(R.id.btndialogclose);
-//        Button saveReport = (Button) dialog.findViewById(R.id.save_report);
         btndialogclose.setOnClickListener(v -> dialog.dismiss());
-
-//        saveReport.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                save_report(report);
-//            }
-//        });
 
         ListView listView = (ListView) dialog.findViewById(R.id.listview);
         ArrayAdapter arrayAdapter = new ArrayAdapter(this,R.layout.list_item, R.id.tv, report);
@@ -993,6 +922,10 @@ public class TwoParameterActivity extends AppCompatActivity {
         dialog.show();
     }
 
+    /**
+     * This method sorts HashMap by value.
+     * @param score This parameter is the HashMap which needs to be sorted buy value.
+     * @return HashMap<String, Double> This returns the sorted HashMap.*/
     public static HashMap<String, Double> sortByValue(HashMap<String, Double> score) {
         List<Map.Entry<String, Double> > list =
                 new LinkedList<Map.Entry<String, Double> >(score.entrySet());
@@ -1004,6 +937,9 @@ public class TwoParameterActivity extends AppCompatActivity {
         return temp;
     }
 
+    /**
+    * Checks permission for camera and storage
+    */
     protected void checkPermissions() {
         final List<String> missingPermissions = new ArrayList<String>();
         // check all required dynamic permissions
@@ -1026,112 +962,32 @@ public class TwoParameterActivity extends AppCompatActivity {
         }
     }
 
+
+    /**
+     * This method is executed after image is captured.
+     * @param requestCode This parameter is the request code for the activity.
+     * @param resultCode This parameter is the result code for the result of the activity.
+     * @param data This parameter represents the data returned from the activity.*/
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-
-
         if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
-//            new Progressdailog().execute();
-
-//            final ProgressDialog progress = new ProgressDialog(this);
-//            progress.setMessage("Starting Urine Test...");
-//            progress.show();
-
-//            Runnable progressRunnable = new Runnable() {
-//                @Override
-//                public void run() {
-//
-//                    progress.cancel();
-//
-//                }
-//            };
-//            Handler pdCanceller = new Handler();
-//            pdCanceller.postDelayed(progressRunnable, 2000);
             try {
                 startDetect = true;
-//                super.onResume();
-//               new AsyncClass(this).execute();
                 setPic();
                 process();
-//                progress.cancel();
-//                System.out.println("sjcfg");
             } catch (Exception e){
-//                new AlertDialog.Builder(TwoParameterActivity.this)
-//                        .setTitle("Error: Image")
-//                        .setMessage("Something went wrong while loading the captured image. Please capture photo again.")
-//                        .setCancelable(false)
-//                        .setPositiveButton("Open Camera", new DialogInterface.OnClickListener() {
-//                            @Override
-//                            public void onClick(DialogInterface dialog, int which) {
-//                                dialog.dismiss();
-//                                startCamera();
-//                            }
-//                        }).show();
             }
         }
     }
-//    ProgressDialog progress;
 
-    //    Thread t1 = new Thread(){
-//        public void run(){
-////            progress = new ProgressDialog(TwoParameterActivity.this);
-////            progress.setMessage("Starting Urine Test...");
-////            progress.show();
-//        }
-//    };
-    Thread t2 = new Thread(){
-
-        public void run(){
-
-            setPic();
-            process();
-//            progress.dismiss();
-        }
-    };
-//    @Override
-//    protected void onResume() {
-//        super.onResume();
-//        if (startDetect){
-//            new AsyncClass(this).execute();
-//            Runnable progressRunnable = new Runnable() {
-//                @Override
-//                public void run() {
-//                    progress = new ProgressDialog(TwoParameterActivity.this);
-//                    progress.setMessage("Starting Urine Test...");
-//                    progress.show();
-//                    t2.start();
-//
-//
-//                }
-//            };
-//            Handler pdCanceller = new Handler();
-//            pdCanceller.postDelayed(progressRunnable, 2000);
-//            ProgressDialog progress;
-//
-//            t2.start();
-//            progress = new ProgressDialog(TwoParameterActivity.this);
-//            progress.setMessage("Starting Urine Test...");
-//            progress.show();
-//            try {
-//                Thread.sleep(3000);
-//                progress.cancel();
-//            } catch (Exception e){
-//
-//            }
-//
-//
-////            setPic();
-////            process();
-////            progress.dismiss();
-//        }
-////        new AsyncClass(this).execute();
-//
-//    }
-
+    /**
+     * This method creates the image file for the camera captured image.
+     * @return File This returns the created image file  name.
+     * */
     private File createImageFile() throws IOException {
         // Create an image file name
-        String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
+        String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss", Locale.US).format(new Date());
         String imageFileName = "JPEG_" + timeStamp + "_";
         File storageDir = getExternalFilesDir(Environment.DIRECTORY_PICTURES);
         File image = File.createTempFile(
@@ -1139,12 +995,17 @@ public class TwoParameterActivity extends AppCompatActivity {
                 ".jpg",         /* suffix */
                 storageDir      /* directory */
         );
-
         // Save a file: path for use with ACTION_VIEW intents
         currentPhotoPath = image.getAbsolutePath();
         return image;
     }
 
+    /**
+     * This method calculated the angle of three spade points.
+     * @param pt0 This parameter is the first point.
+     * @param pt1 This parameter is the second point.
+     * @param  pt2 This parameter is the third point.
+     * @return double This returns the calculated angle.*/
     private static double getAngle(Point pt1, Point pt2, Point pt0)
     {
         double dx1 = pt1.x - pt0.x;
@@ -1154,12 +1015,14 @@ public class TwoParameterActivity extends AppCompatActivity {
         return (dx1*dx2 + dy1*dy2)/Math.sqrt((dx1*dx1 + dy1*dy1)*(dx2*dx2 + dy2*dy2) + 1e-10);
     }
 
+    /**
+     * This method detects urine board from the given image.
+     * @param img This parameter is the camera captured image.
+     * @return Mat This returns the detected urine board image.*/
     public Mat board_detect(Mat img){
         Mat orig = new Mat();
         img.copyTo(orig);
-
         // start processing
-
         Imgproc.cvtColor(img, img, Imgproc.COLOR_BGR2GRAY);
         Imgproc.GaussianBlur(img, img, new Size(3,3), 2, 2);
         Imgproc.Canny(img, img, 20, 60, 3, false);
@@ -1174,7 +1037,6 @@ public class TwoParameterActivity extends AppCompatActivity {
         approx.convertTo(approx, CvType.CV_32F);
         for (MatOfPoint contour: contours) {
             Imgproc.convexHull(contour, hull);
-
             Point[] contourPoints = contour.toArray();
             int[] indices = hull.toArray();
             List<Point> newPoints = new ArrayList<>();
@@ -1183,13 +1045,10 @@ public class TwoParameterActivity extends AppCompatActivity {
             }
             MatOfPoint2f contourHull = new MatOfPoint2f();
             contourHull.fromList(newPoints);
-
             Imgproc.approxPolyDP(contourHull, approx, Imgproc.arcLength(contourHull, true)*0.02, true);
-
             MatOfPoint approxf1 = new MatOfPoint();
             approx.convertTo(approxf1, CvType.CV_32S);
-            if (approx.rows() == 4 && Math.abs(Imgproc.contourArea(approx)) > 40000 &&
-                    Imgproc.isContourConvex(approxf1)) {
+            if (approx.rows() == 4 && Math.abs(Imgproc.contourArea(approx)) > 40000 && Imgproc.isContourConvex(approxf1)) {
                 double maxCosine = 0;
                 for (int j = 2; j < 5; j++) {
                     double cosine = Math.abs(getAngle(approxf1.toArray()[j%4], approxf1.toArray()[j-2], approxf1.toArray()[j-1]));
@@ -1205,10 +1064,8 @@ public class TwoParameterActivity extends AppCompatActivity {
         }
         int index = findLargestSquare(squares);
         MatOfPoint largest_square = squares.get(index);
-
         if (largest_square.rows() == 0 || largest_square.cols() == 0)
             return orig;
-
         MatOfPoint contourHull = hulls.get(index);
         MatOfPoint2f tmp = new MatOfPoint2f();
         contourHull.convertTo(tmp, CvType.CV_32F);
@@ -1223,7 +1080,6 @@ public class TwoParameterActivity extends AppCompatActivity {
                 newPointList.add(p);
             }
         }
-
         List<double[]> lines = new ArrayList<>();
         for (int i = 0; i < newPointList.size(); i++) {
             Point p1 = newPointList.get(i);
@@ -1232,14 +1088,12 @@ public class TwoParameterActivity extends AppCompatActivity {
                 lines.add(new double[]{p1.x, p1.y, p2.x, p2.y});
             }
         }
-
         List<Point> corners = new ArrayList<>();
         for (int i = 0; i < lines.size(); i++) {
             Point corner = computeIntersect(lines.get(i),lines.get((i+1) % lines.size()));
             corners.add(corner);
         }
         corners = sortCorners(corners);
-
         Point p0 = corners.get(0);
         Point p1 = corners.get(1);
         Point p2 = corners.get(2);
@@ -1273,12 +1127,13 @@ public class TwoParameterActivity extends AppCompatActivity {
 
         Mat transmtx = Imgproc.getPerspectiveTransform(cornerMat, quadMat);
         Imgproc.warpPerspective(orig, quad, transmtx, quad.size());
-//        Bitmap bitmap = Bitmap.createBitmap(quad.width(), quad.height(), Bitmap.Config.RGB_565);
-//
-//        Utils.matToBitmap(quad, bitmap);
         return quad;
     }
 
+    /**
+     * This method sorts list of points according to x and y co ordinates.
+     * @param corners This parameter is the list of corners(Points)
+     * @return List<Point> This returns the sorted List of Point(Corner)*/
     private List<Point> sortCorners(List<Point> corners) {
 //        if (corners.size() == 0) return;
         Point p1 = corners.get(0);
@@ -1315,6 +1170,11 @@ public class TwoParameterActivity extends AppCompatActivity {
         return Math.sqrt(a * a + b * b);
     }
 
+    /**
+     * This method finds intersection between two lines.
+     * @param a This parameter is a first line.
+     * @param b This parameter is a second line.
+     * @return Point This returns point of intersection*/
     private static Point computeIntersect(double[] a, double[] b) {
         if (a.length != 4 || b.length != 4)
             throw new ClassFormatError();
@@ -1330,6 +1190,10 @@ public class TwoParameterActivity extends AppCompatActivity {
             return new Point(-1, -1);
     }
 
+    /**
+     * This method finds largest square from the list of MatOfPoint.
+     * @param squares This parameter is a list of MatOfPoint.
+     * @return int This returns the index of largest square.*/
     private static int findLargestSquare(List<MatOfPoint> squares) {
         if (squares.size() == 0)
             return -1;
@@ -1349,6 +1213,8 @@ public class TwoParameterActivity extends AppCompatActivity {
         return max_square_idx;
     }
 
+    /**
+     * This method is adjusts image dimension and orientation.*/
     private void setPic() {
 
         // Get the dimensions of the View
@@ -1426,25 +1292,14 @@ public class TwoParameterActivity extends AppCompatActivity {
                 e.printStackTrace();
                 return 3;
             }
+
             // Save Two Parameter Urine Test
             twoParameterUrineModel.setPt_no(ptno);
             Log.d("pt_no",ptno);
-//            urineReport.setLeuko(leukocytes);
-//            urineReport.setNit(nitrite);
-//            urineReport.setUrb(urobilinogen);
-//            urineReport.setProtein(protein);
-//            urineReport.setPh(ph);
-//            urineReport.setBlood(blood);
-//            urineReport.setSg(specific_gravity);
-//            urineReport.setKet(ketones);
-//            urineReport.setBili(bilirubin);
-//            urineReport.setGlucose(glucose);
             twoParameterUrineModel.setCreat(creatinine);
             twoParameterUrineModel.setMicro(microalbumin);
             twoParameterUrineModel.setAveragecolortest(patientAveragePatchTest);
             twoParameterUrineModel.setPhotouri(stripPhotoPathUri);
-//            twoParameterUrineModel.setstripPhotoPathUri(stripPhotoPathUri);
-
 
             String last_two_parameter_row_id = db.SaveTwoParameterUrinetest(twoParameterUrineModel);
             try {
@@ -1468,7 +1323,7 @@ public class TwoParameterActivity extends AppCompatActivity {
             } else if (s == 3) {
                 if (dialog.isShowing())
                     dialog.dismiss();
-                Toast.makeText(getApplicationContext(), "Exception catched ", Toast.LENGTH_LONG).show();
+                Toast.makeText(getApplicationContext(), "Exception caught ", Toast.LENGTH_LONG).show();
 
             } else {
                 if (dialog.isShowing())
@@ -1481,77 +1336,9 @@ public class TwoParameterActivity extends AppCompatActivity {
             }
         }
     }
-//    private class Progressdailog extends AsyncTask<String, Void, Integer> {
-//        @Override
-//        protected void onPreExecute() {
-//            super.onPreExecute();
-//            dialog.setMessage("Start Urine Test");
-//            dialog.show();
-//        }
-//
-//        @Override
-//        protected Integer doInBackground(String... strings) {
-////
-////            LabDB db = new LabDB(getApplicationContext());
-////            try {
-////                Thread.sleep(1000);
-////            } catch (InterruptedException e) {
-////                e.printStackTrace();
-////                return 3;
-////            }
-////            // Save Vital Sign
-////            urineReport.setPt_no(ptno);
-////            Log.d("pt_no",ptno);
-////            urineReport.setLeuko(leukocytes);
-////            urineReport.setNit(nitrite);
-////            urineReport.setUrb(urobilinogen);
-////            urineReport.setProtein(protein);
-////            urineReport.setPh(ph);
-////            urineReport.setBlood(blood);
-////            urineReport.setSg(specific_gravity);
-////            urineReport.setKet(ketones);
-////            urineReport.setBili(bilirubin);
-////            urineReport.setGlucose(glucose);
-////            urineReport.setAsc(ascorbic_acid);
-////
-////
-////            String last_vitalsign_row_id = db.SaveUrineReport(urineReport);
-////            try {
-////                Thread.sleep(1000);
-////            } catch (InterruptedException e) {
-////                e.printStackTrace();
-////                return 3;
-////            }
-////            urineReport.setRow_id(last_vitalsign_row_id);
-//            return 1;
-//        }
-//
-//        @Override
-//        protected void onPostExecute(Integer s) {
-//            super.onPostExecute(s);
-//            dialog.dismiss();
-////            if (s == 2) {
-////                if (dialog.isShowing())
-////                    dialog.dismiss();
-////                Toast.makeText(getApplicationContext(), "Already saved " , Toast.LENGTH_LONG).show();
-////
-////            } else if (s == 3) {
-////                if (dialog.isShowing())
-////                    dialog.dismiss();
-////                Toast.makeText(getApplicationContext(), "Exception catched ", Toast.LENGTH_LONG).show();
-////
-////            } else {
-////                if (dialog.isShowing())
-////                    dialog.dismiss();
-////                pref.edit().putInt("UTF",1).apply();
-////                Log.d("vitaltestflag",String.valueOf(pref.getInt("UTF",0)));
-////                TwoParameterActivity.super.onBackPressed();
-////                Toast.makeText(getApplicationContext(), "Urine Test  Saved " , Toast.LENGTH_LONG).show();
-////
-////            }
-//        }
-//    }
 
+    /**
+     * This method is executed when back button is pressed.*/
     @Override
     public void onBackPressed() {
 

@@ -63,7 +63,7 @@ public class PerformTestListActivity extends AppCompatActivity {
       });
 
      binding.diabetesTest.setOnClickListener(v -> {
-      Intent i = new Intent(PerformTestListActivity.this, DiabetesActivity.class);
+      Intent i = new Intent(PerformTestListActivity.this, NewDaibetesActivity.class);
       i.putExtra("PTNO", pt_id);
      i.putExtra("patient",patientModel);
      startActivity(i);

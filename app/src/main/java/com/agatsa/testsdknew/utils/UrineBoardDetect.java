@@ -137,9 +137,6 @@ public class UrineBoardDetect {
 
         Mat transmtx = Imgproc.getPerspectiveTransform(cornerMat, quadMat);
         Imgproc.warpPerspective(orig, quad, transmtx, quad.size());
-//        Bitmap bitmap = Bitmap.createBitmap(quad.width(), quad.height(), Bitmap.Config.RGB_565);
-//
-//        Utils.matToBitmap(quad, bitmap);
         return quad;
     }
 

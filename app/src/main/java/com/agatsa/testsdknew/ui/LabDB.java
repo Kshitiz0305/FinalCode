@@ -119,6 +119,12 @@ public class LabDB extends SQLiteOpenHelper {
     private static final String TABLE_DIABETES = "diabetes_test";
     // Columns of Diabetes Test
     private static final String COLUMN_DIABETES = "diabetes";
+    private static final String COLUMN_TEST_TIME = "timetest";
+    private static final String COLUMN_TEST_TYPE = "testtype";
+    private static final String COLUMN_LATEST_MEAL_TIME = "latestmealtime";
+    private static final String COLUMN_LATEST_MEAL_TYPE = "latestmealtype";
+
+
 
 
     private static final String TABLE_BLOOD_PRESSURE = "blood_pressure_test";
@@ -225,6 +231,10 @@ public class LabDB extends SQLiteOpenHelper {
                 + COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT,"
                 + COLUMN_PT_NO + " INTEGER,"
                 + COLUMN_DIABETES + " REAL DEFAULT 0,"
+                + COLUMN_TEST_TIME + " REAL DEFAULT 0,"
+                + COLUMN_TEST_TYPE + " REAL DEFAULT 0,"
+                + COLUMN_LATEST_MEAL_TIME + " REAL DEFAULT 0,"
+                + COLUMN_LATEST_MEAL_TYPE + " REAL DEFAULT 0,"
                 + COLUMN_ADDEDDATE + " TEXT,"
                 + COLUMN_UPDATEDDATE + " TEXT)";
         db.execSQL(CREATE_DIABETES_TABLE);
@@ -418,7 +428,7 @@ public class LabDB extends SQLiteOpenHelper {
         patientModelFlowable= Flowable.just(patientModelList);
         return patientModelFlowable;
     }
-//    public String getJoinedTableJsonArray(String pt_no) {
+    //    public String getJoinedTableJsonArray(String pt_no) {
 //        try {
 //            String columns = "user_id, pt.ptno AS ptno, ptName, ptAddress,ptContactNo, ptEmail, ptAge, ptdob, ptSex," +
 //                    " weight, height, tempt, pulse, bp_s, bp_d, sto2, bt.glucose AS bt_glucose, chlorestrol, uric_acid," +
@@ -572,13 +582,17 @@ public class LabDB extends SQLiteOpenHelper {
         ContentValues values = new ContentValues();
         values.put(COLUMN_PT_NO, glucoseModel.getPt_no());
         values.put(COLUMN_DIABETES, glucoseModel.getPtGlucose());
+        values.put(COLUMN_TEST_TIME, glucoseModel.getPttimetaken());
+        values.put(COLUMN_TEST_TYPE, glucoseModel.getPttesttype());
+        values.put(COLUMN_LATEST_MEAL_TIME, glucoseModel.getPtlatestmealtime());
+        values.put(COLUMN_LATEST_MEAL_TYPE, glucoseModel.getPtmealtype());
         values.put(COLUMN_UPDATEDDATE, Calendar.getInstance().getTimeInMillis() / 1000);
 
         if (!glucoseModel.getRow_id() .equals("")) {
             db.update(TABLE_DIABETES, values, COLUMN_ID + "=?", new String[]{String.valueOf(glucoseModel.getRow_id())});
             result = glucoseModel.getRow_id();
         } else {
-            values.put(COLUMN_ADDEDDATE, Calendar.getInstance().getTimeInMillis() / 1000);
+            values.put(COLUMN_ADDEDDATE, Calendar.getInstance().getTimeInMillis());
             db.insert(TABLE_DIABETES, null, values);
             result = getLastID(TABLE_DIABETES, db);
         }
@@ -726,8 +740,7 @@ public class LabDB extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getReadableDatabase();
 //
         Cursor cursor = db.query(TABLE_VITAL_SIGN, new String[]{COLUMN_ID, COLUMN_WEIGHT,
-                        COLUMN_HEIGHT, COLUMN_TEMP, COLUMN_PULSE,
-                        COLUMN_BP_S, COLUMN_BP_D, COLUMN_STO2}, COLUMN_PT_NO + "=?",
+                        COLUMN_HEIGHT, COLUMN_TEMP, COLUMN_PULSE, COLUMN_STO2}, COLUMN_PT_NO + "=?",
                 new String[]{String.valueOf(pt_no)}, null, null, COLUMN_ID + " DESC", String.valueOf(1));
         if (cursor.moveToFirst()) {
             vitalSign.setRow_id((cursor.getString(0)));
@@ -735,9 +748,9 @@ public class LabDB extends SQLiteOpenHelper {
             vitalSign.setHeight(Double.parseDouble((cursor.getString(2))));
             vitalSign.setTempt(Double.parseDouble((cursor.getString(3))));
             vitalSign.setPulse(Double.parseDouble((cursor.getString(4))));
-            vitalSign.setBps(Double.parseDouble((cursor.getString(5))));
-            vitalSign.setBpd(Double.parseDouble((cursor.getString(6))));
-            vitalSign.setSto2(Double.parseDouble((cursor.getString(7))));
+//            vitalSign.setBps(Double.parseDouble((cursor.getString(5))));
+//            vitalSign.setBpd(Double.parseDouble((cursor.getString(6))));
+            vitalSign.setSto2(Double.parseDouble((cursor.getString(5))));
 //            vitalSign.setGlucose((cursor.getString(8)));
         }
         vitalSign.setPt_no(pt_no);
@@ -750,11 +763,19 @@ public class LabDB extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getReadableDatabase();
 //
         Cursor cursor = db.query(TABLE_DIABETES, new String[]{COLUMN_ID,
-                        COLUMN_DIABETES}, COLUMN_PT_NO + "=?",
+                        COLUMN_DIABETES,COLUMN_TEST_TIME,COLUMN_TEST_TYPE,COLUMN_LATEST_MEAL_TIME,COLUMN_LATEST_MEAL_TYPE
+                        ,COLUMN_ADDEDDATE,COLUMN_UPDATEDDATE}, COLUMN_PT_NO + "=?",
                 new String[]{String.valueOf(pt_no)}, null, null, COLUMN_ID + " DESC", String.valueOf(1));
         if (cursor.moveToFirst()) {
             glucoseModel.setRow_id(cursor.getString(0));
-            glucoseModel.setPtGlucose((cursor.getString(1)));
+            glucoseModel.setPtGlucose(cursor.getString(1));
+            glucoseModel.setPttimetaken((cursor.getString(2)));
+            glucoseModel.setPttesttype((cursor.getString(3)));
+            glucoseModel.setPtlatestmealtime((cursor.getString(4)));
+            glucoseModel.setPtmealtype((cursor.getString(5)));
+            glucoseModel.setAddeddate((cursor.getString(6)));
+            glucoseModel.setUpdateddate((cursor.getString(7)));
+
 
         }
         glucoseModel.setPt_no(pt_no);
