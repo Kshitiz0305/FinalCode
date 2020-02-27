@@ -68,7 +68,7 @@
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
                     android:orientation="vertical">
 
                     <TextView
@@ -78,7 +78,7 @@
                         android:padding="8sp"
                         android:text="@string/any_meal_today_after_wake_up"
                         android:textColor="@color/colorPrimaryDark"
-                        android:textSize="@dimen/_15sdp" />
+                        android:textSize="15sp" />
 
 
                     <LinearLayout
@@ -106,7 +106,7 @@
                                 <Button
                                     android:id="@+id/buttonyes"
                                     android:layout_width="match_parent"
-                                    android:layout_height="@dimen/_35sdp"
+                                    android:layout_height="@dimen/_30sdp"
                                     android:layout_marginLeft="@dimen/_5sdp"
                                     android:layout_gravity="center"
                                     android:background="@drawable/rect_orange"
@@ -136,7 +136,7 @@
                                 <Button
                                     android:id="@+id/buttonno"
                                     android:layout_width="match_parent"
-                                    android:layout_height="@dimen/_35sdp"
+                                    android:layout_height="@dimen/_30sdp"
                                     android:layout_gravity="center"
                                     android:layout_marginRight="@dimen/_5sdp"
                                     android:background="@drawable/rect_orange"
@@ -166,7 +166,7 @@
 
                         <LinearLayout
                             android:layout_width="fill_parent"
-                            android:layout_height="@dimen/_420sdp"
+                            android:layout_height="@dimen/_400sdp"
                             android:orientation="vertical">
 
                             <TextView
@@ -176,7 +176,7 @@
                                 android:padding="8sp"
                                 android:text="@string/what_was_your_latest_meal"
                                 android:textColor="@color/colorPrimaryDark"
-                                android:textSize="@dimen/_15sdp" />
+                                android:textSize="15sp" />
 
                             <RadioGroup
                                 android:layout_width="match_parent"
@@ -185,7 +185,7 @@
                                 <RadioButton
                                     android:id="@+id/breakfast"
                                     android:layout_width="140dp"
-                                    android:textSize="@dimen/_15sdp"
+                                    android:textSize="15sp"
                                     android:checked="true"
                                     android:layout_height="wrap_content"
                                     android:text="@string/breakfast" />
@@ -193,7 +193,7 @@
                                 <RadioButton
                                     android:id="@+id/lunch"
                                     android:layout_width="140dp"
-                                    android:textSize="@dimen/_15sdp"
+                                    android:textSize="15sp"
                                     android:layout_height="wrap_content"
                                     android:text="@string/lunch" />
 
@@ -202,14 +202,14 @@
                                     android:id="@+id/supper"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:textSize="@dimen/_15sdp"
+                                    android:textSize="15sp"
                                     android:text="@string/supper" />
 
                                 <RadioButton
                                     android:id="@+id/Snack"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:textSize="@dimen/_15sdp"
+                                    android:textSize="15sp"
                                     android:text="@string/snack" />
 
                             </RadioGroup>
@@ -235,29 +235,57 @@
                                     android:padding="8sp"
                                     android:text="Timing of the Meal"
                                     android:textColor="@color/colorPrimaryDark"
-                                    android:textSize="@dimen/_15sdp" />
+                                    android:textSize="15sp"/>
 
 
-                                <TextView
-                                    android:id="@+id/txttiming"
+                                <LinearLayout
+                                    android:id="@+id/noofhildrenll"
                                     android:layout_width="match_parent"
-                                    android:layout_height="40dp"
-                                    android:layout_marginLeft="@dimen/_5sdp"
-                                    android:layout_marginRight="@dimen/_5sdp"
-                                    android:layout_weight="1"
-                                    android:hint="HH:MM: a"
-                                    android:drawablePadding="@dimen/_3sdp"
-                                    android:padding="@dimen/_5sdp"
-                                    app:validateEmpty="@{true}"
-                                    android:textColorHighlight="@color/black"
-                                    android:textColor="@color/black"
-                                    android:background="@drawable/bg_gray_border"
-                                    android:drawableRight="@drawable/ic_time"
-                                    android:fontFamily="@font/sf_pro_display_medium"
-                                    android:imeOptions="actionNext"
-                                    android:importantForAutofill="no"
-                                    android:textCursorDrawable="@null"
-                                    android:textSize="@dimen/_15sdp" />
+
+                                    android:layout_height="wrap_content"
+                                    android:orientation="horizontal"
+                                    android:layout_marginTop="4sp"
+                                    android:gravity="center"
+                                    android:weightSum="2">
+
+                                    <TextView
+                                        android:id="@+id/datepicker"
+                                        android:layout_width="100dp"
+                                        android:layout_height="40sp"
+                                        android:layout_weight="1"
+                                        android:drawableRight="@drawable/ic_calendar"
+                                        android:padding="8sp"
+                                        android:layout_marginLeft="2sp"
+                                        android:textSize="13sp"
+                                        android:fontFamily="@font/sf_pro_display_medium"
+                                        android:textColor="@color/black"
+                                        android:inputType="number"
+                                        android:layout_marginRight="2sp"
+                                        android:background="@drawable/bg_gray_border"
+                                        android:hint="@string/select_date" />
+
+
+                                    <TextView
+                                        android:id="@+id/timepicker"
+                                        android:layout_width="100dp"
+                                        android:layout_height="40sp"
+                                        android:hint="@string/select_time"
+                                        android:padding="8sp"
+                                        android:inputType="number"
+                                        android:drawableRight="@drawable/ic_time"
+                                        android:textSize="13sp"
+                                        android:fontFamily="@font/sf_pro_display_medium"
+                                        android:textColor="@color/black"
+                                        android:layout_marginRight="2sp"
+                                        android:background="@drawable/bg_gray_border"
+                                        android:layout_weight="1" />
+
+
+
+                                </LinearLayout>
+
+
+
 
 
                             </LinearLayout>
@@ -275,18 +303,22 @@
                                     android:layout_height="wrap_content"
                                     android:fontFamily="@font/sfpro_display_semibold"
                                     android:padding="8sp"
-                                    android:text="ABC Glucose Test"
+                                    android:text=" Glucose Test"
                                     android:textColor="@color/colorPrimaryDark"
-                                    android:textSize="@dimen/_15sdp" />
+                                    android:textSize="15sp" />
 
 
-                                <Spinner
+                                <TextView
                                     android:id="@+id/glucosetesttype"
-                                    style="@style/Base.Widget.AppCompat.Spinner.Underlined"
                                     android:layout_width="match_parent"
-                                    android:layout_height="40dp"
+                                    android:layout_height="40sp"
+                                    android:background="@drawable/bg_gray_border"
                                     android:cursorVisible="true"
+                                    android:layout_marginLeft="@dimen/_5sdp"
+                                    android:layout_marginRight="@dimen/_5sdp"
+                                    android:textColor="@color/black"
                                     android:entries="@array/abcglucosetest"
+                                    android:textSize="13sp"
                                     android:fontFamily="@font/sf_pro_display_medium"
                                     android:imeOptions="actionNext"
                                     android:importantForAutofill="no"
@@ -307,7 +339,7 @@
                                     android:fontFamily="@font/sfpro_display_semibold"
                                     android:padding="8sp"
                                     android:textColor="@color/colorPrimaryDark"
-                                    android:textSize="@dimen/_15sdp" />
+                                    android:textSize="15sp" />
 
 
                                 <LinearLayout
@@ -320,24 +352,23 @@
                                     <EditText
                                         android:id="@+id/txtGlucoselevel"
                                         android:layout_width="match_parent"
-                                        android:layout_height="40dp"
+                                        android:layout_height="40sp"
                                         android:layout_marginLeft="@dimen/_5sdp"
                                         android:layout_marginRight="@dimen/_5sdp"
                                         android:layout_weight="1"
-                                        android:drawablePadding="@dimen/_3sdp"
-                                        android:padding="@dimen/_5sdp"
-                                        app:validateEmpty="@{true}"
-                                        android:maxLength="3"
-                                        android:inputType="number"
-                                        android:textColorHighlight="@color/black"
-                                        android:textColor="@color/black"
                                         android:background="@drawable/bg_gray_border"
-                                        android:fontFamily="@font/sf_pro_display_medium"
+                                        android:drawablePadding="@dimen/_3sdp"
                                         android:imeOptions="actionNext"
                                         android:importantForAutofill="no"
+                                        android:inputType="number"
+                                        android:textSize="13sp"
+                                        android:fontFamily="@font/sf_pro_display_medium"
+                                        android:maxLength="3"
+                                        android:padding="@dimen/_5sdp"
+                                        android:textColor="@color/black"
+                                        android:textColorHighlight="@color/black"
                                         android:textCursorDrawable="@null"
-                                        android:textSize="@dimen/_15sdp"/>
-
+                                        app:validateEmpty="@{true}" />
 
 
                                 </LinearLayout>
@@ -358,7 +389,7 @@
                                 <Button
                                     android:id="@+id/btnsave"
                                     android:layout_width="match_parent"
-                                    android:layout_height="@dimen/_40sdp"
+                                    android:layout_height="@dimen/_35sdp"
                                     android:layout_gravity="center"
                                     android:background="@drawable/rect_orange"
                                     android:fontFamily="@font/sfpro_display_semibold"

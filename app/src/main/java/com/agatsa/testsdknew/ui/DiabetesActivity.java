@@ -1,6 +1,5 @@
 package com.agatsa.testsdknew.ui;
 
-import android.Manifest;
 import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
 import android.content.Context;
@@ -129,7 +128,7 @@ public class DiabetesActivity extends AppCompatActivity {
             glucoseModel.setPt_no(ptno);
             glucoseModel.setPtGlucose((getEdittextValue(binding.txtglucose)));
             glucoseModel.setPtlatestmealtime("nil");
-            glucoseModel.setPtmealtype("Fasting Reading glucose test");
+            glucoseModel.setPtmealtype("Fasting Reading Glucose test");
             glucoseModel.setPttimetaken("nil");
             glucoseModel.setPttesttype("nil");
             String last_vitalsign_row_id = db.SaveGlucoseSign(glucoseModel);

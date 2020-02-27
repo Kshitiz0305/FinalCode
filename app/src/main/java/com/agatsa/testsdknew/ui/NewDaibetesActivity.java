@@ -1,6 +1,7 @@
 package com.agatsa.testsdknew.ui;
 
 import android.annotation.SuppressLint;
+import android.app.DatePickerDialog;
 import android.app.ProgressDialog;
 import android.app.TimePickerDialog;
 import android.content.Context;
@@ -10,8 +11,6 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RadioButton;
@@ -28,12 +27,11 @@ import com.agatsa.testsdknew.Models.PatientModel;
 import com.agatsa.testsdknew.R;
 import com.agatsa.testsdknew.customviews.DialogUtil;
 import com.agatsa.testsdknew.databinding.ActivityNewDiabetesBinding;
-
-
-import java.util.ArrayList;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
-
 import br.com.ilhasoft.support.validation.Validator;
 
 public class NewDaibetesActivity extends AppCompatActivity {
@@ -42,18 +40,23 @@ public class NewDaibetesActivity extends AppCompatActivity {
     PatientModel newPatient = new PatientModel();
     LabDB labDB;
     String TAG = "Diabetes";
-    String ptname;
+
     ActivityNewDiabetesBinding binding;
     Validator validator;
     GlucoseModel glucoseModel=new GlucoseModel();
     private ProgressDialog dialog;
-    TimePickerDialog picker;
     RadioButton Breakfast, Lunch, Supper,Snack;
-    String testtype="Post Prandial Glucose Test";
-    String txttimingmeal="";
     String Meal="";
-
-
+    private Calendar c;
+    private int mYear;
+    private int mMonth;
+    private int mDay;
+    String datentime="";
+    String timepickertxt="";
+    String datepickertxt="";
+    String am_pm="";
+    String currentDateandTime="";
+    long different;
 
 
 
@@ -71,33 +74,21 @@ public class NewDaibetesActivity extends AppCompatActivity {
         Lunch=findViewById(R.id.lunch);
         Supper=findViewById(R.id.supper);
         Snack=findViewById(R.id.Snack);
-
         labDB = new LabDB(getApplicationContext());
         dialog = new ProgressDialog(this);
         dialog.setCanceledOnTouchOutside(false);
         labDB=new LabDB(this);
         dialog.setCancelable(false);
 
+        SimpleDateFormat sdf = new SimpleDateFormat( "yyyy:MM:dd" );
+        binding.datepicker.setText( sdf.format( new Date() ));
 
-        ArrayList<String> arrayList = new ArrayList<>();
-        arrayList.add("Post Prandial Glucose Test");
-        arrayList.add("Random Glucose Test");
-        ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(this,  android.R.layout.simple_spinner_item, arrayList);
-        arrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        binding.glucosetesttype.setAdapter(arrayAdapter);
+
         binding.btnsave.setOnClickListener(v -> {
-
-
-
             if(validator.validate()){
-
                 new SaveData().execute();
 
-
-
-
             }
-
         });
 
 
@@ -121,38 +112,7 @@ public class NewDaibetesActivity extends AppCompatActivity {
         });
 
         binding.buttonno.setOnClickListener(v -> {
-//            binding.cardviewyes.setVisibility(View.GONE);
-//            AlertDialog.Builder alert = new AlertDialog.Builder(DiabetesActivity.this);
-//            View mView = getLayoutInflater().inflate(R.layout.activity_no_diabetes,null);
-//            Button btn_save = (Button)mView.findViewById(R.id.buttonsave);
-//            Button btn_cancel = (Button)mView.findViewById(R.id.buttoncancel);
-////            EditText  editText = (EditText)mView.findViewById(R.id.txtglucoseditext);
-//            final EditText editText1=(EditText)(mView.findViewById(R.id.txtglucoseditext));
-//            txtglucose=editText1.getText().toString();
-//            Log.d("glucosedailog", txtglucose);
-//            Log.d("glucosedailog", txtglucose);
-//            alert.setView(mView);
-//           AlertDialog alertDialog = alert.create();
-//            alertDialog.setCanceledOnTouchOutside(false);
-//
-//            btn_save.setOnClickListener(v1 -> {
-//                if(editText1.length()==0 || editText1.getText().toString().isEmpty()){
-//                    Toast.makeText(this, "Glucose Level Cannot Be Empty", Toast.LENGTH_SHORT).show();
-//
-//
-//
-//                }else{
-//                    new SaveData().execute();
-//
-//                }
-//
-//            });
-//
-//            btn_cancel.setOnClickListener(v12 -> {
-//                alertDialog.dismiss();
-//
-//            });
-//            alertDialog.show();
+            binding.cardviewyes.setVisibility(View.GONE);
             Intent i=new Intent(this,NodaibetesActivity.class);
             i.putExtra("PTNO", ptno);
             i.putExtra("patient",newPatient);
@@ -163,86 +123,95 @@ public class NewDaibetesActivity extends AppCompatActivity {
 
         binding.buttonyes.setOnClickListener(v -> {
             binding.cardviewyes.setVisibility(View.VISIBLE);
+        });
 
+        binding.datepicker.setOnClickListener(v -> {
+
+            mYear= Calendar.getInstance().get(Calendar.YEAR);
+            mMonth=Calendar.getInstance().get(Calendar.MONTH)+1;
+            mDay=Calendar.getInstance().get(Calendar.DAY_OF_MONTH) ;
+
+            c = Calendar.getInstance();
+            int mYearParam = mYear;
+            int mMonthParam = mMonth-1;
+            int mDayParam = mDay;
+
+            DatePickerDialog datePickerDialog = new DatePickerDialog(NewDaibetesActivity.this,
+                    (view, year, monthOfYear, dayOfMonth) -> {
+                        mMonth = monthOfYear + 1;
+                        mYear=year;
+                        mDay=dayOfMonth;
+                        binding.datepicker.setText( year + ":" + monthOfYear + ":" +dayOfMonth);
+                    }, mYearParam, mMonthParam, mDayParam);
+
+            datePickerDialog.show();
 
         });
 
 
 
-        binding.txttiming.setOnClickListener((View v) -> {
-            final Calendar cldr = Calendar.getInstance();
-
-            int hour = cldr.get(Calendar.HOUR_OF_DAY);
-            int minutes = cldr.get(Calendar.MINUTE);
-            String format;
-            if (hour == 0) {
-                hour += 12;
-                format = "AM";
-            } else if (hour == 12) {
-                format = "PM";
-            } else if (hour > 12) {
-                hour -= 12;
-                format = "PM";
-            } else {
-                format = "AM";
-            }
-
-            String finalFormat = format;
+        binding.timepicker.setOnClickListener((View v) -> {
+            Calendar mcurrentTime = Calendar.getInstance();
+            int hour = mcurrentTime.get(Calendar.HOUR_OF_DAY);
+            int minute = mcurrentTime.get(Calendar.MINUTE);
 
 
+            TimePickerDialog mTimePicker;
 
-            picker = new TimePickerDialog(NewDaibetesActivity.this,
-                    (tp, sHour, sMinute) ->
-                            binding.txttiming.setText(sHour + ":" + sMinute+" "+ finalFormat), hour, minutes, true);
-
-            picker.show();
+            mTimePicker = new TimePickerDialog(NewDaibetesActivity.this, (timePicker, selectedHour, selectedMinute) -> {
 
 
+                if (selectedHour > 12)
+                {
+                    selectedHour = selectedHour - 12;
+                    am_pm = "pm";
+                } else {
+                    am_pm = "am";
+                }
 
-            binding.glucosetesttype.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-                @Override
-                public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                    if(binding.glucosetesttype.getSelectedItem()==null){
-                        Toast.makeText(NewDaibetesActivity.this, "Select One Option", Toast.LENGTH_SHORT).show();
+                binding.timepicker.setText( selectedHour + ":" + selectedMinute+am_pm );
 
-                    }else{
-                        testtype=binding.glucosetesttype.getSelectedItem().toString();
+                datepickertxt=binding.datepicker.getText().toString();
+                timepickertxt=binding.timepicker.getText().toString();
+                datentime=datepickertxt+" "+timepickertxt;
+                Log.d("datentime",datentime);
+                Date date = Calendar.getInstance().getTime();
+                DateFormat dateFormat = new SimpleDateFormat("yyyy:MM:dd hh:mm");
+                currentDateandTime = dateFormat.format(date);
+                Log.d("difference",currentDateandTime);
+                try {
+                    Date date1 = dateFormat.parse(currentDateandTime);
+                    Date date2 = dateFormat.parse(datentime);
+
+                    different=date1.getTime()- date2.getTime();
+                    Log.d("difference : " , String.valueOf(date1));
+                    Log.d("difference : ", String.valueOf(date2));
+                    Log.d("difference : " , String.valueOf(different));
+
+                    if(different<7200000){
+                        binding.glucosetesttype.setText("Random Glucose Test");
+                    }else if(different>=720000  && different<10800000){
+                        binding.glucosetesttype.setText("Post Prandial Glucose Test");
+
+
+                    }else if(different>=10800000){
+                        binding.glucosetesttype.setText("Random Glucose Test");
 
                     }
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+                } catch (ParseException e) {
+                    e.printStackTrace();
                 }
 
-                @Override
-                public void onNothingSelected(AdapterView<?> parent) {
-                    Toast.makeText(NewDaibetesActivity.this, "Nothing Selected", Toast.LENGTH_SHORT).show();
 
-                }
-            });
+            }, hour, minute, false);
+            mTimePicker.setTitle("Select Time");
+            mTimePicker.show();
 
 
 
-
-
-
-
-
-        });
-
+          });
 
 
 
@@ -258,18 +227,11 @@ public class NewDaibetesActivity extends AppCompatActivity {
     }
 
 
-
-
-
-
     @Override
     public void onBackPressed() {
         DialogUtil.getOKCancelDialog(this, "", "Do you want to discard the  diabetes test of " + newPatient.getPtName() + "?", "Yes","No", (dialogInterface, i) ->
                 NewDaibetesActivity.super.onBackPressed());
     }
-
-
-
 
 
 
@@ -296,7 +258,7 @@ public class NewDaibetesActivity extends AppCompatActivity {
                 e.printStackTrace();
                 return 3;
             }
-            // Save Vital Sign
+
 
             Meal="Breakfast";
             if (getRadioButtonValue(Lunch)) {
@@ -307,24 +269,12 @@ public class NewDaibetesActivity extends AppCompatActivity {
             }else if(getRadioButtonValue(Snack)){
                 Meal="Snack";
             }
-
-
-            txttimingmeal=binding.txttiming.getText().toString();
-
-            Date currentTime = Calendar.getInstance().getTime();
             glucoseModel.setPt_no(ptno);
             glucoseModel.setPtGlucose(getEdittextValue(binding.txtGlucoselevel));
-            glucoseModel.setPttimetaken(currentTime.toString());
-
-            glucoseModel.setPttesttype(testtype);
-
-
-            glucoseModel.setPtlatestmealtime(txttimingmeal);
+            glucoseModel.setPttimetaken(currentDateandTime);
+            glucoseModel.setPttesttype(binding.glucosetesttype.getText().toString());
+            glucoseModel.setPtlatestmealtime(datentime);
             glucoseModel.setPtmealtype(Meal);
-
-
-
-
             String last_vitalsign_row_id = db.SaveGlucoseSign(glucoseModel);
             try {
                 Thread.sleep(1000);
@@ -369,6 +319,10 @@ public class NewDaibetesActivity extends AppCompatActivity {
     public String getEdittextValue(EditText editText) {
         return editText.getText().toString();
     }
+
+
+
+
 
 
 

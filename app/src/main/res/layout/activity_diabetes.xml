@@ -68,7 +68,7 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/_120sdp"
+                android:layout_height="@dimen/_110sdp"
                 android:layout_weight="2"
                 android:orientation="vertical">
 
@@ -109,7 +109,7 @@
                 <Button
                     android:id="@+id/btnsaveglucose"
                     android:layout_width="@dimen/_250sdp"
-                    android:layout_height="@dimen/_40sdp"
+                    android:layout_height="@dimen/_30sdp"
                     android:layout_gravity="center"
                     android:layout_marginLeft="@dimen/_10kdp"
                     android:layout_marginTop="@dimen/_10kdp"

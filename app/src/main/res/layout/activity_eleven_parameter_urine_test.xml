@@ -72,7 +72,7 @@
             <Button
                 android:id="@+id/done"
                 android:layout_width="105dp"
-                android:layout_height="wrap_content"
+                android:layout_height="@dimen/_30sdp"
                 android:layout_gravity="center"
                 android:layout_marginLeft="10dp"
                 android:layout_marginRight="10dp"
@@ -84,7 +84,7 @@
             <Button
                 android:id="@+id/btnReport"
                 android:layout_width="105dp"
-                android:layout_height="wrap_content"
+                android:layout_height="@dimen/_30sdp"
                 android:layout_gravity="center"
                 android:layout_marginLeft="10dp"
                 android:layout_marginRight="10dp"
@@ -106,7 +106,7 @@
             <Button
                 android:id="@+id/saveurinetest"
                 android:layout_width="105dp"
-                android:layout_height="wrap_content"
+                android:layout_height="@dimen/_30sdp"
                 android:layout_gravity="center"
                 android:layout_marginLeft="10dp"
                 android:layout_marginRight="10dp"

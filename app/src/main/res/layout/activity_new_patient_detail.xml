@@ -268,12 +268,13 @@
                                     android:layout_height="40dp"
                                     android:cursorVisible="true"
                                     android:background="@drawable/bg_gray_border"
-                                    android:fontFamily="@font/sf_pro_display_medium"
+
                                     android:textCursorDrawable="@null"
                                     android:imeOptions="actionNext"
                                     android:padding="8sp"
                                     android:hint="City"
                                     android:textSize="13sp"
+                                    android:fontFamily="@font/sf_pro_display_medium"
                                     android:importantForAutofill="no"
                                     tools:ignore="SpUsage" />
 
@@ -1175,7 +1176,7 @@
                                 <Button
                                     android:id="@+id/btnSave"
                                     android:layout_width="match_parent"
-                                    android:layout_height="wrap_content"
+                                    android:layout_height="@dimen/_30sdp"
                                     android:layout_gravity="center"
                                     android:background="@drawable/rect_orange"
                                     android:fontFamily="@font/sfpro_display_semibold"

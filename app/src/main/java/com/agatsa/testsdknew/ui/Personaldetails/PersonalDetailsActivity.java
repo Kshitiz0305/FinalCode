@@ -1,6 +1,5 @@
 package com.agatsa.testsdknew.ui.Personaldetails;
 
-import android.Manifest;
 import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
 import android.content.Context;
@@ -10,7 +9,6 @@ import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.AsyncTask;
-import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.util.Log;
@@ -25,7 +23,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.ActivityCompat;
 import androidx.databinding.DataBindingUtil;
 
 import com.agatsa.testsdknew.Models.PatientModel;
@@ -48,19 +45,14 @@ import com.hornet.dateconverter.Model;
 
 import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.Reader;
 import java.io.StringWriter;
 import java.io.Writer;
-import java.nio.channels.FileChannel;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.HashMap;
-import java.util.Map;
 
 import br.com.ilhasoft.support.validation.Validator;
 
@@ -250,9 +242,6 @@ ArrayList<String>  placesnames = new ArrayList<>();
 
                             }
 
-
-
-
                             }
 
                         }
@@ -270,22 +259,6 @@ ArrayList<String>  placesnames = new ArrayList<>();
             }
         });
 
-
-
-//        binding.countrySpinner.setItem(countryName);
-
-//        mBinding.countrySpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-//            @Override
-//            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-//                selectedCountryIso = countryList.get(i).getIso1();
-//                selectedCountryName = countryName.get(i);
-//            }
-//
-//            @Override
-//            public void onNothingSelected(AdapterView<?> adapterView) {
-//
-//            }
-//        });
 
         binding.rgDobType.setOnCheckedChangeListener((radioGroup, i) -> {
 
@@ -326,8 +299,6 @@ ArrayList<String>  placesnames = new ArrayList<>();
             }
 
 
-
-
         });
 
         binding.rgAlcohol.setOnCheckedChangeListener((radioGroup, i) -> {
@@ -343,8 +314,6 @@ ArrayList<String>  placesnames = new ArrayList<>();
                     break;
 
             }
-
-
 
 
         });
@@ -365,8 +334,6 @@ ArrayList<String>  placesnames = new ArrayList<>();
             }
 
 
-
-
         });
         binding.rgDisease
                 .setOnCheckedChangeListener((radioGroup, i) -> {
@@ -382,8 +349,6 @@ ArrayList<String>  placesnames = new ArrayList<>();
                             break;
 
                     }
-
-
 
 
                 });
@@ -448,7 +413,7 @@ ArrayList<String>  placesnames = new ArrayList<>();
             if(m!=null)
             {
                 DatePickerDialog dpd = DatePickerDialog.newInstance(PersonalDetailsActivity.this,m.getYear(),m.getMonth(),m.getDay());
-            dpd.show(getSupportFragmentManager(), "Datepickerdialog");
+                 dpd.show(getSupportFragmentManager(), "Datepickerdialog");
 
 
                 }
@@ -563,9 +528,6 @@ ArrayList<String>  placesnames = new ArrayList<>();
                         }
 
 
-
-
-
                     }
 
                 }
@@ -605,12 +567,6 @@ ArrayList<String>  placesnames = new ArrayList<>();
 
 
 }
-
-
-
-
-
-
     }
 
 
@@ -700,7 +656,6 @@ ArrayList<String>  placesnames = new ArrayList<>();
 
             }
 
-
           if(binding.etDob.getVisibility()==View.VISIBLE) {
 
               if(binding.etDob.getTag()==null)
@@ -710,17 +665,6 @@ ArrayList<String>  placesnames = new ArrayList<>();
           }
           else
               newPatient.setPtDob("nil");
-
-
-
-//           String medication;
-//            if (getRadioButtonValue(optyes)) {
-//                    medication = medicationmedicinename.getText().toString();
-//
-//            }else{
-//                medication="nil";
-//            }
-//            newPatient.setPtmedication(medication);
 
             if(medicationmedicinename.getVisibility()==View.VISIBLE)
             {
@@ -853,41 +797,6 @@ ArrayList<String>  placesnames = new ArrayList<>();
 
 
 
-
-//    @Override
-//    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
-//        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-//        if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-//            Log.v(TAG, "Permission: " + permissions[0] + "was " + grantResults[0]);
-//            //resume tasks needing this permission
-//            Map<String, Integer> perms = new HashMap<String, Integer>();
-//            for (int i = 0; i < permissions.length; i++)
-//                perms.put(permissions[i], grantResults[i]);
-//            if (perms.get(Manifest.permission.ACCESS_NETWORK_STATE) == PackageManager.PERMISSION_GRANTED
-//                    && perms.get(Manifest.permission.INTERNET) == PackageManager.PERMISSION_GRANTED
-//                    && perms.get(Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED
-//                    && perms.get(Manifest.permission.READ_PHONE_STATE) == PackageManager.PERMISSION_GRANTED
-//                    && perms.get(Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED) {
-//                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
-//                    if (perms.get(Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
-//                        // All Permissions Granted
-//                        Toast.makeText(this, "All permission accepted", Toast.LENGTH_SHORT).show();
-//                    }
-//                } else {
-//                    // All Permissions Granted
-//                    Toast.makeText(this, "All permission accepted", Toast.LENGTH_SHORT).show();
-//                }
-//            }
-//        }
-//
-//    }
-
-    /**
-     * Create a File for saving an image or video
-     */
-
-
-
     @Override
     public void onBackPressed() {
 
@@ -895,8 +804,6 @@ ArrayList<String>  placesnames = new ArrayList<>();
             if (validator.validate()) {
                 Toast.makeText(getApplicationContext(), "Saving Data", Toast.LENGTH_LONG).show();
                 new savedata().execute();
-
-//                    navigatenext();
             }
             else {
 
@@ -1023,25 +930,7 @@ ArrayList<String>  placesnames = new ArrayList<>();
 
     }
 
-    public  boolean isStoragePermissionGranted() {
-        if (Build.VERSION.SDK_INT >= 23) {
-            if (checkSelfPermission(android.Manifest.permission.WRITE_EXTERNAL_STORAGE)
-                    == PackageManager.PERMISSION_GRANTED) {
-                Log.v(TAG,"Permission is granted");
-                return true;
-            } else {
 
-                Log.v(TAG,"Permission is revoked");
-                ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, 1);
-                return false;
-            }
-        }
-        else { //permission is automatically granted on sdk<23 upon installation
-            Log.v(TAG,"Permission is granted");
-            return true;
-        }
-
-    }
 
     @Override
     public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {

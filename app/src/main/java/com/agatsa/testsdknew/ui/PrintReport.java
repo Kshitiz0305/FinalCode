@@ -822,6 +822,7 @@ public class PrintReport extends AppCompatActivity {
 //
                             double value;
                             value= Double.parseDouble(glucoseModel.getPtGlucose());
+                            String testtypedifference="";
                             testtype=glucoseModel.getPttesttype();
                             currentDateandTime = System.currentTimeMillis();
                             latestmealdate= Double.parseDouble(glucoseModel.getAddeddate());
@@ -829,15 +830,18 @@ public class PrintReport extends AppCompatActivity {
                             Log.d("difference", String.valueOf(currentDateandTime));
                             Log.d("difference", String.valueOf(latestmealdate));
                             Log.d("difference", String.valueOf(difference));
-                            if(difference<=7200000.0){
+                            if(difference<7200000.0){
                                 Toast.makeText(this, "Random(Expected High Level)", Toast.LENGTH_SHORT).show();
+                                testtypedifference="Random(Expected High Level)";
 
                             }else if(difference>=7200000.0 && difference <=10800000.0){
-                                Toast.makeText(this, "Post Prandial  Glucose TestTest", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(this, "Post Prandial  Glucose Test", Toast.LENGTH_SHORT).show();
+                                testtypedifference="Post Prandial  Glucose Test";
 
 
                             }else if(difference>=10800000.0){
                                 Toast.makeText(this, "Random(Expected Low Level)", Toast.LENGTH_SHORT).show();
+                                testtypedifference="Random(Expected Low Level)";
 
 
 
@@ -845,10 +849,8 @@ public class PrintReport extends AppCompatActivity {
                             }
 
                             if (testtype.equals("Post Prandial Glucose Test")) {
-
-
                                 String Random = String.format("%.2f", value);
-                                if (value < 180) {
+                                if (value <= 180) {
                                     Random += "(Normal)";
                                 } else if (value > 180) {
                                     Random += "(Prediabetes)";
@@ -856,18 +858,12 @@ public class PrintReport extends AppCompatActivity {
                                 }
                                 txtdiabetes.setText(Random);
 
-
-
-
-
-
-
                             } else if (testtype.equals("Random Glucose Test")) {
                                 String Random = String.format("%.2f", value);
 
-                                if (value < 140 && value>0) {
+                                if (value <= 140 && value> 0) {
                                     Random += "(Normal)";
-                                } else if (value > 140 && value < 200) {
+                                } else if (value > 140 && value <= 200) {
                                     Random += "(Prediabetes)";
 
                                 } else if (value > 200) {
@@ -880,9 +876,9 @@ public class PrintReport extends AppCompatActivity {
 
                             } else {
                                 String Random = String.format("%.2f", value);
-                                if (value < 100 && value > 0) {
+                                if (value <=100 && value > 0) {
                                     Random += "(Normal)";
-                                } else if (value > 100 && value < 125) {
+                                } else if (value > 100 && value <= 125) {
                                     Random += "(Prediabetes)";
 
 
@@ -904,17 +900,7 @@ public class PrintReport extends AppCompatActivity {
 
 
 
-
-
-
-
-
-
-
-
     }
-
-
 
 
 

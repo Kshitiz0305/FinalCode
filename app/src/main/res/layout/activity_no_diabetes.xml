@@ -5,11 +5,21 @@
         android:layout_height="match_parent"
         android:layout_width="match_parent">
 
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_marginLeft="10dp"
+            app:cardCornerRadius="@dimen/_10kdp"
+            app:cardElevation="@dimen/_2kdp"
+            app:cardMaxElevation="@dimen/_4kdp"
+            android:layout_marginTop="@dimen/_3sdp"
+            android:layout_marginRight="10dp"
+            android:layout_height="wrap_content">
+
 
         <LinearLayout
 
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="@dimen/_150sdp"
             android:layout_marginLeft="@dimen/_5sdp"
             android:layout_marginRight="@dimen/_5sdp"
             android:orientation="vertical">
@@ -29,6 +39,40 @@
 
 
             </LinearLayout>
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:id="@+id/patientName"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/_110sdp"
+                    android:textSize="17sp"
+                    android:fontFamily="@font/sfpro_display_bold"
+                    android:padding="8sp"
+                    android:text="Diabetes"
+                    android:textAlignment="textEnd"
+                    android:textColor="@color/colorPrimaryDark"
+                    />
+
+                <ImageView
+                    android:id="@+id/nodiabeteshelp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_marginRight="@dimen/_5sdp"
+                    android:src="@drawable/ic_question"
+                    android:fontFamily="@font/sfpro_display_semibold"
+                    android:gravity="right"
+                    android:padding="8sp"
+                    android:textColor="@color/colorPrimaryDark"
+                    android:textSize="15sp" />
+            </RelativeLayout>
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/graylight" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -43,7 +87,7 @@
                     android:id="@+id/txtdiabetesreadingname"
                     android:text="@string/fast_reading"
                     android:textColor="@color/colorPrimaryDark"
-                    android:textSize="@dimen/_15sdp" />
+                    android:textSize="15sp" />
 
 
                 <LinearLayout
@@ -97,7 +141,7 @@
                             <Button
                                 android:id="@+id/buttonsave"
                                 android:layout_width="match_parent"
-                                android:layout_height="@dimen/_35sdp"
+                                android:layout_height="@dimen/_30sdp"
                                 android:layout_gravity="center"
                                 android:layout_marginLeft="@dimen/_5sdp"
                                 android:background="@drawable/rect_orange"
@@ -152,7 +196,10 @@
 
 
 
+
+
         </LinearLayout>
+        </androidx.cardview.widget.CardView>
 
     </ScrollView>
 </layout>

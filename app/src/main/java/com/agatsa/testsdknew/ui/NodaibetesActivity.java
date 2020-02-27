@@ -7,10 +7,14 @@ import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
 
@@ -20,8 +24,6 @@ import com.agatsa.testsdknew.R;
 import com.agatsa.testsdknew.customviews.DialogUtil;
 import com.agatsa.testsdknew.databinding.ActivityNoDiabetesBinding;
 
-import java.util.Calendar;
-import java.util.Date;
 
 import br.com.ilhasoft.support.validation.Validator;
 
@@ -34,9 +36,6 @@ public class NodaibetesActivity extends AppCompatActivity {
     LabDB labDB;
     ProgressDialog dialog;
 
-
-
-
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -47,40 +46,36 @@ public class NodaibetesActivity extends AppCompatActivity {
         ptno = pref.getString("PTNO", "");
         newPatient = getIntent().getParcelableExtra("patient");
         dialog=new ProgressDialog(this);
-
-
         labDB = new LabDB(getApplicationContext());
         labDB=new LabDB(this);
 
 
-
-
         binding.buttonsave.setOnClickListener(v -> {
             if(validator.validate()){
-
                 new SaveData().execute();
-
-
 
             }
 
         });
 
+        binding.nodiabeteshelp.setOnClickListener(v -> {
+            final AlertDialog.Builder alert = new AlertDialog.Builder(NodaibetesActivity.this);
+            View mView = getLayoutInflater().inflate(R.layout.help_dailog,null);
+            Button btn_okay = (Button)mView.findViewById(R.id.btn_okay);
+            TextView diabetestxt=(TextView)mView.findViewById(R.id.infotxt);
+            diabetestxt.setText(getResources().getString(R.string.diabetesinfo));
+            alert.setView(mView);
+            final AlertDialog alertDialog = alert.create();
+            alertDialog.setCanceledOnTouchOutside(false);
 
+            btn_okay.setOnClickListener(v1-> {
+                alertDialog.dismiss();
+            });
+            alertDialog.show();
 
-
-
-
-
-
-
-
+        });
 
     }
-
-
-
-
 
 
 
@@ -89,14 +84,6 @@ public class NodaibetesActivity extends AppCompatActivity {
         DialogUtil.getOKCancelDialog(this, "", "Do you want to discard the  diabetes test of " + newPatient.getPtName() + "?", "Yes","No", (dialogInterface, i) ->
                 NodaibetesActivity.super.onBackPressed());
     }
-
-
-
-
-
-
-
-
 
 
     @SuppressLint("StaticFieldLeak")
@@ -119,7 +106,7 @@ public class NodaibetesActivity extends AppCompatActivity {
                 return 3;
             }
             // Save Vital Sign
-            Date currentTime = Calendar.getInstance().getTime();
+
 
 
             GlucoseModel glucoseModel=new GlucoseModel();
@@ -128,7 +115,7 @@ public class NodaibetesActivity extends AppCompatActivity {
             glucoseModel.setPttesttype(getResources().getString(R.string.fast_reading));
             glucoseModel.setPtmealtype("Nil");
             glucoseModel.setPtlatestmealtime("Nil");
-            glucoseModel.setPttimetaken(currentTime.toString());
+            glucoseModel.setPttimetaken("Nil");
             String last_vitalsign_row_id = db.SaveGlucoseSign(glucoseModel);
             try {
                 Thread.sleep(1000);

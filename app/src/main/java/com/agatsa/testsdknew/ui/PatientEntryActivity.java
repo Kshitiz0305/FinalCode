@@ -35,16 +35,9 @@ public class PatientEntryActivity extends AppCompatActivity {
 
     private static final String TAG ="" ;
     ActivityPatientEntryBinding binding;
-
-    boolean processClick=true;
-
-
     LabDB labDB;
-
-
-   String currentDateandTime;
+    String currentDateandTime;
    ProgressDialog dialog;
-
 
 
 
@@ -60,20 +53,14 @@ public class PatientEntryActivity extends AppCompatActivity {
 
 
         binding.btnNewPatient.setOnClickListener(view -> {
-
-
             Intent i = new Intent(PatientEntryActivity.this, PersonalDetailsActivity.class);
             startActivity(i);
-
-
         });
 
         binding.existingBtn.setOnClickListener(view -> {
 
             Intent i = new Intent(PatientEntryActivity.this, ExistingPatientActivity.class);
             startActivity(i);
-
-
         });
 
        binding.logout.setOnClickListener(view -> {
@@ -83,15 +70,8 @@ public class PatientEntryActivity extends AppCompatActivity {
        });
 
        binding.settings.setOnClickListener(v -> {
-
            showOptions();
-
-
        });
-
-
-
-
 
 
     }
@@ -124,9 +104,6 @@ public class PatientEntryActivity extends AppCompatActivity {
     }
 
 
-
-
-//
     public void exportDatabse(String databaseName) {
         try {
            File sd = Environment.getExternalStorageDirectory();
@@ -494,7 +471,6 @@ public class PatientEntryActivity extends AppCompatActivity {
                 exportelevenparameterUrineDB();
                 exporttwoparameterUrineDB();
                 exporturicacid();
-
                 exportDatabse("Test1.db");
                copyfile();
 
