@@ -131,7 +131,7 @@
                     <Button
                         android:id="@+id/btnsavebloodpressure"
                         android:layout_width="match_parent"
-                        android:layout_height="@dimen/_30sdp"
+                        android:layout_height="@dimen/_35sdp"
                         android:layout_gravity="center"
                          android:background="@drawable/rect_orange"
                         android:text="SAVE"

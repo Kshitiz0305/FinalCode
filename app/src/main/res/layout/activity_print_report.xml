@@ -74,11 +74,11 @@
                         android:text="Address :"
                         android:width ="120dp"/>
                     <TextView
+                        android:id="@+id/txtAddress"
                         android:background="@drawable/bg_gray_border"
                         android:fontFamily="@font/sf_pro_display_medium"
                         android:padding="8sp"
                         android:textSize="13sp"
-                        android:id="@+id/txtAddress"
                         android:width="190dp"
                         android:imeOptions="actionNext"
                         android:singleLine="true"
@@ -103,25 +103,7 @@
                         />
 
                 </TableRow>
-<!--                <TableRow>-->
-<!--                    <TextView-->
-<!--                        android:text="Marital Status:"-->
-<!--                        android:fontFamily="@font/sfpro_display_semibold"-->
-<!--                        android:padding="8sp"-->
-<!--                        android:textColor="@color/colorPrimaryDark"-->
-<!--                        android:textSize="15sp"-->
-<!--                        android:width ="120dp"/>-->
-<!--                    <TextView-->
-<!--                        android:id="@+id/txtmaritalstatus"-->
-<!--                        android:width="100dp"-->
-<!--                        android:background="@drawable/bg_gray_border"-->
-<!--                        android:fontFamily="@font/sf_pro_display_medium"-->
-<!--                        android:padding="8sp"-->
-<!--                        android:textSize="13sp"-->
-<!--                        android:singleLine="true"-->
-<!--                        />-->
 
-<!--               </TableRow>&ndash;&gt;-->
 
             </TableLayout>
             </androidx.cardview.widget.CardView>
@@ -147,7 +129,7 @@
                 android:id="@+id/txtVitalSignTitle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="VITAL REPORT"
+                android:text="@string/vital_report"
                 android:layout_marginTop="@dimen/_5sdp"
                 android:textAlignment="center"
                 android:textColor="@color/colorPrimaryDark"
@@ -332,6 +314,154 @@
                 android:layout_width="match_parent"
                 android:layout_marginLeft="10dp"
                 android:id="@+id/diabetescv"
+                android:visibility="visible"
+                android:layout_marginTop="8dp"
+                android:layout_marginRight="10dp"
+                android:layout_height="match_parent">
+
+
+                <LinearLayout
+
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/_5sdp"
+                        android:fontFamily="@font/sfpro_display_semibold"
+                        android:text="@string/diabetes_report"
+                        android:textAlignment="center"
+                        android:textColor="@color/colorPrimaryDark"
+                        android:textSize="17dp"
+                        android:textStyle="bold"
+
+                        />
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_marginTop="5dp"
+                        android:layout_marginBottom="5dp"
+                        android:background="@drawable/gradient_horizontal" />
+
+
+                    <TableLayout
+                        android:id="@+id/tblDiabetesSign"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+
+                        android:stretchColumns="*">
+
+                        <TableRow>
+
+                            <TextView
+                                android:layout_width="0dp"
+                                android:fontFamily="@font/sfpro_display_semibold"
+                                android:padding="8sp"
+                                android:text="Glucose:"
+                                android:textColor="@color/colorPrimaryDark"
+                                android:textSize="15sp" />
+
+                            <TextView
+                                android:id="@+id/txtglucose"
+                                android:background="@drawable/bg_gray_border"
+                                android:fontFamily="@font/sf_pro_display_medium"
+                                android:padding="8sp"
+                                android:textSize="11sp"
+                                android:width="190dp"
+                                android:imeOptions="actionNext"
+                                android:singleLine="true"
+                                android:inputType="textCapWords" />
+                        </TableRow>
+
+
+                    </TableLayout>
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_marginLeft="10dp"
+                android:id="@+id/twoparametercv"
+                android:visibility="gone"
+                android:layout_marginTop="8dp"
+                android:layout_marginRight="10dp"
+                android:layout_height="match_parent">
+
+
+                <LinearLayout
+
+                    android:layout_width="match_parent"
+                    android:orientation="vertical"
+                    android:layout_height="wrap_content">
+
+
+
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/two_parameter_urine_report"
+                        android:layout_marginTop="@dimen/_5sdp"
+                        android:textAlignment="center"
+                        android:textColor="@color/colorPrimaryDark"
+                        android:fontFamily="@font/sfpro_display_semibold"
+                        android:textStyle="bold"
+                        android:textSize="17dp"
+
+                        />
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_marginBottom="5dp"
+                        android:layout_marginTop="5dp"
+                        android:background="@drawable/gradient_horizontal" />
+
+
+
+                    <TableLayout
+                        android:layout_width="wrap_content"
+                        android:layout_marginTop="@dimen/_3sdp"
+                        android:layout_height="wrap_content"
+                        android:stretchColumns="*"
+                        >
+
+                        <TableRow>
+
+                            <TextView
+                                android:layout_width="150dp"
+                                android:fontFamily="@font/sfpro_display_semibold"
+                                android:padding="8sp"
+                                android:text="Microalbumin/Creatinine:"
+                                android:textColor="@color/colorPrimaryDark"
+                                android:textSize="15sp" />
+
+                            <TextView
+                                android:id="@+id/txtmicroalbumincreatinen"
+                                android:layout_width="258dp"
+                                android:width="100dp"
+                                android:layout_marginTop="@dimen/_2sdp"
+                                android:background="@drawable/bg_gray_border"
+                                android:fontFamily="@font/sf_pro_display_medium"
+                                android:inputType="text"
+                                android:padding="8sp"
+                                android:textSize="13sp" />
+                        </TableRow>
+
+
+
+
+
+                    </TableLayout>
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_marginLeft="10dp"
+                android:id="@+id/uricacidcv"
                 android:visibility="gone"
 
                 android:layout_marginTop="8dp"
@@ -339,71 +469,71 @@
                 android:layout_height="match_parent">
 
 
-            <LinearLayout
+                <LinearLayout
 
-            android:layout_width="match_parent"
-            android:orientation="vertical"
-            android:layout_height="wrap_content">
-
-
-
-
-        <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="DIABETES REPORT"
-                android:layout_marginTop="@dimen/_5sdp"
-                android:textAlignment="center"
-                android:textColor="@color/colorPrimaryDark"
-                android:fontFamily="@font/sfpro_display_semibold"
-                android:textStyle="bold"
-                 android:textSize="17dp"
-
-            />
-
-                <View
                     android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:layout_marginBottom="5dp"
-                    android:layout_marginTop="5dp"
-                    android:background="@drawable/gradient_horizontal" />
+                    android:orientation="vertical"
+                    android:layout_height="wrap_content">
 
 
 
-            <TableLayout
-                android:id="@+id/tblDiabetesSign"
-                android:layout_width="wrap_content"
-                android:layout_marginTop="@dimen/_5sdp"
-                android:layout_height="wrap_content"
-                android:stretchColumns="*"
-                >
-
-                <TableRow>
 
                     <TextView
-                        android:layout_width="150dp"
-                        android:fontFamily="@font/sfpro_display_semibold"
-                        android:padding="8sp"
-                        android:text="Glucose Level:"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/uric_acid_report"
+                        android:layout_marginTop="@dimen/_5sdp"
+                        android:textAlignment="center"
                         android:textColor="@color/colorPrimaryDark"
-                        android:textSize="15sp" />
+                        android:fontFamily="@font/sfpro_display_semibold"
+                        android:textStyle="bold"
+                        android:textSize="17dp"
 
-                    <TextView
-                        android:id="@+id/txtglucose"
-                        android:layout_width="258dp"
-                        android:width="100dp"
-                        android:background="@drawable/bg_gray_border"
-                        android:fontFamily="@font/sf_pro_display_medium"
-                        android:inputType="text"
-                        android:padding="8sp"
-                        android:textSize="13sp" />
-                </TableRow>
+                        />
 
-
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_marginBottom="5dp"
+                        android:layout_marginTop="5dp"
+                        android:background="@drawable/gradient_horizontal" />
 
 
-            </TableLayout>
-        </LinearLayout>
+
+                    <TableLayout
+                        android:layout_width="wrap_content"
+                        android:layout_marginTop="@dimen/_5sdp"
+                        android:layout_height="wrap_content"
+                        android:stretchColumns="*"
+                        >
+
+                        <TableRow>
+
+                            <TextView
+                                android:layout_width="150dp"
+                                android:fontFamily="@font/sfpro_display_semibold"
+                                android:padding="8sp"
+                                android:text="Acid Level:"
+                                android:textColor="@color/colorPrimaryDark"
+                                android:textSize="15sp" />
+
+                            <TextView
+                                android:id="@+id/txturicacid"
+                                android:layout_width="258dp"
+                                android:width="100dp"
+                                android:background="@drawable/bg_gray_border"
+                                android:fontFamily="@font/sf_pro_display_medium"
+                                android:inputType="text"
+                                android:padding="8sp"
+                                android:textSize="13sp" />
+                        </TableRow>
+
+
+
+
+
+                    </TableLayout>
+                </LinearLayout>
             </androidx.cardview.widget.CardView>
 
         <androidx.cardview.widget.CardView
@@ -427,7 +557,7 @@
                 android:id="@+id/txturinetest"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="URINE REPORT"
+                android:text="@string/urine_report"
                 android:layout_marginTop="@dimen/_5sdp"
                 android:textAlignment="center"
                 android:textColor="@color/colorPrimaryDark"
@@ -920,7 +1050,7 @@
         <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="SINGLE LEAD ECG REPORT"
+                android:text="@string/single_lead_ecg_report"
                 android:textAlignment="center"
                 android:textColor="@color/colorPrimaryDark"
                 android:fontFamily="@font/sfpro_display_semibold"
@@ -1143,7 +1273,7 @@
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="CHEST SIX LEAD ECG REPORT"
+                        android:text="@string/chest_six_lead_ecg_report"
                         android:textAlignment="center"
                         android:textColor="@color/colorPrimaryDark"
                         android:fontFamily="@font/sfpro_display_semibold"
@@ -1363,7 +1493,7 @@
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="LIMB SIX LEAD ECG REPORT"
+                        android:text="@string/limb_six_lead_ecg_report"
                         android:textAlignment="center"
                         android:textColor="@color/colorPrimaryDark"
                         android:fontFamily="@font/sfpro_display_semibold"
@@ -1582,7 +1712,7 @@
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="TWELVE LEAD ECG REPORT"
+                        android:text="@string/twelve_lead_ecg_report"
                         android:textAlignment="center"
                         android:textColor="@color/colorPrimaryDark"
                         android:fontFamily="@font/sfpro_display_semibold"
@@ -1814,7 +1944,7 @@
                         android:layout_weight="0.5"
                         android:background="@drawable/rect_orange"
                         android:fontFamily="@font/sfpro_display_semibold"
-                        android:text="Print Report"
+                        android:text="@string/print_report"
                         android:textColor="@color/white"
                         android:visibility="visible" />
 
@@ -1827,7 +1957,7 @@
                         android:layout_weight="0.5"
                         android:background="@drawable/rect_orange"
                         android:fontFamily="@font/sfpro_display_semibold"
-                        android:text="COMPLETE TEST"
+                        android:text="@string/complete_test"
                         android:textColor="@color/white"
                         android:visibility="visible" />
 

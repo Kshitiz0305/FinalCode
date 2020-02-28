@@ -24,9 +24,6 @@ import com.agatsa.testsdknew.Models.VitalSign;
 import com.agatsa.testsdknew.R;
 import com.agatsa.testsdknew.customviews.DialogUtil;
 import com.agatsa.testsdknew.databinding.ActivityVitalTestBinding;
-import com.agatsa.testsdknew.utils.CSVWriter;
-import java.io.File;
-import java.io.FileWriter;
 import br.com.ilhasoft.support.validation.Validator;
 
 public class VitalSignActivity extends AppCompatActivity  {
@@ -144,11 +141,46 @@ public class VitalSignActivity extends AppCompatActivity  {
             }
             // Save Vital Sign
             vitalSign.setPt_no(ptno);
-            vitalSign.setWeight(Double.parseDouble((getEdittextValue(txtWeight))));
-            vitalSign.setHeight(Double.parseDouble((getEdittextValue(txtHeight))));
-            vitalSign.setTempt(Double.parseDouble((getEdittextValue(txtTemp))));
-            vitalSign.setPulse(Double.parseDouble((getEdittextValue(txtPulse))));
-            vitalSign.setSto2(Double.parseDouble((getEdittextValue(txtSTO2))));
+            vitalSign.setWeight(getEdittextValue(txtWeight));
+            vitalSign.setHeight(getEdittextValue(txtHeight));
+            double temp = Double.parseDouble(getEdittextValue(txtTemp));
+            String TEMP = String.format("%.2f", temp);
+            if (temp < 97) {
+                TEMP += "(Low Body Temperature)";
+            } else if (temp > 97 || temp < 100) {
+                TEMP += "(Normal)";
+            } else {
+                TEMP += "(Fever)";
+            }
+            vitalSign.setTempt(TEMP);
+
+            double pulse = Double.parseDouble(String.valueOf(getEdittextValue(txtPulse)));
+            String PULSE = String.format("%.2f", pulse);
+            if (pulse < 90) {
+                PULSE += "(Clinical Emergency)";
+            } else {
+                PULSE += "(Normal)";
+
+            }
+            vitalSign.setPulse(PULSE);
+
+            double heightinmeter = (Double.parseDouble(getEdittextValue(txtHeight)) * 0.0254);
+            double m2 = heightinmeter * heightinmeter;
+            double weight = Double.parseDouble(getEdittextValue(txtWeight));
+            double bmi = weight / m2;
+            String BMI = String.format("%.2f", bmi);
+            if (bmi < 18.5) {
+                BMI += "(Under Weight Range)";
+            } else if (bmi < 24.9) {
+                BMI += "(Healthy Weight Range)";
+            } else if (bmi < 29.9) {
+                BMI += "(Over Weight Range)";
+            } else if (bmi < 39.9) {
+                BMI += "(Obese Range)";
+            }
+            vitalSign.setBmi(BMI);
+
+            vitalSign.setSto2(txtSTO2.getText().toString());
 
             String last_vitalsign_row_id = db.SaveVitalSign(vitalSign);
 
@@ -191,25 +223,7 @@ public class VitalSignActivity extends AppCompatActivity  {
         return editText.getText().toString();
     }
 
-    public  boolean isStoragePermissionGranted() {
-        if (Build.VERSION.SDK_INT >= 23) {
-            if (checkSelfPermission(android.Manifest.permission.WRITE_EXTERNAL_STORAGE)
-                    == PackageManager.PERMISSION_GRANTED) {
-                Log.v(TAG,"Permission is granted");
-                return true;
-            } else {
 
-                Log.v(TAG,"Permission is revoked");
-                ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, 1);
-                return false;
-            }
-        }
-        else { //permission is automatically granted on sdk<23 upon installation
-            Log.v(TAG,"Permission is granted");
-            return true;
-        }
-
-    }
 
     @Override
     public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
@@ -221,42 +235,5 @@ public class VitalSignActivity extends AppCompatActivity  {
         }
     }
 
-    private void exportVitalsigndbDB() {
 
-        LabDB dbhelper = new LabDB(getApplicationContext());
-        File exportDir = new File(Environment.getExternalStorageDirectory(), "/CSV/");
-        if (!exportDir.exists())
-        {
-            exportDir.mkdirs();
-        }
-
-        File file = new File(exportDir, "VitalSign.csv");
-        try
-        {
-            file.createNewFile();
-            CSVWriter csvWrite = new CSVWriter(new FileWriter(file));
-            SQLiteDatabase db = dbhelper.getReadableDatabase();
-            Cursor curCSV = db.rawQuery("SELECT * FROM vital_sign",null);
-            csvWrite.writeNext(curCSV.getColumnNames());
-            while(curCSV.moveToNext())
-            {
-                //Which column you want to exprort
-                String arrStr[] ={curCSV.getString(0),curCSV.getString(1),
-                        curCSV.getString(2),curCSV.getString(3),
-                        curCSV.getString(4),curCSV.getString(5),
-                        curCSV.getString(6),curCSV.getString(7),
-                        curCSV.getString(8),curCSV.getString(9),
-                        curCSV.getString(10),curCSV.getString(11)};
-                csvWrite.writeNext(arrStr);
-            }
-            csvWrite.close();
-            curCSV.close();
-        }
-        catch(Exception sqlEx)
-        {
-            Log.e("MainActivity", sqlEx.getMessage(), sqlEx);
-        }
-
-
-    }
 }

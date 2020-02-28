@@ -1296,8 +1296,46 @@ public class TwoParameterActivity extends AppCompatActivity {
             // Save Two Parameter Urine Test
             twoParameterUrineModel.setPt_no(ptno);
             Log.d("pt_no",ptno);
-            twoParameterUrineModel.setCreat(creatinine);
-            twoParameterUrineModel.setMicro(microalbumin);
+            double mic = Double.parseDouble(microalbumin);
+            double crea = Double.parseDouble(creatinine);
+            String SBP = String.format("%.2f", mic);
+            String DBP = String.format("%.2f", crea);
+            SBP = SBP + "/";
+            DBP = SBP + DBP;
+
+            if (mic == 10 && crea == 10) {
+                DBP += "(Collect Specimen)";
+
+            } else if (mic ==10 && crea <=300) {
+                DBP += "(Normal)";
+
+            } else if (mic==30 && crea ==10) {
+                DBP += "(High Abnormal)";
+
+
+            } else if (mic==30 && crea ==100 || crea==50) {
+                DBP += "(Abnormal)";
+
+            } else if (mic==30 && crea ==200 || crea==300) {
+                DBP += "(Normal)";
+
+            }else if(mic==80 && crea==10) {
+                DBP += "(High Abnormal)";
+
+            } else if(mic==80 && crea==50 || crea==100 || crea==200) {
+                DBP += "( Abnormal)";
+
+            }else if (mic==80 && crea==300) {
+                DBP += "(Normal)";
+            } else if(mic==150 && crea==10 || crea==50) {
+             DBP += "(High Abnormal)";
+
+           } else if(mic==80 && crea==100 || crea==200 || crea==300) {
+                DBP += "( Abnormal)";
+
+            }
+
+            twoParameterUrineModel.setMicrocreat(DBP);
             twoParameterUrineModel.setAveragecolortest(patientAveragePatchTest);
             twoParameterUrineModel.setPhotouri(stripPhotoPathUri);
 
@@ -1328,8 +1366,8 @@ public class TwoParameterActivity extends AppCompatActivity {
             } else {
                 if (dialog.isShowing())
                     dialog.dismiss();
-//                pref.edit().putInt("UTF",1).apply();
-//                Log.d("vitaltestflag",String.valueOf(pref.getInt("UTF",0)));
+                pref.edit().putInt("TPTF",1).apply();
+                Log.d("vitaltestflag",String.valueOf(pref.getInt("TPTF",0)));
                 TwoParameterActivity.super.onBackPressed();
                 Toast.makeText(getApplicationContext(), "Two Parameter Urine Test  Saved " , Toast.LENGTH_LONG).show();
 

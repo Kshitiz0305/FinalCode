@@ -75,8 +75,8 @@ public class LabDB extends SQLiteOpenHelper {
     private static final String COLUMN_TEMP = "tempt";
     private static final String COLUMN_PULSE = "pulse";
     private static final String COLUMN_STO2 = "sto2";
-    private static final String COLUMN_BP_S = "bp_s";
-    private static final String COLUMN_BP_D = "bp_d";
+    private static final String COLUMN_BMI = "bmi";
+
 
 //    private static final String COLUMN_VITAL_GLUCOSE= "glucose";
 
@@ -129,13 +129,12 @@ public class LabDB extends SQLiteOpenHelper {
 
     private static final String TABLE_BLOOD_PRESSURE = "blood_pressure_test";
     // Columns of Diabetes Test
-    private static final String COLUMN_SYSTOLIC = "systolic";
-    private static final String COLUMN_DIASTOLIC = "diastolic";
+    private static final String COLUMN_SYSTOLIC_AND_DIASTOLIC = "systolic_diastolic";
+
 
     private static final String TABLE_TWO_PARAMETER_URINE_TEST = "two_parameter_urine_test";
     // Columns of Two Parameter Urine Test
-    private static final String COLUMN_MICROALBUMINE = "microalbumine";
-    private static final String COLUMN_CREATININE = "creatinine";
+    private static final String COLUMN_MICROALBUMINE_CREATININE = "microalbumine_creatinine";
     private static final String COLUMN_TWO_PARAMETER_AVERAGE_COLOR_TEST = "two_parameter_average_color_test";
     private static final String COLUMN_TWO_PARAMETER_STRIP_PHOTO_URI = "two_parameter_strip_photo_uri";
 
@@ -150,12 +149,6 @@ public class LabDB extends SQLiteOpenHelper {
 
 
 
-    // Patient Blood Test Report
-    private static final String TABLE_BLOOD_TEST = "blood_test";
-    // Columns of Blood Test
-    private static final String COLUMN_GLUCOSE = "glucose";
-    private static final String COLUMN_CHLORESTROL = "chlorestrol";
-    private static final String COLUMN_URIC_ACID = "uric_acid";
 
     // Patient Urine Test Report
     private static final String TABLE_URINE_TEST = "urine_test";
@@ -224,6 +217,7 @@ public class LabDB extends SQLiteOpenHelper {
                 + COLUMN_TEMP + " REAL DEFAULT 0,"
                 + COLUMN_PULSE + " REAL DEFAULT 0,"
                 + COLUMN_STO2 + " REAL DEFAULT 0,"
+                + COLUMN_BMI + " REAL DEFAULT 0,"
                 + COLUMN_ADDEDDATE + " TEXT,"
                 + COLUMN_UPDATEDDATE + " TEXT)";
         db.execSQL(CREATE_VITAL_SIGN_TABLE);
@@ -242,8 +236,7 @@ public class LabDB extends SQLiteOpenHelper {
         String CREATE_TWO_PARAMETER_TABLE = "CREATE TABLE " + TABLE_TWO_PARAMETER_URINE_TEST + "("
                 + COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT,"
                 + COLUMN_PT_NO + " INTEGER,"
-                + COLUMN_MICROALBUMINE + " REAL DEFAULT 0,"
-                + COLUMN_CREATININE + " REAL DEFAULT 0,"
+                + COLUMN_MICROALBUMINE_CREATININE + " REAL DEFAULT 0,"
                 + COLUMN_TWO_PARAMETER_AVERAGE_COLOR_TEST + " TEXT,"
                 + COLUMN_TWO_PARAMETER_STRIP_PHOTO_URI+ " TEXT,"
                 + COLUMN_ADDEDDATE + " TEXT,"
@@ -263,8 +256,7 @@ public class LabDB extends SQLiteOpenHelper {
         String CREATE_BLOOD_PRESSURE_TABLE = "CREATE TABLE " + TABLE_BLOOD_PRESSURE + "("
                 + COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT,"
                 + COLUMN_PT_NO + " INTEGER,"
-                + COLUMN_SYSTOLIC + " REAL DEFAULT 0,"
-                + COLUMN_DIASTOLIC + " REAL DEFAULT 0,"
+                + COLUMN_SYSTOLIC_AND_DIASTOLIC + " REAL DEFAULT 0,"
                 + COLUMN_ADDEDDATE + " TEXT,"
                 + COLUMN_UPDATEDDATE + " TEXT)";
         db.execSQL(CREATE_BLOOD_PRESSURE_TABLE);
@@ -520,6 +512,7 @@ public class LabDB extends SQLiteOpenHelper {
         values.put(COLUMN_TEMP, vitalSign.getTempt());
         values.put(COLUMN_PULSE, vitalSign.getPulse());
         values.put(COLUMN_STO2, vitalSign.getSto2());
+        values.put(COLUMN_BMI, vitalSign.getBmi());
         values.put(COLUMN_UPDATEDDATE, Calendar.getInstance().getTimeInMillis() / 1000);
         if (!vitalSign.getRow_id() .equals("")) {
             db.update(TABLE_VITAL_SIGN, values, COLUMN_ID + "=?", new String[]{String.valueOf(vitalSign.getRow_id())});
@@ -538,8 +531,7 @@ public class LabDB extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
         values.put(COLUMN_PT_NO, twoParameterUrineModel.getPt_no());
-        values.put(COLUMN_MICROALBUMINE, twoParameterUrineModel.getMicro());
-        values.put(COLUMN_CREATININE, twoParameterUrineModel.getCreat());
+        values.put(COLUMN_MICROALBUMINE_CREATININE, twoParameterUrineModel.getMicrocreat());
         values.put(COLUMN_TWO_PARAMETER_AVERAGE_COLOR_TEST, twoParameterUrineModel.getAveragecolortest());
         values.put(COLUMN_TWO_PARAMETER_STRIP_PHOTO_URI, twoParameterUrineModel.getPhotouri());
         values.put(COLUMN_UPDATEDDATE, Calendar.getInstance().getTimeInMillis() / 1000);
@@ -605,8 +597,7 @@ public class LabDB extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
         values.put(COLUMN_PT_NO, bloodPressureModel.getPt_no());
-        values.put(COLUMN_SYSTOLIC, bloodPressureModel.getSystolic());
-        values.put(COLUMN_DIASTOLIC, bloodPressureModel.getDiastolic());
+        values.put(COLUMN_SYSTOLIC_AND_DIASTOLIC, bloodPressureModel.getSystolicdiastolic());
         values.put(COLUMN_UPDATEDDATE, Calendar.getInstance().getTimeInMillis() / 1000);
 
         if (!bloodPressureModel.getRow_id() .equals("")) {
@@ -740,18 +731,17 @@ public class LabDB extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getReadableDatabase();
 //
         Cursor cursor = db.query(TABLE_VITAL_SIGN, new String[]{COLUMN_ID, COLUMN_WEIGHT,
-                        COLUMN_HEIGHT, COLUMN_TEMP, COLUMN_PULSE, COLUMN_STO2}, COLUMN_PT_NO + "=?",
+                        COLUMN_HEIGHT, COLUMN_TEMP, COLUMN_PULSE, COLUMN_STO2,COLUMN_BMI}, COLUMN_PT_NO + "=?",
                 new String[]{String.valueOf(pt_no)}, null, null, COLUMN_ID + " DESC", String.valueOf(1));
         if (cursor.moveToFirst()) {
             vitalSign.setRow_id((cursor.getString(0)));
-            vitalSign.setWeight(Double.parseDouble((cursor.getString(1))));
-            vitalSign.setHeight(Double.parseDouble((cursor.getString(2))));
-            vitalSign.setTempt(Double.parseDouble((cursor.getString(3))));
-            vitalSign.setPulse(Double.parseDouble((cursor.getString(4))));
-//            vitalSign.setBps(Double.parseDouble((cursor.getString(5))));
-//            vitalSign.setBpd(Double.parseDouble((cursor.getString(6))));
-            vitalSign.setSto2(Double.parseDouble((cursor.getString(5))));
-//            vitalSign.setGlucose((cursor.getString(8)));
+            vitalSign.setWeight((cursor.getString(1)));
+            vitalSign.setHeight((cursor.getString(2)));
+            vitalSign.setTempt((cursor.getString(3)));
+            vitalSign.setPulse((cursor.getString(4)));
+            vitalSign.setSto2(cursor.getString(5));
+            vitalSign.setBmi((cursor.getString(6)));
+
         }
         vitalSign.setPt_no(pt_no);
         cursor.close();
@@ -789,12 +779,12 @@ public class LabDB extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getReadableDatabase();
 //
         Cursor cursor = db.query(TABLE_TWO_PARAMETER_URINE_TEST, new String[]{COLUMN_ID,
-                        COLUMN_MICROALBUMINE,COLUMN_CREATININE}, COLUMN_PT_NO + "=?",
+                        COLUMN_MICROALBUMINE_CREATININE}, COLUMN_PT_NO + "=?",
                 new String[]{String.valueOf(pt_no)}, null, null, COLUMN_ID + " DESC", String.valueOf(1));
         if (cursor.moveToFirst()) {
             twoParameterUrineModel.setRow_id(cursor.getString(0));
-            twoParameterUrineModel.setMicro((cursor.getString(1)));
-            twoParameterUrineModel.setCreat((cursor.getString(1)));
+            twoParameterUrineModel.setMicrocreat((cursor.getString(1)));
+
 
         }
         twoParameterUrineModel.setPt_no(pt_no);
@@ -825,12 +815,12 @@ public class LabDB extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getReadableDatabase();
 //
         Cursor cursor = db.query(TABLE_BLOOD_PRESSURE, new String[]{COLUMN_ID,
-                        COLUMN_SYSTOLIC,COLUMN_DIASTOLIC}, COLUMN_PT_NO + "=?",
+                        COLUMN_SYSTOLIC_AND_DIASTOLIC}, COLUMN_PT_NO + "=?",
                 new String[]{String.valueOf(pt_no)}, null, null, COLUMN_ID + " DESC", String.valueOf(1));
         if (cursor.moveToFirst()) {
             bloodPressureModel.setRow_id(cursor.getString(0));
-            bloodPressureModel.setSystolic(Double.parseDouble((cursor.getString(1))));
-            bloodPressureModel.setDiastolic(Double.parseDouble((cursor.getString(2))));
+            bloodPressureModel.setSystolicdiastolic(cursor.getString(1));
+
 
         }
         bloodPressureModel.setPt_no(pt_no);

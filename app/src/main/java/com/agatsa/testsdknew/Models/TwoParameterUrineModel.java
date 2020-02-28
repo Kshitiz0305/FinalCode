@@ -3,16 +3,14 @@ package com.agatsa.testsdknew.Models;
 public class TwoParameterUrineModel {
     String pt_no;
     String row_id;
-    String micro;
-    String creat;
+    String microcreat;
     String averagecolortest;
     String photouri;
 
     public TwoParameterUrineModel() {
         this.pt_no ="";
         this.row_id = "";
-        this.micro = "";
-        this.creat = "";
+        this.microcreat = "";
         this.averagecolortest = "";
         this.photouri = "";
     }
@@ -33,20 +31,12 @@ public class TwoParameterUrineModel {
         this.row_id = row_id;
     }
 
-    public String getMicro() {
-        return micro;
+    public String getMicrocreat() {
+        return microcreat;
     }
 
-    public void setMicro(String micro) {
-        this.micro = micro;
-    }
-
-    public String getCreat() {
-        return creat;
-    }
-
-    public void setCreat(String creat) {
-        this.creat = creat;
+    public void setMicrocreat(String microcreat) {
+        this.microcreat = microcreat;
     }
 
     public String getAveragecolortest() {

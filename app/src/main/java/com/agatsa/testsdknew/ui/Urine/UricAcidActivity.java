@@ -1430,8 +1430,15 @@ public class UricAcidActivity extends AppCompatActivity {
             }
             // Save Vital Sign
             uricAcidModel.setPt_no(ptNo);
-            Log.d("pt_no",ptNo);
-            uricAcidModel.setAcid_level(uricAcidLevel);
+           double value= Double.parseDouble(uricAcidLevel);
+             String Random = String.format("%.2f", value);
+            if (value <= 300) {
+                Random += "(Normal)";
+            } else if (value >=700 && value<=1500) {
+                Random += "(Abnormal)";
+
+            }
+            uricAcidModel.setAcid_level(Random);
             uricAcidModel.setAverage_color(patientAveragePatchTest);
             uricAcidModel.setPhoto_uri(stripPhotoPathUri);
 
@@ -1462,8 +1469,8 @@ public class UricAcidActivity extends AppCompatActivity {
             } else {
                 if (dialog.isShowing())
                     dialog.dismiss();
-                pref.edit().putInt("UTF",1).apply();
-                Log.d("vitalTestFlag",String.valueOf(pref.getInt("UTF",0)));
+                pref.edit().putInt("UATF",1).apply();
+                Log.d("vitalTestFlag",String.valueOf(pref.getInt("UATF",0)));
                 UricAcidActivity.super.onBackPressed();
                 Toast.makeText(getApplicationContext(), "Uric Acid Test Saved " , Toast.LENGTH_LONG).show();
 

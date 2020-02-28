@@ -125,8 +125,32 @@ public class BloodPressureActivity extends AppCompatActivity {
             }
             // Save Bloodpressure Sign
             bloodPressureModel.setPt_no(ptno);
-            bloodPressureModel.setDiastolic(Double.parseDouble(BPD.getText().toString()));
-            bloodPressureModel.setSystolic(Double.parseDouble(BPS.getText().toString()));
+            double systolic = Double.parseDouble(BPD.getText().toString());
+            double diasystolic = Double.parseDouble(BPS.getText().toString());
+            String SBP = String.format("%.2f", systolic);
+            String DBP = String.format("%.2f", diasystolic);
+            SBP = SBP + "/";
+            DBP = SBP + DBP;
+
+            if (systolic < 90 || diasystolic < 60) {
+                DBP += "(Low BP)";
+
+            } else if (systolic < 120 || diasystolic < 80) {
+                DBP += "(Normal)";
+
+            } else if (systolic < 140 || diasystolic < 90) {
+                DBP += "(HyperTension Pre)";
+
+
+            } else if (systolic < 160 || diasystolic < 100) {
+                DBP += "(Hypertension I)";
+
+            } else if (systolic > 190 || diasystolic > 120) {
+                DBP += "(Hypertension II)";
+
+            }
+            bloodPressureModel.setSystolicdiastolic(DBP);
+
             String last_vitalsign_row_id = db.SaveBloodpressureSign(bloodPressureModel);
             try {
                 Thread.sleep(1000);

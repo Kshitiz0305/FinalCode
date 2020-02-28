@@ -114,7 +114,7 @@
     <string name="perform_test">Perform Test</string>
     <string name="ok">Ok</string>
     <string name="breakfast">Breakfast</string>
-    <string name="lunch">lunch</string>
+    <string name="lunch">Lunch</string>
     <string name="supper">Supper</string>
     <string name="snack">Snacks</string>
     <string name="random">Random</string>
@@ -127,6 +127,17 @@
     <string name="fast_reading">Fasting  Reading Glucose Test</string>
     <string name="select_time">Select Time</string>
     <string name="select_date">Select Date</string>
+    <string name="two_parameter_urine_report">TWO PARAMETER URINE REPORT</string>
+    <string name="diabetes_report">DIABETES REPORT</string>
+    <string name="vital_report">VITAL REPORT</string>
+    <string name="uric_acid_report">URIC ACID REPORT</string>
+    <string name="urine_report">URINE REPORT</string>
+    <string name="single_lead_ecg_report">SINGLE LEAD ECG REPORT</string>
+    <string name="chest_six_lead_ecg_report">CHEST SIX LEAD ECG REPORT</string>
+    <string name="limb_six_lead_ecg_report">LIMB SIX LEAD ECG REPORT</string>
+    <string name="twelve_lead_ecg_report">TWELVE LEAD ECG REPORT</string>
+    <string name="print_report">Print Report</string>
+    <string name="complete_test">COMPLETE TEST</string>
 
 
 </resources>

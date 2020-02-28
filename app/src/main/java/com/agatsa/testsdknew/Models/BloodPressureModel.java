@@ -3,14 +3,13 @@ package com.agatsa.testsdknew.Models;
 public class BloodPressureModel {
     String pt_no;
     String  row_id;
-    double systolic;
-    double diastolic;
+    String systolicdiastolic;
+
 
     public BloodPressureModel() {
         pt_no="";
         row_id="";
-        systolic=0.0;
-        diastolic=0.0;
+        systolicdiastolic="";
     }
 
     public String getPt_no() {
@@ -29,19 +28,11 @@ public class BloodPressureModel {
         this.row_id = row_id;
     }
 
-    public double getSystolic() {
-        return systolic;
+    public String getSystolicdiastolic() {
+        return systolicdiastolic;
     }
 
-    public void setSystolic(double systolic) {
-        this.systolic = systolic;
-    }
-
-    public double getDiastolic() {
-        return diastolic;
-    }
-
-    public void setDiastolic(double diastolic) {
-        this.diastolic = diastolic;
+    public void setSystolicdiastolic(String systolicdiastolic) {
+        this.systolicdiastolic = systolicdiastolic;
     }
 }

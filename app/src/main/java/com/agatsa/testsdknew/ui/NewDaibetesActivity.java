@@ -47,16 +47,16 @@ public class NewDaibetesActivity extends AppCompatActivity {
     private ProgressDialog dialog;
     RadioButton Breakfast, Lunch, Supper,Snack;
     String Meal="";
-    private Calendar c;
-    private int mYear;
-    private int mMonth;
-    private int mDay;
     String datentime="";
     String timepickertxt="";
     String datepickertxt="";
     String am_pm="";
     String currentDateandTime="";
     long different;
+    double value;
+    String testype="";
+    String Random="";
+    DatePickerDialog picker;
 
 
 
@@ -127,24 +127,15 @@ public class NewDaibetesActivity extends AppCompatActivity {
 
         binding.datepicker.setOnClickListener(v -> {
 
-            mYear= Calendar.getInstance().get(Calendar.YEAR);
-            mMonth=Calendar.getInstance().get(Calendar.MONTH)+1;
-            mDay=Calendar.getInstance().get(Calendar.DAY_OF_MONTH) ;
+            final Calendar cldr = Calendar.getInstance();
+            int day = cldr.get(Calendar.DAY_OF_MONTH);
+            int month = cldr.get(Calendar.MONTH);
+            int year = cldr.get(Calendar.YEAR);
+            // date picker dialog
+            picker = new DatePickerDialog(NewDaibetesActivity.this,
+                    (view, year1, monthOfYear, dayOfMonth) -> binding.datepicker.setText(year1 + ":" + (monthOfYear + 1) + ":" +day ), year, month, day);
+            picker.show();
 
-            c = Calendar.getInstance();
-            int mYearParam = mYear;
-            int mMonthParam = mMonth-1;
-            int mDayParam = mDay;
-
-            DatePickerDialog datePickerDialog = new DatePickerDialog(NewDaibetesActivity.this,
-                    (view, year, monthOfYear, dayOfMonth) -> {
-                        mMonth = monthOfYear + 1;
-                        mYear=year;
-                        mDay=dayOfMonth;
-                        binding.datepicker.setText( year + ":" + monthOfYear + ":" +dayOfMonth);
-                    }, mYearParam, mMonthParam, mDayParam);
-
-            datePickerDialog.show();
 
         });
 
@@ -215,11 +206,6 @@ public class NewDaibetesActivity extends AppCompatActivity {
 
 
 
-
-
-
-
-
     }
 
     public boolean getRadioButtonValue(RadioButton radioButton) {
@@ -232,10 +218,6 @@ public class NewDaibetesActivity extends AppCompatActivity {
         DialogUtil.getOKCancelDialog(this, "", "Do you want to discard the  diabetes test of " + newPatient.getPtName() + "?", "Yes","No", (dialogInterface, i) ->
                 NewDaibetesActivity.super.onBackPressed());
     }
-
-
-
-
 
 
 
@@ -260,31 +242,83 @@ public class NewDaibetesActivity extends AppCompatActivity {
             }
 
 
-            Meal="Breakfast";
+            Meal = "Breakfast";
             if (getRadioButtonValue(Lunch)) {
                 Meal = "Lunch";
-            } else if (getRadioButtonValue(Supper)){
+            } else if (getRadioButtonValue(Supper)) {
                 Meal = "Supper";
 
-            }else if(getRadioButtonValue(Snack)){
-                Meal="Snack";
+            } else if (getRadioButtonValue(Snack)) {
+                Meal = "Snack";
             }
+
+            testype = binding.glucosetesttype.getText().toString();
+            value= Double.parseDouble(getEdittextValue(binding.txtGlucoselevel));
             glucoseModel.setPt_no(ptno);
-            glucoseModel.setPtGlucose(getEdittextValue(binding.txtGlucoselevel));
             glucoseModel.setPttimetaken(currentDateandTime);
-            glucoseModel.setPttesttype(binding.glucosetesttype.getText().toString());
-            glucoseModel.setPtlatestmealtime(datentime);
-            glucoseModel.setPtmealtype(Meal);
-            String last_vitalsign_row_id = db.SaveGlucoseSign(glucoseModel);
-            try {
-                Thread.sleep(1000);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-                return 3;
+            glucoseModel.setPttesttype(testype);
+            if (testype.equals("Post Prandial Glucose Test")) {
+                 Random = String.format("%.2f", value);
+                if (value <= 180) {
+                    Random += "(Normal)";
+                } else if (value > 180) {
+                    Random += "(Prediabetes)";
+
+                }
+                glucoseModel.setPtGlucose(Random);
+
+
+            } else if (testype.equals("Random Glucose Test")) {
+                 Random = String.format("%.2f", value);
+
+                if (value <= 140 && value > 0) {
+                    Random += "(Normal)";
+                } else if (value > 140 && value <= 200) {
+                    Random += "(Prediabetes)";
+
+                } else if (value > 200) {
+                    Random += "(Diabetes)";
+
+
+                }
+                glucoseModel.setPtGlucose(Random);
+
+
+
+            } else {
+                 Random = String.format("%.2f", value);
+                if (value <= 100 && value > 0) {
+                    Random += "(Normal)";
+                } else if (value > 100 && value <= 125) {
+                    Random += "(Prediabetes)";
+
+
+                } else if (value > 125) {
+                    Random += "(Diabetes)";
+
+                }
+                glucoseModel.setPtGlucose(Random);
+
+
             }
-            glucoseModel.setRow_id(last_vitalsign_row_id);
-            return 1;
-        }
+
+
+
+               Log.d("random",Random);
+                glucoseModel.setPtlatestmealtime(datentime);
+                glucoseModel.setPtmealtype(Meal);
+                String last_vitalsign_row_id = db.SaveGlucoseSign(glucoseModel);
+                try {
+                    Thread.sleep(1000);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                    return 3;
+                }
+                glucoseModel.setRow_id(last_vitalsign_row_id);
+                return 1;
+            }
+
+
 
         @Override
         protected void onPostExecute(Integer s) {

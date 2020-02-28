@@ -36,17 +36,11 @@
 
         <activity android:name=".ui.EcgOptionsActivity"/>
         <activity android:name=".ui.SingleLeadECG"/>
-
-
-
-
         <activity android:name=".ui.LimbSixLead"/>
         <activity android:name=".ui.FitnessECG"/>
         <activity android:name=".ui.ChestSixLead"/>
         <activity android:name=".ui.TwelveLeadEcg"/>
         <activity android:name=".ui.Urine.ElevenParameterActivity"/>
-
-
 
         <activity android:name=".ui.MainActivity" />
         <activity android:name=".ui.NewMainActivity" />
@@ -57,15 +51,17 @@
 
         <activity android:name=".ui.VitalSignActivity" />
         <activity android:name=".ui.PerformTestListActivity" />
-        <activity android:name=".ui.PerformTestActivity"
-            android:noHistory="true"
-            />
+        <activity android:name=".ui.PerformTestActivity" />
         <activity android:name=".ui.StartUrineActivity" />
         <activity android:name=".ui.BloodPressureActivity" />
         <activity android:name=".ui.Urine.TwoParameterActivity" />
         <activity android:name=".ui.Urine.UricAcidActivity" />
-
-
+        <activity android:name=".ui.PdfViewActivity" />
+        <activity android:name=".ui.ECGactivity" />
+        <activity android:name=".ui.ViewPDFActivity" />
+        <activity android:name=".ui.ExistingPatientActivity"/>
+        <activity android:name=".ui.NodaibetesActivity"/>
+        <activity android:name=".ui.NewDaibetesActivity"/>
 
 
         <provider
@@ -77,14 +73,6 @@
                 android:name="android.support.FILE_PROVIDER_PATHS"
                 android:resource="@xml/file_path" />
         </provider>
-
-        <activity android:name=".ui.PdfViewActivity" />
-        <activity android:name=".ui.ECGactivity" />
-        <activity android:name=".ui.ViewPDFActivity" />
-        <activity android:name=".ui.ExistingPatientActivity"/>
-        <activity android:name=".ui.NodaibetesActivity"/>
-        <activity android:name=".ui.NewDaibetesActivity"/>
-            android:windowSoftInputMode="stateAlwaysHidden"/>
     </application>
 
 </manifest>
