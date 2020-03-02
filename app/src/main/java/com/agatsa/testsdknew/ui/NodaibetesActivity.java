@@ -111,7 +111,20 @@ public class NodaibetesActivity extends AppCompatActivity {
 
             GlucoseModel glucoseModel=new GlucoseModel();
             glucoseModel.setPt_no(ptno);
-            glucoseModel.setPtGlucose(binding.txtglucoseditext.getText().toString());
+            double value= Double.parseDouble(binding.txtglucoseditext.getText().toString());
+             String Random = String.format("%.2f", value);
+            if (value <= 100 && value > 0) {
+                Random += "(Normal)";
+            } else if (value > 100 && value <= 125) {
+                Random += "(Prediabetes)";
+
+
+            } else if (value > 125) {
+                Random += "(Diabetes)";
+
+            }
+            glucoseModel.setPtGlucose(Random+"mg/dL");
+
             glucoseModel.setPttesttype(getResources().getString(R.string.fast_reading));
             glucoseModel.setPtmealtype("Nil");
             glucoseModel.setPtlatestmealtime("Nil");

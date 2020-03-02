@@ -39,8 +39,6 @@ public class NewDaibetesActivity extends AppCompatActivity {
     String ptno = "";
     PatientModel newPatient = new PatientModel();
     LabDB labDB;
-    String TAG = "Diabetes";
-
     ActivityNewDiabetesBinding binding;
     Validator validator;
     GlucoseModel glucoseModel=new GlucoseModel();
@@ -85,10 +83,16 @@ public class NewDaibetesActivity extends AppCompatActivity {
 
 
         binding.btnsave.setOnClickListener(v -> {
-            if(validator.validate()){
-                new SaveData().execute();
+            if(datentime.equals("") && testype.equals("")){
+                Toast.makeText(this,"Select Time To Get Test Type And Continue",Toast.LENGTH_LONG).show();
+            }else{
+                if(validator.validate()){
+                    new SaveData().execute();
+
+                }
 
             }
+
         });
 
 
@@ -255,6 +259,7 @@ public class NewDaibetesActivity extends AppCompatActivity {
             testype = binding.glucosetesttype.getText().toString();
             value= Double.parseDouble(getEdittextValue(binding.txtGlucoselevel));
             glucoseModel.setPt_no(ptno);
+
             glucoseModel.setPttimetaken(currentDateandTime);
             glucoseModel.setPttesttype(testype);
             if (testype.equals("Post Prandial Glucose Test")) {
@@ -265,7 +270,7 @@ public class NewDaibetesActivity extends AppCompatActivity {
                     Random += "(Prediabetes)";
 
                 }
-                glucoseModel.setPtGlucose(Random);
+                glucoseModel.setPtGlucose(Random+"mg/dL");
 
 
             } else if (testype.equals("Random Glucose Test")) {
@@ -281,7 +286,7 @@ public class NewDaibetesActivity extends AppCompatActivity {
 
 
                 }
-                glucoseModel.setPtGlucose(Random);
+                glucoseModel.setPtGlucose(Random+"mg/dL");
 
 
 
@@ -297,7 +302,7 @@ public class NewDaibetesActivity extends AppCompatActivity {
                     Random += "(Diabetes)";
 
                 }
-                glucoseModel.setPtGlucose(Random);
+                glucoseModel.setPtGlucose(Random+"mg/dL");
 
 
             }
@@ -305,6 +310,7 @@ public class NewDaibetesActivity extends AppCompatActivity {
 
 
                Log.d("random",Random);
+
                 glucoseModel.setPtlatestmealtime(datentime);
                 glucoseModel.setPtmealtype(Meal);
                 String last_vitalsign_row_id = db.SaveGlucoseSign(glucoseModel);

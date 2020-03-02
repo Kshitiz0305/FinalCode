@@ -1,7 +1,7 @@
 package com.agatsa.testsdknew.Models;
 
 /**
- * Created by sanjiv on 1/12/19.
+ * Created by Kshitiz on 1/12/19.
  */
 
 public class UrineReport {

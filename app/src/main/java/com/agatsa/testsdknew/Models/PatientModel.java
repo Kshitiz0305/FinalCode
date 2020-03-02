@@ -4,7 +4,7 @@ import android.os.Parcel;
 import android.os.Parcelable;
 
 /**
- * Created by sanjiv on 1/12/19.
+ * Created by kshitiz on 1/12/19.
  */
 
 public class PatientModel implements Parcelable {

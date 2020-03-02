@@ -1,10 +1,7 @@
 package com.agatsa.testsdknew.Network;
 
-
-
 import com.agatsa.testsdknew.Models.PersonalDetailsResponse;
 import com.agatsa.testsdknew.Models.UserDetailResponse;
-
 import io.reactivex.Observable;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;

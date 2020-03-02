@@ -1,7 +1,7 @@
 package com.agatsa.testsdknew.Models;
 
 /**
- * Created by sanjiv on 2/19/19.
+ * Created by Kshitiz on 2/19/19.
  */
 public class CalculatedDataModelClass {
     private final Double euclidian_disance;

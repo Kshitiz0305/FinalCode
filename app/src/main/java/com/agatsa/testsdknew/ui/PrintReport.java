@@ -560,9 +560,9 @@ public class PrintReport extends AppCompatActivity {
 
                             diabetescv.setVisibility(View.VISIBLE);
 //
-                            String value=(glucoseModel.getPtGlucose()+"mg/dL");
+                            String value=(glucoseModel.getPtGlucose());
                             String diabetestype=glucoseModel.getPttesttype();
-                            String totalvalue=value+" ("+diabetestype+" )";
+                            String totalvalue=value+" ("+ diabetestype+" )";
                             txtdiabetes.setText(totalvalue);
 
 
@@ -588,8 +588,6 @@ public class PrintReport extends AppCompatActivity {
                         }
 
                         break;
-
-
 
 
 

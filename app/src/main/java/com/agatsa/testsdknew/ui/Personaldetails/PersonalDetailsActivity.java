@@ -72,16 +72,12 @@ public class PersonalDetailsActivity extends AppCompatActivity implements DatePi
     EditText txtAge,disease,smokepcs,alcoholpegs,city;
     RadioButton optMale, optFemale, optOther,optyes,optno;
     RadioButton married, unmarried, divorced,widowed;
-    private static int TAKE_PICTURE = 111;
-    String mCurrentPhotoPath;
     Context thisContext;
     LabDB labDB;
 
     LinearLayout noofchildrenll;
-    Calendar myCalendar;
     RadioGroup maritalstatusrg;
     RadioGroup currentmedicationrg;
-    RadioGroup unhealthyhabitsrg;
     LinearLayout medicationll;
     LinearLayout smokell;
     LinearLayout alcoholll;
@@ -92,7 +88,6 @@ public class PersonalDetailsActivity extends AppCompatActivity implements DatePi
 ArrayList<String> distictnames = new ArrayList<>();
 ArrayList<String>  placesnames = new ArrayList<>();
  Validator validator;
- int recentid;
 
  DistrictPlaces districtPlaces ;
  PersonalDetailsPresenter personalDetailsPresenter;
@@ -905,7 +900,7 @@ ArrayList<String>  placesnames = new ArrayList<>();
             csvWrite.writeNext(curCSV.getColumnNames());
             while(curCSV.moveToNext())
             {
-                //Which column you want to exprort
+                //Which column you want to export
                 String arrStr[] ={curCSV.getString(0),curCSV.getString(1),
                         curCSV.getString(2),curCSV.getString(3),
                         curCSV.getString(4),curCSV.getString(5),

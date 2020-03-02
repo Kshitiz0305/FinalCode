@@ -53,7 +53,6 @@ public class HistoryActivity extends AppCompatActivity implements HistoryCallbac
     ImageView syncallimg;
     SharedPreferences pref;
     EcgConfig ecgConfig;
-    TestHistoryAdapter testHistoryAdapter;
     String ptno="";
 
     @Override
@@ -76,7 +75,6 @@ public class HistoryActivity extends AppCompatActivity implements HistoryCallbac
           Log.d("List", String.valueOf(initiateEcg.getListOfUnsyncedEcg(getApplicationContext(),"test")));
             recyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext(),LinearLayoutManager.VERTICAL,false));
            recyclerView.setAdapter(new HistoryAdapter(getApplicationContext(), ecgConfigInternals,this));
-//            recyclerView.setAdapter(new TestHistoryAdapter(getApplicationContext(),ecgConfigInternals));
         } else {
             longEcgConfigInternals = initiateEcg.getListOfUnsyncedLongEcg(getApplicationContext(),"test");
             recyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext(),LinearLayoutManager.VERTICAL,false));
@@ -108,8 +106,6 @@ public class HistoryActivity extends AppCompatActivity implements HistoryCallbac
 
 
 
-
-
     public void syncEcgData(EcgConfig ecgConfig) {
         InitiateEcg initiateEcg = new InitiateEcg();
         initiateEcg.syncEcgData(getApplicationContext(), ecgConfig,
@@ -118,6 +114,7 @@ public class HistoryActivity extends AppCompatActivity implements HistoryCallbac
                     public void onSuccess(Success success, EcgConfig ecgConfig) {
                         Toast.makeText(getApplicationContext(),success.getSuccessMsg(), Toast.LENGTH_SHORT).show();
                         refreshEcg();
+                        Log.d("ecgdata", String.valueOf(ecgConfig));
                         String filePath = ecgConfig.getFileUrl();
                         Intent intent = new Intent(HistoryActivity.this, PdfViewActivity.class);
                         intent.putExtra("fileUrl", filePath);
