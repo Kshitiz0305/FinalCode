@@ -98,19 +98,9 @@ public class HistoryStressAdapter extends RecyclerView.Adapter<HistoryStressAdap
                     "rmssd: " + config.getRmssd() + "" ;
 
             textViewreadings.setText(readings);
-            buttonViewPDF.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    historyCallback.viewPdf(config);
-                }
-            });
+            buttonViewPDF.setOnClickListener(view -> historyCallback.viewPdf(config));
 
-            buttonSync.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    historyCallback.syncEcgData(config);
-                }
-            });
+            buttonSync.setOnClickListener(view -> historyCallback.syncEcgData(config));
         }
     }
 }

@@ -84,7 +84,7 @@ public class NewDaibetesActivity extends AppCompatActivity {
 
         binding.btnsave.setOnClickListener(v -> {
             if(datentime.equals("") && testype.equals("")){
-                Toast.makeText(this,"Select Time To Get Test Type And Continue",Toast.LENGTH_LONG).show();
+                Toast.makeText(this,"Select Time To Continue",Toast.LENGTH_LONG).show();
             }else{
                 if(validator.validate()){
                     new SaveData().execute();

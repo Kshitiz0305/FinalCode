@@ -2,6 +2,7 @@ package com.agatsa.testsdknew.ui;
 
 import android.Manifest;
 import android.app.ProgressDialog;
+import android.bluetooth.BluetoothAdapter;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -196,25 +197,37 @@ public class EcgOptionsActivity extends AppCompatActivity {
 
         });
         pairbtn.setOnClickListener(view -> {
-            mpd.show();
-            mpd.setMessage("Registering...Please Wait");
-            InitiateEcg initiateEcg = new InitiateEcg();
-            initiateEcg.registerDevice(EcgOptionsActivity.this, CLIENT_ID, new RegisterDeviceResponse() {
-                @Override
-                public void onSuccess(String s) {
-                    mpd.dismiss();
-                    Toast.makeText(EcgOptionsActivity.this, s, Toast.LENGTH_SHORT).show();
 
-                }
+            BluetoothAdapter mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
+            if (mBluetoothAdapter == null) {
+                Toast.makeText(this, "Device Doesn't Support Bluetooth", Toast.LENGTH_SHORT).show();
 
-                @Override
-                public void onError(Errors errors) {
-                    mpd.hide();
-                    Toast.makeText(EcgOptionsActivity.this, errors.getErrorMsg(), Toast.LENGTH_SHORT).show();
+            } else if (!mBluetoothAdapter.isEnabled()) {
+                Toast.makeText(this, "Please Enable Bluetooth to continue", Toast.LENGTH_SHORT).show();
+                // Bluetooth is not enabled :)
+            } else {
+                mpd.show();
+                mpd.setMessage("Registering...Please Wait");
+                InitiateEcg initiateEcg = new InitiateEcg();
+                initiateEcg.registerDevice(EcgOptionsActivity.this, CLIENT_ID, new RegisterDeviceResponse() {
+                    @Override
+                    public void onSuccess(String s) {
+                        mpd.dismiss();
+                        Toast.makeText(EcgOptionsActivity.this, s, Toast.LENGTH_SHORT).show();
+
+                    }
+
+                    @Override
+                    public void onError(Errors errors) {
+                        mpd.hide();
+                        Toast.makeText(EcgOptionsActivity.this, errors.getErrorMsg(), Toast.LENGTH_SHORT).show();
 
 
-                }
-            });
+                    }
+                });
+
+            }
+
 
 
         });

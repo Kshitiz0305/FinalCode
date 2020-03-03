@@ -95,7 +95,8 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.HistoryV
                     "rmssd: " + config.getRmssd() + "" ;
 
             textViewreadings.setText(readings);
-            buttonViewPDF.setOnClickListener(view -> historyCallback.viewPdf(config));
+            buttonViewPDF.setOnClickListener(view ->
+                    historyCallback.viewPdf(config));
 
             buttonSync.setOnClickListener(view -> historyCallback.syncEcgData(config));
         }

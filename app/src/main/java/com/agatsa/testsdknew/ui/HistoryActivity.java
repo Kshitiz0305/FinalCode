@@ -37,7 +37,9 @@ import com.agatsa.testsdknew.R;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
+import java.util.concurrent.ThreadLocalRandom;
 
 public class HistoryActivity extends AppCompatActivity implements HistoryCallback {
 
@@ -52,6 +54,7 @@ public class HistoryActivity extends AppCompatActivity implements HistoryCallbac
     PatientModel patientModel;
     ImageView syncallimg;
     SharedPreferences pref;
+    boolean synsuccess;
     EcgConfig ecgConfig;
     String ptno="";
 
@@ -81,25 +84,19 @@ public class HistoryActivity extends AppCompatActivity implements HistoryCallbac
            recyclerView.setAdapter(new HistoryStressAdapter(getApplicationContext(), longEcgConfigInternals,this));
         }
 
-//        syncallimg.setOnClickListener(v -> {
-//            if(ecgConfigInternals.isEmpty()){
-//                Toast.makeText(this, "No Data To sync", Toast.LENGTH_SHORT).show();
-//
-//
-//            }else{
-//                for(int i=0;i<ecgConfigInternals.size();i++){
-//                    syncEcgData(ecgConfigInternals.get(i));
-//
-//
-//
-//
-//                }
-//
-//
-//            }
-//
-//
-//        });
+        syncallimg.setOnClickListener(v -> {
+            if(ecgConfigInternals.isEmpty()){
+                Toast.makeText(this, "No Data To sync", Toast.LENGTH_SHORT).show();
+
+
+            }else {
+//                synsuccess = true;
+                syncallEcgData();
+            }
+
+
+
+        });
 
 
     }
@@ -114,15 +111,26 @@ public class HistoryActivity extends AppCompatActivity implements HistoryCallbac
                     public void onSuccess(Success success, EcgConfig ecgConfig) {
                         Toast.makeText(getApplicationContext(),success.getSuccessMsg(), Toast.LENGTH_SHORT).show();
                         refreshEcg();
-                        Log.d("ecgdata", String.valueOf(ecgConfig));
+//                        synsuccess=true;
                         String filePath = ecgConfig.getFileUrl();
                         Intent intent = new Intent(HistoryActivity.this, PdfViewActivity.class);
                         intent.putExtra("fileUrl", filePath);
                         startActivity(intent);
+                        synsuccess=true;
+                     /*   if(success.getSuccessCode()==10000 && synsuccess==true){
+
+                            if(!ecgConfigInternals.isEmpty())
+                            {
+                                syncEcgData(ecgConfigInternals.get(0));
+                            }
+
+
+                        }*/
                     }
 
                     @Override
                     public void onError(Errors errors) {
+                        synsuccess=false;
                         Toast.makeText(getApplicationContext(), errors.getErrorMsg(), Toast.LENGTH_SHORT).show();
                     }
                 });
@@ -131,6 +139,53 @@ public class HistoryActivity extends AppCompatActivity implements HistoryCallbac
 
 
     }
+
+
+
+    public void syncallEcgData() {
+       for(int i=0;i<ecgConfigInternals.size()-1;i++){
+           InitiateEcg initiateEcg = new InitiateEcg();
+           initiateEcg.syncEcgData(getApplicationContext(),  ecgConfigInternals.get(0),
+                   new UserDetails(patientModel.getPtName(), patientModel.getPtAge(), patientModel.getPtSex()), true, SECRET_ID, new SyncEcgCallBack() {
+                       @Override
+                       public void onSuccess(Success success, EcgConfig ecgConfig) {
+                           Toast.makeText(getApplicationContext(),success.getSuccessMsg(), Toast.LENGTH_SHORT).show();
+                     /*      if(success.getSuccessCode()==10000 && synsuccess==true){
+
+                               if(!ecgConfigInternals.isEmpty())
+                               {
+                                   syncallEcgData(ecgConfigInternals.g);
+                               }
+
+
+                           }*/
+                           refreshEcg();
+//                        synsuccess=true;
+//                        String filePath = ecgConfig.getFileUrl();
+//                        Intent intent = new Intent(HistoryActivity.this, PdfViewActivity.class);
+//                        intent.putExtra("fileUrl", filePath);
+//                        startActivity(intent);
+//                        synsuccess=true;
+
+                       }
+
+                       @Override
+                       public void onError(Errors errors) {
+                           synsuccess=false;
+                           Toast.makeText(getApplicationContext(), errors.getErrorMsg(), Toast.LENGTH_SHORT).show();
+                       }
+                   });
+
+       }
+
+
+
+
+
+    }
+
+
+
 
 
 
@@ -214,6 +269,7 @@ public class HistoryActivity extends AppCompatActivity implements HistoryCallbac
         ecgConfigInternals = initiateEcg.getListOfUnsyncedEcg(getApplicationContext(),"test");
         recyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext(),LinearLayoutManager.VERTICAL,false));
         recyclerView.setAdapter(new HistoryAdapter(getApplicationContext(), ecgConfigInternals,this));
+        //synsuccess=true;
     }
 
     private void refreshStress(){

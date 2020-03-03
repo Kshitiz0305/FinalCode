@@ -4,20 +4,13 @@ package com.agatsa.testsdknew.ui.adapters;
 
 import android.content.Context;
 import android.view.LayoutInflater;
-import android.view.View;
 import android.view.ViewGroup;
-import android.widget.CompoundButton;
-
 import androidx.annotation.NonNull;
 import androidx.databinding.DataBindingUtil;
 import androidx.recyclerview.widget.RecyclerView;
-
-
 import com.agatsa.testsdknew.Models.PatientModel;
 import com.agatsa.testsdknew.R;
-import com.agatsa.testsdknew.databinding.ActivityExistingPatientBinding;
 import com.agatsa.testsdknew.databinding.ActivityExistingPatientSearchListBinding;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -30,8 +23,6 @@ public class PatientDetailAdapter extends RecyclerView.Adapter<PatientDetailAdap
 
    PatientModel selectedPatient;
     private  int selectedItemCount = 0;
-
-
 
 
 
@@ -77,17 +68,9 @@ public class PatientDetailAdapter extends RecyclerView.Adapter<PatientDetailAdap
 
         }
 
-        holder.tableItemBinding.checker.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+        holder.tableItemBinding.checker.setOnCheckedChangeListener((compoundButton, b) -> {
 
-            }
         });
-
-
-
-
-
 
 
 
@@ -137,13 +120,10 @@ public class PatientDetailAdapter extends RecyclerView.Adapter<PatientDetailAdap
         public PatientDetailViewHolder(@NonNull ActivityExistingPatientSearchListBinding itemView) {
             super(itemView.getRoot());
             this.tableItemBinding = itemView;
-            this.tableItemBinding.checker.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    lastCheckedPosition = getAdapterPosition();
-                    notifyDataSetChanged();
+            this.tableItemBinding.checker.setOnClickListener(v -> {
+                lastCheckedPosition = getAdapterPosition();
+                notifyDataSetChanged();
 
-                }
             });
 //
 
