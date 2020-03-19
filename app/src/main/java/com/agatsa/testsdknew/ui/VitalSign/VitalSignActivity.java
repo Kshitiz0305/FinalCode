@@ -1,32 +1,28 @@
-package com.agatsa.testsdknew.ui;
+package com.agatsa.testsdknew.ui.VitalSign;
 
-import android.Manifest;
 import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
-import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
 import android.os.AsyncTask;
-import android.os.Build;
 import android.os.Bundle;
-import android.os.Environment;
 import android.util.Log;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.ActivityCompat;
 import androidx.databinding.DataBindingUtil;
 import com.agatsa.testsdknew.Models.PatientModel;
 import com.agatsa.testsdknew.Models.VitalSign;
 import com.agatsa.testsdknew.R;
 import com.agatsa.testsdknew.customviews.DialogUtil;
 import com.agatsa.testsdknew.databinding.ActivityVitalTestBinding;
+import com.agatsa.testsdknew.ui.LabDB;
+
 import br.com.ilhasoft.support.validation.Validator;
 
-public class VitalSignActivity extends AppCompatActivity  {
+public class VitalSignActivity extends AppCompatActivity implements VitalSignView  {
     String TAG = "PATIENTDETAIL";
     String device_id = "", duid = "", suid = "";
     String ptno = " ";
@@ -39,6 +35,8 @@ public class VitalSignActivity extends AppCompatActivity  {
     LabDB labDB;
     Validator validator;
     ActivityVitalTestBinding binding;
+    VitalSignPresenter vitalSignPresenter;
+    String patient_id="";
 
 
     @Override
@@ -47,10 +45,11 @@ public class VitalSignActivity extends AppCompatActivity  {
         binding = DataBindingUtil.setContentView(this, R.layout.activity_vital_test);
         validator = new Validator(binding);
         validator.enableFormValidationMode();
+        vitalSignPresenter=new VitalSignPresenter(this,this);
         pref = this.getSharedPreferences("sunyahealth", Context.MODE_PRIVATE);
         ptno = pref.getString("PTNO", "");
         newPatient = getIntent().getParcelableExtra("patient");
-        Log.d("rantestvitalpt",ptno);
+        patient_id=getIntent().getStringExtra("patient_id");
 
 
 
@@ -70,7 +69,11 @@ public class VitalSignActivity extends AppCompatActivity  {
 
         btnSave = findViewById(R.id.btnsave);
         btnSave.setOnClickListener(v -> {
+//            vitalSignPresenter.vitalsign(patient_id,txtWeight.getText().toString(),txtHeight.getText().toString(),txtTemp.getText().toString(),txtPulse.getText().toString(),txtSTO2.getText().toString(),"96","97","2018-04-10T04:00:00.000Z","2018-04-10T04:00:00.000Z");
+
             if(validator.validate()){
+
+
                 if(Double.parseDouble(txtWeight.getText().toString())> 200){
                     Toast.makeText(this,"Invalid Weight",Toast.LENGTH_LONG).show();
 

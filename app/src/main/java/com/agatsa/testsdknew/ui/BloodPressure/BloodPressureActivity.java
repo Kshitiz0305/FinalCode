@@ -1,4 +1,4 @@
-package com.agatsa.testsdknew.ui;
+package com.agatsa.testsdknew.ui.BloodPressure;
 
 import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
@@ -7,6 +7,7 @@ import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.util.Log;
@@ -14,6 +15,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
 
@@ -22,14 +24,21 @@ import com.agatsa.testsdknew.Models.PatientModel;
 import com.agatsa.testsdknew.R;
 import com.agatsa.testsdknew.customviews.DialogUtil;
 import com.agatsa.testsdknew.databinding.ActivityBloodPressureBinding;
+import com.agatsa.testsdknew.ui.LabDB;
+import com.agatsa.testsdknew.ui.Personaldetails.PersonalDetailsPresenter;
 import com.agatsa.testsdknew.utils.CSVWriter;
 
 import java.io.File;
 import java.io.FileWriter;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.util.Locale;
+import java.util.TimeZone;
 
 import br.com.ilhasoft.support.validation.Validator;
 
-public class BloodPressureActivity extends AppCompatActivity {
+public class BloodPressureActivity extends AppCompatActivity implements BloodPressureView {
 
     ActivityBloodPressureBinding binding;
     Validator validator;
@@ -42,25 +51,49 @@ public class BloodPressureActivity extends AppCompatActivity {
     PatientModel newPatient;
     String ptno = " ";
    BloodPressureModel bloodPressureModel=new BloodPressureModel();
+   BloodPressurePresenter bloodPressurePresenter;
+   String patient_id;
+    String formattedDate="";
+   String createdon;
+    @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = DataBindingUtil.setContentView(this, R.layout.activity_blood_pressure);
         validator = new Validator(binding);
+        bloodPressurePresenter=new BloodPressurePresenter(this,this);
         validator.enableFormValidationMode();
         BPS = findViewById(R.id.BPSys);
         BPD = findViewById(R.id.BPDias);
         pref = this.getSharedPreferences("sunyahealth", Context.MODE_PRIVATE);
         ptno = pref.getString("PTNO", "");
+        patient_id=getIntent().getStringExtra("patient_id");
         newPatient = getIntent().getParcelableExtra("patient");
         Log.d("bloodpressurelpt",ptno);
         labDB = new LabDB(getApplicationContext());
+        DateTimeFormatter inputFormatter = null;
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
+            inputFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'", Locale.ENGLISH);
+            DateTimeFormatter outputFormatter = DateTimeFormatter.ofPattern("dd-MM-yyy", Locale.ENGLISH);
+            LocalDate date = LocalDate.parse("2018-04-10T04:00:00.000Z", inputFormatter);
+             formattedDate = outputFormatter.format(date);
+
+        }
+
+
         dialog = new ProgressDialog(this);
         dialog.setCanceledOnTouchOutside(false);
         dialog.setCancelable(false);
 
         binding.btnsavebloodpressure.setOnClickListener(v -> {
             if(validator.validate()) {
+
+
+
+//               bloodPressurePresenter.bloodpressure(patient_id,BPS.getText().toString(),BPD.getText().toString(),"2018-04-10T04:00:00.000Z","2018-04-10T04:00:00.000Z");
+
+
+
                 if (Double.parseDouble(BPS.getText().toString()) < 20 || Double.parseDouble(BPS.getText().toString()) > 250) {
                     Toast.makeText(this, "Invalid Blood Pressure (Systolic)", Toast.LENGTH_LONG).show();
 
@@ -125,8 +158,8 @@ public class BloodPressureActivity extends AppCompatActivity {
             }
             // Save Bloodpressure Sign
             bloodPressureModel.setPt_no(ptno);
-            double systolic = Double.parseDouble(BPD.getText().toString());
-            double diasystolic = Double.parseDouble(BPS.getText().toString());
+            double systolic = Double.parseDouble(BPS.getText().toString());
+            double diasystolic = Double.parseDouble(BPD.getText().toString());
             String SBP = String.format("%.2f", systolic);
             String DBP = String.format("%.2f", diasystolic);
             SBP = SBP + "/";
@@ -150,6 +183,9 @@ public class BloodPressureActivity extends AppCompatActivity {
 
             }
             bloodPressureModel.setSystolicdiastolic(DBP);
+            bloodPressureModel.setSystolic(BPS.getText().toString());
+            bloodPressureModel.setDiastolic(BPD.getText().toString());
+
 
             String last_vitalsign_row_id = db.SaveBloodpressureSign(bloodPressureModel);
             try {

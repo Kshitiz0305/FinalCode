@@ -7,7 +7,8 @@ import java.util.List;
 
 public interface HistoryCallback {
     void syncEcgData(EcgConfig ecgConfig);
-    void syncallEcgData();
+    void setlongecgButtonSyncAll(LongEcgConfig ecgConfig);
+    void setButtonSyncAll(EcgConfig ecgConfig);
     void viewPdf(EcgConfig ecgConfig);
     void viewPdfStress(LongEcgConfig longEcgConfig);
     void syncStressData(LongEcgConfig longEcgConfig);

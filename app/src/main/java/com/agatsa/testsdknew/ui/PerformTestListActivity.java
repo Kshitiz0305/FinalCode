@@ -5,7 +5,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Environment;
-import android.view.View;
+import android.util.Log;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
@@ -14,6 +14,10 @@ import com.agatsa.testsdknew.Models.PatientModel;
 import com.agatsa.testsdknew.R;
 import com.agatsa.testsdknew.customviews.DialogUtil;
 import com.agatsa.testsdknew.databinding.ActivityPerformTestListBinding;
+import com.agatsa.testsdknew.ui.BloodPressure.BloodPressureActivity;
+import com.agatsa.testsdknew.ui.Diabetes.NewDaibetesActivity;
+import com.agatsa.testsdknew.ui.PatientEntry.PatientEntryActivity;
+import com.agatsa.testsdknew.ui.VitalSign.VitalSignActivity;
 
 import java.io.File;
 import java.io.FileInputStream;

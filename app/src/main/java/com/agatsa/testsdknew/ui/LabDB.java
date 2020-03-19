@@ -130,6 +130,8 @@ public class LabDB extends SQLiteOpenHelper {
     private static final String TABLE_BLOOD_PRESSURE = "blood_pressure_test";
     // Columns of Diabetes Test
     private static final String COLUMN_SYSTOLIC_AND_DIASTOLIC = "systolic_diastolic";
+    private static final String COLUMN_SYSTOLIC = "systolic";
+    private static final String COLUMN_DIASTOLIC = "diastolic";
 
 
     private static final String TABLE_TWO_PARAMETER_URINE_TEST = "two_parameter_urine_test";
@@ -185,7 +187,8 @@ public class LabDB extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase db) {
         String CREATE_PATIENT_TABLE = "CREATE TABLE " + TABLE_PT_DETAILS + "("
-                + COLUMN_PT_NO + " TEXT PRIMARY KEY ,"
+                + COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT,"
+                + COLUMN_PT_NO + " TEXT ,"
                 + UUID + " TEXT  DEFAULT 'nil', "
                 + COLUMN_PT_NAME + " TEXT,"
                 + COLUMN_PT_ADDRESS + " TEXT,"
@@ -257,6 +260,8 @@ public class LabDB extends SQLiteOpenHelper {
                 + COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT,"
                 + COLUMN_PT_NO + " INTEGER,"
                 + COLUMN_SYSTOLIC_AND_DIASTOLIC + " REAL DEFAULT 0,"
+                + COLUMN_SYSTOLIC + " REAL DEFAULT 0,"
+                + COLUMN_DIASTOLIC + " REAL DEFAULT 0,"
                 + COLUMN_ADDEDDATE + " TEXT,"
                 + COLUMN_UPDATEDDATE + " TEXT)";
         db.execSQL(CREATE_BLOOD_PRESSURE_TABLE);
@@ -377,13 +382,15 @@ public class LabDB extends SQLiteOpenHelper {
             PatientModel patientModel = new PatientModel();
             patientModel.setId(cursor.getString(0));
             patientModel.setPtNo(cursor.getString(1));
-            patientModel.setPtName(cursor.getString(2));
-            patientModel.setPtAddress(cursor.getString(3));
-            patientModel.setPtContactNo(cursor.getString(4));
-            patientModel.setPtEmail(cursor.getString(5));
-            patientModel.setPtAge(cursor.getString(6));
-            patientModel.setPtSex(cursor.getString(8));
-            patientModel.setPtCity(cursor.getString(9));
+            patientModel.setmUuid(cursor.getString(2));
+            patientModel.setPtName(cursor.getString(3));
+            patientModel.setPtAddress(cursor.getString(4));
+            patientModel.setPtContactNo(cursor.getString(5));
+            patientModel.setPtEmail(cursor.getString(6));
+            patientModel.setPtAge(cursor.getString(7));
+            patientModel.setPtDob(cursor.getString(8));
+            patientModel.setPtSex(cursor.getString(9));
+            patientModel.setPtCity(cursor.getString(10));
             patientModelList.add(patientModel);
 
 
@@ -403,13 +410,14 @@ public class LabDB extends SQLiteOpenHelper {
         Cursor cursor = db.rawQuery("select * from " + TABLE_PT_DETAILS+" where ptNo  =?", new String[]{Id});
         while (cursor.moveToNext()) {
             PatientModel patientModel = new PatientModel();
-            patientModel.setId(cursor.getString(0));
-            patientModel.setPtNo(cursor.getString(1));
-            patientModel.setPtName(cursor.getString(2));
-            patientModel.setPtAddress(cursor.getString(3));
-            patientModel.setPtContactNo(cursor.getString(4));
-            patientModel.setPtEmail(cursor.getString(5));
-            patientModel.setPtAge(cursor.getString(6));
+            patientModel.setRow_id(cursor.getString(0));
+            patientModel.setId(cursor.getString(1));
+            patientModel.setPtNo(cursor.getString(2));
+            patientModel.setPtName(cursor.getString(3));
+            patientModel.setPtAddress(cursor.getString(4));
+            patientModel.setPtContactNo(cursor.getString(5));
+            patientModel.setPtEmail(cursor.getString(6));
+            patientModel.setPtAge(cursor.getString(7));
             patientModelList.add(patientModel);
 
 
@@ -598,6 +606,8 @@ public class LabDB extends SQLiteOpenHelper {
         ContentValues values = new ContentValues();
         values.put(COLUMN_PT_NO, bloodPressureModel.getPt_no());
         values.put(COLUMN_SYSTOLIC_AND_DIASTOLIC, bloodPressureModel.getSystolicdiastolic());
+        values.put(COLUMN_SYSTOLIC, bloodPressureModel.getSystolic());
+        values.put(COLUMN_DIASTOLIC, bloodPressureModel.getDiastolic());
         values.put(COLUMN_UPDATEDDATE, Calendar.getInstance().getTimeInMillis() / 1000);
 
         if (!bloodPressureModel.getRow_id() .equals("")) {
@@ -774,6 +784,78 @@ public class LabDB extends SQLiteOpenHelper {
         return glucoseModel;
     }
 
+    public PatientModel getPatientmodel(String pt_no) {
+        PatientModel patientModel = new PatientModel();
+        SQLiteDatabase db = this.getReadableDatabase();
+//
+        Cursor cursor = db.query(TABLE_PT_DETAILS, new String[]{COLUMN_ID,COLUMN_PT_NO,UUID,
+                        COLUMN_PT_NAME,COLUMN_PT_ADDRESS,COLUMN_PT_CONTACTNO,COLUMN_PT_EMAIL,COLUMN_PT_AGE,
+                        COLUMN_PT_DOB,COLUMN_PT_SEX,COLUMN_PT_CITY,COLUMN_PT_MARITALSTATUS,
+                        COLUMN_PT_NO_OF_BOYS,COLUMN_PT_NO_OF_GIRLS,COLUMN_PT_DRUG_ALLERGIES,COLUMN_PT_DISEASE,COLUMN_PT_MEDICATION_MEDICINE,
+                        COLUMN_PT_SMOKING,COLUMN_PT_ALCOHOL}, COLUMN_PT_NO + "=?",
+                new String[]{String.valueOf(pt_no)}, null, null, COLUMN_ID + " DESC", String.valueOf(1));
+        if (cursor.moveToFirst()) {
+            patientModel.setId(cursor.getString(0));
+            patientModel.setPtNo(cursor.getString(1));
+            patientModel.setmUuid(cursor.getString(2));
+            patientModel.setPtName(cursor.getString(3));
+            patientModel.setPtAddress(cursor.getString(4));
+            patientModel.setPtContactNo(cursor.getString(5));
+            patientModel.setPtEmail(cursor.getString(6));
+            patientModel.setPtAge(cursor.getString(7));
+            patientModel.setPtDob(cursor.getString(8));
+            patientModel.setPtSex(cursor.getString(9));
+            patientModel.setPtCity(cursor.getString(10));
+            patientModel.setPtmaritalstatus(cursor.getString(11));
+            patientModel.setPtnoofboys(cursor.getString(12));
+            patientModel.setPtnoofgirls(cursor.getString(13));
+            patientModel.setPtdrugallergies(cursor.getString(14));
+            patientModel.setPtdiseases(cursor.getString(15));
+            patientModel.setPtmedicationmedicinename(cursor.getString(16));
+            patientModel.setPtsmoking(cursor.getString(17));
+            patientModel.setPtalcohol(cursor.getString(18));
+
+
+
+        }
+        patientModel.setPtNo(pt_no);
+        cursor.close();
+        db.close();
+        return patientModel;
+    }
+
+    public ECGReport getlastecg(String pt_no) {
+        ECGReport ecgReport = new ECGReport();
+        SQLiteDatabase db = this.getReadableDatabase();
+//
+        Cursor cursor = db.query(TABLE_ECG_SIGN, new String[]{COLUMN_ID,COLUMN_HEARTRATE,
+                        COLUMN_PR,COLUMN_QT,COLUMN_QTC,COLUMN_QRS,COLUMN_SDNN,
+                        COLUMN_RMSSD,COLUMN_MRR,COLUMN_FINDING,
+                }, COLUMN_PT_NO + "=?",
+                new String[]{String.valueOf(pt_no)}, null, null, COLUMN_ID + " DESC", String.valueOf(1));
+        if (cursor.moveToFirst()) {
+            ecgReport.setRow_id(cursor.getString(0));
+            ecgReport.setHeartrate(Double.parseDouble(cursor.getString(1)));
+            ecgReport.setPr(Double.parseDouble(cursor.getString(2)));
+            ecgReport.setQt(Double.parseDouble(cursor.getString(3)));
+            ecgReport.setQtc(Double.parseDouble(cursor.getString(4)));
+            ecgReport.setQrs(Double.parseDouble(cursor.getString(7)));
+            ecgReport.setSdnn(Double.parseDouble(cursor.getString(8)));
+            ecgReport.setRmssd(Double.parseDouble(cursor.getString(9)));
+            ecgReport.setMrr(Double.parseDouble(cursor.getString(10)));
+//            ecgReport.setFinding("0");
+
+
+
+
+
+        }
+        ecgReport.setPt_no(pt_no);
+        cursor.close();
+        db.close();
+        return ecgReport;
+    }
+
     public TwoParameterUrineModel gettwoparameterurinedata(String pt_no) {
         TwoParameterUrineModel twoParameterUrineModel = new TwoParameterUrineModel();
         SQLiteDatabase db = this.getReadableDatabase();
@@ -815,11 +897,13 @@ public class LabDB extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getReadableDatabase();
 //
         Cursor cursor = db.query(TABLE_BLOOD_PRESSURE, new String[]{COLUMN_ID,
-                        COLUMN_SYSTOLIC_AND_DIASTOLIC}, COLUMN_PT_NO + "=?",
+                        COLUMN_SYSTOLIC_AND_DIASTOLIC,COLUMN_SYSTOLIC,COLUMN_DIASTOLIC}, COLUMN_PT_NO + "=?",
                 new String[]{String.valueOf(pt_no)}, null, null, COLUMN_ID + " DESC", String.valueOf(1));
         if (cursor.moveToFirst()) {
             bloodPressureModel.setRow_id(cursor.getString(0));
             bloodPressureModel.setSystolicdiastolic(cursor.getString(1));
+            bloodPressureModel.setSystolic(cursor.getString(2));
+            bloodPressureModel.setDiastolic(cursor.getString(3));
 
 
         }

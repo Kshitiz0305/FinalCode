@@ -26,6 +26,9 @@
         <activity
             android:name=".ui.HistoryActivity"
             android:label="@string/title_activity_history" />
+        <activity
+            android:name=".ui.LongEcgHistoryActivity"
+            android:label="@string/title_activity_history" />
         <activity android:name=".ui.SplashActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -45,24 +48,24 @@
 
         <activity android:name=".ui.MainActivity" />
         <activity android:name=".ui.NewMainActivity" />
-        <activity android:name=".ui.PatientEntryActivity"
+        <activity android:name=".ui.PatientEntry.PatientEntryActivity"
             android:noHistory="true"/>
         <activity android:name=".ui.PrintReport" />
         <activity android:name=".ui.Personaldetails.PersonalDetailsActivity" />
 
-        <activity android:name=".ui.VitalSignActivity" />
+        <activity android:name=".ui.VitalSign.VitalSignActivity" />
         <activity android:name=".ui.PerformTestListActivity" />
         <activity android:name=".ui.PerformTestActivity" />
         <activity android:name=".ui.StartUrineActivity" />
-        <activity android:name=".ui.BloodPressureActivity" />
+        <activity android:name=".ui.BloodPressure.BloodPressureActivity" />
         <activity android:name=".ui.Urine.TwoParameterActivity" />
         <activity android:name=".ui.Urine.UricAcidActivity" />
         <activity android:name=".ui.PdfViewActivity" />
         <activity android:name=".ui.ECGactivity" />
         <activity android:name=".ui.ViewPDFActivity" />
         <activity android:name=".ui.ExistingPatientActivity"/>
-        <activity android:name=".ui.NodaibetesActivity"/>
-        <activity android:name=".ui.NewDaibetesActivity"/>
+        <activity android:name=".ui.Diabetes.NodaibetesActivity"/>
+        <activity android:name=".ui.Diabetes.NewDaibetesActivity"/>
 
 
 

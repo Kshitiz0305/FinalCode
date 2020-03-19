@@ -2,6 +2,7 @@ package com.agatsa.testsdknew.ui;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
@@ -10,6 +11,7 @@ import com.agatsa.testsdknew.Models.PatientModel;
 import com.agatsa.testsdknew.R;
 import com.agatsa.testsdknew.customviews.DialogUtil;
 import com.agatsa.testsdknew.databinding.ActivityPerformTestBinding;
+import com.agatsa.testsdknew.ui.PatientEntry.PatientEntryActivity;
 
 
 public class PerformTestActivity extends AppCompatActivity {

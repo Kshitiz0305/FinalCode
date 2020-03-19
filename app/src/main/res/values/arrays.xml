@@ -11,5 +11,7 @@
         <item>Post Prandial Glucose Test</item>
         <item>Random Glucose Test</item>
 
-    </string-array>
+    </string-array>\
+
+    <string name="d2c897d823c8816180c28d1eb5849b8aa1160dde"/>
 </resources>

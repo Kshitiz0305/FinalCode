@@ -1,6 +1,8 @@
 package com.agatsa.testsdknew.ui.Personaldetails;
 
-public interface PersonalDetailsView {
+import com.agatsa.testsdknew.Models.PersonalDetailsResponse;
 
+public interface PersonalDetailsView {
+     void showData(PersonalDetailsResponse response) ;
 
 }

@@ -12,7 +12,7 @@ android {
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
-        buildConfigField "String", "BASE_URL", '"http://192.168.254.11:8000/"'
+        buildConfigField "String", "BASE_URL", '"http://sunya.health:90"'
     }
     buildTypes {
         release {

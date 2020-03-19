@@ -1,4 +1,4 @@
-package com.agatsa.testsdknew.ui;
+package com.agatsa.testsdknew.ui.Diabetes;
 
 import android.annotation.SuppressLint;
 import android.app.DatePickerDialog;
@@ -27,6 +27,8 @@ import com.agatsa.testsdknew.Models.PatientModel;
 import com.agatsa.testsdknew.R;
 import com.agatsa.testsdknew.customviews.DialogUtil;
 import com.agatsa.testsdknew.databinding.ActivityNewDiabetesBinding;
+import com.agatsa.testsdknew.ui.LabDB;
+
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -34,7 +36,7 @@ import java.util.Calendar;
 import java.util.Date;
 import br.com.ilhasoft.support.validation.Validator;
 
-public class NewDaibetesActivity extends AppCompatActivity {
+public class NewDaibetesActivity extends AppCompatActivity implements DiabetesView {
     SharedPreferences pref;
     String ptno = "";
     PatientModel newPatient = new PatientModel();
@@ -55,6 +57,9 @@ public class NewDaibetesActivity extends AppCompatActivity {
     String testype="";
     String Random="";
     DatePickerDialog picker;
+    DiabetesPresenter diabetesPresenter;
+    String patient_id;
+    Integer diabeteslevel;
 
 
 
@@ -68,6 +73,7 @@ public class NewDaibetesActivity extends AppCompatActivity {
         pref = this.getSharedPreferences("sunyahealth", Context.MODE_PRIVATE);
         ptno = pref.getString("PTNO", "");
         newPatient = getIntent().getParcelableExtra("patient");
+        diabetesPresenter=new DiabetesPresenter(this,this);
         Breakfast=findViewById(R.id.breakfast);
         Lunch=findViewById(R.id.lunch);
         Supper=findViewById(R.id.supper);
@@ -76,6 +82,8 @@ public class NewDaibetesActivity extends AppCompatActivity {
         dialog = new ProgressDialog(this);
         dialog.setCanceledOnTouchOutside(false);
         labDB=new LabDB(this);
+        patient_id=getIntent().getStringExtra("patient_id");
+
         dialog.setCancelable(false);
 
         SimpleDateFormat sdf = new SimpleDateFormat( "yyyy:MM:dd" );
@@ -83,8 +91,9 @@ public class NewDaibetesActivity extends AppCompatActivity {
 
 
         binding.btnsave.setOnClickListener(v -> {
+
             if(datentime.equals("") && testype.equals("")){
-                Toast.makeText(this,"Select Time To Continue",Toast.LENGTH_LONG).show();
+                Toast.makeText(this,"Enter time to Continue",Toast.LENGTH_LONG).show();
             }else{
                 if(validator.validate()){
                     new SaveData().execute();

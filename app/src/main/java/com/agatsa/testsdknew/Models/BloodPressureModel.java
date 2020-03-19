@@ -4,12 +4,32 @@ public class BloodPressureModel {
     String pt_no;
     String  row_id;
     String systolicdiastolic;
+    String systolic;
+    String diastolic;
 
 
     public BloodPressureModel() {
         pt_no="";
         row_id="";
+        systolic="";
+        diastolic="";
         systolicdiastolic="";
+    }
+
+    public String getSystolic() {
+        return systolic;
+    }
+
+    public void setSystolic(String systolic) {
+        this.systolic = systolic;
+    }
+
+    public String getDiastolic() {
+        return diastolic;
+    }
+
+    public void setDiastolic(String diastolic) {
+        this.diastolic = diastolic;
     }
 
     public String getPt_no() {
@@ -35,4 +55,6 @@ public class BloodPressureModel {
     public void setSystolicdiastolic(String systolicdiastolic) {
         this.systolicdiastolic = systolicdiastolic;
     }
+
+
 }

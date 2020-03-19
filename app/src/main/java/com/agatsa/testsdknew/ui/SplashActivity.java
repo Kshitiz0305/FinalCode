@@ -13,6 +13,7 @@ import android.widget.Toast;
 import androidx.core.app.ActivityCompat;
 
 import com.agatsa.testsdknew.R;
+import com.agatsa.testsdknew.ui.PatientEntry.PatientEntryActivity;
 
 import java.util.HashMap;
 import java.util.Map;

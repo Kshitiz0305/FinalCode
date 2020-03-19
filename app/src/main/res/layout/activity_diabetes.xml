@@ -77,7 +77,7 @@
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/sfpro_display_semibold"
                     android:padding="8sp"
-                    android:text="Glusoce Level"
+                    android:text="Glucose Level"
                     android:textColor="@color/colorPrimaryDark"
                     android:textSize="15sp" />
 

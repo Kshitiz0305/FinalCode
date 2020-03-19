@@ -50,7 +50,7 @@ public class ApiClient {
         httpClient.addInterceptor(chain -> {
             Request original = chain.request();
             Request.Builder requestBuilder = original.newBuilder()
-                    .addHeader("cache-control", "no-cache");
+                    .addHeader("Authorization", "Token d2c897d823c8816180c28d1eb5849b8aa1160dde");
 
             Request request = requestBuilder.build();
             return chain.proceed(request);

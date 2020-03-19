@@ -137,6 +137,9 @@
     <string name="twelve_lead_ecg_report">TWELVE LEAD ECG REPORT</string>
     <string name="print_report">Print Report</string>
     <string name="complete_test">COMPLETE TEST</string>
+    <string name="heartrate_in_bpm">HeartRate(in bpm)</string>
+    <string name="normal_heart_rate">Normal Heart Rate</string>
+    <string name="sync_data">SYNC DATA</string>
 
 
 </resources>

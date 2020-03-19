@@ -26,6 +26,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
 
 import com.agatsa.testsdknew.Models.PatientModel;
+import com.agatsa.testsdknew.Models.PersonalDetailsResponse;
 import com.agatsa.testsdknew.Models.VitalSign;
 import com.agatsa.testsdknew.Models.districtsplaces.DistrictPlaces;
 import com.agatsa.testsdknew.Models.districtsplaces.Districts;
@@ -34,7 +35,7 @@ import com.agatsa.testsdknew.R;
 import com.agatsa.testsdknew.customviews.DialogUtil;
 import com.agatsa.testsdknew.databinding.ActivityNewPatientDetailBinding;
 import com.agatsa.testsdknew.ui.LabDB;
-import com.agatsa.testsdknew.ui.PatientEntryActivity;
+import com.agatsa.testsdknew.ui.PatientEntry.PatientEntryActivity;
 import com.agatsa.testsdknew.ui.PerformTestActivity;
 import com.agatsa.testsdknew.utils.CSVWriter;
 import com.agatsa.testsdknew.utils.StrictEncryption;
@@ -51,8 +52,10 @@ import java.io.InputStreamReader;
 import java.io.Reader;
 import java.io.StringWriter;
 import java.io.Writer;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 
 import br.com.ilhasoft.support.validation.Validator;
 
@@ -91,6 +94,9 @@ ArrayList<String>  placesnames = new ArrayList<>();
 
  DistrictPlaces districtPlaces ;
  PersonalDetailsPresenter personalDetailsPresenter;
+    String sex = "Male";
+    String patient_id="";
+    String currentdate="";
 
 
 
@@ -107,6 +113,8 @@ ArrayList<String>  placesnames = new ArrayList<>();
         device_id = pref.getString("device_id", "");
         duid = getIntent().getStringExtra("duid");
         pt_id = pref.getString("PTNO", "");
+        SimpleDateFormat sdf = new SimpleDateFormat( "yyyy:MM:dd" );
+        currentdate=sdf.format( new Date()) ;
         thisContext = PersonalDetailsActivity.this;
         labDB = new LabDB(getApplicationContext());
         dialog = new ProgressDialog(this);
@@ -478,7 +486,7 @@ ArrayList<String>  placesnames = new ArrayList<>();
         btnSave = findViewById(R.id.btnSave);
         btnSave.setOnClickListener(v -> {
             if (validator.validate()) {
-
+               personalDetailsPresenter.postpersonaldata(txtPtName.getText().toString(),"","",txtEmail.getText().toString(),txtPtContactNo.getText().toString(),binding.spDistrict.getSelectedItem().toString()+binding.spPlace.getSelectedItem().toString()+"+",city.getText().toString(),"Nepali",binding.etDob.getText().toString(),sex,true);
 
 
                 if(binding.spDistrict.getSelectedItemId()==-1){
@@ -493,7 +501,7 @@ ArrayList<String>  placesnames = new ArrayList<>();
                     }
                     else {
 
-                        String sex = "Male";
+
                         if (getRadioButtonValue(optFemale)) {
                             sex = "Female";
                             System.out.println("Female Selected");
@@ -512,8 +520,6 @@ ArrayList<String>  placesnames = new ArrayList<>();
 ////                                exportDatabse("Test1.db");
 //                            }
 
-//                            personalDetailsPresenter.postpersonaldata(txtPtName.getText().toString(),"","",txtEmail.getText().toString(),txtPtContactNo.getText().toString(),binding.spDistrict.getSelectedItem().toString()+binding.spPlace.getSelectedItem().toString()+"+",city.getText().toString(),"Nepali",binding.etDob.getText().toString(),sex,true);
-
 
                         }
                         catch (Exception e){
@@ -526,6 +532,7 @@ ArrayList<String>  placesnames = new ArrayList<>();
                     }
 
                 }
+
 
 
 
@@ -564,8 +571,14 @@ ArrayList<String>  placesnames = new ArrayList<>();
 }
     }
 
+    @Override
+    public void showData(PersonalDetailsResponse response) {
+        if(response!=null){
+             patient_id= String.valueOf(response.getPk());
+             Log.d("patient_id", (patient_id));
+        }
 
-
+    }
 
 
     @SuppressLint("StaticFieldLeak")
@@ -764,11 +777,14 @@ ArrayList<String>  placesnames = new ArrayList<>();
                 pref = thisContext.getSharedPreferences("sunyahealth", MODE_PRIVATE);
                 SharedPreferences.Editor editor = pref.edit();
                 editor.putString("PTNO", pt_id);
+                editor.putString("Patient_id", patient_id);
                 editor.apply();
                 Toast.makeText(getApplicationContext(), "Patient Saved " , Toast.LENGTH_LONG).show();
                 Intent intent = new Intent(PersonalDetailsActivity.this, PerformTestActivity.class);
                 intent.putExtra("patient",newPatient);
                 intent.putExtra("ptid",pt_id);
+                intent.putExtra("patient_id",patient_id);
+
                 startActivity(intent);
 
             }

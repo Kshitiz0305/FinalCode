@@ -14,11 +14,11 @@
 
         <TextView
             android:id="@+id/textView"
-            android:textColor="@color/colorPrimary"
+            android:textColor="@color/colorPrimaryDark"
             android:fontFamily="@font/sfpro_display_semibold"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="HeartRate(in bpm)"
+            android:text="@string/heartrate_in_bpm"
             android:textSize="15sp"/>
 
         <LinearLayout
@@ -44,10 +44,10 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:gravity="end"
-                android:textColor="@color/colorPrimary"
+                android:textColor="@color/colorPrimaryDark"
                 android:fontFamily="@font/sfpro_display_semibold"
                 android:padding="5dp"
-                android:text="Normal Heart Rate"
+                android:text="@string/normal_heart_rate"
                 android:textSize="20sp" />
 
         </LinearLayout>
@@ -118,7 +118,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="50dp"
                         android:fontFamily="@font/sfpro_display_semibold"
-                        android:text="SYNC DATA"
+                        android:text="@string/sync_data"
                         android:textColor="@color/white"
                         android:background="@drawable/rect_orange"
                         android:layout_gravity="center"

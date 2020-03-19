@@ -18,6 +18,7 @@ import com.agatsa.testsdknew.Models.PatientModel;
 import com.agatsa.testsdknew.R;
 import com.agatsa.testsdknew.customviews.DialogUtil;
 import com.agatsa.testsdknew.databinding.ActivityExistingPatientBinding;
+import com.agatsa.testsdknew.ui.PatientEntry.PatientEntryActivity;
 import com.agatsa.testsdknew.ui.adapters.PatientDetailAdapter;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;

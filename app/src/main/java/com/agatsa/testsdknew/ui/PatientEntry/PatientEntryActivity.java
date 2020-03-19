@@ -1,10 +1,12 @@
-package com.agatsa.testsdknew.ui;
+package com.agatsa.testsdknew.ui.PatientEntry;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -18,8 +20,16 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.databinding.DataBindingUtil;
+import com.agatsa.testsdknew.Models.BloodPressureModel;
+import com.agatsa.testsdknew.Models.ECGReport;
+import com.agatsa.testsdknew.Models.GlucoseModel;
+import com.agatsa.testsdknew.Models.PatientModel;
+import com.agatsa.testsdknew.Models.UrineReport;
+import com.agatsa.testsdknew.Models.VitalSign;
 import com.agatsa.testsdknew.R;
 import com.agatsa.testsdknew.databinding.ActivityPatientEntryBinding;
+import com.agatsa.testsdknew.ui.ExistingPatientActivity;
+import com.agatsa.testsdknew.ui.LabDB;
 import com.agatsa.testsdknew.ui.Personaldetails.PersonalDetailsActivity;
 import com.agatsa.testsdknew.utils.CSVWriter;
 import java.io.File;
@@ -31,13 +41,27 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 
-public class PatientEntryActivity extends AppCompatActivity {
+
+public class PatientEntryActivity extends AppCompatActivity implements PatientEntryView  {
 
     private static final String TAG ="" ;
     ActivityPatientEntryBinding binding;
     LabDB labDB;
     String currentDateandTime;
    ProgressDialog dialog;
+   String patient_id="";
+   VitalSign vitalSign;
+    SharedPreferences pref;
+    ECGReport ecgReport;
+    String pt_no="";
+    UrineReport urineReport;
+   PatientEntryPresenter patientEntryPresenter;
+   BloodPressureModel bloodPressureModel;
+   PatientModel patientModel;
+   GlucoseModel glucoseModel;
+   String token="d2c897d823c8816180c28d1eb5849b8aa1160dde";
+
+
 
 
 
@@ -46,9 +70,13 @@ public class PatientEntryActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         binding = DataBindingUtil.setContentView(this, R.layout.activity_patient_entry);
         labDB=new LabDB(this);
+         pref = this.getSharedPreferences("sunyahealth", Context.MODE_PRIVATE);
+        pt_no =pref.getString("PTNO","");
         dialog=new ProgressDialog(this);
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy.MM.dd  HH:mm:ss.SSS");
-        currentDateandTime= sdf.format(new Date());
+        patientEntryPresenter=new PatientEntryPresenter(this,this);
+        patient_id=pref.getString("Patient_id","");
+        patientModel=getIntent().getParcelableExtra("patient");
+
 
 
 
@@ -60,6 +88,7 @@ public class PatientEntryActivity extends AppCompatActivity {
         binding.existingBtn.setOnClickListener(view -> {
 
             Intent i = new Intent(PatientEntryActivity.this, ExistingPatientActivity.class);
+
             startActivity(i);
         });
 
@@ -91,10 +120,12 @@ public class PatientEntryActivity extends AppCompatActivity {
             if(strName == null)
                 return;
             if ("Export".equals(strName)) {
+//                new SyncData().execute();
                 new SaveData().execute();
 
             }else if("Sync".equals((strName))){
-                Toast.makeText(this, "Sync in Progress", Toast.LENGTH_SHORT).show();
+                 new SyncData().execute();
+
 
 
             }
@@ -203,8 +234,7 @@ public class PatientEntryActivity extends AppCompatActivity {
                         curVitalCSV.getString(2),curVitalCSV.getString(3),
                         curVitalCSV.getString(4),curVitalCSV.getString(5),
                         curVitalCSV.getString(6),curVitalCSV.getString(7),
-                        curVitalCSV.getString(8),curVitalCSV.getString(9),
-                        curVitalCSV.getString(10)};
+                        curVitalCSV.getString(8),curVitalCSV.getString(9)};
                 csvVitalWrite.writeNext(vitalstr);
             }
             csvVitalWrite.close();
@@ -275,7 +305,7 @@ public class PatientEntryActivity extends AppCompatActivity {
                 //Which column you want to exprort
                 String bloodpressureStr[] ={curbloodpressureCSV.getString(0),curbloodpressureCSV.getString(1),
                         curbloodpressureCSV.getString(2),curbloodpressureCSV.getString(3),
-                        curbloodpressureCSV.getString(4),curbloodpressureCSV.getString(5)};
+                        curbloodpressureCSV.getString(4)};
                 csvbloodpressureWrite.writeNext(bloodpressureStr);
             }
             csvbloodpressureWrite.close();
@@ -391,7 +421,7 @@ public class PatientEntryActivity extends AppCompatActivity {
                 String diabetesStr[] ={curtwoparameterurineCSV.getString(0),curtwoparameterurineCSV.getString(1),
                         curtwoparameterurineCSV.getString(2),curtwoparameterurineCSV.getString(3),
                         curtwoparameterurineCSV.getString(4),curtwoparameterurineCSV.getString(5),
-                        curtwoparameterurineCSV.getString(6),curtwoparameterurineCSV.getString(7)
+                        curtwoparameterurineCSV.getString(6)
                 };
                 csveurineWrite.writeNext(diabetesStr);
             }
@@ -514,6 +544,102 @@ public class PatientEntryActivity extends AppCompatActivity {
         }
     }
 
+    @SuppressLint("StaticFieldLeak")
+    private class SyncData extends AsyncTask<String, Void, Integer> {
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            dialog.setMessage("Saving Data");
+            dialog.show();
+        }
+
+        @Override
+        protected Integer doInBackground(String... strings) {
+//
+            try {
+                Thread.sleep(1000);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+                return 3;
+            }
+
+            SimpleDateFormat f = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssZ");
+             String formatteddate=f.format(new Date());
+            vitalSign = labDB.getLastVitalSign(pt_no);
+            bloodPressureModel=labDB.getbloodpressuresign(pt_no);
+            glucoseModel=labDB.getDiabetesSign(pt_no);
+            patientModel=labDB.getPatientmodel(pt_no);
+//            ecgReport= labDB.getlastecg(pt_no);
+//            urineReport=labDB.getLastUrineReport(pt_no);
+
+
+
+            String temp = vitalSign.getTempt();
+            String diabeteslevel = glucoseModel.getPtGlucose();
+            String pulse = vitalSign.getPulse();
+            temp = temp.replaceAll("[^0-9]", "");
+           temp= temp.substring(0, temp.length() - 2);
+//
+            diabeteslevel = diabeteslevel.replaceAll("[^0-9]", "");
+            diabeteslevel= diabeteslevel.substring(0, diabeteslevel.length() - 2);
+
+//
+//            // Convert str into StringBuffer as Strings
+//            // are immutable.
+           pulse = pulse.replaceAll("[^0-9]", "");
+
+           Log.d("patientmodel", String.valueOf(patientModel));
+            pulse= pulse.substring(0, pulse.length() - 2);
+
+          patientEntryPresenter.login();
+
+            patientEntryPresenter.vitalsign(patient_id, vitalSign.getWeight(), vitalSign.getHeight(), Integer.parseInt(temp),Integer.parseInt(pulse), vitalSign.getSto2(), bloodPressureModel.getSystolic(), bloodPressureModel.getDiastolic(), formatteddate, formatteddate);
+           patientEntryPresenter.bloodpressure(patient_id,bloodPressureModel.getSystolic(),bloodPressureModel.getDiastolic(),formatteddate,formatteddate);
+            patientEntryPresenter.diabetes(patient_id, diabeteslevel,formatteddate,formatteddate);
+            patientEntryPresenter.medicalhistory(patient_id,patientModel.getPtdrugallergies(),patientModel.getPtdiseases(),"Typhoid",patientModel.getPtmedicationmedicinename(),false,false,false,formatteddate,patientModel.getPtCity());
+            patientEntryPresenter.ecg(patient_id,formatteddate, 97,96,98,98, 90,90,98, 99,0);
+            patientEntryPresenter.urinereport(patient_id,70, 80,90,97,92, 89,86, 87,89,90,98,"color_test","/storage/emulated",formatteddate,formatteddate);
+
+
+
+
+            try {
+                Thread.sleep(1000);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+                return 3;
+            }
+
+
+            return 1;
+        }
+
+        @Override
+        protected void onPostExecute(Integer s) {
+            super.onPostExecute(s);
+            if (s == 2) {
+                if (dialog.isShowing())
+                    dialog.dismiss();
+                Toast.makeText(getApplicationContext(), "Already saved " , Toast.LENGTH_LONG).show();
+
+            } else if (s == 3) {
+                if (dialog.isShowing())
+                    dialog.dismiss();
+                Toast.makeText(getApplicationContext(), "Exception catched " , Toast.LENGTH_LONG).show();
+
+            } else {
+                if (dialog.isShowing())
+                    dialog.dismiss();
+//                pref.edit().putInt("VTF",1).apply();
+//                Log.d("vitaltestflag",String.valueOf(pref.getInt("VTF",0)));
+//                VitalSignActivity.super.onBackPressed();
+//                Toast.makeText(getApplicationContext(), "Database Exported", Toast.LENGTH_LONG).show();
+            }
+
+        }
+    }
+
+
     public  boolean isStoragePermissionGranted() {
         if (Build.VERSION.SDK_INT >= 23) {
             if (checkSelfPermission(android.Manifest.permission.WRITE_EXTERNAL_STORAGE)
@@ -570,6 +696,7 @@ public class PatientEntryActivity extends AppCompatActivity {
 
 
     }
+
 
 
 

@@ -20,10 +20,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
 
 import com.agatsa.testsdknew.Models.BloodPressureModel;
-import com.agatsa.testsdknew.Models.BloodReport;
 import com.agatsa.testsdknew.Models.ECGReport;
 import com.agatsa.testsdknew.Models.GlucoseModel;
-import com.agatsa.testsdknew.Models.LongECGReport;
 import com.agatsa.testsdknew.Models.PatientModel;
 import com.agatsa.testsdknew.Models.TwoParameterUrineModel;
 import com.agatsa.testsdknew.Models.UricAcidModel;
@@ -31,22 +29,15 @@ import com.agatsa.testsdknew.Models.UrineReport;
 import com.agatsa.testsdknew.Models.VitalSign;
 import com.agatsa.testsdknew.R;
 import com.agatsa.testsdknew.customviews.DialogUtil;
+import com.agatsa.testsdknew.ui.PatientEntry.PatientEntryActivity;
 
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.lang.reflect.Method;
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.time.LocalDateTime;
-import java.time.ZoneOffset;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
-import java.util.Date;
-import java.util.Locale;
 import java.util.Set;
 import java.util.UUID;
 

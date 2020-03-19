@@ -200,7 +200,7 @@
                                         android:layout_marginRight="@dimen/_5sdp"
                                         android:background="@drawable/rect_orange"
                                         android:fontFamily="@font/sfpro_display_semibold"
-                                        android:text="COMPLETE SINGLE  LEAD"
+                                        android:text="COMPLETE FITNESS  LEAD"
                                         android:textColor="@color/white"
                                         android:visibility="visible" />
 

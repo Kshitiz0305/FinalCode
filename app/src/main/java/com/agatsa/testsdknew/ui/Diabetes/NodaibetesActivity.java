@@ -1,4 +1,4 @@
-package com.agatsa.testsdknew.ui;
+package com.agatsa.testsdknew.ui.Diabetes;
 
 import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
@@ -23,11 +23,12 @@ import com.agatsa.testsdknew.Models.PatientModel;
 import com.agatsa.testsdknew.R;
 import com.agatsa.testsdknew.customviews.DialogUtil;
 import com.agatsa.testsdknew.databinding.ActivityNoDiabetesBinding;
+import com.agatsa.testsdknew.ui.LabDB;
 
 
 import br.com.ilhasoft.support.validation.Validator;
 
-public class NodaibetesActivity extends AppCompatActivity {
+public class NodaibetesActivity extends AppCompatActivity implements DiabetesView {
     ActivityNoDiabetesBinding binding;
     Validator validator;
     SharedPreferences pref;
@@ -35,6 +36,10 @@ public class NodaibetesActivity extends AppCompatActivity {
     PatientModel newPatient = new PatientModel();
     LabDB labDB;
     ProgressDialog dialog;
+    DiabetesPresenter diabetesPresenter;
+    String patient_id;
+    Integer daibetesvalue;
+    double value;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -42,15 +47,21 @@ public class NodaibetesActivity extends AppCompatActivity {
         binding = DataBindingUtil.setContentView(this, R.layout.activity_no_diabetes);
         validator = new Validator(binding);
         validator.enableFormValidationMode();
+        diabetesPresenter=new DiabetesPresenter(this,this);
         pref = this.getSharedPreferences("sunyahealth", Context.MODE_PRIVATE);
         ptno = pref.getString("PTNO", "");
         newPatient = getIntent().getParcelableExtra("patient");
         dialog=new ProgressDialog(this);
         labDB = new LabDB(getApplicationContext());
         labDB=new LabDB(this);
+        patient_id=getIntent().getStringExtra("patient_id");
+
 
 
         binding.buttonsave.setOnClickListener(v -> {
+//            daibetesvalue= Integer.parseInt(getEdittextValue(binding.txtglucoseditext));
+            Log.d("diabetesvalue", String.valueOf(daibetesvalue));
+//            diabetesPresenter.diabetes(patient_id, String.valueOf(daibetesvalue),"2018-04-10T04:00:00.000Z","2018-04-10T04:00:00.000Z");
             if(validator.validate()){
                 new SaveData().execute();
 
@@ -111,7 +122,7 @@ public class NodaibetesActivity extends AppCompatActivity {
 
             GlucoseModel glucoseModel=new GlucoseModel();
             glucoseModel.setPt_no(ptno);
-            double value= Double.parseDouble(binding.txtglucoseditext.getText().toString());
+             value= Double.parseDouble(binding.txtglucoseditext.getText().toString());
              String Random = String.format("%.2f", value);
             if (value <= 100 && value > 0) {
                 Random += "(Normal)";

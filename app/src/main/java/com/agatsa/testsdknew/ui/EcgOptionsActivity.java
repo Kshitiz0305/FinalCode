@@ -11,9 +11,6 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
-import android.view.MenuItem;
-import android.view.View;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -22,7 +19,6 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.databinding.DataBindingUtil;
@@ -190,7 +186,7 @@ public class EcgOptionsActivity extends AppCompatActivity {
         });
 
         longsyncimg.setOnClickListener(v -> {
-            Intent i=new Intent(EcgOptionsActivity.this, HistoryActivity.class);
+            Intent i=new Intent(EcgOptionsActivity.this, LongEcgHistoryActivity.class);
             i.putExtra("patient",patientModel);
             i.putExtra("type", EcgTypes.LONG_ECG);
             startActivity(i);

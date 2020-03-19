@@ -9,6 +9,7 @@ import android.os.Parcelable;
 
 public class PatientModel implements Parcelable {
     String id ;
+    String  row_id;
     String ptNo;
     String user_id;
     String ptName;
@@ -38,7 +39,8 @@ public PatientModel(){
 
     public PatientModel(Parcel in) {
         id = in.readString();
-        ptNo = in.readString();
+        row_id=in.readString() ;
+    ptNo = in.readString();
         user_id = in.readString();
         ptName = in.readString();
         ptAddress = in.readString();
@@ -63,6 +65,7 @@ public PatientModel(){
     @Override
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeString(id);
+        dest.writeString(row_id);
         dest.writeString(ptNo);
         dest.writeString(user_id);
         dest.writeString(ptName);
@@ -152,6 +155,14 @@ public PatientModel(){
 
     public String getPtAddress() {
         return ptAddress;
+    }
+
+    public String getRow_id() {
+        return row_id;
+    }
+
+    public void setRow_id(String row_id) {
+        this.row_id = row_id;
     }
 
     public void setPtAddress(String ptAddress) {
