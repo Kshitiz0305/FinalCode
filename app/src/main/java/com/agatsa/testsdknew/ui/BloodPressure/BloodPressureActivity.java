@@ -19,6 +19,7 @@ import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
 
+import com.agatsa.testsdknew.LabInstanceDB;
 import com.agatsa.testsdknew.Models.BloodPressureModel;
 import com.agatsa.testsdknew.Models.PatientModel;
 import com.agatsa.testsdknew.R;
@@ -54,6 +55,7 @@ public class BloodPressureActivity extends AppCompatActivity implements BloodPre
    BloodPressurePresenter bloodPressurePresenter;
    String patient_id;
     String formattedDate="";
+    LabInstanceDB labInstanceDB;
    String createdon;
     @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
@@ -64,6 +66,7 @@ public class BloodPressureActivity extends AppCompatActivity implements BloodPre
         bloodPressurePresenter=new BloodPressurePresenter(this,this);
         validator.enableFormValidationMode();
         BPS = findViewById(R.id.BPSys);
+        labInstanceDB=new LabInstanceDB(this);
         BPD = findViewById(R.id.BPDias);
         pref = this.getSharedPreferences("sunyahealth", Context.MODE_PRIVATE);
         ptno = pref.getString("PTNO", "");
@@ -150,6 +153,7 @@ public class BloodPressureActivity extends AppCompatActivity implements BloodPre
         protected Integer doInBackground(String... strings) {
 //
             LabDB db = new LabDB(getApplicationContext());
+            LabInstanceDB labInstanceDB = new LabInstanceDB(getApplicationContext());
             try {
                 Thread.sleep(1000);
             } catch (InterruptedException e) {
@@ -188,6 +192,7 @@ public class BloodPressureActivity extends AppCompatActivity implements BloodPre
 
 
             String last_vitalsign_row_id = db.SaveBloodpressureSign(bloodPressureModel);
+            String last_vitalsign_row_idd = labInstanceDB.SaveBloodpressureSign(bloodPressureModel);
             try {
                 Thread.sleep(1000);
             } catch (InterruptedException e) {
@@ -195,6 +200,7 @@ public class BloodPressureActivity extends AppCompatActivity implements BloodPre
                 return 3;
             }
             bloodPressureModel.setRow_id(last_vitalsign_row_id);
+            bloodPressureModel.setRow_id(last_vitalsign_row_idd);
             return 1;
         }
 

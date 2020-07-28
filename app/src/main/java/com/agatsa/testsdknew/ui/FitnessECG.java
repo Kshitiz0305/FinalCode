@@ -37,6 +37,7 @@ import com.agatsa.sanketlife.development.Success;
 import com.agatsa.sanketlife.development.UserDetails;
 import com.agatsa.sanketlife.models.EcgTypes;
 import com.agatsa.testsdknew.BuildConfig;
+import com.agatsa.testsdknew.LabInstanceDB;
 import com.agatsa.testsdknew.Models.ECGReport;
 import com.agatsa.testsdknew.Models.PatientModel;
 import com.agatsa.testsdknew.R;
@@ -404,6 +405,7 @@ public class FitnessECG extends AppCompatActivity implements ResponseCallback {
                 Toast.makeText(mContext, "Pdf Generated", Toast.LENGTH_SHORT).show();
 
                 LabDB db = new LabDB(getApplicationContext());
+                LabInstanceDB labInstanceDB=new LabInstanceDB(getApplicationContext());
                 ecgReport.setPt_no(ptno);
                 ecgReport.setHeartrate(ecgConfig.getHeartRate());
                 ecgReport.setPr((ecgConfig.getpR()));
@@ -417,6 +419,40 @@ public class FitnessECG extends AppCompatActivity implements ResponseCallback {
                 ecgReport.setEcgType("LSL");
                 ecgReport.setFilepath(ecgConfig.getFileUrl());
                 compositeDisposable.add(db.updateEcgObserVable(ecgReport)
+                        .subscribeOn(Schedulers.io())
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe(ecgid -> {
+
+                                    if (ecgid != null) {
+
+                                        if (!ecgid.equals("")) {
+
+                                            pref.edit().putInt("LSLF", 1 ).apply();
+
+                                            DialogUtil.getOKDialog(FitnessECG.this, "", "Report Saved Successfully", "ok");
+
+                                        } else {
+
+
+                                            DialogUtil.getOKDialog(FitnessECG.this, "", "Error While saving", "ok");
+                                        }
+
+
+                                    } else {
+
+
+
+                                        DialogUtil.getOKDialog(FitnessECG.this, "", "Error While saving", "ok");
+                                    }
+                                },
+                                throwable -> {
+
+                                    Log.e("rantest", "Unable to get username", throwable);
+
+
+                                }));
+
+                compositeDisposable.add(labInstanceDB.updateEcgObserVable(ecgReport)
                         .subscribeOn(Schedulers.io())
                         .observeOn(AndroidSchedulers.mainThread())
                         .subscribe(ecgid -> {

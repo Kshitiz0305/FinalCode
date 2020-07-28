@@ -37,6 +37,7 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.core.content.FileProvider;
 
+import com.agatsa.testsdknew.LabInstanceDB;
 import com.agatsa.testsdknew.Models.PatientModel;
 import com.agatsa.testsdknew.Models.UrineReport;
 import com.agatsa.testsdknew.R;
@@ -1667,6 +1668,7 @@ public  class ElevenParameterActivity extends AppCompatActivity {
         protected Integer doInBackground(String... strings) {
 //
             LabDB db = new LabDB(getApplicationContext());
+            LabInstanceDB labInstanceDB=new LabInstanceDB(getApplicationContext());
             try {
                 Thread.sleep(1000);
             } catch (InterruptedException e) {
@@ -1692,6 +1694,7 @@ public  class ElevenParameterActivity extends AppCompatActivity {
 
 
             String last_vitalsign_row_id = db.SaveUrineReport(urineReport);
+            String last_vitalsign_row_idd = labInstanceDB.SaveUrineReport(urineReport);
             try {
                 Thread.sleep(1000);
             } catch (InterruptedException e) {
@@ -1699,6 +1702,7 @@ public  class ElevenParameterActivity extends AppCompatActivity {
                 return 3;
             }
             urineReport.setRow_id(last_vitalsign_row_id);
+            urineReport.setRow_id(last_vitalsign_row_idd);
             return 1;
         }
 

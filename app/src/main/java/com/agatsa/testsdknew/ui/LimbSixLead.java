@@ -32,6 +32,7 @@ import com.agatsa.sanketlife.development.InitiateEcg;
 import com.agatsa.sanketlife.development.Success;
 import com.agatsa.sanketlife.development.UserDetails;
 import com.agatsa.testsdknew.BuildConfig;
+import com.agatsa.testsdknew.LabInstanceDB;
 import com.agatsa.testsdknew.Models.ECGReport;
 import com.agatsa.testsdknew.Models.PatientModel;
 import com.agatsa.testsdknew.R;
@@ -94,41 +95,32 @@ public class LimbSixLead extends AppCompatActivity {
         hideAndSeek(buttoncollectionsshowstart,false);
 
 
-       binding.btnComplete.setOnClickListener(new View.OnClickListener() {
-           @Override
-           public void onClick(View view) {
+       binding.btnComplete.setOnClickListener(view -> LimbSixLead.this.onBackPressed());
 
-               LimbSixLead.this.onBackPressed();
-           }
-       });
+        binding.btnViewr.setOnClickListener(view -> {
+Log.d("rantest","In the view pdf");
+            if(!pdfurl.equals(""))
+            {
+                File file = new File(pdfurl);
+                Intent intent = new Intent(Intent.ACTION_VIEW);
 
-        binding.btnViewr.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-  Log.d("rantest","In the view pdf");
-                if(!pdfurl.equals(""))
-                {
-                    File file = new File(pdfurl);
-                    Intent intent = new Intent(Intent.ACTION_VIEW);
+                // set leadIndex to give temporary permission to external app to use your FileProvider
+                intent.setFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
 
-                    // set leadIndex to give temporary permission to external app to use your FileProvider
-                    intent.setFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+                // generate URI, I defined authority as the application ID in the Manifest, the last param is file I want to open
+                Uri photoURI = FileProvider.getUriForFile(LimbSixLead.this,
+                        BuildConfig.APPLICATION_ID + ".provider",
+                        file);
+                // I am opening a PDF file so I give it a valid MIME type
+                intent.setDataAndType(photoURI, "application/pdf");
 
-                    // generate URI, I defined authority as the application ID in the Manifest, the last param is file I want to open
-                    Uri photoURI = FileProvider.getUriForFile(LimbSixLead.this,
-                            BuildConfig.APPLICATION_ID + ".provider",
-                            file);
-                    // I am opening a PDF file so I give it a valid MIME type
-                    intent.setDataAndType(photoURI, "application/pdf");
-
-                    // validate that the device can open your File!
-                    startActivity(intent);
+                // validate that the device can open your File!
+                startActivity(intent);
 
 
 
 
-                }}
-        });
+            }});
 
         initViews();
         initOnClickListener();
@@ -362,6 +354,7 @@ leadIndex =1;
             public void onPdfAvailable(EcgConfig ecgConfig) {
 
                 LabDB db = new LabDB(getApplicationContext());
+                LabInstanceDB labInstanceDB=new LabInstanceDB(getApplicationContext());
                 ecgReport.setPt_no(ptno);
                 ecgReport.setHeartrate(ecgConfig.getHeartRate());
                 ecgReport.setPr((ecgConfig.getpR()));
@@ -376,6 +369,40 @@ leadIndex =1;
 
                 ecgReport.setFilepath(ecgConfig.getFileUrl());
                 compositeDisposable.add(db.updateEcgObserVable(ecgReport)
+                        .subscribeOn(Schedulers.io())
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe(ecgid -> {
+
+                                    if (ecgid != null) {
+
+                                        if (!ecgid.equals("")) {
+
+                                            pref.edit().putInt("LISLF", 1 ).apply();
+
+                                            DialogUtil.getOKDialog(LimbSixLead.this, "", "Report Saved Successfully", "ok");
+
+                                        } else {
+
+
+                                            DialogUtil.getOKDialog(LimbSixLead.this, "", "Error While saving", "ok");
+                                        }
+
+
+                                    } else {
+
+
+
+                                        DialogUtil.getOKDialog(LimbSixLead.this, "", "Error While saving", "ok");
+                                    }
+                                },
+                                throwable -> {
+
+                                    Log.e("rantest", "Unable to get username", throwable);
+
+
+                                }));
+
+                compositeDisposable.add(labInstanceDB.updateEcgObserVable(ecgReport)
                         .subscribeOn(Schedulers.io())
                         .observeOn(AndroidSchedulers.mainThread())
                         .subscribe(ecgid -> {

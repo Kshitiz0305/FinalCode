@@ -39,6 +39,7 @@ import com.agatsa.sanketlife.development.InitiateEcg;
 import com.agatsa.sanketlife.development.Success;
 import com.agatsa.sanketlife.development.UserDetails;
 import com.agatsa.testsdknew.BuildConfig;
+import com.agatsa.testsdknew.LabInstanceDB;
 import com.agatsa.testsdknew.Models.ECGReport;
 import com.agatsa.testsdknew.Models.PatientModel;
 import com.agatsa.testsdknew.R;
@@ -429,6 +430,7 @@ public  class SingleLeadECG extends AppCompatActivity implements ResponseCallbac
                 @Override
                 public void onPdfAvailable(EcgConfig ecgConfig) {
                     LabDB db = new LabDB(getApplicationContext());
+                    LabInstanceDB labInstanceDB=new LabInstanceDB(getApplicationContext());
                     ecgReport.setPt_no(ptno);
                     ecgReport.setHeartrate(ecgConfig.getHeartRate());
                     ecgReport.setPr((ecgConfig.getpR()));
@@ -468,6 +470,32 @@ public  class SingleLeadECG extends AppCompatActivity implements ResponseCallbac
                                     },
                                     throwable -> Log.e("rantest", "Unable to get username", throwable)));
 
+                    mDisposable.add(labInstanceDB.updateEcgObserVable(ecgReport)
+                            .subscribeOn(Schedulers.io())
+                            .observeOn(AndroidSchedulers.mainThread())
+                            .subscribe(ecgid -> {
+
+                                        if (ecgid != null) {
+
+                                            if (!ecgid.equals("")) {
+                                                pref.edit().putInt("SLF",1).apply();
+                                                Log.d("rantestsl",String.valueOf(pref.getInt("SLF",0)));
+                                                DialogUtil.getOKDialog(SingleLeadECG.this, "", "Report Saved Successfully", "ok");
+
+                                            }
+                                            else {
+                                                DialogUtil.getOKDialog(SingleLeadECG.this, "", "Error While saving", "ok");
+                                            }
+
+
+                                        } else {
+
+                                            DialogUtil.getOKDialog(SingleLeadECG.this, "", "Error While saving", "ok");
+                                        }
+                                    },
+                                    throwable -> Log.e("rantest", "Unable to get username", throwable)));
+
+
 
 
                     Log.e("makepdfpath", ecgConfig.getFileUrl());
@@ -481,6 +509,7 @@ public  class SingleLeadECG extends AppCompatActivity implements ResponseCallbac
 
 
                 }
+
 
                 @Override
                 public void onError(Errors errors) {

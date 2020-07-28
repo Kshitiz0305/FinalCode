@@ -41,17 +41,14 @@ public class StartUrineActivity extends AppCompatActivity {
             progress.setMessage("Starting Urine Test...");
             progress.show();
 
-            Runnable progressRunnable = new Runnable() {
-                @Override
-                public void run() {
-                    progress.cancel();
-                    Intent i = new Intent(StartUrineActivity.this, ElevenParameterActivity.class);
-                    i.putExtra("PTNO", ptno);
-                    i.putExtra("patient", patientModel);
-                    startActivity(i);
+            Runnable progressRunnable = () -> {
+                progress.cancel();
+                Intent i = new Intent(StartUrineActivity.this, ElevenParameterActivity.class);
+                i.putExtra("PTNO", ptno);
+                i.putExtra("patient", patientModel);
+                startActivity(i);
 
 
-                }
             };
             Handler pdCanceller = new Handler();
             pdCanceller.postDelayed(progressRunnable, 2000);
@@ -66,17 +63,14 @@ public class StartUrineActivity extends AppCompatActivity {
             progress.setMessage("Starting Urine Test...");
             progress.show();
 
-            Runnable progressRunnable = new Runnable() {
-                @Override
-                public void run() {
-                    progress.cancel();
-                    Intent i = new Intent(StartUrineActivity.this, TwoParameterActivity.class);
-                    i.putExtra("PTNO", ptno);
-                    i.putExtra("patient", patientModel);
-                    startActivity(i);
+            Runnable progressRunnable = () -> {
+                progress.cancel();
+                Intent i = new Intent(StartUrineActivity.this, TwoParameterActivity.class);
+                i.putExtra("PTNO", ptno);
+                i.putExtra("patient", patientModel);
+                startActivity(i);
 
 
-                }
             };
             Handler pdCanceller = new Handler();
             pdCanceller.postDelayed(progressRunnable, 2000);
@@ -88,17 +82,14 @@ public class StartUrineActivity extends AppCompatActivity {
             progress.setMessage("Starting Urine Test...");
             progress.show();
 
-            Runnable progressRunnable = new Runnable() {
-                @Override
-                public void run() {
-                    progress.cancel();
-                    Intent i = new Intent(StartUrineActivity.this, UricAcidActivity.class);
-                    i.putExtra("PTNO", ptno);
-                    i.putExtra("patient", patientModel);
-                    startActivity(i);
+            Runnable progressRunnable = () -> {
+                progress.cancel();
+                Intent i = new Intent(StartUrineActivity.this, UricAcidActivity.class);
+                i.putExtra("PTNO", ptno);
+                i.putExtra("patient", patientModel);
+                startActivity(i);
 
 
-                }
             };
             Handler pdCanceller = new Handler();
             pdCanceller.postDelayed(progressRunnable, 2000);

@@ -18,6 +18,7 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
 
+import com.agatsa.testsdknew.LabInstanceDB;
 import com.agatsa.testsdknew.Models.GlucoseModel;
 import com.agatsa.testsdknew.Models.PatientModel;
 import com.agatsa.testsdknew.R;
@@ -39,6 +40,7 @@ public class NodaibetesActivity extends AppCompatActivity implements DiabetesVie
     DiabetesPresenter diabetesPresenter;
     String patient_id;
     Integer daibetesvalue;
+    LabInstanceDB labInstanceDB;
     double value;
 
     @Override
@@ -50,6 +52,7 @@ public class NodaibetesActivity extends AppCompatActivity implements DiabetesVie
         diabetesPresenter=new DiabetesPresenter(this,this);
         pref = this.getSharedPreferences("sunyahealth", Context.MODE_PRIVATE);
         ptno = pref.getString("PTNO", "");
+        labInstanceDB=new LabInstanceDB(this);
         newPatient = getIntent().getParcelableExtra("patient");
         dialog=new ProgressDialog(this);
         labDB = new LabDB(getApplicationContext());
@@ -59,9 +62,7 @@ public class NodaibetesActivity extends AppCompatActivity implements DiabetesVie
 
 
         binding.buttonsave.setOnClickListener(v -> {
-//            daibetesvalue= Integer.parseInt(getEdittextValue(binding.txtglucoseditext));
-            Log.d("diabetesvalue", String.valueOf(daibetesvalue));
-//            diabetesPresenter.diabetes(patient_id, String.valueOf(daibetesvalue),"2018-04-10T04:00:00.000Z","2018-04-10T04:00:00.000Z");
+
             if(validator.validate()){
                 new SaveData().execute();
 
@@ -110,6 +111,7 @@ public class NodaibetesActivity extends AppCompatActivity implements DiabetesVie
         protected Integer doInBackground(String... strings) {
 //
             LabDB db = new LabDB(getApplicationContext());
+            LabInstanceDB labInstanceDB = new LabInstanceDB(getApplicationContext());
             try {
                 Thread.sleep(1000);
             } catch (InterruptedException e) {
@@ -141,6 +143,7 @@ public class NodaibetesActivity extends AppCompatActivity implements DiabetesVie
             glucoseModel.setPtlatestmealtime("Nil");
             glucoseModel.setPttimetaken("Nil");
             String last_vitalsign_row_id = db.SaveGlucoseSign(glucoseModel);
+            String last_vitalsign_row_idd = labInstanceDB.SaveGlucoseSign(glucoseModel);
             try {
                 Thread.sleep(1000);
             } catch (InterruptedException e) {
@@ -148,6 +151,7 @@ public class NodaibetesActivity extends AppCompatActivity implements DiabetesVie
                 return 3;
             }
             glucoseModel.setRow_id(last_vitalsign_row_id);
+            glucoseModel.setRow_id(last_vitalsign_row_idd);
             return 1;
         }
 

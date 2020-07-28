@@ -13,6 +13,8 @@ import android.widget.EditText;
 import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
+
+import com.agatsa.testsdknew.LabInstanceDB;
 import com.agatsa.testsdknew.Models.PatientModel;
 import com.agatsa.testsdknew.Models.VitalSign;
 import com.agatsa.testsdknew.R;
@@ -36,6 +38,7 @@ public class VitalSignActivity extends AppCompatActivity implements VitalSignVie
     Validator validator;
     ActivityVitalTestBinding binding;
     VitalSignPresenter vitalSignPresenter;
+    LabInstanceDB labInstanceDB;
     String patient_id="";
 
 
@@ -45,6 +48,7 @@ public class VitalSignActivity extends AppCompatActivity implements VitalSignVie
         binding = DataBindingUtil.setContentView(this, R.layout.activity_vital_test);
         validator = new Validator(binding);
         validator.enableFormValidationMode();
+        labInstanceDB=new LabInstanceDB(this);
         vitalSignPresenter=new VitalSignPresenter(this,this);
         pref = this.getSharedPreferences("sunyahealth", Context.MODE_PRIVATE);
         ptno = pref.getString("PTNO", "");
@@ -136,6 +140,7 @@ public class VitalSignActivity extends AppCompatActivity implements VitalSignVie
         protected Integer doInBackground(String... strings) {
 //
             LabDB db = new LabDB(getApplicationContext());
+            LabInstanceDB labInstanceDB=new LabInstanceDB(getApplicationContext());
             try {
                 Thread.sleep(1000);
             } catch (InterruptedException e) {
@@ -186,6 +191,7 @@ public class VitalSignActivity extends AppCompatActivity implements VitalSignVie
             vitalSign.setSto2(txtSTO2.getText().toString());
 
             String last_vitalsign_row_id = db.SaveVitalSign(vitalSign);
+            String last_vitalsign_row_idd = labInstanceDB.SaveVitalSign(vitalSign);
 
             try {
                 Thread.sleep(1000);
@@ -194,6 +200,7 @@ public class VitalSignActivity extends AppCompatActivity implements VitalSignVie
                 return 3;
             }
             vitalSign.setRow_id(last_vitalsign_row_id);
+            vitalSign.setRow_id(last_vitalsign_row_idd);
             return 1;
         }
 

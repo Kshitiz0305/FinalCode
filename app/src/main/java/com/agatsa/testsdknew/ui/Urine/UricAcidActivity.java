@@ -38,6 +38,7 @@ import androidx.core.content.ContextCompat;
 import androidx.core.content.FileProvider;
 import androidx.databinding.DataBindingUtil;
 
+import com.agatsa.testsdknew.LabInstanceDB;
 import com.agatsa.testsdknew.Models.PatientModel;
 import com.agatsa.testsdknew.Models.UricAcidModel;
 import com.agatsa.testsdknew.R;
@@ -1422,6 +1423,7 @@ public class UricAcidActivity extends AppCompatActivity {
         protected Integer doInBackground(String... strings) {
 //
             LabDB db = new LabDB(getApplicationContext());
+            LabInstanceDB labInstanceDB=new LabInstanceDB(getApplicationContext());
             try {
                 Thread.sleep(1000);
             } catch (InterruptedException e) {
@@ -1443,6 +1445,7 @@ public class UricAcidActivity extends AppCompatActivity {
             uricAcidModel.setPhoto_uri(stripPhotoPathUri);
 
             String last_uric_acid_row_id = db.SaveUricAcid(uricAcidModel);
+            String last_uric_acid_row_idd = labInstanceDB.SaveUricAcid(uricAcidModel);
             try {
                 Thread.sleep(1000);
             } catch (InterruptedException e) {
@@ -1450,6 +1453,7 @@ public class UricAcidActivity extends AppCompatActivity {
                 return 3;
             }
             uricAcidModel.setRow_id(last_uric_acid_row_id);
+            uricAcidModel.setRow_id(last_uric_acid_row_idd);
             return 1;
         }
 

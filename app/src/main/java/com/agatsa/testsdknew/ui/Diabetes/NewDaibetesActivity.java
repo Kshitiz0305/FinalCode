@@ -22,6 +22,7 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
 
+import com.agatsa.testsdknew.LabInstanceDB;
 import com.agatsa.testsdknew.Models.GlucoseModel;
 import com.agatsa.testsdknew.Models.PatientModel;
 import com.agatsa.testsdknew.R;
@@ -59,6 +60,7 @@ public class NewDaibetesActivity extends AppCompatActivity implements DiabetesVi
     DatePickerDialog picker;
     DiabetesPresenter diabetesPresenter;
     String patient_id;
+    LabInstanceDB labInstanceDB;
     Integer diabeteslevel;
 
 
@@ -72,6 +74,7 @@ public class NewDaibetesActivity extends AppCompatActivity implements DiabetesVi
         validator.enableFormValidationMode();
         pref = this.getSharedPreferences("sunyahealth", Context.MODE_PRIVATE);
         ptno = pref.getString("PTNO", "");
+        labInstanceDB=new LabInstanceDB(this);
         newPatient = getIntent().getParcelableExtra("patient");
         diabetesPresenter=new DiabetesPresenter(this,this);
         Breakfast=findViewById(R.id.breakfast);
@@ -247,6 +250,7 @@ public class NewDaibetesActivity extends AppCompatActivity implements DiabetesVi
         protected Integer doInBackground(String... strings) {
 //
             LabDB db = new LabDB(getApplicationContext());
+            LabInstanceDB labInstanceDB=new LabInstanceDB(getApplicationContext());
             try {
                 Thread.sleep(1000);
             } catch (InterruptedException e) {
@@ -323,6 +327,7 @@ public class NewDaibetesActivity extends AppCompatActivity implements DiabetesVi
                 glucoseModel.setPtlatestmealtime(datentime);
                 glucoseModel.setPtmealtype(Meal);
                 String last_vitalsign_row_id = db.SaveGlucoseSign(glucoseModel);
+                String last_vitalsign_row_idd = labInstanceDB.SaveGlucoseSign(glucoseModel);
                 try {
                     Thread.sleep(1000);
                 } catch (InterruptedException e) {
@@ -330,6 +335,7 @@ public class NewDaibetesActivity extends AppCompatActivity implements DiabetesVi
                     return 3;
                 }
                 glucoseModel.setRow_id(last_vitalsign_row_id);
+                glucoseModel.setRow_id(last_vitalsign_row_idd);
                 return 1;
             }
 

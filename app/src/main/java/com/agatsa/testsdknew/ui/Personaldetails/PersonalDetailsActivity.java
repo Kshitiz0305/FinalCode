@@ -25,6 +25,7 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
 
+import com.agatsa.testsdknew.LabInstanceDB;
 import com.agatsa.testsdknew.Models.PatientModel;
 import com.agatsa.testsdknew.Models.PersonalDetailsResponse;
 import com.agatsa.testsdknew.Models.VitalSign;
@@ -85,6 +86,7 @@ public class PersonalDetailsActivity extends AppCompatActivity implements DatePi
     LinearLayout smokell;
     LinearLayout alcoholll;
     int changedage=-102;
+    LabInstanceDB labInstanceDB;
     ActivityNewPatientDetailBinding binding;
 
 
@@ -112,6 +114,7 @@ ArrayList<String>  placesnames = new ArrayList<>();
         personalDetailsPresenter=new PersonalDetailsPresenter(this,this);
         device_id = pref.getString("device_id", "");
         duid = getIntent().getStringExtra("duid");
+        labInstanceDB=new LabInstanceDB(thisContext);
         pt_id = pref.getString("PTNO", "");
         SimpleDateFormat sdf = new SimpleDateFormat( "yyyy:MM:dd" );
         currentdate=sdf.format( new Date()) ;
@@ -731,12 +734,14 @@ ArrayList<String>  placesnames = new ArrayList<>();
 
             // Save Patient Detail
             LabDB db = new LabDB(getApplicationContext());
+              LabInstanceDB db1=new LabInstanceDB(getApplicationContext());
             if (db.getRowCount("pt_details", "") == 100) {
                 return 2;
             }
             else {
 //                newPatient.setPtNo(device_id + duid);
                 pt_id = db.SavePatient(newPatient);
+                pt_id=db1.SavePatient(newPatient);
                 try {
                     Thread.sleep(1000);
                 } catch (InterruptedException e) {
